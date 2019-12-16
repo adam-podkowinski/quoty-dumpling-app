@@ -14,9 +14,8 @@ class CollectionScreen extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Theme.of(context).accentColor,
-              Theme.of(context).backgroundColor.withOpacity(.8),
-              Theme.of(context).primaryColor.withOpacity(.6),
+              Theme.of(context).accentColor.withOpacity(.8),
+              Theme.of(context).primaryColor,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

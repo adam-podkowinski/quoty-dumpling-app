@@ -18,11 +18,11 @@ class DumplingScreen extends StatelessWidget {
       ),
       body: Container(
         decoration: BoxDecoration(
+          // color: Theme.of(context).primaryColor,
           gradient: LinearGradient(
             colors: [
-              Theme.of(context).accentColor,
-              Theme.of(context).backgroundColor.withOpacity(.8),
-              Theme.of(context).primaryColor.withOpacity(.6),
+              Theme.of(context).accentColor.withOpacity(.8),
+              Theme.of(context).primaryColor,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

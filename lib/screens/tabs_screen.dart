@@ -15,7 +15,7 @@ class _TabsScreenState extends State<TabsScreen> {
     CollectionScreen(),
   ];
 
-  int _selectedPageIndex = 0;
+  int _selectedPageIndex = 1;
 
   void _selectPage(int index) {
     setState(() {
@@ -32,24 +32,24 @@ class _TabsScreenState extends State<TabsScreen> {
       body: _pages[_selectedPageIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
-        backgroundColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Theme.of(context).accentColor,
+        // backgroundColor: Theme.of(context).primaryColor,
+        unselectedItemColor: Theme.of(context).primaryColor,
+        selectedItemColor: Colors.white,
         currentIndex: _selectedPageIndex,
         type: BottomNavigationBarType.shifting,
         items: [
           BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).accentColor,
             icon: Icon(Icons.settings),
             title: Text('Dumpling'),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).accentColor,
             icon: Icon(Icons.star),
             title: Text('Favorites'),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).accentColor,
             icon: Icon(Icons.star),
             title: Text('Favorites'),
           ),

@@ -17,9 +17,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Quoty Dumpling!',
         theme: mainTheme.copyWith(
-          appBarTheme: AppBarTheme(
-            color: mainTheme.accentColor,
-          ),
+          appBarTheme: AppBarTheme(color: mainTheme.accentColor),
         ),
         home: TabsScreen(),
         routes: {
