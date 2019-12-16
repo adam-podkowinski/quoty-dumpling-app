@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         home: DumplingScreen(),
-        // routes: {
-
-        // },
+        routes: {
+          DumplingScreen.routeId: (ctx) => DumplingScreen(),
+        },
       ),
     );
   }

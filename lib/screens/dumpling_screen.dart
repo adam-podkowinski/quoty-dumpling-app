@@ -4,6 +4,8 @@ import 'package:quoty_dumpling_app/widgets/dumpling.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
 
 class DumplingScreen extends StatelessWidget {
+  static const routeId = 'dumpling-screen';
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
