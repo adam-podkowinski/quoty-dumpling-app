@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/screens/dumpling_screen.dart';
 import 'package:quoty_dumpling_app/models/constants.dart';
+import 'package:quoty_dumpling_app/screens/tabs_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
             color: mainTheme.accentColor,
           ),
         ),
-        home: DumplingScreen(),
+        home: TabsScreen(),
         routes: {
           DumplingScreen.routeId: (ctx) => DumplingScreen(),
         },
