@@ -11,6 +11,9 @@ class ProgressBar extends StatelessWidget {
     return Card(
       color: Colors.white70.withOpacity(.85),
       clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: Stack(
         children: <Widget>[
           Container(

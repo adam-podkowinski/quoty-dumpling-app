@@ -20,7 +20,7 @@ class CustomAppBar extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            'Open Your Dumpling!',
+            'Dumpling!',
             style: Theme.of(context).textTheme.title,
           ),
         ),
