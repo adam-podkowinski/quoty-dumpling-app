@@ -30,8 +30,9 @@ class ProgressBar extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
+                  // Color.fromRGBO(145, 189, 58, 1),
+                  Color(0xffE0FF66),
                   Theme.of(context).buttonColor,
-                  Color.fromRGBO(145, 189, 58, 1),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,

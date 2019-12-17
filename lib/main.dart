@@ -19,7 +19,9 @@ class MyApp extends StatelessWidget {
         theme: mainTheme.copyWith(
           appBarTheme: AppBarTheme(color: mainTheme.accentColor),
         ),
-        home: TabsScreen(),
+        home: SafeArea(
+          child: TabsScreen(),
+        ),
         routes: {
           DumplingScreen.routeId: (ctx) => DumplingScreen(),
         },

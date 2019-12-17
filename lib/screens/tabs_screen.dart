@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_nav_bar/gradient_nav_bar.dart';
+import 'package:gradient_nav_bar/model/tab_info.dart';
+import 'package:quoty_dumpling_app/icons/dumpling_icon_icons.dart';
 
 import 'package:quoty_dumpling_app/screens/collection_screen.dart';
 import 'package:quoty_dumpling_app/screens/dumpling_screen.dart';
@@ -26,33 +29,43 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Quoty Dumpling!'),
-      // ),
       body: _pages[_selectedPageIndex],
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: GradientNavigationBar(
         onTap: _selectPage,
-        // backgroundColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Theme.of(context).primaryColor,
-        selectedItemColor: Colors.white,
+        gradient: LinearGradient(
+          colors: [
+            Theme.of(context).primaryColor,
+            Theme.of(context).accentColor,
+          ],
+        ),
         currentIndex: _selectedPageIndex,
-        type: BottomNavigationBarType.shifting,
+        backgroundColor: Theme.of(context).buttonColor,
+        iconColor: Theme.of(context).primaryColor,
+        labelColor: Theme.of(context).primaryColor,
+        showLabel: true,
         items: [
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).accentColor,
-            icon: Icon(Icons.settings),
-            title: Text('Dumpling'),
+          TabInfo(
+            icon: Icons.settings,
+            label: 'Settings',
           ),
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).accentColor,
-            icon: Icon(Icons.star),
-            title: Text('Favorites'),
+          TabInfo(
+            icon: DumplingIcon.dumpling,
+            label: 'Dumpling',
           ),
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).accentColor,
-            icon: Icon(Icons.star),
-            title: Text('Favorites'),
+          TabInfo(
+            icon: Icons.book,
+            label: 'Collection',
           ),
+          // BottomNavigationBarItem(
+          //   // backgroundColor: Theme.of(context).accentColor,
+          //   icon: Icon(DumplingIcon.dumpling),
+          //   title: Text('Dumpling'),
+          // ),
+          // BottomNavigationBarItem(
+          //   // backgroundColor: Theme.of(context).accentColor,
+          //   icon: Icon(Icons.book),
+          //   title: Text('Collection'),
+          // ),
         ],
       ),
     );
