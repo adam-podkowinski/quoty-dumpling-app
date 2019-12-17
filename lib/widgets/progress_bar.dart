@@ -27,15 +27,14 @@ class ProgressBar extends StatelessWidget {
                   .7 *
                   Provider.of<DumplingProvider>(context)
                       .progressBarStatus, // if not all space is taken
-              SizeConfig.screenWidth * .7, // is is taken
+              SizeConfig.screenWidth * .7, // it is taken
             ),
             height: SizeConfig.screenHeight * 0.02,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  // Color.fromRGBO(145, 189, 58, 1),
-                  Color(0xffE0FF66),
-                  Theme.of(context).buttonColor,
+                  Color(0xff91bd3a),
+                  Theme.of(context).buttonColor.withRed(150).withGreen(240),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
