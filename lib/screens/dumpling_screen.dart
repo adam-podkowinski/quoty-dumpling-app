@@ -30,6 +30,7 @@ class DumplingScreen extends StatelessWidget {
               SizedBox(
                 height: SizeConfig.screenHeight * 0.09,
               ),
+              //TODO: Show dialog and other widget if dumpling is opened. (unlocked quote widget);
               Dumpling(),
               ProgressBar(),
             ],
