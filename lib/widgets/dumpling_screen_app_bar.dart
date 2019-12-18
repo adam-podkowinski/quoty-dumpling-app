@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quoty_dumpling_app/models/size_config.dart';
+import 'package:quoty_dumpling_app/helpers/size_config.dart';
 
 class CustomAppBar extends StatelessWidget {
   @override

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:quoty_dumpling_app/widgets/dumpling_screen_app_bar.dart';
 
-class CollectionScreen extends StatelessWidget {
+class CollectionScreen extends StatefulWidget {
+  @override
+  _CollectionScreenState createState() => _CollectionScreenState();
+}
+
+class _CollectionScreenState extends State<CollectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(
-      //     'Quoty Dumpling!',
-      //     style: Theme.of(context).textTheme.title,
-      //   ),
-      // ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -25,9 +24,15 @@ class CollectionScreen extends StatelessWidget {
         ),
         child: Center(
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               CustomAppBar(),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+                child: Text(
+                  'blank',
+                ),
+              ),
             ],
           ),
         ),

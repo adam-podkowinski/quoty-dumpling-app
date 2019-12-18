@@ -2,18 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
-import 'package:quoty_dumpling_app/screens/dumpling_screen.dart';
-import 'package:quoty_dumpling_app/models/constants.dart';
+import 'package:quoty_dumpling_app/helpers/constants.dart';
+import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/screens/tabs_screen.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // This widget is the root of your application
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (ctx) => DumplingProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: DumplingProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Quotes(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Quoty Dumpling!',
         theme: mainTheme.copyWith(
@@ -22,9 +29,6 @@ class MyApp extends StatelessWidget {
         home: SafeArea(
           child: TabsScreen(),
         ),
-        routes: {
-          DumplingScreen.routeId: (ctx) => DumplingScreen(),
-        },
       ),
     );
   }
