@@ -24,7 +24,7 @@ class CustomAppBar extends StatelessWidget {
       child: Center(
         child: Text(
           'Dumpling!',
-          style: Theme.of(context).textTheme.title,
+          style: Theme.of(context).appBarTheme.textTheme.title,
         ),
       ),
     );

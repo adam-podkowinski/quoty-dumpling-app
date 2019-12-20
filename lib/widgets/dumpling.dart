@@ -31,11 +31,9 @@ class _DumplingState extends State<Dumpling> {
       height: SizeConfig.screenWidth * .85,
       padding: _isPressed
           ? EdgeInsets.all(
-              SizeConfig.screenWidth * .05,
-            )
-          : EdgeInsets.all(
               SizeConfig.screenWidth * .03,
-            ),
+            )
+          : EdgeInsets.zero,
       child: GestureDetector(
         onTapDown: (_) {
           setState(() {

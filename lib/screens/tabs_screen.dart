@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_nav_bar/gradient_nav_bar.dart';
 import 'package:gradient_nav_bar/model/tab_info.dart';
+import 'package:quoty_dumpling_app/helpers/constants.dart';
+import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/dumpling_icon_icons.dart';
 
 import 'package:quoty_dumpling_app/screens/collection_screen.dart';
@@ -19,6 +21,7 @@ class _TabsScreenState extends State<TabsScreen> {
   ];
 
   int _selectedPageIndex = 1;
+  var _isInit = true;
 
   void _selectPage(int index) {
     setState(() {
@@ -27,7 +30,17 @@ class _TabsScreenState extends State<TabsScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      SizeConfig().init(context);
+    }
+    _isInit = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: _pages[_selectedPageIndex],
       bottomNavigationBar: GradientNavigationBar(

@@ -5,6 +5,7 @@ import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
 import 'package:quoty_dumpling_app/widgets/dumpling.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
+import 'package:quoty_dumpling_app/widgets/unlocked_new_quote.dart';
 
 class DumplingScreen extends StatefulWidget {
   static const routeId = 'dumpling-screen';
@@ -17,7 +18,6 @@ class _DumplingScreenState extends State<DumplingScreen>
     with TickerProviderStateMixin {
   Animation<double> _dumplingAnimation;
   Animation<double> _initAnimation;
-  Animation<Offset> _newQuoteSlideAnimation;
   AnimationController _dumplingAnimController;
   AnimationController _initAnimController;
   var _isFull = false;
@@ -57,25 +57,12 @@ class _DumplingScreenState extends State<DumplingScreen>
       ),
     );
     //
-    _newQuoteSlideAnimation = Tween<Offset>(
-      begin: Offset(0, 10),
-      end: Offset(0, -10),
-    ).animate(
-      CurvedAnimation(
-        curve: Curves.easeIn,
-        parent: _dumplingAnimController,
-      ),
-    );
     _initAnimController.forward();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (_isInit) {
-      SizeConfig().init(context);
-      _isInit = false;
-    }
     // when the progress bar is full dumpling fades out and new_quote widget shows smoothly
     if (Provider.of<DumplingProvider>(context).isFull) {
       _dumplingAnimController.forward().then((_) {
@@ -111,36 +98,33 @@ class _DumplingScreenState extends State<DumplingScreen>
             end: Alignment.bottomRight,
           ),
         ),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              CustomAppBar(),
-              SizedBox(
-                height: SizeConfig.screenHeight * 0.1,
-              ),
-              //TODO: Show dialog and other widget if dumpling is opened. (unlocked quote widget);
-              Center(
-                child: FadeTransition(
-                  opacity: _initAnimation,
-                  child: FadeTransition(
-                    opacity: _dumplingAnimation,
-                    child: !_isFull
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Dumpling(),
-                              ProgressBar(),
-                            ],
-                          )
-                        : SlideTransition(
-                            position: _newQuoteSlideAnimation,
-                            child: Text('full'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            CustomAppBar(),
+            FadeTransition(
+              opacity: _initAnimation,
+              child: FadeTransition(
+                opacity: _dumplingAnimation,
+                child: Column(
+                  children: !_isFull
+                      ? <Widget>[
+                          Dumpling(),
+                          ProgressBar(),
+                          SizedBox(
+                            height: SizeConfig.screenHeight * 0.066,
                           ),
-                  ),
+                        ]
+                      : <Widget>[
+                          UnlockedNewQuote(),
+                        ],
                 ),
               ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: 1,
+            ),
+          ],
         ),
       ),
     );
