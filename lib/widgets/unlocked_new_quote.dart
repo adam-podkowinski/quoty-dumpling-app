@@ -17,7 +17,7 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 250),
+      duration: Duration(milliseconds: 150),
     );
     _newQuoteSlideAnimation = Tween<double>(
       begin: 0,
@@ -42,19 +42,26 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
     return SizeTransition(
       sizeFactor: _newQuoteSlideAnimation,
       axis: Axis.horizontal,
-      child: Card(
-        shape: RoundedRectangleBorder(
+      child: Container(
+        height: SizeConfig.screenWidth * .85,
+        width: SizeConfig.screenWidth * .85,
+        alignment: Alignment.topCenter,
+        padding: EdgeInsets.only(top: SizeConfig.screenHeight * 0.01),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.white,
+              Colors.white,
+              Theme.of(context).buttonColor,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Container(
-          height: SizeConfig.screenWidth * .85,
-          width: SizeConfig.screenWidth * .85,
-          alignment: Alignment.topCenter,
-          padding: EdgeInsets.only(top: SizeConfig.screenHeight * 0.01),
-          child: Text(
-            'New QUOTE!',
-            style: kTitleStyle(SizeConfig.screenWidth),
-          ),
+        child: Text(
+          'New QUOTE!',
+          style: kTitleStyle(SizeConfig.screenWidth),
         ),
       ),
     );
