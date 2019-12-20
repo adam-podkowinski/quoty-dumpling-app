@@ -78,14 +78,14 @@ class _DumplingScreenState extends State<DumplingScreen>
     }
     // when the progress bar is full dumpling fades out and new_quote widget shows smoothly
     if (Provider.of<DumplingProvider>(context).isFull) {
-      _dumplingAnimController.forward();
-      Future.delayed(Duration(milliseconds: 250), () {
+      _dumplingAnimController.forward().then((_) {
         setState(() {
           _isFull = true;
           _dumplingAnimController.reverse();
+          Provider.of<DumplingProvider>(context)
+              .clearClickingProgressWhenFull();
         });
-      }).then((_) =>
-          Provider.of<DumplingProvider>(context).clearClickingProgress());
+      });
     }
   }
 
@@ -93,6 +93,7 @@ class _DumplingScreenState extends State<DumplingScreen>
   void dispose() {
     super.dispose();
     _dumplingAnimController.dispose();
+    _initAnimController.dispose();
   }
 
   @override

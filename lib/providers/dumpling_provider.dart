@@ -16,9 +16,11 @@ class DumplingProvider extends ChangeNotifier {
     return _isFull;
   }
 
-  void clearClickingProgress() {
-    _progressBarStatus = 0;
-    _isFull = false;
+  void clearClickingProgressWhenFull() {
+    if (_isFull) {
+      _progressBarStatus = 0;
+      _isFull = false;
+    }
     notifyListeners();
   }
 
