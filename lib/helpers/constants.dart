@@ -5,12 +5,13 @@ var mainTheme = ThemeData.light().copyWith(
   primaryColor: Color(0xFFFFA259),
   accentColor: Color(0xffFF7860),
   buttonColor: Color(0xffFED766),
+  backgroundColor: Color(0xffFFEBCC),
   appBarTheme: AppBarTheme(
     textTheme: TextTheme(
       title: TextStyle(
         fontFamily: 'Lato',
         fontWeight: FontWeight.bold,
-        color: Colors.white,
+        color: Color(0xffFFFFEA),
         fontSize: 23,
       ),
     ),

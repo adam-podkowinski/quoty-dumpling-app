@@ -23,7 +23,7 @@ class ProgressBar extends StatelessWidget {
         ],
       ),
       child: Card(
-        color: Colors.white70.withOpacity(.85),
+        color: Theme.of(context).backgroundColor,
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

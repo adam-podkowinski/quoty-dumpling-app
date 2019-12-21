@@ -55,6 +55,8 @@ class _TabsScreenState extends State<TabsScreen> {
         backgroundColor: Theme.of(context).buttonColor,
         iconColor: Theme.of(context).primaryColor,
         labelColor: Theme.of(context).primaryColor,
+        selectedIconColor: Theme.of(context).backgroundColor.withBlue(220),
+        selectedLabelColor: Theme.of(context).backgroundColor.withBlue(220),
         showLabel: true,
         items: [
           TabInfo(
@@ -69,16 +71,6 @@ class _TabsScreenState extends State<TabsScreen> {
             icon: Icons.book,
             label: 'Collection',
           ),
-          // BottomNavigationBarItem(
-          //   // backgroundColor: Theme.of(context).accentColor,
-          //   icon: Icon(DumplingIcon.dumpling),
-          //   title: Text('Dumpling'),
-          // ),
-          // BottomNavigationBarItem(
-          //   // backgroundColor: Theme.of(context).accentColor,
-          //   icon: Icon(Icons.book),
-          //   title: Text('Collection'),
-          // ),
         ],
       ),
     );

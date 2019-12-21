@@ -21,7 +21,6 @@ class _DumplingScreenState extends State<DumplingScreen>
   AnimationController _dumplingAnimController;
   AnimationController _initAnimController;
   var _isFull = false;
-  var _isInit = true;
 
   @override
   void initState() {
@@ -29,7 +28,7 @@ class _DumplingScreenState extends State<DumplingScreen>
     //
     _dumplingAnimController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 250),
+      duration: Duration(milliseconds: 150),
     );
     //
     _initAnimController = AnimationController(

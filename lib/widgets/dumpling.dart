@@ -51,7 +51,8 @@ class _DumplingState extends State<Dumpling> {
         child: ColorFiltered(
           // color: Colors.black,
           colorFilter: ColorFilter.mode(
-            Color.fromRGBO(255, 246, 200, 1),
+            // Color.fromRGBO(255, 246, 200, 1),
+            Theme.of(context).backgroundColor.withRed(255),
             BlendMode.modulate,
           ),
           child: Image.asset(
