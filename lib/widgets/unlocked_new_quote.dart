@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/models/quote.dart';
+import 'package:quoty_dumpling_app/providers/quotes.dart';
 
 class UnlockedNewQuote extends StatefulWidget {
   @override
@@ -10,8 +13,8 @@ class UnlockedNewQuote extends StatefulWidget {
 class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
     with SingleTickerProviderStateMixin {
   Animation _newQuoteSlideAnimation;
-  Animation _newQuoteSizeAnimation;
   AnimationController _controller;
+  Quote _newQuote;
 
   @override
   void initState() {
@@ -21,24 +24,20 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
       duration: Duration(milliseconds: 150),
     );
     _newQuoteSlideAnimation = Tween<Offset>(
-      begin: Offset(0, -2),
+      begin: Offset(0, -10),
       end: Offset.zero,
     ).animate(
       CurvedAnimation(
-        curve: Curves.easeIn,
+        curve: Curves.fastLinearToSlowEaseIn,
         parent: _controller,
       ),
-    );
-    _newQuoteSizeAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
-      CurvedAnimation(
-        curve: Curves.easeIn,
-        parent: _controller,
-      ),
-    );
+    )..addStatusListener(
+        (_) {
+          setState(() {});
+        },
+      );
     _controller.forward();
+    _newQuote = Provider.of<Quotes>(context, listen: false).unlockRandomQuote();
   }
 
   @override
@@ -49,33 +48,100 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
 
   @override
   Widget build(BuildContext context) {
-    return SizeTransition(
-      axis: Axis.horizontal,
-      sizeFactor: _newQuoteSizeAnimation,
-      child: SlideTransition(
-        position: _newQuoteSlideAnimation,
-        child: Container(
-          height: SizeConfig.screenWidth * .85,
-          width: SizeConfig.screenWidth * .85,
+    return SlideTransition(
+      position: _newQuoteSlideAnimation,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).backgroundColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 100),
+          height: _controller.isAnimating
+              ? SizeConfig.screenWidth * .3
+              : SizeConfig.screenWidth * .9,
+          width: SizeConfig.screenWidth * .9,
           alignment: Alignment.topCenter,
           padding: EdgeInsets.only(top: SizeConfig.screenHeight * 0.01),
           decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor,
             gradient: LinearGradient(
               colors: [
-                Theme.of(context).backgroundColor,
-                Theme.of(context).backgroundColor,
-                Theme.of(context).backgroundColor,
-                Theme.of(context).buttonColor,
-                // Theme.of(context).buttonColor,
+                // Theme.of(context).backgroundColor,
+                Provider.of<Quotes>(context)
+                    .rarityColor(_newQuote.rarity, context)
+                    .withOpacity(.1),
+                Provider.of<Quotes>(context)
+                    .rarityColor(_newQuote.rarity, context)
+                    .withOpacity(.7),
               ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Text(
-            'New QUOTE!',
-            style: kTitleStyle(SizeConfig.screenWidth),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: <Widget>[
+                  FittedBox(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'New ',
+                          style: kTitleStyle(SizeConfig.screenWidth),
+                        ),
+                        SizedBox(width: 5),
+                        Stack(
+                          children: <Widget>[
+                            Text(
+                              '${Provider.of<Quotes>(context).rarityText(_newQuote.rarity)} ',
+                              style:
+                                  kTitleStyle(SizeConfig.screenWidth).copyWith(
+                                fontFamily: 'Pacifico',
+                                fontStyle: FontStyle.italic,
+                                foreground: Paint()
+                                  ..style = PaintingStyle.stroke
+                                  ..strokeWidth = 5
+                                  ..color =
+                                      kTitleStyle(SizeConfig.screenWidth).color,
+                              ),
+                            ),
+                            Text(
+                              '${Provider.of<Quotes>(context).rarityText(_newQuote.rarity)} ',
+                              style:
+                                  kTitleStyle(SizeConfig.screenWidth).copyWith(
+                                fontFamily: 'Pacifico',
+                                fontStyle: FontStyle.italic,
+                                color: Provider.of<Quotes>(context)
+                                    .rarityColor(_newQuote.rarity, context),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Quote',
+                          style: kTitleStyle(SizeConfig.screenWidth),
+                        ),
+                      ],
+                      // 'New QUOTE!',
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  Text(
+                    _newQuote.quote,
+                    textAlign: TextAlign.justify,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(_newQuote.author),
+                ],
+              ),
+            ),
           ),
         ),
       ),

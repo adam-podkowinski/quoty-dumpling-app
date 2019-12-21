@@ -21,8 +21,6 @@ dependencies:
     sdk: flutter
   provider: ^3.2.0
   gradient_nav_bar: ^1.0.0
-  path: ^1.6.4
-  sweet_alert_dialogs: "^0.1.0"
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -70,9 +68,9 @@ flutter:
     - family: DumplingIcon
       fonts:
         - asset: assets/icons/DumplingIcon.ttf
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
+    - family: Pacifico
+      fonts:
+        - asset: assets/fonts/Pacifico-Regular.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

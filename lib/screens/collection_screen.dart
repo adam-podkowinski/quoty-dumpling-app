@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
-import 'package:quoty_dumpling_app/widgets/dumpling_screen_app_bar.dart';
 
 class CollectionScreen extends StatefulWidget {
   @override

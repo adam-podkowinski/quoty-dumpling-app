@@ -6,7 +6,7 @@ class DumplingProvider extends ChangeNotifier {
   //multiplier which shows how much we can add to progressBarStatus each click
   double _clickMultiplier = 25;
   //if progress bar status is equal to 1 (full)
-  var _isFull = false;
+  var _isFull = true;
 
   double get progressBarStatus {
     return _progressBarStatus;

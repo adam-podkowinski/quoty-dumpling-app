@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 
 var mainTheme = ThemeData.light().copyWith(
   primaryColor: Color(0xFFFFA259),
@@ -26,3 +25,7 @@ TextStyle kTitleStyle(double screenWidth) {
     fontSize: screenWidth * 0.08,
   );
 }
+
+final rareColor = Colors.amber;
+final epicColor = Colors.purpleAccent;
+final legendaryColor = Colors.yellow;
