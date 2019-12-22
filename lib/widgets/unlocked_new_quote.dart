@@ -21,7 +21,7 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 150),
     );
     _newQuoteSlideAnimation = Tween<Offset>(
       begin: Offset(0, -10),
@@ -50,130 +50,104 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
   Widget build(BuildContext context) {
     return SlideTransition(
       position: _newQuoteSlideAnimation,
-      child: Card(
-        shape: RoundedRectangleBorder(
+      child: AnimatedContainer(
+        constraints: BoxConstraints(
+          maxHeight: _controller.isAnimating
+              ? SizeConfig.screenWidth * .3
+              : SizeConfig.screenWidth,
+        ),
+        duration: Duration(milliseconds: 100),
+        width: SizeConfig.screenWidth * .9,
+        decoration: BoxDecoration(
+          color: Theme.of(context).backgroundColor,
           borderRadius: BorderRadius.circular(10),
         ),
-        clipBehavior: Clip.antiAlias,
-        elevation: 10,
         child: Container(
-          color: Theme.of(context).backgroundColor,
-          child: IntrinsicHeight(
-            child: AnimatedContainer(
-              // padding: EdgeInsets.all(SizeConfig.screenWidth * 0.01),
-              duration: Duration(milliseconds: 200),
-              constraints: BoxConstraints(
-                maxHeight: _controller.isAnimating
-                    ? SizeConfig.screenWidth * .3
-                    : SizeConfig.screenHeight,
-                // minHeight: SizeConfig.screenWidth * .4,
-              ),
-              width: SizeConfig.screenWidth * .9,
-              alignment: Alignment.topCenter,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Provider.of<Quotes>(context)
-                        .rarityColor(_newQuote.rarity, context)
-                        .withOpacity(.1),
-                    Provider.of<Quotes>(context)
-                        .rarityColor(_newQuote.rarity, context)
-                        .withOpacity(.7),
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+          padding: EdgeInsets.symmetric(
+            vertical: SizeConfig.screenHeight * 0.01,
+            horizontal: SizeConfig.screenWidth * 0.04,
+          ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Provider.of<Quotes>(context)
+                    .rarityColor(_newQuote.rarity, context)
+                    .withOpacity(.1),
+                Provider.of<Quotes>(context)
+                    .rarityColor(_newQuote.rarity, context)
+                    .withOpacity(.7),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'New ',
+                        style: kTitleStyle(SizeConfig.screenWidth),
+                      ),
+                      SizedBox(width: 5),
+                      Stack(
+                        children: <Widget>[
+                          Text(
+                            '${Provider.of<Quotes>(context).rarityText(_newQuote.rarity)} ',
+                            style: kTitleStyle(SizeConfig.screenWidth).copyWith(
+                              fontFamily: 'Pacifico',
+                              fontStyle: FontStyle.italic,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 5
+                                ..color =
+                                    kTitleStyle(SizeConfig.screenWidth).color,
+                            ),
+                          ),
+                          Text(
+                            '${Provider.of<Quotes>(context).rarityText(_newQuote.rarity)} ',
+                            style: kTitleStyle(SizeConfig.screenWidth).copyWith(
+                              fontFamily: 'Pacifico',
+                              fontStyle: FontStyle.italic,
+                              color: Provider.of<Quotes>(context)
+                                  .rarityColor(_newQuote.rarity, context),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        'Quote',
+                        style: kTitleStyle(SizeConfig.screenWidth),
+                      ),
+                    ],
+                    // 'New QUOTE!',
+                  ),
                 ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(bottom: 10),
-                child: Content(newQuote: _newQuote),
-              ),
+                SizedBox(height: 20),
+                Text(
+                  _newQuote.quote,
+                  style: kQuoteStyle(SizeConfig.screenWidth),
+                  textAlign: TextAlign.justify,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                FittedBox(
+                  child: Text(
+                    'Author: ${_newQuote.author == '' ? 'Unknown' : _newQuote.author}',
+                    style: kAuthorStyle(SizeConfig.screenWidth),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class Content extends StatelessWidget {
-  final Quote newQuote;
-  Content({
-    @required this.newQuote,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        FittedBox(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'New ',
-                style: kTitleStyle(SizeConfig.screenWidth),
-              ),
-              SizedBox(width: 5),
-              Stack(
-                children: <Widget>[
-                  Text(
-                    '${Provider.of<Quotes>(context).rarityText(newQuote.rarity)} ',
-                    style: kTitleStyle(SizeConfig.screenWidth).copyWith(
-                      fontFamily: 'Pacifico',
-                      fontStyle: FontStyle.italic,
-                      foreground: Paint()
-                        ..style = PaintingStyle.stroke
-                        ..strokeWidth = 5
-                        ..color = kTitleStyle(SizeConfig.screenWidth).color,
-                    ),
-                  ),
-                  Text(
-                    '${Provider.of<Quotes>(context).rarityText(newQuote.rarity)} ',
-                    style: kTitleStyle(SizeConfig.screenWidth).copyWith(
-                      fontFamily: 'Pacifico',
-                      fontStyle: FontStyle.italic,
-                      color: Provider.of<Quotes>(context)
-                          .rarityColor(newQuote.rarity, context),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(width: 5),
-              Text(
-                'Quote',
-                style: kTitleStyle(SizeConfig.screenWidth),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: SizeConfig.screenWidth * 0.03,
-        ),
-        Flex(
-          direction: Axis.vertical,
-          children: <Widget>[
-            Text(
-              newQuote.quote,
-              style: kQuoteStyle(SizeConfig.screenWidth),
-            ),
-            SizedBox(
-              height: SizeConfig.screenWidth * 0.03,
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 10),
-              child: FittedBox(
-                child: Text(
-                  'Author: ${newQuote.author == "" ? 'Unknown' : newQuote.author}',
-                  style: kAuthorStyle(SizeConfig.screenWidth),
-                  // style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }
