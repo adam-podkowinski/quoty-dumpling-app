@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
+import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
 import 'package:quoty_dumpling_app/widgets/dumpling.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
@@ -25,6 +26,8 @@ class _DumplingScreenState extends State<DumplingScreen>
   @override
   void initState() {
     super.initState();
+    Provider.of<Quotes>(context, listen: false).fetchQuotes();
+
     //
     _dumplingAnimController = AnimationController(
       vsync: this,

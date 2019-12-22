@@ -21,7 +21,7 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 150),
+      duration: Duration(milliseconds: 250),
     );
     _newQuoteSlideAnimation = Tween<Offset>(
       begin: Offset(0, -10),
@@ -53,20 +53,16 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
       child: AnimatedContainer(
         constraints: BoxConstraints(
           maxHeight: _controller.isAnimating
-              ? SizeConfig.screenWidth * .3
+              ? SizeConfig.screenWidth * .2
               : SizeConfig.screenWidth,
         ),
-        duration: Duration(milliseconds: 100),
+        duration: Duration(milliseconds: 200),
         width: SizeConfig.screenWidth * .9,
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Container(
-          padding: EdgeInsets.symmetric(
-            vertical: SizeConfig.screenHeight * 0.01,
-            horizontal: SizeConfig.screenWidth * 0.04,
-          ),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -83,6 +79,10 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
             borderRadius: BorderRadius.circular(10),
           ),
           child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+              vertical: SizeConfig.screenHeight * 0.01,
+              horizontal: SizeConfig.screenWidth * 0.04,
+            ),
             child: Column(
               children: <Widget>[
                 FittedBox(

@@ -29,11 +29,11 @@ class Quotes extends ChangeNotifier {
             author: e['quoteAuthor'],
             isFavorite: false,
             isInCollection: false,
-            rarity: index <= contents.length * .25
+            rarity: index <= contents.length * .8
                 ? Rarities.COMMON
-                : index <= contents.length * .50
+                : index <= contents.length * .95
                     ? Rarities.RARE
-                    : index <= contents.length * .75
+                    : index <= contents.length * .99
                         ? Rarities.EPIC
                         : Rarities.LEGENDARY,
           ),
