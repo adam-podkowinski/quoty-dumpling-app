@@ -62,12 +62,13 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
               : SizeConfig.screenWidth * .9,
           width: SizeConfig.screenWidth * .9,
           alignment: Alignment.topCenter,
-          padding: EdgeInsets.only(top: SizeConfig.screenHeight * 0.01),
+          padding: EdgeInsets.symmetric(
+            vertical: SizeConfig.screenHeight * 0.01,
+            horizontal: SizeConfig.screenWidth * 0.04,
+          ),
           decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
             gradient: LinearGradient(
               colors: [
-                // Theme.of(context).backgroundColor,
                 Provider.of<Quotes>(context)
                     .rarityColor(_newQuote.rarity, context)
                     .withOpacity(.1),
@@ -81,66 +82,68 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
             borderRadius: BorderRadius.circular(10),
           ),
           child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: <Widget>[
-                  FittedBox(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'New ',
-                          style: kTitleStyle(SizeConfig.screenWidth),
-                        ),
-                        SizedBox(width: 5),
-                        Stack(
-                          children: <Widget>[
-                            Text(
-                              '${Provider.of<Quotes>(context).rarityText(_newQuote.rarity)} ',
-                              style:
-                                  kTitleStyle(SizeConfig.screenWidth).copyWith(
-                                fontFamily: 'Pacifico',
-                                fontStyle: FontStyle.italic,
-                                foreground: Paint()
-                                  ..style = PaintingStyle.stroke
-                                  ..strokeWidth = 5
-                                  ..color =
-                                      kTitleStyle(SizeConfig.screenWidth).color,
-                              ),
+            child: Column(
+              children: <Widget>[
+                FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'New ',
+                        style: kTitleStyle(SizeConfig.screenWidth),
+                      ),
+                      SizedBox(width: 5),
+                      Stack(
+                        children: <Widget>[
+                          Text(
+                            '${Provider.of<Quotes>(context).rarityText(_newQuote.rarity)} ',
+                            style: kTitleStyle(SizeConfig.screenWidth).copyWith(
+                              fontFamily: 'Pacifico',
+                              fontStyle: FontStyle.italic,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 5
+                                ..color =
+                                    kTitleStyle(SizeConfig.screenWidth).color,
                             ),
-                            Text(
-                              '${Provider.of<Quotes>(context).rarityText(_newQuote.rarity)} ',
-                              style:
-                                  kTitleStyle(SizeConfig.screenWidth).copyWith(
-                                fontFamily: 'Pacifico',
-                                fontStyle: FontStyle.italic,
-                                color: Provider.of<Quotes>(context)
-                                    .rarityColor(_newQuote.rarity, context),
-                              ),
+                          ),
+                          Text(
+                            '${Provider.of<Quotes>(context).rarityText(_newQuote.rarity)} ',
+                            style: kTitleStyle(SizeConfig.screenWidth).copyWith(
+                              fontFamily: 'Pacifico',
+                              fontStyle: FontStyle.italic,
+                              color: Provider.of<Quotes>(context)
+                                  .rarityColor(_newQuote.rarity, context),
                             ),
-                          ],
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          'Quote',
-                          style: kTitleStyle(SizeConfig.screenWidth),
-                        ),
-                      ],
-                      // 'New QUOTE!',
-                    ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        'Quote',
+                        style: kTitleStyle(SizeConfig.screenWidth),
+                      ),
+                    ],
+                    // 'New QUOTE!',
                   ),
-                  SizedBox(height: 30),
-                  Text(
-                    _newQuote.quote,
-                    textAlign: TextAlign.justify,
+                ),
+                SizedBox(height: 30),
+                Text(
+                  _newQuote.quote,
+                  style: kQuoteStyle(SizeConfig.screenWidth),
+                  textAlign: TextAlign.justify,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                FittedBox(
+                  child: Text(
+                    'Author: ${_newQuote.author == '' ? 'Unknown' : _newQuote.author}',
+                    style: kAuthorStyle(SizeConfig.screenWidth),
+                    textAlign: TextAlign.left,
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(_newQuote.author),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

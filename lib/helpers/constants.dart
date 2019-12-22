@@ -26,6 +26,27 @@ TextStyle kTitleStyle(double screenWidth) {
   );
 }
 
+TextStyle kQuoteStyle(double screenWidth) {
+  return TextStyle(
+    fontFamily: 'Lato',
+    fontStyle: FontStyle.italic,
+    color: kTitleStyle(screenWidth).color,
+    decorationStyle: TextDecorationStyle.dashed,
+    fontSize: screenWidth * 0.05,
+  );
+}
+
+TextStyle kAuthorStyle(double screenWidth) {
+  return TextStyle(
+    fontFamily: 'Lato',
+    fontWeight: FontWeight.bold,
+    color: kTitleStyle(screenWidth).color,
+    decorationStyle: TextDecorationStyle.dashed,
+    fontSize: screenWidth * 0.05,
+    wordSpacing: 2,
+  );
+}
+
 final rareColor = Colors.amber;
 final epicColor = Colors.purpleAccent;
 final legendaryColor = Colors.yellow;
