@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 
 class Quotes extends ChangeNotifier {

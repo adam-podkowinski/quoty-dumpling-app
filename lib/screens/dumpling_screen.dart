@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
-import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
 import 'package:quoty_dumpling_app/widgets/dumpling.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
@@ -26,8 +25,6 @@ class _DumplingScreenState extends State<DumplingScreen>
   @override
   void initState() {
     super.initState();
-    // Provider.of<Quotes>(context, listen: false).fetchQuotes();
-
     //
     _dumplingAnimController = AnimationController(
       vsync: this,
@@ -65,7 +62,7 @@ class _DumplingScreenState extends State<DumplingScreen>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // when the progress bar is full dumpling fades out and new_quote widget shows smoothly
+
     if (Provider.of<DumplingProvider>(context).isFull) {
       _dumplingAnimController.forward().then((_) {
         setState(() {
@@ -75,6 +72,11 @@ class _DumplingScreenState extends State<DumplingScreen>
               .clearClickingProgressWhenFull();
         });
       });
+    } else {
+      if (!Provider.of<DumplingProvider>(context).isFullState) {
+        _isFull = false;
+        _dumplingAnimController.reverse();
+      }
     }
   }
 
@@ -118,7 +120,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                           ),
                         ]
                       : <Widget>[
-                          UnlockedNewQuote(),
+                          UnlockedNewQuote(_dumplingAnimController),
                         ],
                 ),
               ),

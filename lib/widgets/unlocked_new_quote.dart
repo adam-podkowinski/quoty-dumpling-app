@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
-import 'package:quoty_dumpling_app/screens/tabs_screen.dart';
 
 class UnlockedNewQuote extends StatefulWidget {
+  final dumplingController;
+
+  UnlockedNewQuote(this.dumplingController);
   @override
   _UnlockedNewQuoteState createState() => _UnlockedNewQuoteState();
 }
@@ -81,7 +84,11 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
               vertical: SizeConfig.screenHeight * 0.01,
               horizontal: SizeConfig.screenWidth * 0.04,
             ),
-            child: CardContent(newQuote: _newQuote),
+            child: CardContent(
+              newQuote: _newQuote,
+              controller: _controller,
+              dumplingController: widget.dumplingController,
+            ),
           ),
         ),
       ),
@@ -91,8 +98,12 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
 
 class CardContent extends StatelessWidget {
   final Quote newQuote;
+  final AnimationController controller;
+  final AnimationController dumplingController;
   CardContent({
     @required this.newQuote,
+    @required this.controller,
+    @required this.dumplingController,
   });
 
   @override
@@ -168,15 +179,23 @@ class CardContent extends StatelessWidget {
               rarityColor: newQuote.rarityColor(context),
               textContent: 'Eat more!',
               onTap: () {
-                print(1);
+                dumplingController.forward();
+                controller.reverse().then(
+                      (_) => Provider.of<DumplingProvider>(context)
+                          .notifyIsFullStateChanged(),
+                    );
               },
             ),
             NewQuoteButton(
-              rarityColor: newQuote.rarityColor(context),
-              textContent: 'Go to collection!',
-              onTap: () => Provider.of<DumplingProvider>(context)
-                  .changeToCollectionScreen(true),
-            ),
+                rarityColor: newQuote.rarityColor(context),
+                textContent: 'Go to collection!',
+                onTap: () {
+                  dumplingController.forward();
+                  controller.reverse().then(
+                        (_) => Provider.of<DumplingProvider>(context)
+                            .changeToCollectionScreen(true),
+                      );
+                }),
           ],
         ),
         SizedBox(
