@@ -83,68 +83,118 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
               vertical: SizeConfig.screenHeight * 0.01,
               horizontal: SizeConfig.screenWidth * 0.04,
             ),
-            child: Column(
-              children: <Widget>[
-                FittedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'New ',
-                        style: kTitleStyle(SizeConfig.screenWidth),
-                      ),
-                      SizedBox(width: 5),
-                      Stack(
-                        children: <Widget>[
-                          Text(
-                            '${Provider.of<Quotes>(context).rarityText(_newQuote.rarity)} ',
-                            style: kTitleStyle(SizeConfig.screenWidth).copyWith(
-                              fontFamily: 'Pacifico',
-                              fontStyle: FontStyle.italic,
-                              foreground: Paint()
-                                ..style = PaintingStyle.stroke
-                                ..strokeWidth = 5
-                                ..color =
-                                    kTitleStyle(SizeConfig.screenWidth).color,
-                            ),
-                          ),
-                          Text(
-                            '${Provider.of<Quotes>(context).rarityText(_newQuote.rarity)} ',
-                            style: kTitleStyle(SizeConfig.screenWidth).copyWith(
-                              fontFamily: 'Pacifico',
-                              fontStyle: FontStyle.italic,
-                              color: Provider.of<Quotes>(context)
-                                  .rarityColor(_newQuote.rarity, context),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        'Quote',
-                        style: kTitleStyle(SizeConfig.screenWidth),
-                      ),
-                    ],
-                    // 'New QUOTE!',
+            child: CardContent(newQuote: _newQuote),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CardContent extends StatelessWidget {
+  final Quote newQuote;
+  CardContent({
+    @required this.newQuote,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        //title
+        FittedBox(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'New ',
+                style: kTitleStyle(SizeConfig.screenWidth),
+              ),
+              SizedBox(width: 5),
+              Stack(
+                children: <Widget>[
+                  Text(
+                    '${Provider.of<Quotes>(context).rarityText(newQuote.rarity)} ',
+                    style: kTitleStyle(SizeConfig.screenWidth).copyWith(
+                      fontFamily: 'Pacifico',
+                      fontStyle: FontStyle.italic,
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 5
+                        ..color = kTitleStyle(SizeConfig.screenWidth).color,
+                    ),
                   ),
-                ),
-                SizedBox(height: 20),
-                Text(
-                  _newQuote.quote,
-                  style: kQuoteStyle(SizeConfig.screenWidth),
-                  textAlign: TextAlign.justify,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                FittedBox(
-                  child: Text(
-                    'Author: ${_newQuote.author == '' ? 'Unknown' : _newQuote.author}',
-                    style: kAuthorStyle(SizeConfig.screenWidth),
+                  Text(
+                    '${Provider.of<Quotes>(context).rarityText(newQuote.rarity)} ',
+                    style: kTitleStyle(SizeConfig.screenWidth).copyWith(
+                      fontFamily: 'Pacifico',
+                      fontStyle: FontStyle.italic,
+                      color: Provider.of<Quotes>(context)
+                          .rarityColor(newQuote.rarity, context),
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+              SizedBox(width: 5),
+              Text(
+                'Quote',
+                style: kTitleStyle(SizeConfig.screenWidth),
+              ),
+            ],
+            // 'New QUOTE!',
+          ),
+        ),
+        SizedBox(height: 20),
+        //Quote content and author
+        Text(
+          newQuote.quote,
+          style: kQuoteStyle(SizeConfig.screenWidth),
+          textAlign: TextAlign.justify,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        FittedBox(
+          child: Text(
+            'Author: ${newQuote.author == '' ? 'Unknown' : newQuote.author}',
+            style: kAuthorStyle(SizeConfig.screenWidth),
+          ),
+        ),
+        //Buttons
+        SizedBox(
+          height: SizeConfig.screenWidth * .04,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            NewQuoteButton(),
+            NewQuoteButton(),
+          ],
+        ),
+        SizedBox(
+          height: SizeConfig.screenWidth * .01,
+        ),
+      ],
+    );
+  }
+}
+
+class NewQuoteButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(60),
+      onTap: () {},
+      child: Container(
+        height: SizeConfig.screenHeight * .05,
+        width: SizeConfig.screenHeight * .2,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(60),
+          gradient: LinearGradient(
+            colors: [
+              Colors.black,
+              Colors.white,
+            ],
           ),
         ),
       ),

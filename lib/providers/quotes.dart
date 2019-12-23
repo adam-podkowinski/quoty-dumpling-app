@@ -66,7 +66,6 @@ class Quotes extends ChangeNotifier {
   Color rarityColor(Rarities rarity, BuildContext context) {
     switch (rarity) {
       case Rarities.COMMON:
-        // return kTitleStyle(SizeConfig.screenWidth).color;
         return Theme.of(context).primaryColor;
         break;
       case Rarities.RARE:
