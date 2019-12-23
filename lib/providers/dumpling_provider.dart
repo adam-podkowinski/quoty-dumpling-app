@@ -8,6 +8,11 @@ class DumplingProvider extends ChangeNotifier {
   //if progress bar status is equal to 1 (full)
   var _isFull = true;
 
+  var _changeGoToCollectionScreen = false;
+  bool get changeGoToCollectionScreen {
+    return _changeGoToCollectionScreen;
+  }
+
   double get progressBarStatus {
     return _progressBarStatus;
   }
@@ -29,6 +34,11 @@ class DumplingProvider extends ChangeNotifier {
     if (_progressBarStatus >= 1.0) {
       _isFull = true;
     }
+    notifyListeners();
+  }
+
+  void changeToCollectionScreen(bool val) {
+    _changeGoToCollectionScreen = val;
     notifyListeners();
   }
 }
