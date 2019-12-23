@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         title: 'Quoty Dumpling!',
         theme: mainTheme,
         home: SafeArea(
-          child: TabsScreen(),
+          child: TabsScreen(1),
         ),
       ),
     );

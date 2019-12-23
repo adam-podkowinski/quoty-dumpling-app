@@ -41,9 +41,17 @@ TextStyle kAuthorStyle(double screenWidth) {
     fontFamily: 'Lato',
     fontWeight: FontWeight.bold,
     color: kTitleStyle(screenWidth).color,
-    decorationStyle: TextDecorationStyle.dashed,
     fontSize: screenWidth * 0.05,
     wordSpacing: 2,
+  );
+}
+
+TextStyle kButtonTextStyle(double screenWidth) {
+  return TextStyle(
+    fontFamily: 'Lato',
+    fontWeight: FontWeight.bold,
+    color: kTitleStyle(screenWidth).color,
+    fontSize: screenWidth * 0.045,
   );
 }
 

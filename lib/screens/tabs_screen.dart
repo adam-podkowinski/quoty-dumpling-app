@@ -10,6 +10,10 @@ import 'package:quoty_dumpling_app/screens/collection_screen.dart';
 import 'package:quoty_dumpling_app/screens/dumpling_screen.dart';
 
 class TabsScreen extends StatefulWidget {
+  int selectedPageIndex = 1;
+
+  TabsScreen(this.selectedPageIndex);
+
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }
@@ -21,12 +25,11 @@ class _TabsScreenState extends State<TabsScreen> {
     CollectionScreen(),
   ];
 
-  int _selectedPageIndex = 1;
   var _isInit = true;
 
   void _selectPage(int index) {
     setState(() {
-      _selectedPageIndex = index;
+      widget.selectedPageIndex = index;
     });
   }
 
@@ -43,37 +46,39 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-      body: _pages[_selectedPageIndex],
-      bottomNavigationBar: GradientNavigationBar(
-        onTap: _selectPage,
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).primaryColor,
-            Theme.of(context).accentColor,
+    return SafeArea(
+      child: Scaffold(
+        body: _pages[widget.selectedPageIndex],
+        bottomNavigationBar: GradientNavigationBar(
+          onTap: _selectPage,
+          gradient: LinearGradient(
+            colors: [
+              Theme.of(context).primaryColor,
+              Theme.of(context).accentColor,
+            ],
+          ),
+          currentIndex: widget.selectedPageIndex,
+          backgroundColor: Theme.of(context).buttonColor,
+          iconColor: Theme.of(context).primaryColor,
+          labelColor: Theme.of(context).primaryColor,
+          selectedIconColor: Theme.of(context).backgroundColor.withBlue(220),
+          selectedLabelColor: Theme.of(context).backgroundColor.withBlue(220),
+          showLabel: true,
+          items: [
+            TabInfo(
+              icon: Icons.settings,
+              label: 'Settings',
+            ),
+            TabInfo(
+              icon: DumplingIcon.dumpling,
+              label: 'Dumpling',
+            ),
+            TabInfo(
+              icon: Icons.book,
+              label: 'Collection',
+            ),
           ],
         ),
-        currentIndex: _selectedPageIndex,
-        backgroundColor: Theme.of(context).buttonColor,
-        iconColor: Theme.of(context).primaryColor,
-        labelColor: Theme.of(context).primaryColor,
-        selectedIconColor: Theme.of(context).backgroundColor.withBlue(220),
-        selectedLabelColor: Theme.of(context).backgroundColor.withBlue(220),
-        showLabel: true,
-        items: [
-          TabInfo(
-            icon: Icons.settings,
-            label: 'Settings',
-          ),
-          TabInfo(
-            icon: DumplingIcon.dumpling,
-            label: 'Dumpling',
-          ),
-          TabInfo(
-            icon: Icons.book,
-            label: 'Collection',
-          ),
-        ],
       ),
     );
   }

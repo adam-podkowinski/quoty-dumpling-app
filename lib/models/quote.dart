@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:quoty_dumpling_app/helpers/constants.dart';
+
 enum Rarities {
   COMMON,
   RARE,
@@ -19,4 +22,20 @@ class Quote {
     this.isFavorite,
     this.rarity,
   });
+
+  Color rarityColor(BuildContext context) {
+    switch (rarity) {
+      case Rarities.COMMON:
+        return Theme.of(context).primaryColor;
+        break;
+      case Rarities.RARE:
+        return rareColor;
+        break;
+      case Rarities.EPIC:
+        return epicColor;
+        break;
+      default:
+        return legendaryColor;
+    }
+  }
 }

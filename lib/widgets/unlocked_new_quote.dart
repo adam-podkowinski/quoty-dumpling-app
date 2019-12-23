@@ -4,6 +4,7 @@ import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
+import 'package:quoty_dumpling_app/screens/tabs_screen.dart';
 
 class UnlockedNewQuote extends StatefulWidget {
   @override
@@ -66,12 +67,8 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Provider.of<Quotes>(context)
-                    .rarityColor(_newQuote.rarity, context)
-                    .withOpacity(.1),
-                Provider.of<Quotes>(context)
-                    .rarityColor(_newQuote.rarity, context)
-                    .withOpacity(.7),
+                _newQuote.rarityColor(context).withOpacity(.1),
+                _newQuote.rarityColor(context).withOpacity(.7),
               ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -129,8 +126,7 @@ class CardContent extends StatelessWidget {
                     style: kTitleStyle(SizeConfig.screenWidth).copyWith(
                       fontFamily: 'Pacifico',
                       fontStyle: FontStyle.italic,
-                      color: Provider.of<Quotes>(context)
-                          .rarityColor(newQuote.rarity, context),
+                      color: newQuote.rarityColor(context),
                     ),
                   ),
                 ],
@@ -167,8 +163,22 @@ class CardContent extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            NewQuoteButton(),
-            NewQuoteButton(),
+            NewQuoteButton(
+              rarityColor: newQuote.rarityColor(context),
+              textContent: 'Eat more!',
+              onTap: () {
+                print(1);
+              },
+            ),
+            NewQuoteButton(
+              rarityColor: newQuote.rarityColor(context),
+              textContent: 'Go to collection!',
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (ctx) => TabsScreen(2),
+                ),
+              ),
+            ),
           ],
         ),
         SizedBox(
@@ -180,21 +190,51 @@ class CardContent extends StatelessWidget {
 }
 
 class NewQuoteButton extends StatelessWidget {
+  final Color rarityColor;
+  final String textContent;
+  final Function onTap;
+
+  NewQuoteButton({
+    @required this.rarityColor,
+    @required this.textContent,
+    @required this.onTap,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(60),
-      onTap: () {},
-      child: Container(
-        height: SizeConfig.screenHeight * .05,
-        width: SizeConfig.screenHeight * .2,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(60),
-          gradient: LinearGradient(
-            colors: [
-              Colors.black,
-              Colors.white,
-            ],
+    return Material(
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50),
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(50),
+        child: Container(
+          height: SizeConfig.screenHeight * .05,
+          width: SizeConfig.screenHeight * .2,
+          padding: EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: kTitleStyle(SizeConfig.screenWidth).color,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(50),
+            gradient: LinearGradient(
+              colors: [
+                rarityColor.withOpacity(.6),
+                rarityColor.withOpacity(1),
+              ],
+              stops: [.2, 1],
+            ),
+          ),
+          child: Center(
+            child: FittedBox(
+              child: Text(
+                textContent,
+                style: kButtonTextStyle(SizeConfig.screenWidth),
+              ),
+            ),
           ),
         ),
       ),

@@ -29,11 +29,11 @@ class Quotes extends ChangeNotifier {
             author: e['quoteAuthor'],
             isFavorite: false,
             isInCollection: false,
-            rarity: index <= contents.length * .8
+            rarity: index <= contents.length * .25
                 ? Rarities.COMMON
-                : index <= contents.length * .95
+                : index <= contents.length * .50
                     ? Rarities.RARE
-                    : index <= contents.length * .99
+                    : index <= contents.length * .75
                         ? Rarities.EPIC
                         : Rarities.LEGENDARY,
           ),
@@ -60,22 +60,6 @@ class Quotes extends ChangeNotifier {
         break;
       default:
         return 'Legendary';
-    }
-  }
-
-  Color rarityColor(Rarities rarity, BuildContext context) {
-    switch (rarity) {
-      case Rarities.COMMON:
-        return Theme.of(context).primaryColor;
-        break;
-      case Rarities.RARE:
-        return rareColor;
-        break;
-      case Rarities.EPIC:
-        return epicColor;
-        break;
-      default:
-        return legendaryColor;
     }
   }
 }

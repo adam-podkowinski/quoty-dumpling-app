@@ -26,7 +26,7 @@ class _DumplingScreenState extends State<DumplingScreen>
   @override
   void initState() {
     super.initState();
-    Provider.of<Quotes>(context, listen: false).fetchQuotes();
+    // Provider.of<Quotes>(context, listen: false).fetchQuotes();
 
     //
     _dumplingAnimController = AnimationController(
