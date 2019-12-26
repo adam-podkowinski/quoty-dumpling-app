@@ -29,6 +29,7 @@ class _TabsScreenState extends State<TabsScreen> {
   var _dumplingProvider;
 
   void _selectPage(int index) {
+    if (index != 1) _dumplingProvider.notifyIsFullStateChanged();
     setState(() {
       _selectedPageIndex = index;
     });
@@ -42,11 +43,11 @@ class _TabsScreenState extends State<TabsScreen> {
       Provider.of<Quotes>(context).fetchQuotes();
       _dumplingProvider = Provider.of<DumplingProvider>(context);
     }
-    if (_dumplingProvider.changeGoToCollectionScreen) {
+    if (_dumplingProvider.goToCollectionScreen) {
       setState(() {
         _selectedPageIndex = 2;
       });
-      _dumplingProvider.changeToCollectionScreen(false);
+      _dumplingProvider.changeGoToCollectionScreen(false);
     }
     _isInit = false;
   }

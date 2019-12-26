@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
+import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
 
 class Dumpling extends StatefulWidget {
   @override
@@ -62,5 +63,16 @@ class _DumplingState extends State<Dumpling> {
         ),
       ),
     );
+  }
+}
+
+class DumplingScreenWhileClicking extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: <Widget>[
+      Dumpling(),
+      ProgressBar(),
+      SizedBox(height: SizeConfig.screenHeight * 0.066),
+    ]);
   }
 }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
 import 'package:quoty_dumpling_app/widgets/dumpling.dart';
-import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
 import 'package:quoty_dumpling_app/widgets/unlocked_new_quote.dart';
 
 class DumplingScreen extends StatefulWidget {
@@ -16,34 +14,18 @@ class DumplingScreen extends StatefulWidget {
 
 class _DumplingScreenState extends State<DumplingScreen>
     with TickerProviderStateMixin {
-  Animation<double> _dumplingAnimation;
   Animation<double> _initAnimation;
-  AnimationController _dumplingAnimController;
   AnimationController _initAnimController;
-  var _isFull = false;
+  var _dumplingProvider;
+  var _isInit = true;
 
   @override
   void initState() {
     super.initState();
     //
-    _dumplingAnimController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 150),
-    );
-    //
     _initAnimController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 150),
-    );
-    //
-    _dumplingAnimation = Tween<double>(
-      begin: 1,
-      end: 0,
-    ).animate(
-      CurvedAnimation(
-        curve: Curves.easeIn,
-        parent: _dumplingAnimController,
-      ),
     );
     //
     _initAnimation = Tween<double>(
@@ -62,28 +44,15 @@ class _DumplingScreenState extends State<DumplingScreen>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    if (Provider.of<DumplingProvider>(context).isFull) {
-      _dumplingAnimController.forward().then((_) {
-        setState(() {
-          _isFull = true;
-          _dumplingAnimController.reverse();
-          Provider.of<DumplingProvider>(context)
-              .clearClickingProgressWhenFull();
-        });
-      });
-    } else {
-      if (!Provider.of<DumplingProvider>(context).isFullState) {
-        _isFull = false;
-        _dumplingAnimController.reverse();
-      }
+    if (_isInit) _dumplingProvider = Provider.of<DumplingProvider>(context);
+    if (_dumplingProvider.isFull) {
+      _dumplingProvider.clearClickingProgressWhenFull();
     }
   }
 
   @override
   void dispose() {
     super.dispose();
-    _dumplingAnimController.dispose();
     _initAnimController.dispose();
   }
 
@@ -104,30 +73,22 @@ class _DumplingScreenState extends State<DumplingScreen>
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             CustomAppBar(),
             FadeTransition(
               opacity: _initAnimation,
-              child: FadeTransition(
-                opacity: _dumplingAnimation,
-                child: Column(
-                  children: !_isFull
-                      ? <Widget>[
-                          Dumpling(),
-                          ProgressBar(),
-                          SizedBox(
-                            height: SizeConfig.screenHeight * 0.066,
-                          ),
-                        ]
-                      : <Widget>[
-                          UnlockedNewQuote(_dumplingAnimController),
-                        ],
-                ),
+              child: AnimatedCrossFade(
+                firstCurve: Curves.ease,
+                duration: Duration(milliseconds: 300),
+                crossFadeState: _dumplingProvider.isFull
+                    ? CrossFadeState.showSecond
+                    : CrossFadeState.showFirst,
+                firstChild: DumplingScreenWhileClicking(),
+                secondChild: UnlockedNewQuote(),
               ),
             ),
-            SizedBox(
-              height: 1,
-            ),
+            SizedBox(),
           ],
         ),
       ),

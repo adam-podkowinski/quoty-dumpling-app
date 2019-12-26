@@ -8,13 +8,13 @@ class DumplingProvider extends ChangeNotifier {
   //if progress bar status is equal to 1 (full)
   var _isFull = false;
 
-  //is dumpling hidden or shown. Should NOT use _isFull for this operations because after unlocking new quote  _isFull automatically changes to false but we want to show UnlockedNewQuote widget first and then show dumpling
-  var _isFullState = false;
+  // //is dumpling hidden or shown. Should NOT use _isFull for this operations because after unlocking new quote  _isFull automatically changes to false but we want to show UnlockedNewQuote widget first and then show dumpling
+  // var _isFullState = false;
 
-  var _changeGoToCollectionScreen = false;
+  var _goToCollectionScreen = false;
 
-  bool get changeGoToCollectionScreen {
-    return _changeGoToCollectionScreen;
+  bool get goToCollectionScreen {
+    return _goToCollectionScreen;
   }
 
   double get progressBarStatus {
@@ -25,34 +25,29 @@ class DumplingProvider extends ChangeNotifier {
     return _isFull;
   }
 
-  bool get isFullState {
-    return _isFullState;
-  }
+  // bool get isFullState {
+  //   return _isFullState;
+  // }
 
   void clearClickingProgressWhenFull() {
-    if (_isFull) {
-      _progressBarStatus = 0;
-      _isFull = false;
-    }
-    notifyListeners();
+    _progressBarStatus = 0;
   }
 
   void clickedOnDumpling() {
     _progressBarStatus += _clickMultiplier / 100;
     if (_progressBarStatus >= 1.0) {
-      _isFullState = true;
       _isFull = true;
     }
     notifyListeners();
   }
 
-  void changeToCollectionScreen(bool val) {
-    _changeGoToCollectionScreen = val;
+  void changeGoToCollectionScreen(bool val) {
+    _goToCollectionScreen = val;
     notifyListeners();
   }
 
   void notifyIsFullStateChanged() {
-    _isFullState = _isFull;
+    _isFull = false;
     notifyListeners();
   }
 }
