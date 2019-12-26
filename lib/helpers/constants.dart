@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 var mainTheme = ThemeData.light().copyWith(
-  primaryColor: Color(0xFFFFA259),
+  primaryColor: Color(0xffFFA259),
   accentColor: Color(0xffFF7860),
   buttonColor: Color(0xffFED766),
   backgroundColor: Color(0xffFFEBCC),

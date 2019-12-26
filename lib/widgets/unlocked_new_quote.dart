@@ -6,6 +6,7 @@ import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
+import 'package:quoty_dumpling_app/screens/collection_screen.dart';
 
 class UnlockedNewQuote extends StatefulWidget {
   @override
@@ -185,9 +186,9 @@ class CardContent extends StatelessWidget {
                 onTap: () {
                   controller.reverse().then((_) {
                     Provider.of<DumplingProvider>(context)
-                        .changeGoToCollectionScreen(true);
-                    Provider.of<DumplingProvider>(context)
                         .notifyIsFullStateChanged();
+                    Provider.of<DumplingProvider>(context)
+                        .changeGoToCollectionScreen(true);
                   });
                 }),
           ],

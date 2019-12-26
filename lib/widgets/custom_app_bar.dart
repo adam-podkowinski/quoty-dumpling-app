@@ -14,11 +14,11 @@ class CustomAppBar extends StatelessWidget {
             Theme.of(context).accentColor,
           ],
         ),
-        boxShadow: [
+        boxShadow: <BoxShadow>[
           BoxShadow(color: Colors.black12, blurRadius: 8),
           BoxShadow(color: Colors.black12, blurRadius: 8),
           BoxShadow(color: Colors.black12, blurRadius: 8),
-          BoxShadow(color: Colors.black12, blurRadius: 7),
+          BoxShadow(color: Colors.black12, blurRadius: 8),
         ],
       ),
       child: Center(

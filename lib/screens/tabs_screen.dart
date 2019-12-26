@@ -62,50 +62,48 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: FutureBuilder(
-        future: _fetchQuotesFuture,
-        builder: (ctx, snapshot) =>
-            snapshot.connectionState != ConnectionState.done
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Scaffold(
-                    body: _pages[_selectedPageIndex],
-                    bottomNavigationBar: GradientNavigationBar(
-                      onTap: _selectPage,
-                      gradient: LinearGradient(
-                        colors: [
-                          Theme.of(context).primaryColor,
-                          Theme.of(context).accentColor,
-                        ],
-                      ),
-                      currentIndex: _selectedPageIndex,
-                      backgroundColor: Theme.of(context).buttonColor,
-                      iconColor: Theme.of(context).primaryColor,
-                      labelColor: Theme.of(context).primaryColor,
-                      selectedIconColor:
-                          Theme.of(context).backgroundColor.withBlue(220),
-                      selectedLabelColor:
-                          Theme.of(context).backgroundColor.withBlue(220),
-                      showLabel: true,
-                      items: [
-                        TabInfo(
-                          icon: Icons.settings,
-                          label: 'Settings',
-                        ),
-                        TabInfo(
-                          icon: DumplingIcon.dumpling,
-                          label: 'Dumpling',
-                        ),
-                        TabInfo(
-                          icon: Icons.book,
-                          label: 'Collection',
-                        ),
+    return FutureBuilder(
+      future: _fetchQuotesFuture,
+      builder: (ctx, snapshot) =>
+          snapshot.connectionState != ConnectionState.done && _isInit
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Scaffold(
+                  body: _pages[_selectedPageIndex],
+                  bottomNavigationBar: GradientNavigationBar(
+                    onTap: _selectPage,
+                    gradient: LinearGradient(
+                      colors: [
+                        Theme.of(context).primaryColor,
+                        Theme.of(context).accentColor,
                       ],
                     ),
+                    currentIndex: _selectedPageIndex,
+                    backgroundColor: Theme.of(context).buttonColor,
+                    iconColor: Theme.of(context).primaryColor,
+                    labelColor: Theme.of(context).primaryColor,
+                    selectedIconColor:
+                        Theme.of(context).backgroundColor.withBlue(220),
+                    selectedLabelColor:
+                        Theme.of(context).backgroundColor.withBlue(220),
+                    showLabel: true,
+                    items: [
+                      TabInfo(
+                        icon: Icons.settings,
+                        label: 'Settings',
+                      ),
+                      TabInfo(
+                        icon: DumplingIcon.dumpling,
+                        label: 'Dumpling',
+                      ),
+                      TabInfo(
+                        icon: Icons.book,
+                        label: 'Collection',
+                      ),
+                    ],
                   ),
-      ),
+                ),
     );
   }
 }
