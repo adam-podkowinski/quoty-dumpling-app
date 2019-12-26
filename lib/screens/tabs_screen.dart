@@ -28,6 +28,8 @@ class _TabsScreenState extends State<TabsScreen> {
 
   var _dumplingProvider;
 
+  var _fetchQuotesFuture;
+
   void _selectPage(int index) {
     if (index != 1) _dumplingProvider.notifyIsFullStateChanged();
     setState(() {
@@ -36,12 +38,19 @@ class _TabsScreenState extends State<TabsScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _fetchQuotesFuture =
+        Provider.of<Quotes>(context, listen: false).fetchQuotes();
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
       SizeConfig().init(context);
-      Provider.of<Quotes>(context).fetchQuotes();
       _dumplingProvider = Provider.of<DumplingProvider>(context);
+      _isInit = false;
     }
     if (_dumplingProvider.goToCollectionScreen) {
       setState(() {
@@ -49,45 +58,53 @@ class _TabsScreenState extends State<TabsScreen> {
       });
       _dumplingProvider.changeGoToCollectionScreen(false);
     }
-    _isInit = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return SafeArea(
-      child: Scaffold(
-        body: _pages[_selectedPageIndex],
-        bottomNavigationBar: GradientNavigationBar(
-          onTap: _selectPage,
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).accentColor,
-            ],
-          ),
-          currentIndex: _selectedPageIndex,
-          backgroundColor: Theme.of(context).buttonColor,
-          iconColor: Theme.of(context).primaryColor,
-          labelColor: Theme.of(context).primaryColor,
-          selectedIconColor: Theme.of(context).backgroundColor.withBlue(220),
-          selectedLabelColor: Theme.of(context).backgroundColor.withBlue(220),
-          showLabel: true,
-          items: [
-            TabInfo(
-              icon: Icons.settings,
-              label: 'Settings',
-            ),
-            TabInfo(
-              icon: DumplingIcon.dumpling,
-              label: 'Dumpling',
-            ),
-            TabInfo(
-              icon: Icons.book,
-              label: 'Collection',
-            ),
-          ],
-        ),
+      child: FutureBuilder(
+        future: _fetchQuotesFuture,
+        builder: (ctx, snapshot) =>
+            snapshot.connectionState != ConnectionState.done
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Scaffold(
+                    body: _pages[_selectedPageIndex],
+                    bottomNavigationBar: GradientNavigationBar(
+                      onTap: _selectPage,
+                      gradient: LinearGradient(
+                        colors: [
+                          Theme.of(context).primaryColor,
+                          Theme.of(context).accentColor,
+                        ],
+                      ),
+                      currentIndex: _selectedPageIndex,
+                      backgroundColor: Theme.of(context).buttonColor,
+                      iconColor: Theme.of(context).primaryColor,
+                      labelColor: Theme.of(context).primaryColor,
+                      selectedIconColor:
+                          Theme.of(context).backgroundColor.withBlue(220),
+                      selectedLabelColor:
+                          Theme.of(context).backgroundColor.withBlue(220),
+                      showLabel: true,
+                      items: [
+                        TabInfo(
+                          icon: Icons.settings,
+                          label: 'Settings',
+                        ),
+                        TabInfo(
+                          icon: DumplingIcon.dumpling,
+                          label: 'Dumpling',
+                        ),
+                        TabInfo(
+                          icon: Icons.book,
+                          label: 'Collection',
+                        ),
+                      ],
+                    ),
+                  ),
       ),
     );
   }

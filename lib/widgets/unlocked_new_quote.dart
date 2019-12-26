@@ -16,7 +16,7 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
     with SingleTickerProviderStateMixin {
   Animation _newQuoteSlideAnimation;
   AnimationController _controller;
-  Quote _newQuote;
+  var _newQuote;
 
   @override
   void initState() {
@@ -46,18 +46,8 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
   @override
   void dispose() {
     super.dispose();
+    _newQuote = null;
     _controller.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    //AnimatedCrossFade runs initState of this widget only once, but we wanna to by runned every time when we unlock a new quote
-    if (_controller.isDismissed) {
-      _newQuote =
-          Provider.of<Quotes>(context, listen: false).unlockRandomQuote();
-      _controller.forward();
-    }
   }
 
   @override
@@ -70,7 +60,7 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
               ? SizeConfig.screenWidth * .2
               : SizeConfig.screenWidth,
         ),
-        duration: Duration(milliseconds: 200),
+        duration: Duration(milliseconds: 300),
         width: SizeConfig.screenWidth * .9,
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
@@ -224,7 +214,6 @@ class NewQuoteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(50),
       ),

@@ -50,9 +50,7 @@ class _DumplingState extends State<Dumpling> {
           _dumplingProvider.clickedOnDumpling();
         },
         child: ColorFiltered(
-          // color: Colors.black,
           colorFilter: ColorFilter.mode(
-            // Color.fromRGBO(255, 246, 200, 1),
             Theme.of(context).backgroundColor.withRed(255),
             BlendMode.modulate,
           ),
@@ -69,10 +67,11 @@ class _DumplingState extends State<Dumpling> {
 class DumplingScreenWhileClicking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      Dumpling(),
-      ProgressBar(),
-      SizedBox(height: SizeConfig.screenHeight * 0.066),
-    ]);
+    return Column(
+      children: <Widget>[
+        Dumpling(),
+        ProgressBar(),
+      ],
+    );
   }
 }

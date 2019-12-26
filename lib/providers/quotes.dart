@@ -28,11 +28,11 @@ class Quotes extends ChangeNotifier {
             author: e['quoteAuthor'],
             isFavorite: false,
             isInCollection: false,
-            rarity: index <= contents.length * .25
+            rarity: index <= (contents.length - 1) * .25
                 ? Rarities.COMMON
-                : index <= contents.length * .50
+                : index <= (contents.length - 1) * .50
                     ? Rarities.RARE
-                    : index <= contents.length * .75
+                    : index <= (contents.length - 1) * .75
                         ? Rarities.EPIC
                         : Rarities.LEGENDARY,
           ),
@@ -42,8 +42,14 @@ class Quotes extends ChangeNotifier {
   }
 
   Quote unlockRandomQuote() {
-    int index = Random().nextInt(_items.length);
-    return _items[index];
+    if (_items.length > 0) {
+      int index = Random().nextInt(_items.length - 1);
+      return _items[index];
+    } else
+      return Quote(
+        author: '',
+        quote: '',
+      );
   }
 
   String rarityText(Rarities rarity) {

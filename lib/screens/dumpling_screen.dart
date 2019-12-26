@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
 import 'package:quoty_dumpling_app/widgets/dumpling.dart';
@@ -78,14 +79,11 @@ class _DumplingScreenState extends State<DumplingScreen>
             CustomAppBar(),
             FadeTransition(
               opacity: _initAnimation,
-              child: AnimatedCrossFade(
-                firstCurve: Curves.ease,
+              child: AnimatedSwitcher(
                 duration: Duration(milliseconds: 300),
-                crossFadeState: _dumplingProvider.isFull
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                firstChild: DumplingScreenWhileClicking(),
-                secondChild: UnlockedNewQuote(),
+                child: _dumplingProvider.isFull
+                    ? UnlockedNewQuote()
+                    : DumplingScreenWhileClicking(),
               ),
             ),
             SizedBox(),
