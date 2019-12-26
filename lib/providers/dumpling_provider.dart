@@ -8,9 +8,6 @@ class DumplingProvider extends ChangeNotifier {
   //if progress bar status is equal to 1 (full)
   var _isFull = false;
 
-  // //is dumpling hidden or shown. Should NOT use _isFull for this operations because after unlocking new quote  _isFull automatically changes to false but we want to show UnlockedNewQuote widget first and then show dumpling
-  // var _isFullState = false;
-
   var _goToCollectionScreen = false;
 
   bool get goToCollectionScreen {
@@ -24,10 +21,6 @@ class DumplingProvider extends ChangeNotifier {
   bool get isFull {
     return _isFull;
   }
-
-  // bool get isFullState {
-  //   return _isFullState;
-  // }
 
   void clearClickingProgressWhenFull() {
     Future.delayed(
