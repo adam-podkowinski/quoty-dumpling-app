@@ -76,7 +76,7 @@ class _DumplingScreenState extends State<DumplingScreen>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            CustomAppBar(),
+            CustomAppBar('Dumpling'),
             FadeTransition(
               opacity: _initAnimation,
               child: AnimatedSwitcher(

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 
 class CustomAppBar extends StatelessWidget {
+  final title;
+
+  CustomAppBar(this.title);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +27,7 @@ class CustomAppBar extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          'Dumpling!',
+          title,
           style: Theme.of(context).appBarTheme.textTheme.title,
         ),
       ),

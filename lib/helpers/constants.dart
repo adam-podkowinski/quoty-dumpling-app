@@ -55,6 +55,23 @@ TextStyle kButtonTextStyle(double screenWidth) {
   );
 }
 
+OutlineInputBorder kSearchBarBorder = OutlineInputBorder(
+  borderSide: BorderSide(
+    color: mainTheme.buttonColor,
+    width: 4,
+  ),
+  borderRadius: BorderRadius.all(
+    Radius.circular(25.0),
+  ),
+);
+
+TextStyle kSearchBarTextStyle(double screenWidth) {
+  return TextStyle(
+    color: mainTheme.backgroundColor,
+    fontSize: screenWidth * 0.05,
+  );
+}
+
 final rareColor = Colors.amber;
 final epicColor = Colors.purpleAccent;
 final legendaryColor = Colors.yellow;
