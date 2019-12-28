@@ -26,12 +26,14 @@ class _TabsScreenState extends State<TabsScreen> {
 
   var _isInit = true;
 
-  var _dumplingProvider;
-
   var _fetchQuotesFuture;
 
+  var _dumplingProvider;
+
   void _selectPage(int index) {
-    if (index != 1) _dumplingProvider.notifyIsFullStateChanged();
+    if (index != 1)
+      Provider.of<DumplingProvider>(context, listen: false)
+          .notifyIsFullStateChanged();
     setState(() {
       _selectedPageIndex = index;
     });
@@ -84,9 +86,9 @@ class _TabsScreenState extends State<TabsScreen> {
                     iconColor: Theme.of(context).primaryColor,
                     labelColor: Theme.of(context).primaryColor,
                     selectedIconColor:
-                        Theme.of(context).backgroundColor.withBlue(220),
+                        Theme.of(context).appBarTheme.textTheme.title.color,
                     selectedLabelColor:
-                        Theme.of(context).backgroundColor.withBlue(220),
+                        Theme.of(context).appBarTheme.textTheme.title.color,
                     showLabel: true,
                     items: [
                       TabInfo(
