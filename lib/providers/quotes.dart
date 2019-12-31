@@ -27,7 +27,7 @@ class Quotes extends ChangeNotifier {
             quote: e['quoteText'],
             author: e['quoteAuthor'],
             isFavorite: false,
-            isInCollection: false,
+            isInCollection: true,
             rarity: index <= (contents.length - 1) * .25
                 ? Rarities.COMMON
                 : index <= (contents.length - 1) * .50

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/providers/collection.dart';
+import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
 import 'package:quoty_dumpling_app/widgets/search_bar.dart';
 
@@ -8,6 +11,14 @@ class CollectionScreen extends StatefulWidget {
 }
 
 class _CollectionScreenState extends State<CollectionScreen> {
+  var _collectionProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _collectionProvider = Provider.of<Collection>(context, listen: false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,14 +35,18 @@ class _CollectionScreenState extends State<CollectionScreen> {
           ),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             CustomAppBar('Collection'),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                SearchBar(),
-              ],
+            IntrinsicHeight(child: SearchBar()),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (ctx, index) => Text(
+                  Provider.of<Quotes>(context).items[0].quote,
+                ),
+              ),
             ),
           ],
         ),

@@ -5,29 +5,27 @@ import 'package:quoty_dumpling_app/helpers/size_config.dart';
 class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.screenWidth * 0.03,
-          vertical: SizeConfig.screenWidth * 0.05,
-        ),
-        child: TextField(
-          onChanged: (value) {},
-          style: kSearchBarTextStyle(SizeConfig.screenWidth),
-          decoration: InputDecoration(
-            labelText: "Search",
-            hintText: "Author or quote...",
-            prefixIcon: Icon(
-              Icons.search,
-              color: Theme.of(context).backgroundColor,
-              size: SizeConfig.screenWidth * 0.07,
-            ),
-            hintStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
-            labelStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
-            enabled: true,
-            focusedBorder: kSearchBarBorder,
-            enabledBorder: kSearchBarBorder,
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: SizeConfig.screenWidth * 0.03,
+        vertical: SizeConfig.screenWidth * 0.05,
+      ),
+      child: TextField(
+        onChanged: (value) {},
+        style: kSearchBarTextStyle(SizeConfig.screenWidth),
+        decoration: InputDecoration(
+          labelText: "Search",
+          hintText: "Author or quote...",
+          prefixIcon: Icon(
+            Icons.search,
+            color: Theme.of(context).backgroundColor,
+            size: SizeConfig.screenWidth * 0.07,
           ),
+          hintStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
+          labelStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
+          enabled: true,
+          focusedBorder: kSearchBarBorder,
+          enabledBorder: kSearchBarBorder,
         ),
       ),
     );
