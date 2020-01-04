@@ -11,8 +11,8 @@ enum Rarities {
 class Quote {
   final quote;
   final author;
-  final isInCollection;
-  final isFavorite;
+  var isInCollection;
+  var isFavorite;
   final rarity;
 
   Quote({

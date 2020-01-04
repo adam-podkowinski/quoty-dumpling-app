@@ -6,7 +6,6 @@ import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
-import 'package:quoty_dumpling_app/screens/tabs_screen.dart';
 
 class UnlockedNewQuote extends StatefulWidget {
   @override
@@ -47,7 +46,6 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
   @override
   void dispose() {
     super.dispose();
-    _newQuote = null;
     _controller.dispose();
   }
 

@@ -57,8 +57,8 @@ class _TabsScreenState extends State<TabsScreen> {
     if (_dumplingProvider.goToCollectionScreen) {
       setState(() {
         _selectedPageIndex = 2;
+        _dumplingProvider.changeGoToCollectionScreen(false);
       });
-      _dumplingProvider.changeGoToCollectionScreen(false);
     }
   }
 

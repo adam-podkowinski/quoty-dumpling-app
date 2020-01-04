@@ -27,7 +27,7 @@ class Quotes extends ChangeNotifier {
             quote: e['quoteText'],
             author: e['quoteAuthor'],
             isFavorite: false,
-            isInCollection: true,
+            isInCollection: false,
             rarity: index <= (contents.length - 1) * .25
                 ? Rarities.COMMON
                 : index <= (contents.length - 1) * .50
@@ -39,11 +39,13 @@ class Quotes extends ChangeNotifier {
         );
       },
     );
+    notifyListeners();
   }
 
   Quote unlockRandomQuote() {
     if (_items.length > 0) {
       int index = Random().nextInt(_items.length - 1);
+      _items[index].isInCollection = true;
       return _items[index];
     } else
       return Quote(

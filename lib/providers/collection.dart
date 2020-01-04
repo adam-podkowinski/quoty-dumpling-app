@@ -3,6 +3,13 @@ import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
 
 class Collection extends ChangeNotifier {
+  final Quotes _quotesProvider;
+
+  Collection(this._quotesProvider) {
+    if (this._quotesProvider != null) if (this._quotesProvider.items.length >=
+        0) fetchUnlockedItems();
+  }
+
   List<Quote> _unlockedItems = [];
 
   List<Quote> get unlockedItems {
@@ -10,10 +17,12 @@ class Collection extends ChangeNotifier {
   }
 
   void fetchUnlockedItems() {
+    print('collection fetch');
+
     _unlockedItems.clear();
     _unlockedItems.addAll(
-      Quotes().items.isNotEmpty
-          ? Quotes().items.where((item) => item.isInCollection == true)
+      _quotesProvider.items.isNotEmpty
+          ? _quotesProvider.items.where((item) => item.isInCollection == true)
           : [
               Quote(
                 author: '',
@@ -25,6 +34,5 @@ class Collection extends ChangeNotifier {
               ),
             ],
     );
-    print(_unlockedItems[0].quote);
   }
 }
