@@ -13,7 +13,8 @@ class Quote {
   final author;
   var isInCollection;
   var isFavorite;
-  final rarity;
+  DateTime unlockingTime;
+  final Rarities rarity;
 
   Quote({
     this.quote,

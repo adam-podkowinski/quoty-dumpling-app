@@ -39,13 +39,15 @@ class Quotes extends ChangeNotifier {
         );
       },
     );
-    notifyListeners();
   }
 
   Quote unlockRandomQuote() {
     if (_items.length > 0) {
       int index = Random().nextInt(_items.length - 1);
       _items[index].isInCollection = true;
+      _items[index].unlockingTime = DateTime.now();
+      notifyListeners();
+
       return _items[index];
     } else
       return Quote(
