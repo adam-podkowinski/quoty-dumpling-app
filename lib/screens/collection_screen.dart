@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
+import 'package:quoty_dumpling_app/widgets/collection_grid.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
 import 'package:quoty_dumpling_app/widgets/search_bar.dart';
 
@@ -12,24 +13,21 @@ class CollectionScreen extends StatefulWidget {
 
 class _CollectionScreenState extends State<CollectionScreen> {
   Quotes _quotesProvider;
-  List<Quote> _unlockedQuotes = [];
 
   @override
   void initState() {
     super.initState();
     _quotesProvider = Provider.of<Quotes>(context, listen: false);
-    _unlockedQuotes =
-        _quotesProvider.items.where((e) => e.isUnlocked == true).toList();
 
-    //sort by time first LESS IMPORTANT THAN BY RARITY
-    _unlockedQuotes.sort(
-      (a, b) =>
-          a.unlockingTime.millisecond.compareTo(b.unlockingTime.millisecond),
-    );
-    //then sort by rarity MORE IMPORTANT THAN BY TIME
-    _unlockedQuotes.sort(
-      (a, b) => a.rarity.index.compareTo(b.rarity.index),
-    );
+    // //sort by time first LESS IMPORTANT THAN BY RARITY
+    // _quotesProvider.unlockedQuotes.sort(
+    //   (a, b) =>
+    //       a.unlockingTime.millisecond.compareTo(b.unlockingTime.millisecond),
+    // );
+    // //then sort by rarity MORE IMPORTANT THAN BY TIME
+    // _quotesProvider.unlockedQuotes.sort(
+    //   (a, b) => a.rarity.index.compareTo(b.rarity.index),
+    // );
   }
 
   @override
@@ -52,7 +50,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
-          children: _unlockedQuotes.length <= 0
+          children: _quotesProvider.unlockedQuotes.length <= 0
               ? <Widget>[
                   CustomAppBar('Collection'),
                   NothingInCollectionWidget(),
@@ -60,23 +58,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
               : <Widget>[
                   CustomAppBar('Collection'),
                   SearchBar(),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: _unlockedQuotes.length,
-                      itemBuilder: (ctx, index) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text(_unlockedQuotes[index].rarityText()),
-                          Text(
-                            _unlockedQuotes[index]
-                                .unlockingTime
-                                .millisecond
-                                .toString(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  CollectionGrid(),
                 ],
         ),
       ),

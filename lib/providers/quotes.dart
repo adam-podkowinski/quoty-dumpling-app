@@ -7,10 +7,20 @@ import 'package:flutter/services.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 
 class Quotes extends ChangeNotifier {
-  List<Quote> _items = [];
+  List<Quote> _quotes = [];
+  List<Quote> _unlockedQuotes = [];
+  List<Quote> _quotesToUnlock = [];
 
-  List<Quote> get items {
-    return [..._items];
+  List<Quote> get quotes {
+    return [..._quotes];
+  }
+
+  List<Quote> get unlockedQuotes {
+    return [..._unlockedQuotes];
+  }
+
+  List<Quote> get quotesToUnlock {
+    return [..._quotesToUnlock];
   }
 
   Future<void> fetchQuotes() async {
@@ -19,10 +29,10 @@ class Quotes extends ChangeNotifier {
     contents = jsonDecode(
       utf8.decode(contentsB.buffer.asUint8List(), allowMalformed: true),
     );
-    _items.clear();
+    _quotes.clear();
     contents.forEach(
       (e) {
-        _items.add(
+        _quotes.add(
           Quote(
             quote: e['quoteText'],
             author: e['quoteAuthor'],
@@ -33,13 +43,21 @@ class Quotes extends ChangeNotifier {
         );
       },
     );
+    _unlockedQuotes.addAll(
+      _quotes.where((e) => e.isUnlocked == true),
+    );
+    _quotesToUnlock.addAll(
+      _quotes.where((e) => e.isUnlocked != true),
+    );
   }
 
   Quote unlockRandomQuote() {
-    if (_items.length > 0) {
-      int index = Random().nextInt(_items.length - 1);
-      _items[index].unlockThisQuote();
-      return _items[index];
+    if (_quotes.length > 0) {
+      int index = Random().nextInt(_quotesToUnlock.length - 1);
+      _quotesToUnlock[index].unlockThisQuote();
+      _unlockedQuotes.add(_quotesToUnlock[index]);
+      _quotesToUnlock.remove(_quotesToUnlock[index]);
+      return _quotesToUnlock[index];
     } else
       return Quote(
         author: 'No quotes loaded',

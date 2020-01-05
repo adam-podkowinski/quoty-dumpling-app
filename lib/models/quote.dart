@@ -22,6 +22,7 @@ class Quote {
     this.isUnlocked,
     this.isFavorite,
     this.rarity,
+    this.unlockingTime,
   });
 
   Color rarityColor(BuildContext context) {

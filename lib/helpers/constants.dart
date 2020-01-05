@@ -4,6 +4,7 @@ var mainTheme = ThemeData.light().copyWith(
   primaryColor: Color(0xffFFA259),
   accentColor: Color(0xffFF7860),
   buttonColor: Color(0xffFED766),
+  secondaryHeaderColor: Color(0xff91bd3a),
   backgroundColor: Color(0xffFFEBCC),
   appBarTheme: AppBarTheme(
     textTheme: TextTheme(
