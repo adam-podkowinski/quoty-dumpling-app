@@ -146,7 +146,9 @@ class CardContent extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 20),
+        SizedBox(
+          height: SizeConfig.screenWidth * .04,
+        ),
         //Quote content and author
         Text(
           newQuote.quote,
@@ -154,7 +156,7 @@ class CardContent extends StatelessWidget {
           textAlign: TextAlign.justify,
         ),
         SizedBox(
-          height: 20,
+          height: SizeConfig.screenWidth * .04,
         ),
         FittedBox(
           child: Text(
@@ -216,6 +218,7 @@ class NewQuoteButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(50),
       ),
+      elevation: 3,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(50),
