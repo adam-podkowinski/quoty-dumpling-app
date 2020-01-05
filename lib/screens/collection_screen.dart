@@ -19,14 +19,14 @@ class _CollectionScreenState extends State<CollectionScreen> {
     super.initState();
     _quotesProvider = Provider.of<Quotes>(context, listen: false);
     _unlockedQuotes =
-        _quotesProvider.items.where((e) => e.isInCollection == true).toList();
+        _quotesProvider.items.where((e) => e.isUnlocked == true).toList();
 
-    //sort by time first
+    //sort by time first LESS IMPORTANT THAN BY RARITY
     _unlockedQuotes.sort(
       (a, b) =>
           a.unlockingTime.millisecond.compareTo(b.unlockingTime.millisecond),
     );
-    //then sort by rarity
+    //then sort by rarity MORE IMPORTANT THAN BY TIME
     _unlockedQuotes.sort(
       (a, b) => a.rarity.index.compareTo(b.rarity.index),
     );
@@ -59,18 +59,14 @@ class _CollectionScreenState extends State<CollectionScreen> {
                 ]
               : <Widget>[
                   CustomAppBar('Collection'),
-                  IntrinsicHeight(child: SearchBar()),
+                  SearchBar(),
                   Expanded(
                     child: ListView.builder(
                       itemCount: _unlockedQuotes.length,
                       itemBuilder: (ctx, index) => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          Text(
-                            _quotesProvider.rarityText(
-                              _unlockedQuotes[index].rarity,
-                            ),
-                          ),
+                          Text(_unlockedQuotes[index].rarityText()),
                           Text(
                             _unlockedQuotes[index]
                                 .unlockingTime

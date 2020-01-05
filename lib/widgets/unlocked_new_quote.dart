@@ -118,7 +118,7 @@ class CardContent extends StatelessWidget {
               Stack(
                 children: <Widget>[
                   Text(
-                    '${Provider.of<Quotes>(context).rarityText(newQuote.rarity)} ',
+                    '${newQuote.rarityText()} ',
                     style: kTitleStyle(SizeConfig.screenWidth).copyWith(
                       fontFamily: 'Pacifico',
                       fontStyle: FontStyle.italic,
@@ -129,7 +129,7 @@ class CardContent extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${Provider.of<Quotes>(context).rarityText(newQuote.rarity)} ',
+                    '${newQuote.rarityText()} ',
                     style: kTitleStyle(SizeConfig.screenWidth).copyWith(
                       fontFamily: 'Pacifico',
                       fontStyle: FontStyle.italic,

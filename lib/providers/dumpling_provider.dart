@@ -42,7 +42,6 @@ class DumplingProvider extends ChangeNotifier {
 
   void changeGoToCollectionScreen(bool val) {
     _goToCollectionScreen = val;
-    notifyListeners();
   }
 
   void notifyIsFullStateChanged() {

@@ -11,7 +11,7 @@ enum Rarities {
 class Quote {
   final quote;
   final author;
-  var isInCollection;
+  var isUnlocked;
   var isFavorite;
   DateTime unlockingTime;
   final Rarities rarity;
@@ -19,7 +19,7 @@ class Quote {
   Quote({
     this.quote,
     this.author,
-    this.isInCollection,
+    this.isUnlocked,
     this.isFavorite,
     this.rarity,
   });
@@ -38,5 +38,42 @@ class Quote {
       default:
         return legendaryColor;
     }
+  }
+
+  String rarityText() {
+    switch (rarity) {
+      case Rarities.COMMON:
+        return 'Common';
+        break;
+      case Rarities.RARE:
+        return 'Rare';
+        break;
+      case Rarities.EPIC:
+        return 'Epic';
+        break;
+      default:
+        return 'Legendary';
+    }
+  }
+
+  static Rarities getRarityByText(String rarityText) {
+    switch (rarityText) {
+      case 'common':
+        return Rarities.COMMON;
+        break;
+      case 'rare':
+        return Rarities.RARE;
+        break;
+      case 'epic':
+        return Rarities.EPIC;
+        break;
+      default:
+        return Rarities.LEGENDARY;
+    }
+  }
+
+  void unlockThisQuote() {
+    isUnlocked = true;
+    unlockingTime = DateTime.now();
   }
 }
