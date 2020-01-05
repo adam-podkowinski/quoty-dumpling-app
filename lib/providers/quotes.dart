@@ -55,9 +55,10 @@ class Quotes extends ChangeNotifier {
     if (_quotes.length > 0) {
       int index = Random().nextInt(_quotesToUnlock.length - 1);
       _quotesToUnlock[index].unlockThisQuote();
+      Quote unlockedQuote = _quotesToUnlock[index];
       _unlockedQuotes.add(_quotesToUnlock[index]);
       _quotesToUnlock.remove(_quotesToUnlock[index]);
-      return _quotesToUnlock[index];
+      return unlockedQuote;
     } else
       return Quote(
         author: 'No quotes loaded',
