@@ -7,9 +7,11 @@ class SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.screenWidth * 0.03,
-          vertical: SizeConfig.screenWidth * 0.05,
+        padding: EdgeInsets.fromLTRB(
+          SizeConfig.screenWidth * 0.03,
+          SizeConfig.screenWidth * 0.05,
+          SizeConfig.screenWidth * 0.03,
+          0,
         ),
         child: TextField(
           onChanged: (value) {},
