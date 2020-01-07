@@ -55,6 +55,7 @@ class GridCell extends StatelessWidget {
                   maxLines: 7,
                   style: TextStyle(
                     fontFamily: 'Lato',
+                    fontSize: 17,
                     color: Theme.of(context).textTheme.title.color,
                   ),
                 ),
