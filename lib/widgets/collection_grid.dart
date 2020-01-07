@@ -25,14 +25,30 @@ class CollectionGrid extends StatelessWidget {
   }
 }
 
-class GridCell extends StatelessWidget {
+class GridCell extends StatefulWidget {
   final int index;
   GridCell(this.index);
 
   @override
+  _GridCellState createState() => _GridCellState();
+}
+
+class _GridCellState extends State<GridCell> {
+  var _isInit = true;
+
+  var quote;
+
+  final heartColor = Color(0xfffa4252);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit)
+      quote = Provider.of<Quotes>(context).unlockedQuotes[widget.index];
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(SizeConfig.screenWidth);
-    final quote = Provider.of<Quotes>(context).unlockedQuotes[index];
     return Card(
       elevation: 5,
       shape: RoundedRectangleBorder(
@@ -75,8 +91,12 @@ class GridCell extends StatelessWidget {
             ),
             child: GridTileBar(
               leading: InkWell(
+                onTap: () => setState(
+                  () => quote.changeFavorite(),
+                ),
                 child: Icon(
-                  Icons.favorite,
+                  quote.isFavorite ? Icons.favorite : Icons.favorite_border,
+                  color: heartColor,
                 ),
               ),
               title: Text(

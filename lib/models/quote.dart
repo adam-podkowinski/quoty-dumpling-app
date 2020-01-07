@@ -77,4 +77,8 @@ class Quote {
     isUnlocked = true;
     unlockingTime = DateTime.now();
   }
+
+  void changeFavorite() {
+    isFavorite = !isFavorite;
+  }
 }
