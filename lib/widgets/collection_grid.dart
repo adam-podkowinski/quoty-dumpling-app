@@ -31,6 +31,7 @@ class GridCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(SizeConfig.screenWidth);
     final quote = Provider.of<Quotes>(context).unlockedQuotes[index];
     return Card(
       elevation: 5,
@@ -55,36 +56,47 @@ class GridCell extends StatelessWidget {
                   maxLines: 7,
                   style: TextStyle(
                     fontFamily: 'Lato',
-                    fontSize: 17,
+                    fontSize: SizeConfig.screenWidth * 0.04328,
                     color: Theme.of(context).textTheme.title.color,
                   ),
                 ),
               ),
             ),
           ),
-          GridTileBar(
-            leading: InkWell(
-              child: Icon(
-                Icons.favorite,
-              ),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: quote.rarityColor(context).withOpacity(.8),
+                  blurRadius: 99,
+                  spreadRadius: 10,
+                ),
+              ],
             ),
-            title: Text(
-              quote.author == '' ? 'Unknown' : quote.author,
-              style: TextStyle(
-                fontFamily: 'Lato',
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).textTheme.title.color,
+            child: GridTileBar(
+              leading: InkWell(
+                child: Icon(
+                  Icons.favorite,
+                ),
               ),
-            ),
-            subtitle: Text(
-              quote.rarityText(),
-              style: TextStyle(
-                fontStyle: FontStyle.italic,
-                fontFamily: 'Lato',
-                color: Theme.of(context).textTheme.title.color,
+              title: Text(
+                quote.author == '' ? 'Unknown' : quote.author,
+                style: TextStyle(
+                  fontFamily: 'Lato',
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).textTheme.title.color,
+                ),
               ),
+              subtitle: Text(
+                quote.rarityText(),
+                style: TextStyle(
+                  fontStyle: FontStyle.italic,
+                  fontFamily: 'Lato',
+                  color: Theme.of(context).textTheme.title.color,
+                ),
+              ),
+              backgroundColor: quote.rarityColor(context),
             ),
-            backgroundColor: quote.rarityColor(context),
           ),
         ],
       ),
