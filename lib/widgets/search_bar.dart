@@ -10,6 +10,18 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   final TextEditingController _controller = TextEditingController();
 
+  var _isClearButtonVisible = false;
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   if (_controller.text != '') {
+  //     setState(() {
+  //       _isClearButtonVisible = true;
+  //     });
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(
@@ -22,7 +34,11 @@ class _SearchBarState extends State<SearchBar> {
         ),
         child: TextField(
           onChanged: (value) {
-            setState(() {});
+            setState(() {
+              if (_controller.text != '') {
+                _isClearButtonVisible = true;
+              }
+            });
           },
           style: kSearchBarTextStyle(SizeConfig.screenWidth),
           controller: _controller,
@@ -35,19 +51,24 @@ class _SearchBarState extends State<SearchBar> {
               size: SizeConfig.screenWidth * 0.07,
             ),
             suffixIcon: AnimatedOpacity(
-              duration: Duration(milliseconds: 250),
+              duration: Duration(milliseconds: 200),
               opacity: _controller.text != '' ? 1 : 0,
-              child: _controller.text != ''
-                  ? InkWell(
-                      child: Icon(
-                        Icons.cancel,
-                        color: Colors.white,
-                      ),
-                      onTap: () => setState(
+              child: GestureDetector(
+                child: Icon(
+                  Icons.cancel,
+                  color: Theme.of(context).backgroundColor,
+                ),
+                onTap: () {
+                  if (_controller.text != '') {
+                    //error which is a flutter's fault... have to use this kind of workaround
+                    WidgetsBinding.instance.addPostFrameCallback(
+                      (_) => setState(
                         () => _controller.clear(),
                       ),
-                    )
-                  : null,
+                    );
+                  }
+                },
+              ),
             ),
             hintStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
             labelStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
