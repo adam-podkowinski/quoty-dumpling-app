@@ -10,6 +10,9 @@ class Quotes extends ChangeNotifier {
   List<Quote> _quotes = [];
   List<Quote> _unlockedQuotes = [];
   List<Quote> _quotesToUnlock = [];
+  var _raritySortingMoreImportant = true;
+  var _sortFromNewest = true;
+  var _sortByRarityDescending = false;
 
   List<Quote> get quotes {
     return [..._quotes];
@@ -52,6 +55,37 @@ class Quotes extends ChangeNotifier {
     _quotesToUnlock.addAll(
       _quotes.where((e) => e.isUnlocked != true),
     );
+  }
+
+  void _sortCollectionByRarity() {
+    _sortByRarityDescending
+        ? _unlockedQuotes.sort(
+            (a, b) => b.rarity.index.compareTo(a.rarity.index),
+          )
+        : _unlockedQuotes.sort(
+            (a, b) => a.rarity.index.compareTo(b.rarity.index),
+          );
+  }
+
+  void _sortCollectionByUnlockingDate() {
+    _sortFromNewest
+        ? _unlockedQuotes.sort(
+            (a, b) => b.unlockingTime.compareTo(a.unlockingTime),
+          )
+        : _unlockedQuotes.sort(
+            (a, b) => a.unlockingTime.compareTo(b.unlockingTime),
+          );
+  }
+
+  void sortCollection() {
+    if (_raritySortingMoreImportant) {
+      _sortCollectionByUnlockingDate();
+      _sortCollectionByRarity();
+    } else {
+      _sortCollectionByRarity();
+      _sortCollectionByUnlockingDate();
+    }
+    // notifyListeners();
   }
 
   Quote unlockRandomQuote() {

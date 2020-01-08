@@ -7,6 +7,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 class CollectionGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Provider.of<Quotes>(context).sortCollection();
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -17,7 +18,8 @@ class CollectionGrid extends StatelessWidget {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
           ),
-          itemCount: Provider.of<Quotes>(context).unlockedQuotes.length,
+          itemCount:
+              Provider.of<Quotes>(context, listen: false).unlockedQuotes.length,
           itemBuilder: (ctx, index) => GridCell(index),
         ),
       ),
@@ -34,17 +36,17 @@ class GridCell extends StatefulWidget {
 }
 
 class _GridCellState extends State<GridCell> {
-  var _isInit = true;
+  // var _isInit = true;
 
   var quote;
 
   final heartColor = Color(0xfffa4252);
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit)
-      quote = Provider.of<Quotes>(context).unlockedQuotes[widget.index];
+  void initState() {
+    super.initState();
+    quote = Provider.of<Quotes>(context, listen: false)
+        .unlockedQuotes[widget.index];
   }
 
   @override
@@ -83,7 +85,7 @@ class _GridCellState extends State<GridCell> {
             decoration: BoxDecoration(
               boxShadow: <BoxShadow>[
                 BoxShadow(
-                  color: quote.rarityColor(context).withOpacity(.8),
+                  color: quote.rarityColor(context).withOpacity(.7),
                   blurRadius: 99,
                   spreadRadius: 10,
                 ),
