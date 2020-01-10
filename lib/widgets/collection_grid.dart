@@ -37,8 +37,6 @@ class GridCell extends StatefulWidget {
 }
 
 class _GridCellState extends State<GridCell> {
-  // var _isInit = true;
-
   var quote;
 
   final heartColor = Color(0xfffa4252);
@@ -52,8 +50,8 @@ class _GridCellState extends State<GridCell> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimationConfiguration.synchronized(
-      duration: Duration(milliseconds: 250),
+    return SlideAnimation(
+      verticalOffset: 50.0,
       child: FadeInAnimation(
         child: Card(
           elevation: 5,

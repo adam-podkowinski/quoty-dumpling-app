@@ -21,6 +21,7 @@ class _SearchBarState extends State<SearchBar> {
           0,
         ),
         child: TextField(
+          autofocus: false,
           onChanged: (value) {
             setState(() {
               if (_controller.text != '') {}
@@ -49,7 +50,10 @@ class _SearchBarState extends State<SearchBar> {
                     //error which is a flutter's fault... have to use this kind of workaround
                     WidgetsBinding.instance.addPostFrameCallback(
                       (_) => setState(
-                        () => _controller.clear(),
+                        () {
+                          _controller.clear();
+                          FocusScope.of(context).unfocus();
+                        },
                       ),
                     );
                   }
