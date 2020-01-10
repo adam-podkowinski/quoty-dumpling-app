@@ -9,9 +9,11 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
+    print(10 / SizeConfig.screenWidth);
     return IntrinsicHeight(
       child: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -20,51 +22,57 @@ class _SearchBarState extends State<SearchBar> {
           SizeConfig.screenWidth * 0.03,
           0,
         ),
-        child: TextField(
-          autofocus: false,
-          onChanged: (value) {
-            setState(() {
-              if (_controller.text != '') {}
-            });
-          },
-          style: kSearchBarTextStyle(SizeConfig.screenWidth),
-          controller: _controller,
-          decoration: InputDecoration(
-            labelText: "Search",
-            hintText: "Author or quote...",
-            prefixIcon: Icon(
-              Icons.search,
-              color: Theme.of(context).backgroundColor,
-              size: SizeConfig.screenWidth * 0.07,
-            ),
-            suffixIcon: AnimatedOpacity(
-              duration: Duration(milliseconds: 200),
-              opacity: _controller.text != '' ? 1 : 0,
-              child: GestureDetector(
-                child: Icon(
-                  Icons.cancel,
+        //Use stack instead of suffix in textField because if you click on suffix it is opening keyboard
+        child: Stack(
+          alignment: Alignment.centerRight,
+          children: <Widget>[
+            TextField(
+              onChanged: (value) {
+                setState(() {});
+              },
+              style: kSearchBarTextStyle(SizeConfig.screenWidth),
+              controller: _controller,
+              focusNode: _focusNode,
+              decoration: InputDecoration(
+                labelText: "Search",
+                hintText: "Author or quote...",
+                prefixIcon: Icon(
+                  Icons.search,
                   color: Theme.of(context).backgroundColor,
+                  size: SizeConfig.screenWidth * 0.07,
                 ),
-                onTap: () {
-                  if (_controller.text != '') {
-                    //error which is a flutter's fault... have to use this kind of workaround
-                    WidgetsBinding.instance.addPostFrameCallback(
-                      (_) => setState(
-                        () {
-                          _controller.clear();
-                          FocusScope.of(context).unfocus();
-                        },
-                      ),
-                    );
-                  }
-                },
+                hintStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
+                labelStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
+                focusedBorder: kSearchBarBorder,
+                enabledBorder: kSearchBarBorder,
               ),
             ),
-            hintStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
-            labelStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
-            focusedBorder: kSearchBarBorder,
-            enabledBorder: kSearchBarBorder,
-          ),
+            Positioned(
+              right: SizeConfig.screenWidth * .02546296,
+              child: AnimatedOpacity(
+                duration: Duration(milliseconds: 200),
+                opacity: _controller.text != '' ? 1 : 0,
+                child: GestureDetector(
+                  child: Icon(
+                    Icons.cancel,
+                    color: Theme.of(context).backgroundColor,
+                  ),
+                  onTap: () {
+                    if (_controller.text != '') {
+                      //error which is a flutter's fault... have to use this kind of workaround
+                      WidgetsBinding.instance.addPostFrameCallback(
+                        (_) => setState(
+                          () {
+                            _controller.clear();
+                          },
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
