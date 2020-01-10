@@ -10,18 +10,6 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   final TextEditingController _controller = TextEditingController();
 
-  var _isClearButtonVisible = false;
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   if (_controller.text != '') {
-  //     setState(() {
-  //       _isClearButtonVisible = true;
-  //     });
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(
@@ -35,9 +23,7 @@ class _SearchBarState extends State<SearchBar> {
         child: TextField(
           onChanged: (value) {
             setState(() {
-              if (_controller.text != '') {
-                _isClearButtonVisible = true;
-              }
+              if (_controller.text != '') {}
             });
           },
           style: kSearchBarTextStyle(SizeConfig.screenWidth),

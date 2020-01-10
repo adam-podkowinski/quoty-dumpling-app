@@ -40,10 +40,10 @@ class Quotes extends ChangeNotifier {
             quote: e['quoteText'],
             author: e['quoteAuthor'],
             isFavorite: false,
-            isUnlocked: false,
+            // isUnlocked: false,
+            isUnlocked: true,
             rarity: Quote.getRarityByText(e['rarity']),
-            // isUnlocked: true,
-            // unlockingTime: DateTime.now(),
+            unlockingTime: DateTime.now(),
             // rarity: Rarities.EPIC
           ),
         );
