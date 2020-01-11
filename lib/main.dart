@@ -19,10 +19,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Quotes(),
         ),
-        // ChangeNotifierProxyProvider<Quotes, Collection>(
-        //   create: (context) => Collection(null),
-        //   update: (context, quotes, _) => Collection(quotes),
-        // ),
       ],
       child: MaterialApp(
         title: 'Quoty Dumpling!',

@@ -85,7 +85,6 @@ class Quotes extends ChangeNotifier {
       _sortCollectionByRarity();
       _sortCollectionByUnlockingDate();
     }
-    // notifyListeners();
   }
 
   Quote unlockRandomQuote() {

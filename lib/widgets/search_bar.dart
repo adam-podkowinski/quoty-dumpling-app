@@ -13,67 +13,57 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    print(10 / SizeConfig.screenWidth);
-    return IntrinsicHeight(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(
-          SizeConfig.screenWidth * 0.03,
-          SizeConfig.screenWidth * 0.05,
-          SizeConfig.screenWidth * 0.03,
-          0,
-        ),
-        //Use stack instead of suffix in textField because if you click on suffix it is opening keyboard
-        child: Stack(
-          alignment: Alignment.centerRight,
-          children: <Widget>[
-            TextField(
-              onChanged: (value) {
-                setState(() {});
-              },
-              style: kSearchBarTextStyle(SizeConfig.screenWidth),
-              controller: _controller,
-              focusNode: _focusNode,
-              decoration: InputDecoration(
-                labelText: "Search",
-                hintText: "Author or quote...",
-                prefixIcon: Icon(
-                  Icons.search,
+    return Expanded(
+      child: Stack(
+        alignment: Alignment.centerRight,
+        children: <Widget>[
+          TextField(
+            onChanged: (value) {
+              setState(() {});
+            },
+            style: kSearchBarTextStyle(SizeConfig.screenWidth),
+            controller: _controller,
+            focusNode: _focusNode,
+            decoration: InputDecoration(
+              labelText: "Search",
+              hintText: "Author or quote...",
+              prefixIcon: Icon(
+                Icons.search,
+                color: Theme.of(context).backgroundColor,
+                size: SizeConfig.screenWidth * 0.07,
+              ),
+              hintStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
+              labelStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
+              focusedBorder: kSearchBarBorder,
+              enabledBorder: kSearchBarBorder,
+            ),
+          ),
+          Positioned(
+            right: SizeConfig.screenWidth * .02546296,
+            child: AnimatedOpacity(
+              duration: Duration(milliseconds: 200),
+              opacity: _controller.text != '' ? 1 : 0,
+              child: GestureDetector(
+                child: Icon(
+                  Icons.cancel,
                   color: Theme.of(context).backgroundColor,
-                  size: SizeConfig.screenWidth * 0.07,
                 ),
-                hintStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
-                labelStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
-                focusedBorder: kSearchBarBorder,
-                enabledBorder: kSearchBarBorder,
+                onTap: () {
+                  if (_controller.text != '') {
+                    //error which is a flutter's fault... have to use this kind of workaround
+                    WidgetsBinding.instance.addPostFrameCallback(
+                      (_) => setState(
+                        () {
+                          _controller.clear();
+                        },
+                      ),
+                    );
+                  }
+                },
               ),
             ),
-            Positioned(
-              right: SizeConfig.screenWidth * .02546296,
-              child: AnimatedOpacity(
-                duration: Duration(milliseconds: 200),
-                opacity: _controller.text != '' ? 1 : 0,
-                child: GestureDetector(
-                  child: Icon(
-                    Icons.cancel,
-                    color: Theme.of(context).backgroundColor,
-                  ),
-                  onTap: () {
-                    if (_controller.text != '') {
-                      //error which is a flutter's fault... have to use this kind of workaround
-                      WidgetsBinding.instance.addPostFrameCallback(
-                        (_) => setState(
-                          () {
-                            _controller.clear();
-                          },
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
