@@ -56,6 +56,14 @@ TextStyle kButtonTextStyle(double screenWidth) {
   );
 }
 
+TextStyle kCommonTextStyle(double screenWidth) {
+  return TextStyle(
+    fontFamily: 'Lato',
+    color: kTitleStyle(screenWidth).color,
+    fontSize: screenWidth * 0.04,
+  );
+}
+
 OutlineInputBorder kSearchBarBorder = OutlineInputBorder(
   borderSide: BorderSide(
     color: mainTheme.buttonColor,
