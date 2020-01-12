@@ -42,6 +42,9 @@ class _SettingsDialogState extends State<SettingsDialog> {
 
   @override
   Widget build(BuildContext context) {
+    print(SizeConfig.screenHeight);
+    print(SizeConfig.screenWidth);
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(_padding),
@@ -65,6 +68,12 @@ class _SettingsDialogState extends State<SettingsDialog> {
                 ),
               ),
             ),
+            Divider(
+              color: Theme.of(context).accentColor,
+              thickness: 2,
+              endIndent: SizeConfig.screenWidth * .05092,
+              indent: SizeConfig.screenWidth * .05092,
+            ),
             SizedBox(
               height: SizeConfig.screenHeight * .01,
             ),
@@ -84,7 +93,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
             ),
             Divider(
               color: Theme.of(context).accentColor,
-              thickness: 1,
+              thickness: .75,
             ),
             CheckboxListTile(
               activeColor: Theme.of(context).accentColor,
@@ -96,7 +105,62 @@ class _SettingsDialogState extends State<SettingsDialog> {
                 style: kButtonTextStyle(SizeConfig.screenWidth),
               ),
             ),
+            Divider(
+              color: Theme.of(context).accentColor,
+              thickness: .75,
+            ),
+            Row(
+              children: <Widget>[
+                Spacer(),
+                SettingsButton(
+                  text: 'Save',
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  color: Theme.of(context).secondaryHeaderColor,
+                ),
+                Spacer(),
+                SettingsButton(
+                  text: 'Cancel',
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  color: Theme.of(context).errorColor,
+                ),
+                Spacer(),
+              ],
+            ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class SettingsButton extends StatelessWidget {
+  final Function onPressed;
+  final String text;
+  final Color color;
+
+  SettingsButton({
+    this.onPressed,
+    this.text,
+    this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      onPressed: onPressed,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(SizeConfig.screenWidth * .05092),
+      ),
+      color: color,
+      textColor: Theme.of(context).backgroundColor,
+      child: SizedBox(
+        width: SizeConfig.screenWidth * .2546,
+        child: Center(
+          child: Text(text),
         ),
       ),
     );
