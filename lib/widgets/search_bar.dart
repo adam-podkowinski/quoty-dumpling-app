@@ -9,7 +9,12 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   final TextEditingController _controller = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +28,8 @@ class _SearchBarState extends State<SearchBar> {
             },
             style: kSearchBarTextStyle(SizeConfig.screenWidth),
             controller: _controller,
-            focusNode: _focusNode,
             decoration: InputDecoration(
+              suffix: Icon(null),
               labelText: "Search",
               hintText: "Author or quote...",
               prefixIcon: Icon(
@@ -50,6 +55,7 @@ class _SearchBarState extends State<SearchBar> {
                 ),
                 onTap: () {
                   if (_controller.text != '') {
+                    FocusScope.of(context).unfocus();
                     //error which is a flutter's fault... have to use this kind of workaround
                     WidgetsBinding.instance.addPostFrameCallback(
                       (_) => setState(
