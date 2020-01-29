@@ -5,14 +5,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
+import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart'
+    show SortEnum;
 
 class Quotes extends ChangeNotifier {
   List<Quote> _quotes = [];
   List<Quote> _unlockedQuotes = [];
   List<Quote> _quotesToUnlock = [];
-  var _raritySortingMoreImportant = true;
-  var _sortFromNewest = true;
-  var _sortByRarityDescending = false;
+  SortEnum _sortOption = SortEnum.RARITY_DESCENDING;
 
   List<Quote> get quotes {
     return [..._quotes];
@@ -57,33 +57,32 @@ class Quotes extends ChangeNotifier {
     );
   }
 
-  void _sortCollectionByRarity() {
-    _sortByRarityDescending
-        ? _unlockedQuotes.sort(
-            (a, b) => b.rarity.index.compareTo(a.rarity.index),
-          )
-        : _unlockedQuotes.sort(
-            (a, b) => a.rarity.index.compareTo(b.rarity.index),
-          );
-  }
-
-  void _sortCollectionByUnlockingDate() {
-    _sortFromNewest
-        ? _unlockedQuotes.sort(
-            (a, b) => b.unlockingTime.compareTo(a.unlockingTime),
-          )
-        : _unlockedQuotes.sort(
-            (a, b) => a.unlockingTime.compareTo(b.unlockingTime),
-          );
+  void updateSortOptions(SortEnum option) {
+    _sortOption = option;
   }
 
   void sortCollection() {
-    if (_raritySortingMoreImportant) {
-      _sortCollectionByUnlockingDate();
-      _sortCollectionByRarity();
-    } else {
-      _sortCollectionByRarity();
-      _sortCollectionByUnlockingDate();
+    switch (_sortOption) {
+      case SortEnum.NEWEST:
+        _unlockedQuotes.sort(
+          (a, b) => b.unlockingTime.compareTo(a.unlockingTime),
+        );
+        break;
+      case SortEnum.OLDEST:
+        _unlockedQuotes.sort(
+          (a, b) => a.unlockingTime.compareTo(b.unlockingTime),
+        );
+        break;
+      case SortEnum.RARITY:
+        _unlockedQuotes.sort(
+          (a, b) => a.unlockingTime.compareTo(b.unlockingTime),
+        );
+        break;
+      default:
+        _unlockedQuotes.sort(
+          (a, b) => b.unlockingTime.compareTo(a.unlockingTime),
+        );
+        break;
     }
   }
 

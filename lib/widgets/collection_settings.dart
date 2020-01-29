@@ -29,15 +29,12 @@ class SettingsDialog extends StatefulWidget {
 class _SettingsDialogState extends State<SettingsDialog> {
   final _padding = SizeConfig.screenWidth * .035;
   var _collectionSettingsProvider;
-  var _isInit = true;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      _collectionSettingsProvider = Provider.of<CollectionSettings>(context);
-      _isInit = false;
-    }
+  void initState() {
+    super.initState();
+    _collectionSettingsProvider = Provider.of<CollectionSettings>(context);
+    _collectionSettingsProvider.initOptions();
   }
 
   @override
@@ -112,6 +109,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
                 SettingsButton(
                   text: 'Save',
                   onPressed: () {
+                    _collectionSettingsProvider.saveOptions(context);
                     Navigator.of(context).pop();
                   },
                   color: Theme.of(context).secondaryHeaderColor,
@@ -120,6 +118,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
                 SettingsButton(
                   text: 'Cancel',
                   onPressed: () {
+                    _collectionSettingsProvider.cancelOptions();
                     Navigator.of(context).pop();
                   },
                   color: Theme.of(context).errorColor,
@@ -203,7 +202,7 @@ class _ListElementState extends State<ListElement> {
       child: RadioListTile(
         value: widget.value,
         activeColor: Theme.of(context).accentColor,
-        groupValue: collectionSettingsProvider.selectedValue,
+        groupValue: collectionSettingsProvider.selectedOption.index,
         onChanged: (val) => collectionSettingsProvider.changeSelectedVal(val),
         title: Text(
           title,

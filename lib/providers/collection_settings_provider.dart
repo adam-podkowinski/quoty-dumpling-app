@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart' show BuildContext;
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/providers/quotes.dart';
 
 enum SortEnum {
   RARITY,
@@ -8,14 +11,31 @@ enum SortEnum {
 }
 
 class CollectionSettings extends ChangeNotifier {
-  int _selectedValue = 0;
-  int get selectedValue {
-    return _selectedValue;
+  SortEnum _selectedOption = SortEnum.RARITY_DESCENDING;
+  SortEnum get selectedOption {
+    return _selectedOption;
   }
 
   bool _showOnlyFavorite = false;
   bool get showOnlyFavorite {
     return _showOnlyFavorite;
+  }
+
+  Map<String, dynamic> _previousOptions = {};
+
+  void initOptions() {
+    _previousOptions['selectedOption'] = _selectedOption;
+    _previousOptions['showOnlyFavorite'] = _showOnlyFavorite;
+  }
+
+  void cancelOptions() {
+    _selectedOption = _previousOptions['selectedOption'];
+    _showOnlyFavorite = _previousOptions['showOnlyFavorite'];
+  }
+
+  void saveOptions(BuildContext context) {
+    Provider.of<Quotes>(context).updateSortOptions(_selectedOption);
+    Provider.of<Quotes>(context).sortCollection();
   }
 
   void changeShowOnlyFavorite(bool val) {
@@ -24,7 +44,7 @@ class CollectionSettings extends ChangeNotifier {
   }
 
   void changeSelectedVal(int n) {
-    _selectedValue = n;
+    _selectedOption = SortEnum.values[n];
     notifyListeners();
   }
 

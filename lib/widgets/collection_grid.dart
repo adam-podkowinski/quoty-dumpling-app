@@ -38,14 +38,17 @@ class GridCell extends StatefulWidget {
 
 class _GridCellState extends State<GridCell> {
   var quote;
+  var _isInit = true;
 
   final heartColor = Color(0xfffa4252);
 
   @override
-  void initState() {
-    super.initState();
-    quote = Provider.of<Quotes>(context, listen: false)
-        .unlockedQuotes[widget.index];
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      quote = Provider.of<Quotes>(context).unlockedQuotes[widget.index];
+      _isInit = false;
+    }
   }
 
   @override
