@@ -82,8 +82,10 @@ class Quotes extends ChangeNotifier {
         _unlockedQuotes.sort(
           (a, b) => b.unlockingTime.compareTo(a.unlockingTime),
         );
-        break;
     }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 
   Quote unlockRandomQuote() {

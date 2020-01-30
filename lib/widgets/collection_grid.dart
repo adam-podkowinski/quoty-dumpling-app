@@ -8,7 +8,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 class CollectionGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Provider.of<Quotes>(context).sortCollection();
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -19,8 +18,7 @@ class CollectionGrid extends StatelessWidget {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
           ),
-          itemCount:
-              Provider.of<Quotes>(context, listen: false).unlockedQuotes.length,
+          itemCount: Provider.of<Quotes>(context).unlockedQuotes.length,
           itemBuilder: (ctx, index) => GridCell(index),
         ),
       ),
@@ -37,7 +35,7 @@ class GridCell extends StatefulWidget {
 }
 
 class _GridCellState extends State<GridCell> {
-  var quote;
+  var quotesProvider;
   var _isInit = true;
 
   final heartColor = Color(0xfffa4252);
@@ -46,7 +44,7 @@ class _GridCellState extends State<GridCell> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
-      quote = Provider.of<Quotes>(context).unlockedQuotes[widget.index];
+      quotesProvider = Provider.of<Quotes>(context);
       _isInit = false;
     }
   }
@@ -75,7 +73,7 @@ class _GridCellState extends State<GridCell> {
                   color: Theme.of(context).backgroundColor,
                   child: Center(
                     child: AutoSizeText(
-                      quote.quote,
+                      quotesProvider.unlockedQuotes[widget.index].quote,
                       textAlign: TextAlign.center,
                       maxLines: 7,
                       style: TextStyle(
@@ -91,7 +89,9 @@ class _GridCellState extends State<GridCell> {
                 decoration: BoxDecoration(
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                      color: quote.rarityColor(context).withOpacity(.7),
+                      color: quotesProvider.unlockedQuotes[widget.index]
+                          .rarityColor(context)
+                          .withOpacity(.7),
                       blurRadius: 99,
                       spreadRadius: 10,
                     ),
@@ -100,15 +100,20 @@ class _GridCellState extends State<GridCell> {
                 child: GridTileBar(
                   leading: InkWell(
                     onTap: () => setState(
-                      () => quote.changeFavorite(),
+                      () => quotesProvider.unlockedQuotes[widget.index]
+                          .changeFavorite(),
                     ),
                     child: Icon(
-                      quote.isFavorite ? Icons.favorite : Icons.favorite_border,
+                      quotesProvider.unlockedQuotes[widget.index].isFavorite
+                          ? Icons.favorite
+                          : Icons.favorite_border,
                       color: heartColor,
                     ),
                   ),
                   title: Text(
-                    quote.author == '' ? 'Unknown' : quote.author,
+                    quotesProvider.unlockedQuotes[widget.index].author == ''
+                        ? 'Unknown'
+                        : quotesProvider.unlockedQuotes[widget.index].author,
                     style: TextStyle(
                       fontFamily: 'Lato',
                       fontWeight: FontWeight.bold,
@@ -116,14 +121,15 @@ class _GridCellState extends State<GridCell> {
                     ),
                   ),
                   subtitle: Text(
-                    quote.rarityText(),
+                    quotesProvider.unlockedQuotes[widget.index].rarityText(),
                     style: TextStyle(
                       fontStyle: FontStyle.italic,
                       fontFamily: 'Lato',
                       color: Theme.of(context).textTheme.title.color,
                     ),
                   ),
-                  backgroundColor: quote.rarityColor(context),
+                  backgroundColor: quotesProvider.unlockedQuotes[widget.index]
+                      .rarityColor(context),
                 ),
               ),
             ],

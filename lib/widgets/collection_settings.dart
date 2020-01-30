@@ -33,7 +33,8 @@ class _SettingsDialogState extends State<SettingsDialog> {
   @override
   void initState() {
     super.initState();
-    _collectionSettingsProvider = Provider.of<CollectionSettings>(context);
+    _collectionSettingsProvider =
+        Provider.of<CollectionSettings>(context, listen: false);
     _collectionSettingsProvider.initOptions();
   }
 
