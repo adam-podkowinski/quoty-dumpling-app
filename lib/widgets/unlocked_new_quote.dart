@@ -6,6 +6,7 @@ import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
+import 'package:quoty_dumpling_app/widgets/dumpling.dart';
 
 class UnlockedNewQuote extends StatefulWidget {
   @override
@@ -96,6 +97,7 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
 class CardContent extends StatelessWidget {
   final Quote newQuote;
   final AnimationController controller;
+  DumplingProvider _dumplingProvider;
   CardContent({
     @required this.newQuote,
     @required this.controller,
@@ -103,6 +105,7 @@ class CardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _dumplingProvider = Provider.of<DumplingProvider>(context, listen: false);
     return Column(
       children: <Widget>[
         //title
@@ -175,8 +178,7 @@ class CardContent extends StatelessWidget {
               rarityColor: newQuote.rarityColor(context),
               textContent: 'Eat more!',
               onTap: () {
-                Provider.of<DumplingProvider>(context, listen: false)
-                    .notifyIsFullStateChanged();
+                _dumplingProvider.notifyIsFullStateChanged();
                 controller.reverse();
               },
             ),
@@ -185,10 +187,8 @@ class CardContent extends StatelessWidget {
                 textContent: 'Go to collection!',
                 onTap: () {
                   controller.reverse().then((_) {
-                    Provider.of<DumplingProvider>(context)
-                        .notifyIsFullStateChanged();
-                    Provider.of<DumplingProvider>(context)
-                        .changeGoToCollectionScreen(true);
+                    _dumplingProvider.notifyIsFullStateChanged();
+                    _dumplingProvider.changeGoToCollectionScreen(true);
                   });
                 }),
           ],

@@ -18,7 +18,8 @@ class CollectionGrid extends StatelessWidget {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
           ),
-          itemCount: Provider.of<Quotes>(context).unlockedQuotes.length,
+          itemCount:
+              Provider.of<Quotes>(context, listen: false).unlockedQuotes.length,
           itemBuilder: (ctx, index) => GridCell(index),
         ),
       ),

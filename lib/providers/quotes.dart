@@ -75,12 +75,12 @@ class Quotes extends ChangeNotifier {
         break;
       case SortEnum.RARITY:
         _unlockedQuotes.sort(
-          (a, b) => a.unlockingTime.compareTo(b.unlockingTime),
+          (a, b) => a.rarity.index.compareTo(b.rarity.index),
         );
         break;
       default:
         _unlockedQuotes.sort(
-          (a, b) => b.unlockingTime.compareTo(a.unlockingTime),
+          (a, b) => b.rarity.index.compareTo(a.rarity.index),
         );
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
