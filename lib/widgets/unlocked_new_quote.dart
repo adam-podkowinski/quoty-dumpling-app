@@ -6,7 +6,6 @@ import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
-import 'package:quoty_dumpling_app/widgets/dumpling.dart';
 
 class UnlockedNewQuote extends StatefulWidget {
   @override
@@ -152,6 +151,7 @@ class CardContent extends StatelessWidget {
         SizedBox(
           height: SizeConfig.screenWidth * .04,
         ),
+
         //Quote content and author
         Text(
           newQuote.quote,
@@ -167,6 +167,7 @@ class CardContent extends StatelessWidget {
             style: kAuthorStyle(SizeConfig.screenWidth),
           ),
         ),
+
         //Buttons
         SizedBox(
           height: SizeConfig.screenWidth * .04,
@@ -183,14 +184,15 @@ class CardContent extends StatelessWidget {
               },
             ),
             NewQuoteButton(
-                rarityColor: newQuote.rarityColor(context),
-                textContent: 'Go to collection!',
-                onTap: () {
-                  controller.reverse().then((_) {
-                    _dumplingProvider.notifyIsFullStateChanged();
-                    _dumplingProvider.changeGoToCollectionScreen(true);
-                  });
-                }),
+              rarityColor: newQuote.rarityColor(context),
+              textContent: 'Go to collection!',
+              onTap: () {
+                controller.reverse().then((_) {
+                  _dumplingProvider.notifyIsFullStateChanged();
+                  _dumplingProvider.changeGoToCollectionScreen(true);
+                });
+              },
+            ),
           ],
         ),
         SizedBox(

@@ -29,13 +29,16 @@ class SettingsDialog extends StatefulWidget {
 class _SettingsDialogState extends State<SettingsDialog> {
   final _padding = SizeConfig.screenWidth * .035;
   var _collectionSettingsProvider;
+  var _isInit = true;
 
   @override
-  void initState() {
-    super.initState();
-    _collectionSettingsProvider =
-        Provider.of<CollectionSettings>(context, listen: false);
-    _collectionSettingsProvider.initOptions();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      _collectionSettingsProvider = Provider.of<CollectionSettings>(context);
+      _collectionSettingsProvider.initOptions();
+      _isInit = false;
+    }
   }
 
   @override
