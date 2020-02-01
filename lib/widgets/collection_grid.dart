@@ -18,8 +18,7 @@ class CollectionGrid extends StatelessWidget {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
           ),
-          itemCount:
-              Provider.of<Quotes>(context, listen: false).unlockedQuotes.length,
+          itemCount: Provider.of<Quotes>(context).visibleQuotes.length,
           itemBuilder: (ctx, index) => GridCell(index),
         ),
       ),
@@ -74,7 +73,7 @@ class _GridCellState extends State<GridCell> {
                   color: Theme.of(context).backgroundColor,
                   child: Center(
                     child: AutoSizeText(
-                      quotesProvider.unlockedQuotes[widget.index].quote,
+                      quotesProvider.visibleQuotes[widget.index].quote,
                       textAlign: TextAlign.center,
                       maxLines: 7,
                       style: TextStyle(
@@ -90,7 +89,7 @@ class _GridCellState extends State<GridCell> {
                 decoration: BoxDecoration(
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                      color: quotesProvider.unlockedQuotes[widget.index]
+                      color: quotesProvider.visibleQuotes[widget.index]
                           .rarityColor(context)
                           .withOpacity(.7),
                       blurRadius: 99,
@@ -100,21 +99,24 @@ class _GridCellState extends State<GridCell> {
                 ),
                 child: GridTileBar(
                   leading: InkWell(
-                    onTap: () => setState(
-                      () => quotesProvider.unlockedQuotes[widget.index]
-                          .changeFavorite(),
-                    ),
+                    onTap: () => setState(() {
+                      quotesProvider.visibleQuotes[widget.index]
+                          .changeFavorite();
+                      WidgetsBinding.instance.addPostFrameCallback(
+                        (_) => quotesProvider.checkFavorite(),
+                      );
+                    }),
                     child: Icon(
-                      quotesProvider.unlockedQuotes[widget.index].isFavorite
+                      quotesProvider.visibleQuotes[widget.index].isFavorite
                           ? Icons.favorite
                           : Icons.favorite_border,
                       color: heartColor,
                     ),
                   ),
                   title: Text(
-                    quotesProvider.unlockedQuotes[widget.index].author == ''
+                    quotesProvider.visibleQuotes[widget.index].author == ''
                         ? 'Unknown'
-                        : quotesProvider.unlockedQuotes[widget.index].author,
+                        : quotesProvider.visibleQuotes[widget.index].author,
                     style: TextStyle(
                       fontFamily: 'Lato',
                       fontWeight: FontWeight.bold,
@@ -122,14 +124,14 @@ class _GridCellState extends State<GridCell> {
                     ),
                   ),
                   subtitle: Text(
-                    quotesProvider.unlockedQuotes[widget.index].rarityText(),
+                    quotesProvider.visibleQuotes[widget.index].rarityText(),
                     style: TextStyle(
                       fontStyle: FontStyle.italic,
                       fontFamily: 'Lato',
                       color: Theme.of(context).textTheme.title.color,
                     ),
                   ),
-                  backgroundColor: quotesProvider.unlockedQuotes[widget.index]
+                  backgroundColor: quotesProvider.visibleQuotes[widget.index]
                       .rarityColor(context),
                 ),
               ),

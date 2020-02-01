@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
 import 'package:gradient_nav_bar/gradient_nav_bar.dart';
 import 'package:gradient_nav_bar/model/tab_info.dart';
-import 'package:provider/provider.dart';
+
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/dumpling_icon_icons.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
-
 import 'package:quoty_dumpling_app/screens/collection_screen.dart';
 import 'package:quoty_dumpling_app/screens/dumpling_screen.dart';
 

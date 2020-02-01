@@ -19,8 +19,8 @@ class Quote {
   Quote({
     this.quote,
     this.author,
-    this.isUnlocked,
-    this.isFavorite,
+    this.isUnlocked = false,
+    this.isFavorite = false,
     this.rarity,
     this.unlockingTime,
   });

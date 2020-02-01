@@ -10,9 +10,16 @@ import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart'
 
 class Quotes extends ChangeNotifier {
   List<Quote> _quotes = [];
+  List<Quote> _visibleQuotes = [];
   List<Quote> _unlockedQuotes = [];
   List<Quote> _quotesToUnlock = [];
   SortEnum _sortOption = SortEnum.RARITY_DESCENDING;
+  var _showOnlyFavorite = false;
+  var _noFavoritesWhenShowingThem = false;
+
+  bool get noFavoritesWhenShowingThem {
+    return _noFavoritesWhenShowingThem;
+  }
 
   List<Quote> get quotes {
     return [..._quotes];
@@ -20,6 +27,10 @@ class Quotes extends ChangeNotifier {
 
   List<Quote> get unlockedQuotes {
     return [..._unlockedQuotes];
+  }
+
+  List<Quote> get visibleQuotes {
+    return [..._visibleQuotes];
   }
 
   List<Quote> get quotesToUnlock {
@@ -39,9 +50,7 @@ class Quotes extends ChangeNotifier {
           Quote(
             quote: e['quoteText'],
             author: e['quoteAuthor'],
-            isFavorite: false,
             rarity: Quote.getRarityByText(e['rarity']),
-            isUnlocked: false,
             // isUnlocked: true,
             // unlockingTime: DateTime.now(),
             // rarity: Rarities.EPIC
@@ -55,31 +64,54 @@ class Quotes extends ChangeNotifier {
     _quotesToUnlock.addAll(
       _quotes.where((e) => e.isUnlocked != true),
     );
+    _visibleQuotes.addAll(_unlockedQuotes);
   }
 
-  void updateSortOptions(SortEnum option) {
+  void updateSortOptions(SortEnum option, bool showOnlyFavorite) {
     _sortOption = option;
+    _showOnlyFavorite = showOnlyFavorite;
+  }
+
+  bool checkFavorite() {
+    if (_showOnlyFavorite) {
+      if (_unlockedQuotes.any((e) => e.isFavorite)) {
+        _visibleQuotes = _unlockedQuotes.where((e) => e.isFavorite).toList();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          notifyListeners();
+        });
+      } else {
+        _noFavoritesWhenShowingThem = true;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          notifyListeners();
+        });
+        return false;
+      }
+    } else {
+      _visibleQuotes = _unlockedQuotes;
+    }
+    return true;
   }
 
   void sortCollection() {
+    if (!checkFavorite()) return;
     switch (_sortOption) {
       case SortEnum.NEWEST:
-        _unlockedQuotes.sort(
+        _visibleQuotes.sort(
           (a, b) => b.unlockingTime.compareTo(a.unlockingTime),
         );
         break;
       case SortEnum.OLDEST:
-        _unlockedQuotes.sort(
+        _visibleQuotes.sort(
           (a, b) => a.unlockingTime.compareTo(b.unlockingTime),
         );
         break;
       case SortEnum.RARITY:
-        _unlockedQuotes.sort(
+        _visibleQuotes.sort(
           (a, b) => a.rarity.index.compareTo(b.rarity.index),
         );
         break;
       default:
-        _unlockedQuotes.sort(
+        _visibleQuotes.sort(
           (a, b) => b.rarity.index.compareTo(a.rarity.index),
         );
     }

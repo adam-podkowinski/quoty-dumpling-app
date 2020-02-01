@@ -51,86 +51,89 @@ class _SettingsDialogState extends State<SettingsDialog> {
       backgroundColor: Theme.of(context).backgroundColor,
       child: Padding(
         padding: EdgeInsets.all(_padding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Align(
-              alignment: Alignment.center,
-              child: AutoSizeText(
-                'Customize Collection',
-                maxLines: 1,
-                textAlign: TextAlign.center,
-                style: kAuthorStyle(SizeConfig.screenWidth).copyWith(
-                  fontSize: SizeConfig.screenWidth * 0.065,
+        child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Align(
+                alignment: Alignment.center,
+                child: AutoSizeText(
+                  'Customize Collection',
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  style: kAuthorStyle(SizeConfig.screenWidth).copyWith(
+                    fontSize: SizeConfig.screenWidth * 0.065,
+                  ),
                 ),
               ),
-            ),
-            Divider(
-              color: Theme.of(context).accentColor,
-              thickness: 2,
-              endIndent: SizeConfig.screenWidth * .05092,
-              indent: SizeConfig.screenWidth * .05092,
-            ),
-            SizedBox(
-              height: SizeConfig.screenHeight * .01,
-            ),
-            Text(
-              'Sort:',
-              textAlign: TextAlign.left,
-              style: kButtonTextStyle(SizeConfig.screenWidth),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: _collectionSettingsProvider
-                  .titlesWithSubtitlesOfOptions.length,
-              itemBuilder: (_, i) => ListElement(
-                value: i,
+              Divider(
+                color: Theme.of(context).accentColor,
+                thickness: 2,
+                endIndent: SizeConfig.screenWidth * .05092,
+                indent: SizeConfig.screenWidth * .05092,
               ),
-            ),
-            Divider(
-              color: Theme.of(context).accentColor,
-              thickness: .75,
-            ),
-            CheckboxListTile(
-              activeColor: Theme.of(context).accentColor,
-              value: _collectionSettingsProvider.showOnlyFavorite,
-              onChanged: (val) =>
-                  _collectionSettingsProvider.changeShowOnlyFavorite(val),
-              title: Text(
-                'Show Only Favorite',
+              SizedBox(
+                height: SizeConfig.screenHeight * .01,
+              ),
+              Text(
+                'Sort:',
+                textAlign: TextAlign.left,
                 style: kButtonTextStyle(SizeConfig.screenWidth),
               ),
-            ),
-            Divider(
-              color: Theme.of(context).accentColor,
-              thickness: .75,
-            ),
-            Row(
-              children: <Widget>[
-                Spacer(),
-                SettingsButton(
-                  text: 'Save',
-                  onPressed: () {
-                    _collectionSettingsProvider.saveOptions(context);
-                    Navigator.of(context).pop();
-                  },
-                  color: Theme.of(context).secondaryHeaderColor,
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: _collectionSettingsProvider
+                    .titlesWithSubtitlesOfOptions.length,
+                itemBuilder: (_, i) => ListElement(
+                  value: i,
                 ),
-                Spacer(),
-                SettingsButton(
-                  text: 'Cancel',
-                  onPressed: () {
-                    _collectionSettingsProvider.cancelOptions();
-                    Navigator.of(context).pop();
-                  },
-                  color: Theme.of(context).errorColor,
+              ),
+              Divider(
+                color: Theme.of(context).accentColor,
+                thickness: .75,
+              ),
+              CheckboxListTile(
+                activeColor: Theme.of(context).accentColor,
+                value: _collectionSettingsProvider.showOnlyFavorite,
+                onChanged: (val) =>
+                    _collectionSettingsProvider.changeShowOnlyFavorite(val),
+                title: Text(
+                  'Show Only Favorite',
+                  style: kButtonTextStyle(SizeConfig.screenWidth),
                 ),
-                Spacer(),
-              ],
-            ),
-          ],
+              ),
+              Divider(
+                color: Theme.of(context).accentColor,
+                thickness: .75,
+              ),
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  SettingsButton(
+                    text: 'Save',
+                    onPressed: () {
+                      _collectionSettingsProvider.saveOptions(context);
+                      Navigator.of(context).pop();
+                    },
+                    color: Theme.of(context).secondaryHeaderColor,
+                  ),
+                  Spacer(),
+                  SettingsButton(
+                    text: 'Cancel',
+                    onPressed: () {
+                      _collectionSettingsProvider.cancelOptions();
+                      Navigator.of(context).pop();
+                    },
+                    color: Theme.of(context).errorColor,
+                  ),
+                  Spacer(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
