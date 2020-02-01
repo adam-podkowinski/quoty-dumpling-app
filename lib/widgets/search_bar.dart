@@ -55,15 +55,17 @@ class _SearchBarState extends State<SearchBar> {
                 ),
                 onTap: () {
                   if (_controller.text != '') {
-                    FocusScope.of(context).unfocus();
-                    //error which is a flutter's fault... have to use this kind of workaround
-                    WidgetsBinding.instance.addPostFrameCallback(
-                      (_) => setState(
-                        () {
-                          _controller.clear();
-                        },
-                      ),
-                    );
+                    setState(() {
+                      FocusScope.of(context).unfocus();
+                      //error which is a flutter's fault... have to use this kind of workaround
+                      WidgetsBinding.instance.addPostFrameCallback(
+                        (_) => setState(
+                          () {
+                            _controller.clear();
+                          },
+                        ),
+                      );
+                    });
                   }
                 },
               ),
