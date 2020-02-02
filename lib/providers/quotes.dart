@@ -79,10 +79,8 @@ class Quotes extends ChangeNotifier {
     _favoritesOnTop = showOnlyFavorite;
   }
 
-  void sortByFavorite(bool previousQuotesSetted) {
+  void sortByFavorite(bool isInitSort) {
     if (_favoritesOnTop) {
-      if (!previousQuotesSetted) _previousQuotes = [..._visibleQuotes];
-
       _visibleQuotes.sort((a, b) {
         int aNum = 0;
         int bNum = 0;
@@ -90,7 +88,7 @@ class Quotes extends ChangeNotifier {
         if (b.isFavorite) bNum = 1;
         return bNum.compareTo(aNum);
       });
-      initCollectionTilesToAnimate();
+      if (!isInitSort) initCollectionTilesToAnimate();
     }
   }
 
@@ -109,7 +107,7 @@ class Quotes extends ChangeNotifier {
     });
   }
 
-  void sortCollection() {
+  void sortCollection(bool isInitSort) {
     _previousQuotes = [..._visibleQuotes];
     switch (_sortOption) {
       case SortEnum.NEWEST:
@@ -132,8 +130,12 @@ class Quotes extends ChangeNotifier {
           (a, b) => b.rarity.index.compareTo(a.rarity.index),
         );
     }
-    sortByFavorite(true);
-    initCollectionTilesToAnimate();
+    sortByFavorite(isInitSort);
+    if (isInitSort) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
+    } else {
+      initCollectionTilesToAnimate();
+    }
   }
 
   Quote unlockRandomQuote() {

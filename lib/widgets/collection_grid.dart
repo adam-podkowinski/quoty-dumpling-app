@@ -130,7 +130,7 @@ class _GridCellState extends State<GridCell>
                       onTap: () => setState(() {
                         _quotesProvider.visibleQuotes[widget.index]
                             .changeFavorite();
-                        _quotesProvider.sortByFavorite(false);
+                        _quotesProvider.sortCollection(false);
                       }),
                       child: Icon(
                         _quotesProvider.visibleQuotes[widget.index].isFavorite

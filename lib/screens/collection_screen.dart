@@ -23,7 +23,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _quotesProvider.sortCollection();
+    _quotesProvider.sortCollection(true);
 
     return Scaffold(
       body: Container(

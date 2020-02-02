@@ -36,7 +36,7 @@ class CollectionSettings extends ChangeNotifier {
   void saveOptions(BuildContext context) {
     Provider.of<Quotes>(context, listen: false)
         .updateSortOptions(_selectedOption, _favoritesOnTop);
-    Provider.of<Quotes>(context, listen: false).sortCollection();
+    Provider.of<Quotes>(context, listen: false).sortCollection(false);
   }
 
   void changeFavoritesOnTop(bool val) {
