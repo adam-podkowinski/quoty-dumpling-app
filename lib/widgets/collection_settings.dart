@@ -99,11 +99,11 @@ class _SettingsDialogState extends State<SettingsDialog> {
               ),
               CheckboxListTile(
                 activeColor: Theme.of(context).accentColor,
-                value: _collectionSettingsProvider.showOnlyFavorite,
+                value: _collectionSettingsProvider.favoritesOnTop,
                 onChanged: (val) =>
-                    _collectionSettingsProvider.changeShowOnlyFavorite(val),
+                    _collectionSettingsProvider.changeFavoritesOnTop(val),
                 title: Text(
-                  'Show Only Favorite',
+                  'Show Favorites On Top',
                   style: kButtonTextStyle(SizeConfig.screenWidth),
                 ),
               ),

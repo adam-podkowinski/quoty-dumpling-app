@@ -16,31 +16,31 @@ class CollectionSettings extends ChangeNotifier {
     return _selectedOption;
   }
 
-  bool _showOnlyFavorite = false;
-  bool get showOnlyFavorite {
-    return _showOnlyFavorite;
+  bool _favoritesOnTop = false;
+  bool get favoritesOnTop {
+    return _favoritesOnTop;
   }
 
   Map<String, dynamic> _previousOptions = {};
 
   void initOptions() {
     _previousOptions['selectedOption'] = _selectedOption;
-    _previousOptions['showOnlyFavorite'] = _showOnlyFavorite;
+    _previousOptions['favoritesOnTop'] = _favoritesOnTop;
   }
 
   void cancelOptions() {
     _selectedOption = _previousOptions['selectedOption'];
-    _showOnlyFavorite = _previousOptions['showOnlyFavorite'];
+    _favoritesOnTop = _previousOptions['favoritesOnTop'];
   }
 
   void saveOptions(BuildContext context) {
     Provider.of<Quotes>(context, listen: false)
-        .updateSortOptions(_selectedOption, _showOnlyFavorite);
+        .updateSortOptions(_selectedOption, _favoritesOnTop);
     Provider.of<Quotes>(context, listen: false).sortCollection();
   }
 
-  void changeShowOnlyFavorite(bool val) {
-    _showOnlyFavorite = val;
+  void changeFavoritesOnTop(bool val) {
+    _favoritesOnTop = val;
     notifyListeners();
   }
 

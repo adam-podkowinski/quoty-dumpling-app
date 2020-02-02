@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
@@ -14,11 +15,10 @@ class Quotes extends ChangeNotifier {
   List<Quote> _unlockedQuotes = [];
   List<Quote> _quotesToUnlock = [];
   SortEnum _sortOption = SortEnum.RARITY_DESCENDING;
-  var _showOnlyFavorite = false;
-  var _noFavoritesWhenShowingThem = false;
-
-  bool get noFavoritesWhenShowingThem {
-    return _noFavoritesWhenShowingThem;
+  var _favoritesOnTop = false;
+  var _isCollectionLoading = false;
+  bool get isCollectionLoading {
+    return _isCollectionLoading;
   }
 
   List<Quote> get quotes {
@@ -69,31 +69,28 @@ class Quotes extends ChangeNotifier {
 
   void updateSortOptions(SortEnum option, bool showOnlyFavorite) {
     _sortOption = option;
-    _showOnlyFavorite = showOnlyFavorite;
+    _favoritesOnTop = showOnlyFavorite;
   }
 
-  bool checkFavorite() {
-    if (_showOnlyFavorite) {
-      if (_unlockedQuotes.any((e) => e.isFavorite)) {
-        _visibleQuotes = _unlockedQuotes.where((e) => e.isFavorite).toList();
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          notifyListeners();
-        });
-      } else {
-        _noFavoritesWhenShowingThem = true;
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          notifyListeners();
-        });
-        return false;
-      }
-    } else {
-      _visibleQuotes = _unlockedQuotes;
+  void sortByFavorite() {
+    if (_favoritesOnTop) {
+      _isCollectionLoading = true;
+      _visibleQuotes.sort((a, b) {
+        int aNum = 0;
+        int bNum = 0;
+        if (a.isFavorite) aNum = 1;
+        if (b.isFavorite) bNum = 1;
+        return bNum.compareTo(aNum);
+      });
     }
-    return true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
+    _isCollectionLoading = false;
   }
 
   void sortCollection() {
-    if (!checkFavorite()) return;
+    _isCollectionLoading = true;
     switch (_sortOption) {
       case SortEnum.NEWEST:
         _visibleQuotes.sort(
@@ -115,9 +112,7 @@ class Quotes extends ChangeNotifier {
           (a, b) => b.rarity.index.compareTo(a.rarity.index),
         );
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      notifyListeners();
-    });
+    sortByFavorite();
   }
 
   Quote unlockRandomQuote() {
@@ -126,6 +121,7 @@ class Quotes extends ChangeNotifier {
       _quotesToUnlock[index].unlockThisQuote();
       Quote unlockedQuote = _quotesToUnlock[index];
       _unlockedQuotes.add(_quotesToUnlock[index]);
+      _visibleQuotes.add(_quotesToUnlock[index]);
       _quotesToUnlock.remove(_quotesToUnlock[index]);
       return unlockedQuote;
     } else
