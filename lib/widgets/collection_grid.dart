@@ -13,20 +13,16 @@ class CollectionGrid extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: _quotesProvider.isCollectionLoading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 2 / 2.2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                itemCount: _quotesProvider.visibleQuotes.length,
-                itemBuilder: (ctx, index) => GridCell(index),
-              ),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 2 / 2.2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+          ),
+          itemCount: _quotesProvider.visibleQuotes.length,
+          itemBuilder: (ctx, index) => GridCell(index),
+        ),
       ),
     );
   }
@@ -42,21 +38,12 @@ class GridCell extends StatefulWidget {
 
 class _GridCellState extends State<GridCell>
     with SingleTickerProviderStateMixin {
-  var _quotesProvider;
+  Quotes _quotesProvider;
   var _isInit = true;
   Animation<double> _inOutAnimation;
   AnimationController _controller;
 
   final heartColor = Color(0xfffa4252);
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      _quotesProvider = Provider.of<Quotes>(context);
-      _isInit = false;
-    }
-  }
 
   @override
   void initState() {
@@ -70,6 +57,22 @@ class _GridCellState extends State<GridCell>
       end: 1,
     ).animate(_controller);
     _controller.forward();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      _quotesProvider = Provider.of<Quotes>(context);
+      _isInit = false;
+    }
+    if (_quotesProvider.animateCollectionTiles) {
+      if (_quotesProvider.collectionTilesToAnimate.contains(widget.index)) {
+        _controller.reverse().then(
+              (_) => _controller.forward(),
+            );
+      }
+    }
   }
 
   @override
@@ -127,7 +130,7 @@ class _GridCellState extends State<GridCell>
                       onTap: () => setState(() {
                         _quotesProvider.visibleQuotes[widget.index]
                             .changeFavorite();
-                        _quotesProvider.sortByFavorite();
+                        _quotesProvider.sortByFavorite(false);
                       }),
                       child: Icon(
                         _quotesProvider.visibleQuotes[widget.index].isFavorite

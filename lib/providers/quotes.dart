@@ -14,11 +14,14 @@ class Quotes extends ChangeNotifier {
   List<Quote> _visibleQuotes = [];
   List<Quote> _unlockedQuotes = [];
   List<Quote> _quotesToUnlock = [];
+  List<int> _collectionTilesToAnimate = [];
   SortEnum _sortOption = SortEnum.RARITY_DESCENDING;
   var _favoritesOnTop = false;
-  var _isCollectionLoading = false;
-  bool get isCollectionLoading {
-    return _isCollectionLoading;
+  var _animateCollectionTiles = false;
+  var _previousQuotes = [];
+
+  bool get animateCollectionTiles {
+    return _animateCollectionTiles;
   }
 
   List<Quote> get quotes {
@@ -35,6 +38,10 @@ class Quotes extends ChangeNotifier {
 
   List<Quote> get quotesToUnlock {
     return [..._quotesToUnlock];
+  }
+
+  List<int> get collectionTilesToAnimate {
+    return [..._collectionTilesToAnimate];
   }
 
   Future<void> fetchQuotes() async {
@@ -72,9 +79,10 @@ class Quotes extends ChangeNotifier {
     _favoritesOnTop = showOnlyFavorite;
   }
 
-  void sortByFavorite() {
+  void sortByFavorite(bool previousQuotesSetted) {
     if (_favoritesOnTop) {
-      _isCollectionLoading = true;
+      if (!previousQuotesSetted) _previousQuotes = [..._visibleQuotes];
+
       _visibleQuotes.sort((a, b) {
         int aNum = 0;
         int bNum = 0;
@@ -82,15 +90,27 @@ class Quotes extends ChangeNotifier {
         if (b.isFavorite) bNum = 1;
         return bNum.compareTo(aNum);
       });
+      initCollectionTilesToAnimate();
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+  }
+
+  void initCollectionTilesToAnimate() {
+    _collectionTilesToAnimate.clear();
+    _visibleQuotes.asMap().forEach((index, quote) {
+      if (!(quote == _previousQuotes[index])) {
+        _collectionTilesToAnimate.add(index);
+      }
+    });
+    _animateCollectionTiles = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
+    Future.delayed(Duration(milliseconds: 200), () {
+      _animateCollectionTiles = false;
       notifyListeners();
     });
-    _isCollectionLoading = false;
   }
 
   void sortCollection() {
-    _isCollectionLoading = true;
+    _previousQuotes = [..._visibleQuotes];
     switch (_sortOption) {
       case SortEnum.NEWEST:
         _visibleQuotes.sort(
@@ -112,7 +132,8 @@ class Quotes extends ChangeNotifier {
           (a, b) => b.rarity.index.compareTo(a.rarity.index),
         );
     }
-    sortByFavorite();
+    sortByFavorite(true);
+    initCollectionTilesToAnimate();
   }
 
   Quote unlockRandomQuote() {
