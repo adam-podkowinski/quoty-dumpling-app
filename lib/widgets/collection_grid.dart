@@ -53,10 +53,9 @@ class _GridCellState extends State<GridCell>
       duration: Duration(milliseconds: 200),
     );
     _inOutAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
+      begin: 1,
+      end: 0,
     ).animate(_controller);
-    _controller.forward();
   }
 
   @override
@@ -68,8 +67,8 @@ class _GridCellState extends State<GridCell>
     }
     if (_quotesProvider.animateCollectionTiles) {
       if (_quotesProvider.collectionTilesToAnimate.contains(widget.index)) {
-        _controller.reverse().then(
-              (_) => _controller.forward(),
+        _controller.forward().then(
+              (_) => _controller.reverse(),
             );
       }
     }

@@ -100,41 +100,58 @@ class Quotes extends ChangeNotifier {
       }
     });
     _animateCollectionTiles = true;
-    WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
+    notifyListeners();
     Future.delayed(Duration(milliseconds: 200), () {
       _animateCollectionTiles = false;
       notifyListeners();
     });
   }
 
+  void _sortByNewest() {
+    _visibleQuotes.sort(
+      (a, b) => b.unlockingTime.compareTo(a.unlockingTime),
+    );
+  }
+
+  void _sortByOldest() {
+    _visibleQuotes.sort(
+      (a, b) => a.unlockingTime.compareTo(b.unlockingTime),
+    );
+  }
+
+  void _sortByRarity() {
+    _sortByNewest();
+    _visibleQuotes.sort(
+      (a, b) => a.rarity.index.compareTo(b.rarity.index),
+    );
+  }
+
+  void _sortByRarityDescending() {
+    _sortByNewest();
+    _visibleQuotes.sort(
+      (a, b) => b.rarity.index.compareTo(a.rarity.index),
+    );
+  }
+
   void sortCollection(bool isInitSort) {
     _previousQuotes = [..._visibleQuotes];
     switch (_sortOption) {
       case SortEnum.NEWEST:
-        _visibleQuotes.sort(
-          (a, b) => b.unlockingTime.compareTo(a.unlockingTime),
-        );
+        _sortByNewest();
         break;
       case SortEnum.OLDEST:
-        _visibleQuotes.sort(
-          (a, b) => a.unlockingTime.compareTo(b.unlockingTime),
-        );
+        _sortByOldest();
         break;
       case SortEnum.RARITY:
-        _visibleQuotes.sort(
-          (a, b) => a.rarity.index.compareTo(b.rarity.index),
-        );
+        _sortByRarity();
         break;
       default:
-        _visibleQuotes.sort(
-          (a, b) => b.rarity.index.compareTo(a.rarity.index),
-        );
+        _sortByRarityDescending();
     }
-    sortByFavorite(isInitSort);
     if (isInitSort) {
       WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
     } else {
-      initCollectionTilesToAnimate();
+      sortByFavorite(isInitSort);
     }
   }
 
