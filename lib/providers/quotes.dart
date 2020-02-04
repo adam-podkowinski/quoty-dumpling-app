@@ -19,9 +19,14 @@ class Quotes extends ChangeNotifier {
   var _favoritesOnTop = false;
   var _animateCollectionTiles = false;
   var _previousQuotes = [];
+  var _areQuotesLoading = false;
 
   bool get animateCollectionTiles {
     return _animateCollectionTiles;
+  }
+
+  bool get areQuotesLoading {
+    return _areQuotesLoading;
   }
 
   List<Quote> get quotes {
@@ -88,7 +93,9 @@ class Quotes extends ChangeNotifier {
         if (b.isFavorite) bNum = 1;
         return bNum.compareTo(aNum);
       });
-      if (!isInitSort) initCollectionTilesToAnimate();
+    }
+    if (!isInitSort) {
+      initCollectionTilesToAnimate();
     }
   }
 
@@ -100,6 +107,7 @@ class Quotes extends ChangeNotifier {
       }
     });
     _animateCollectionTiles = true;
+    _areQuotesLoading = false;
     notifyListeners();
     Future.delayed(Duration(milliseconds: 200), () {
       _animateCollectionTiles = false;
@@ -134,6 +142,8 @@ class Quotes extends ChangeNotifier {
   }
 
   void sortCollection(bool isInitSort) {
+    _areQuotesLoading = true;
+    notifyListeners();
     _previousQuotes = [..._visibleQuotes];
     switch (_sortOption) {
       case SortEnum.NEWEST:
@@ -149,6 +159,8 @@ class Quotes extends ChangeNotifier {
         _sortByRarityDescending();
     }
     if (isInitSort) {
+      _areQuotesLoading = false;
+
       WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
     } else {
       sortByFavorite(isInitSort);

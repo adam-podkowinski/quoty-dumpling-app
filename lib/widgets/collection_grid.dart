@@ -2,27 +2,68 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-class CollectionGrid extends StatelessWidget {
+class CollectionGrid extends StatefulWidget {
+  @override
+  _CollectionGridState createState() => _CollectionGridState();
+}
+
+class _CollectionGridState extends State<CollectionGrid> {
   Quotes _quotesProvider;
+  BuildContext disposeContext;
+  Function disposeController;
+  var _isInit = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      Provider.of<CollectionSettings>(context).initScrollControlller();
+      disposeController =
+          Provider.of<CollectionSettings>(context).disposeScrollController;
+      _quotesProvider = Provider.of<Quotes>(context);
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      _quotesProvider = Provider.of<Quotes>(context);
+      _isInit = false;
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    disposeController();
+  }
+
   @override
   Widget build(BuildContext context) {
-    _quotesProvider = Provider.of<Quotes>(context);
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 2 / 2.2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),
-          itemCount: _quotesProvider.visibleQuotes.length,
-          itemBuilder: (ctx, index) => GridCell(index),
-        ),
+        child: _quotesProvider.areQuotesLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : GridView.builder(
+                controller:
+                    Provider.of<CollectionSettings>(context).scrollController,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 2 / 2.2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemCount: _quotesProvider.visibleQuotes.length,
+                itemBuilder: (ctx, index) => GridCell(index),
+              ),
       ),
     );
   }
@@ -54,7 +95,7 @@ class _GridCellState extends State<GridCell>
     );
     _inOutAnimation = Tween<double>(
       begin: 1,
-      end: 0,
+      end: .4,
     ).animate(_controller);
   }
 
@@ -129,7 +170,10 @@ class _GridCellState extends State<GridCell>
                       onTap: () => setState(() {
                         _quotesProvider.visibleQuotes[widget.index]
                             .changeFavorite();
-                        _quotesProvider.sortCollection(false);
+                        Future.delayed(
+                          Duration(milliseconds: 100),
+                          () => _quotesProvider.sortCollection(false),
+                        );
                       }),
                       child: Icon(
                         _quotesProvider.visibleQuotes[widget.index].isFavorite

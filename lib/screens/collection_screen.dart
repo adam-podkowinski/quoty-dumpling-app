@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/widgets/collection_grid.dart';
 import 'package:quoty_dumpling_app/widgets/collection_settings.dart';
@@ -26,6 +27,16 @@ class _CollectionScreenState extends State<CollectionScreen> {
     _quotesProvider.sortCollection(true);
 
     return Scaffold(
+      floatingActionButton:
+          Provider.of<CollectionSettings>(context).showScrollFab
+              ? FloatingActionButton(
+                  onPressed: () =>
+                      Provider.of<CollectionSettings>(context).scrollUp(),
+                  child: Icon(Icons.arrow_upward),
+                  backgroundColor: Theme.of(context).buttonColor,
+                  splashColor: Theme.of(context).accentColor,
+                )
+              : null,
       body: Container(
         width: double.infinity,
         height: double.infinity,

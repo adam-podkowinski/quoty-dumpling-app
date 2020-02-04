@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart' show BuildContext;
+import 'package:flutter/material.dart'
+    show BuildContext, Curves, ScrollController;
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
@@ -22,6 +23,38 @@ class CollectionSettings extends ChangeNotifier {
   }
 
   Map<String, dynamic> _previousOptions = {};
+
+  ScrollController _scrollController;
+  ScrollController get scrollController {
+    return _scrollController;
+  }
+
+  bool _showScrollFab = false;
+  bool get showScrollFab {
+    return _showScrollFab;
+  }
+
+  void initScrollControlller() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      if (_scrollController.offset > 300 && !_showScrollFab) {
+        _showScrollFab = true;
+        notifyListeners();
+      } else if (_scrollController.offset < 300 && _showScrollFab) {
+        _showScrollFab = false;
+        notifyListeners();
+      }
+    });
+  }
+
+  void disposeScrollController() {
+    _scrollController.dispose();
+  }
+
+  void scrollUp() {
+    _scrollController.animateTo(0,
+        duration: Duration(milliseconds: 400), curve: Curves.easeIn);
+  }
 
   void initOptions() {
     _previousOptions['selectedOption'] = _selectedOption;
