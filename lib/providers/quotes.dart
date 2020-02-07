@@ -94,9 +94,6 @@ class Quotes extends ChangeNotifier {
         return bNum.compareTo(aNum);
       });
     }
-    if (!isInitSort) {
-      initCollectionTilesToAnimate();
-    }
   }
 
   void initCollectionTilesToAnimate() {
@@ -143,7 +140,7 @@ class Quotes extends ChangeNotifier {
 
   void sortCollection(bool isInitSort) {
     _areQuotesLoading = true;
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
     _previousQuotes = [..._visibleQuotes];
     switch (_sortOption) {
       case SortEnum.NEWEST:
@@ -158,13 +155,13 @@ class Quotes extends ChangeNotifier {
       default:
         _sortByRarityDescending();
     }
-    if (isInitSort) {
-      _areQuotesLoading = false;
-
-      WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
+    sortByFavorite(isInitSort);
+    if (!isInitSort) {
+      initCollectionTilesToAnimate();
     } else {
-      sortByFavorite(isInitSort);
+      WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
     }
+    _areQuotesLoading = false;
   }
 
   Quote unlockRandomQuote() {

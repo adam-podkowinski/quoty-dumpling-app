@@ -13,7 +13,6 @@ class CollectionGrid extends StatefulWidget {
 
 class _CollectionGridState extends State<CollectionGrid> {
   Quotes _quotesProvider;
-  BuildContext disposeContext;
   Function disposeController;
   var _isInit = true;
 
