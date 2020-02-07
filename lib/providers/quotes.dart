@@ -170,7 +170,7 @@ class Quotes extends ChangeNotifier {
       _quotesToUnlock[index].unlockThisQuote();
       Quote unlockedQuote = _quotesToUnlock[index];
       _unlockedQuotes.add(_quotesToUnlock[index]);
-      _visibleQuotes.add(_quotesToUnlock[index]);
+      _visibleQuotes = [..._unlockedQuotes];
       _quotesToUnlock.remove(_quotesToUnlock[index]);
       return unlockedQuote;
     } else
@@ -178,5 +178,31 @@ class Quotes extends ChangeNotifier {
         author: 'No quotes loaded',
         quote: 'No quotes loaded',
       );
+  }
+
+//searching
+  void searchCollection(String value) {
+    if (value != null && value != '') {
+      _visibleQuotes = _unlockedQuotes
+          .where(
+            (e) =>
+                e.quote
+                    .toLowerCase()
+                    .trim()
+                    .replaceAll(' ', '')
+                    //
+                    .contains(value.toLowerCase().trim().replaceAll(' ', '')) ||
+                e.author
+                    .toLowerCase()
+                    .trim()
+                    .replaceAll(' ', '')
+                    //
+                    .contains(value.toLowerCase().trim().replaceAll(' ', '')),
+          )
+          .toList();
+    } else {
+      _visibleQuotes = _unlockedQuotes;
+    }
+    sortCollection(false);
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/providers/quotes.dart';
 
 class SearchBar extends StatefulWidget {
   @override
@@ -10,10 +12,23 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   final TextEditingController _controller = TextEditingController();
 
+  Quotes _quotesProvider;
+
+  var _isInit = true;
+
   @override
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      _quotesProvider = Provider.of<Quotes>(context);
+      _isInit = false;
+    }
   }
 
   @override
@@ -24,7 +39,7 @@ class _SearchBarState extends State<SearchBar> {
         children: <Widget>[
           TextField(
             onChanged: (value) {
-              setState(() {});
+              _quotesProvider.searchCollection(_controller.text);
             },
             style: kSearchBarTextStyle(SizeConfig.screenWidth),
             controller: _controller,
@@ -58,13 +73,10 @@ class _SearchBarState extends State<SearchBar> {
                     setState(() {
                       FocusScope.of(context).unfocus();
                       //error which is a flutter's fault... have to use this kind of workaround
-                      WidgetsBinding.instance.addPostFrameCallback(
-                        (_) => setState(
-                          () {
-                            _controller.clear();
-                          },
-                        ),
-                      );
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        _controller.clear();
+                        _quotesProvider.searchCollection(_controller.text);
+                      });
                     });
                   }
                 },
