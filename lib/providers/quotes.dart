@@ -61,7 +61,7 @@ class Quotes extends ChangeNotifier {
         _quotes.add(
           Quote(
             quote: e['quoteText'],
-            author: e['quoteAuthor'],
+            author: e['quoteAuthor'] == '' ? 'Unknown' : e['quoteAuthor'],
             rarity: Quote.getRarityByText(e['rarity']),
             // isUnlocked: true,
             // unlockingTime: DateTime.now(),
@@ -84,7 +84,7 @@ class Quotes extends ChangeNotifier {
     _favoritesOnTop = showOnlyFavorite;
   }
 
-  void sortByFavorite(bool isInitSort) {
+  void sortByFavorite(bool shouldAnimate) {
     if (_favoritesOnTop) {
       _visibleQuotes.sort((a, b) {
         int aNum = 0;
@@ -138,7 +138,11 @@ class Quotes extends ChangeNotifier {
     );
   }
 
-  void sortCollection(bool isInitSort) {
+  void refreshVisibleQuotes() {
+    _visibleQuotes = _unlockedQuotes;
+  }
+
+  void sortCollection(bool shouldAnimate) {
     _areQuotesLoading = true;
     WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
     _previousQuotes = [..._visibleQuotes];
@@ -155,8 +159,8 @@ class Quotes extends ChangeNotifier {
       default:
         _sortByRarityDescending();
     }
-    sortByFavorite(isInitSort);
-    if (!isInitSort) {
+    sortByFavorite(shouldAnimate);
+    if (!shouldAnimate) {
       initCollectionTilesToAnimate();
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
@@ -203,6 +207,6 @@ class Quotes extends ChangeNotifier {
     } else {
       _visibleQuotes = _unlockedQuotes;
     }
-    sortCollection(false);
+    sortCollection(true);
   }
 }

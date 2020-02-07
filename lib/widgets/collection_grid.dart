@@ -182,9 +182,7 @@ class _GridCellState extends State<GridCell>
                       ),
                     ),
                     title: Text(
-                      _quotesProvider.visibleQuotes[widget.index].author == ''
-                          ? 'Unknown'
-                          : _quotesProvider.visibleQuotes[widget.index].author,
+                      _quotesProvider.visibleQuotes[widget.index].author,
                       style: TextStyle(
                         fontFamily: 'Lato',
                         fontWeight: FontWeight.bold,

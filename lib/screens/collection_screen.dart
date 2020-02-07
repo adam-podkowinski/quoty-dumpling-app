@@ -24,6 +24,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _quotesProvider.refreshVisibleQuotes();
     _quotesProvider.sortCollection(true);
 
     return Scaffold(
