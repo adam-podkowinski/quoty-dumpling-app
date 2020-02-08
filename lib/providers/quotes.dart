@@ -71,6 +71,23 @@ class Quotes extends ChangeNotifier {
     _visibleQuotes = [...unlockedQuotes];
   }
 
+  Quote unlockRandomQuote() {
+    if (_quotesToUnlock.length > 0) {
+      int index = Random().nextInt(_quotesToUnlock.length - 1);
+      _quotesToUnlock[index].unlockThisQuote();
+      Quote unlockedQuote = _quotesToUnlock[index];
+      _unlockedQuotes.add(_quotesToUnlock[index]);
+      _visibleQuotes = [..._unlockedQuotes];
+      _quotesToUnlock.remove(_quotesToUnlock[index]);
+      return unlockedQuote;
+    } else
+      return Quote(
+        author: 'No quotes loaded',
+        quote: 'No quotes loaded',
+        rarity: Rarities.LEGENDARY,
+      );
+  }
+
   void updateSortOptions(SortEnum option, bool showOnlyFavorite) {
     _sortOption = option;
     _favoritesOnTop = showOnlyFavorite;
@@ -101,6 +118,7 @@ class Quotes extends ChangeNotifier {
     });
   }
 
+//Sorting options
   void _sortByNewest() {
     _visibleQuotes.sort(
       (a, b) => b.unlockingTime.compareTo(a.unlockingTime),
@@ -126,6 +144,7 @@ class Quotes extends ChangeNotifier {
       (a, b) => b.rarity.index.compareTo(a.rarity.index),
     );
   }
+  //
 
   void refreshVisibleQuotes() {
     _visibleQuotes = _unlockedQuotes;
@@ -149,29 +168,12 @@ class Quotes extends ChangeNotifier {
         _sortByRarityDescending();
     }
     sortByFavorite();
-    if (!shouldAnimate) {
+    if (shouldAnimate) {
       initCollectionTilesToAnimate();
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
     }
     _areQuotesLoading = false;
-  }
-
-  Quote unlockRandomQuote() {
-    if (_quotesToUnlock.length > 0) {
-      int index = Random().nextInt(_quotesToUnlock.length - 1);
-      _quotesToUnlock[index].unlockThisQuote();
-      Quote unlockedQuote = _quotesToUnlock[index];
-      _unlockedQuotes.add(_quotesToUnlock[index]);
-      _visibleQuotes = [..._unlockedQuotes];
-      _quotesToUnlock.remove(_quotesToUnlock[index]);
-      return unlockedQuote;
-    } else
-      return Quote(
-        author: 'No quotes loaded',
-        quote: 'No quotes loaded',
-        rarity: Rarities.LEGENDARY,
-      );
   }
 
 //searching
@@ -204,6 +206,6 @@ class Quotes extends ChangeNotifier {
     } else {
       _visibleQuotes = _unlockedQuotes;
     }
-    sortCollection(true);
+    sortCollection(false);
   }
 }

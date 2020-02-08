@@ -98,19 +98,23 @@ class _GridCellState extends State<GridCell>
     ).animate(_controller);
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      _quotesProvider = Provider.of<Quotes>(context);
-      _isInit = false;
-    }
+  void animateCollectionTiles() {
     if (_quotesProvider.animateCollectionTiles) {
       if (_quotesProvider.collectionTilesToAnimate.contains(widget.index)) {
         _controller.forward().then(
               (_) => _controller.reverse(),
             );
       }
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      _quotesProvider = Provider.of<Quotes>(context);
+      _quotesProvider.addListener(animateCollectionTiles);
+      _isInit = false;
     }
   }
 
@@ -171,7 +175,7 @@ class _GridCellState extends State<GridCell>
                             .changeFavorite();
                         Future.delayed(
                           Duration(milliseconds: 100),
-                          () => _quotesProvider.sortCollection(false),
+                          () => _quotesProvider.sortCollection(true),
                         );
                       }),
                       child: Icon(

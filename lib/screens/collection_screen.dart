@@ -25,7 +25,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
   @override
   Widget build(BuildContext context) {
     _quotesProvider.refreshVisibleQuotes();
-    _quotesProvider.sortCollection(true);
+    _quotesProvider.sortCollection(false);
 
     return Scaffold(
       floatingActionButton:
