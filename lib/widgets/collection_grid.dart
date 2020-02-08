@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
@@ -47,21 +48,31 @@ class _CollectionGridState extends State<CollectionGrid> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: _quotesProvider.areQuotesLoading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : GridView.builder(
-                controller:
-                    Provider.of<CollectionSettings>(context).scrollController,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 2 / 2.2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
+        child: _quotesProvider.visibleQuotes.length > 0
+            ? _quotesProvider.areQuotesLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : GridView.builder(
+                    controller: Provider.of<CollectionSettings>(context)
+                        .scrollController,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 2 / 2.2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                    itemCount: _quotesProvider.visibleQuotes.length,
+                    itemBuilder: (ctx, index) => GridCell(index),
+                  )
+            : SlideAnimation(
+                verticalOffset: 50,
+                child: AutoSizeText(
+                  'Not found quotes with this particular phrase.',
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: Styles.kSearchBarTextStyle,
                 ),
-                itemCount: _quotesProvider.visibleQuotes.length,
-                itemBuilder: (ctx, index) => GridCell(index),
               ),
       ),
     );

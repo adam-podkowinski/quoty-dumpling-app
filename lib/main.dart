@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
@@ -27,7 +28,9 @@ class MyApp extends StatelessWidget {
         title: 'Quoty Dumpling!',
         theme: Styles.mainTheme,
         home: SafeArea(
-          child: TabsScreen(),
+          child: AnimationConfiguration.synchronized(
+            child: TabsScreen(),
+          ),
         ),
       ),
     );

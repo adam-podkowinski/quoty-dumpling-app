@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
@@ -77,8 +78,8 @@ class _DumplingScreenState extends State<DumplingScreen>
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             CustomAppBar('Dumpling'),
-            FadeTransition(
-              opacity: _initAnimation,
+            FadeInAnimation(
+              duration: Duration(milliseconds: 200),
               child: AnimatedSwitcher(
                 duration: Duration(milliseconds: 300),
                 child: _dumplingProvider.isFull
