@@ -56,27 +56,19 @@ class Quotes extends ChangeNotifier {
       utf8.decode(contentsB.buffer.asUint8List(), allowMalformed: true),
     );
     _quotes.clear();
-    contents.forEach(
-      (e) {
-        _quotes.add(
-          Quote(
-            quote: e['quoteText'],
-            author: e['quoteAuthor'] == '' ? 'Unknown' : e['quoteAuthor'],
-            rarity: Quote.getRarityByText(e['rarity']),
-            // isUnlocked: true,
-            // unlockingTime: DateTime.now(),
-            // rarity: Rarities.EPIC
-          ),
-        );
-      },
+    _quotes.addAll(
+      contents.map(
+        (e) => Quote.fromMap(e),
+      ),
     );
+
     _unlockedQuotes.addAll(
       _quotes.where((e) => e.isUnlocked == true),
     );
     _quotesToUnlock.addAll(
       _quotes.where((e) => e.isUnlocked != true),
     );
-    _visibleQuotes.addAll(_unlockedQuotes);
+    _visibleQuotes = [...unlockedQuotes];
   }
 
   void updateSortOptions(SortEnum option, bool showOnlyFavorite) {
@@ -84,15 +76,12 @@ class Quotes extends ChangeNotifier {
     _favoritesOnTop = showOnlyFavorite;
   }
 
-  void sortByFavorite(bool shouldAnimate) {
+  void sortByFavorite() {
     if (_favoritesOnTop) {
-      _visibleQuotes.sort((a, b) {
-        int aNum = 0;
-        int bNum = 0;
-        if (a.isFavorite) aNum = 1;
-        if (b.isFavorite) bNum = 1;
-        return bNum.compareTo(aNum);
-      });
+      List<Quote> favoritedQuotes =
+          _visibleQuotes.where((e) => e.isFavorite).toList();
+      _visibleQuotes = _visibleQuotes.where((e) => !e.isFavorite).toList();
+      _visibleQuotes.insertAll(0, favoritedQuotes);
     }
   }
 
@@ -159,7 +148,7 @@ class Quotes extends ChangeNotifier {
       default:
         _sortByRarityDescending();
     }
-    sortByFavorite(shouldAnimate);
+    sortByFavorite();
     if (!shouldAnimate) {
       initCollectionTilesToAnimate();
     } else {
@@ -169,7 +158,7 @@ class Quotes extends ChangeNotifier {
   }
 
   Quote unlockRandomQuote() {
-    if (_quotes.length > 0) {
+    if (_quotesToUnlock.length > 0) {
       int index = Random().nextInt(_quotesToUnlock.length - 1);
       _quotesToUnlock[index].unlockThisQuote();
       Quote unlockedQuote = _quotesToUnlock[index];
@@ -181,6 +170,7 @@ class Quotes extends ChangeNotifier {
       return Quote(
         author: 'No quotes loaded',
         quote: 'No quotes loaded',
+        rarity: Rarities.LEGENDARY,
       );
   }
 
@@ -197,6 +187,13 @@ class Quotes extends ChangeNotifier {
                     //
                     .contains(value.toLowerCase().trim().replaceAll(' ', '')) ||
                 e.author
+                    .toLowerCase()
+                    .trim()
+                    .replaceAll(' ', '')
+                    //
+                    .contains(value.toLowerCase().trim().replaceAll(' ', '')) ||
+                e
+                    .rarityText()
                     .toLowerCase()
                     .trim()
                     .replaceAll(' ', '')

@@ -17,13 +17,24 @@ class Quote {
   final Rarities rarity;
 
   Quote({
-    this.quote,
-    this.author,
+    @required this.quote,
+    @required this.author,
+    @required this.rarity,
     this.isUnlocked = false,
     this.isFavorite = false,
-    this.rarity,
     this.unlockingTime,
   });
+
+  static Quote fromMap(Map<String, dynamic> map) {
+    return Quote(
+      quote: map['quoteText'],
+      author: map['quoteAuthor'] == '' ? 'Unknown' : map['quoteAuthor'],
+      rarity: Quote.getRarityByText(map['rarity']),
+      //debug
+      // isUnlocked: true,
+      // unlockingTime: DateTime.now(),
+    );
+  }
 
   Color rarityColor(BuildContext context) {
     switch (rarity) {

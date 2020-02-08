@@ -94,7 +94,7 @@ class _GridCellState extends State<GridCell>
     );
     _inOutAnimation = Tween<double>(
       begin: 1,
-      end: .4,
+      end: .5,
     ).animate(_controller);
   }
 
