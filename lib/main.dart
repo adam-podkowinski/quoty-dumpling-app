@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
@@ -9,7 +10,6 @@ import 'package:quoty_dumpling_app/screens/tabs_screen.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Quoty Dumpling!',
-        theme: mainTheme,
+        theme: Styles.mainTheme,
         home: SafeArea(
           child: TabsScreen(),
         ),

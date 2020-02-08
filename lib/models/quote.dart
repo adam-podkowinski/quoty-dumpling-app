@@ -42,13 +42,13 @@ class Quote {
         return Theme.of(context).primaryColor;
         break;
       case Rarities.RARE:
-        return rareColor;
+        return Styles.rareColor;
         break;
       case Rarities.EPIC:
-        return epicColor;
+        return Styles.epicColor;
         break;
       default:
-        return legendaryColor;
+        return Styles.legendaryColor;
     }
   }
 

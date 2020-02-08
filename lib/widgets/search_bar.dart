@@ -41,7 +41,7 @@ class _SearchBarState extends State<SearchBar> {
             onChanged: (value) {
               _quotesProvider.searchCollection(_controller.text);
             },
-            style: kSearchBarTextStyle(SizeConfig.screenWidth),
+            style: Styles.kSearchBarTextStyle,
             controller: _controller,
             decoration: InputDecoration(
               suffix: Icon(null),
@@ -52,10 +52,10 @@ class _SearchBarState extends State<SearchBar> {
                 color: Theme.of(context).backgroundColor,
                 size: SizeConfig.screenWidth * 0.07,
               ),
-              hintStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
-              labelStyle: kSearchBarTextStyle(SizeConfig.screenWidth),
-              focusedBorder: kSearchBarBorder,
-              enabledBorder: kSearchBarBorder,
+              hintStyle: Styles.kSearchBarTextStyle,
+              labelStyle: Styles.kSearchBarTextStyle,
+              focusedBorder: Styles.kSearchBarBorder,
+              enabledBorder: Styles.kSearchBarBorder,
             ),
           ),
           Positioned(

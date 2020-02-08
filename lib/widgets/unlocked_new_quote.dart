@@ -114,25 +114,25 @@ class CardContent extends StatelessWidget {
             children: <Widget>[
               Text(
                 'New ',
-                style: kTitleStyle(SizeConfig.screenWidth),
+                style: Styles.kTitleStyle,
               ),
               SizedBox(width: 5),
               Stack(
                 children: <Widget>[
                   Text(
                     '${newQuote.rarityText()} ',
-                    style: kTitleStyle(SizeConfig.screenWidth).copyWith(
+                    style: Styles.kTitleStyle.copyWith(
                       fontFamily: 'Pacifico',
                       fontStyle: FontStyle.italic,
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
                         ..strokeWidth = 5
-                        ..color = kTitleStyle(SizeConfig.screenWidth).color,
+                        ..color = Styles.kTitleStyle.color,
                     ),
                   ),
                   Text(
                     '${newQuote.rarityText()} ',
-                    style: kTitleStyle(SizeConfig.screenWidth).copyWith(
+                    style: Styles.kTitleStyle.copyWith(
                       fontFamily: 'Pacifico',
                       fontStyle: FontStyle.italic,
                       color: newQuote.rarityColor(context),
@@ -143,7 +143,7 @@ class CardContent extends StatelessWidget {
               SizedBox(width: 5),
               Text(
                 'Quote',
-                style: kTitleStyle(SizeConfig.screenWidth),
+                style: Styles.kTitleStyle,
               ),
             ],
           ),
@@ -155,7 +155,7 @@ class CardContent extends StatelessWidget {
         //Quote content and author
         Text(
           newQuote.quote,
-          style: kQuoteStyle(SizeConfig.screenWidth),
+          style: Styles.kQuoteStyle,
           textAlign: TextAlign.justify,
         ),
         SizedBox(
@@ -164,7 +164,7 @@ class CardContent extends StatelessWidget {
         FittedBox(
           child: Text(
             'Author: ${newQuote.author == '' ? 'Unknown' : newQuote.author}',
-            style: kAuthorStyle(SizeConfig.screenWidth),
+            style: Styles.kAuthorStyle,
           ),
         ),
 
@@ -230,7 +230,7 @@ class NewQuoteButton extends StatelessWidget {
           padding: EdgeInsets.all(6),
           decoration: BoxDecoration(
             border: Border.all(
-              color: kTitleStyle(SizeConfig.screenWidth).color,
+              color: Styles.kTitleStyle.color,
               width: 2,
             ),
             borderRadius: BorderRadius.circular(50),
@@ -246,7 +246,7 @@ class NewQuoteButton extends StatelessWidget {
             child: FittedBox(
               child: Text(
                 textContent,
-                style: kButtonTextStyle(SizeConfig.screenWidth),
+                style: Styles.kButtonTextStyle,
               ),
             ),
           ),

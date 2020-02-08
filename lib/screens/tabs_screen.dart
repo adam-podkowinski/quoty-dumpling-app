@@ -51,15 +51,17 @@ class _TabsScreenState extends State<TabsScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
-      SizeConfig().init(context);
+      SizeConfig.init(context);
       _dumplingProvider = Provider.of<DumplingProvider>(context);
-      _isInit = false;
-    }
-    if (_dumplingProvider.goToCollectionScreen) {
-      setState(() {
-        _selectedPageIndex = 2;
-        _dumplingProvider.changeGoToCollectionScreen(false);
+      _dumplingProvider.addListener(() {
+        if (_dumplingProvider.goToCollectionScreen) {
+          setState(() {
+            _selectedPageIndex = 2;
+            _dumplingProvider.changeGoToCollectionScreen(false);
+          });
+        }
       });
+      _isInit = false;
     }
   }
 

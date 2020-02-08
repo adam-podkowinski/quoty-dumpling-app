@@ -65,7 +65,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
                   'Customize Collection',
                   maxLines: 1,
                   textAlign: TextAlign.center,
-                  style: kAuthorStyle(SizeConfig.screenWidth).copyWith(
+                  style: Styles.kAuthorStyle.copyWith(
                     fontSize: SizeConfig.screenWidth * 0.065,
                   ),
                 ),
@@ -82,7 +82,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
               Text(
                 'Sort:',
                 textAlign: TextAlign.left,
-                style: kButtonTextStyle(SizeConfig.screenWidth),
+                style: Styles.kButtonTextStyle,
               ),
               ListView.builder(
                 shrinkWrap: true,
@@ -104,7 +104,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
                     _collectionSettingsProvider.changeFavoritesOnTop(val),
                 title: Text(
                   'Show Favorites On Top',
-                  style: kButtonTextStyle(SizeConfig.screenWidth),
+                  style: Styles.kButtonTextStyle,
                 ),
               ),
               Divider(
@@ -215,7 +215,7 @@ class _ListElementState extends State<ListElement> {
         onChanged: (val) => collectionSettingsProvider.changeSelectedVal(val),
         title: Text(
           title,
-          style: kCommonTextStyle(SizeConfig.screenWidth),
+          style: Styles.kCommonTextStyle,
         ),
         subtitle: Text(
           subtitle,
