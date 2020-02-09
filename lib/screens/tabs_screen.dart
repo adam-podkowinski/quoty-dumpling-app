@@ -11,6 +11,7 @@ import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/screens/collection_screen.dart';
 import 'package:quoty_dumpling_app/screens/dumpling_screen.dart';
 
+//TODO: Add TabsScreenProvider to change screens from other widgets
 class TabsScreen extends StatefulWidget {
   @override
   _TabsScreenState createState() => _TabsScreenState();

@@ -16,46 +16,21 @@ class DumplingScreen extends StatefulWidget {
 
 class _DumplingScreenState extends State<DumplingScreen>
     with TickerProviderStateMixin {
-  Animation<double> _initAnimation;
-  AnimationController _initAnimController;
   var _dumplingProvider;
   var _isInit = true;
 
   @override
-  void initState() {
-    super.initState();
-    //
-    _initAnimController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 150),
-    );
-    //
-    _initAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
-      CurvedAnimation(
-        curve: Curves.easeIn,
-        parent: _initAnimController,
-      ),
-    );
-    //
-    _initAnimController.forward();
-  }
-
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (_isInit) _dumplingProvider = Provider.of<DumplingProvider>(context);
-    if (_dumplingProvider.isFull) {
-      _dumplingProvider.clearClickingProgressWhenFull();
+    if (_isInit) {
+      _dumplingProvider = Provider.of<DumplingProvider>(context)
+        ..addListener(() {
+          if (_dumplingProvider.isFull) {
+            _dumplingProvider.clearClickingProgressWhenFull();
+          }
+        });
+      _isInit = false;
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _initAnimController.dispose();
   }
 
   @override

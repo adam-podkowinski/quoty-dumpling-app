@@ -11,16 +11,16 @@ class DumplingProvider extends ChangeNotifier {
   //if true, page is changing to collection screen
   var _goToCollectionScreen = false;
 
+  bool get isFull {
+    return _isFull;
+  }
+
   bool get goToCollectionScreen {
     return _goToCollectionScreen;
   }
 
   double get progressBarStatus {
     return _progressBarStatus;
-  }
-
-  bool get isFull {
-    return _isFull;
   }
 
   void clearClickingProgressWhenFull() {
