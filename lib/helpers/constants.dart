@@ -74,6 +74,7 @@ class Styles {
 
   static TextStyle kSearchBarTextStyle = TextStyle(
     color: mainTheme.backgroundColor,
+    fontFamily: 'Lato',
     fontSize: _screenWidth * 0.05,
   );
 }

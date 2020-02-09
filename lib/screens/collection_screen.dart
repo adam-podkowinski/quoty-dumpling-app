@@ -9,6 +9,7 @@ import 'package:quoty_dumpling_app/providers/tabs.dart';
 import 'package:quoty_dumpling_app/widgets/collection_grid.dart';
 import 'package:quoty_dumpling_app/widgets/collection_settings.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
+import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
 import 'package:quoty_dumpling_app/widgets/search_bar.dart';
 
 class CollectionScreen extends StatefulWidget {
@@ -120,21 +121,12 @@ class NothingInCollectionWidget extends StatelessWidget {
                 style: Styles.kAuthorStyle,
               ),
               SizedBox(height: SizeConfig.screenWidth * 0.03),
-              Container(
+              RoundedButton(
+                onPressed: () =>
+                    Provider.of<Tabs>(context, listen: false).navigateToPage(1),
+                text: 'Open Dumplings!',
+                textColor: Theme.of(context).textTheme.title.color,
                 width: SizeConfig.screenWidth * 0.5,
-                child: RaisedButton(
-                  onPressed: () => Provider.of<Tabs>(context, listen: false)
-                      .navigateToPage(1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(SizeConfig.screenWidth * .05092),
-                  ),
-                  color: Theme.of(context).buttonColor,
-                  textColor: Styles.kButtonTextStyle.color,
-                  child: Center(
-                    child: Text('Open Dumplings!'),
-                  ),
-                ),
               ),
             ],
           ),

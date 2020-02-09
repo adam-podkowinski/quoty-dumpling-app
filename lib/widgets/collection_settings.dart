@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
+import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
 
 class SettingsIcon extends StatelessWidget {
   @override
@@ -114,58 +115,32 @@ class _SettingsDialogState extends State<SettingsDialog> {
               Row(
                 children: <Widget>[
                   Spacer(),
-                  SettingsButton(
+                  RoundedButton(
                     text: 'Save',
                     onPressed: () {
                       _collectionSettingsProvider.saveOptions(context);
                       Navigator.of(context).pop();
                     },
                     color: Theme.of(context).secondaryHeaderColor,
+                    textColor: Theme.of(context).backgroundColor,
+                    width: SizeConfig.screenWidth * .2546,
                   ),
                   Spacer(),
-                  SettingsButton(
+                  RoundedButton(
                     text: 'Cancel',
                     onPressed: () {
                       _collectionSettingsProvider.cancelOptions();
                       Navigator.of(context).pop();
                     },
+                    width: SizeConfig.screenWidth * .2546,
                     color: Theme.of(context).errorColor,
+                    textColor: Theme.of(context).backgroundColor,
                   ),
                   Spacer(),
                 ],
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class SettingsButton extends StatelessWidget {
-  final Function onPressed;
-  final String text;
-  final Color color;
-
-  SettingsButton({
-    this.onPressed,
-    this.text,
-    this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return RaisedButton(
-      onPressed: onPressed,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(SizeConfig.screenWidth * .05092),
-      ),
-      color: color,
-      textColor: Theme.of(context).backgroundColor,
-      child: SizedBox(
-        width: SizeConfig.screenWidth * .2546,
-        child: Center(
-          child: Text(text),
         ),
       ),
     );
