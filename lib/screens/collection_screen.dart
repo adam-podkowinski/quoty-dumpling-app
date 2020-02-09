@@ -23,13 +23,12 @@ class _CollectionScreenState extends State<CollectionScreen> {
   void initState() {
     super.initState();
     _quotesProvider = Provider.of<Quotes>(context, listen: false);
+    _quotesProvider.refreshVisibleQuotes();
+    _quotesProvider.sortCollection(false);
   }
 
   @override
   Widget build(BuildContext context) {
-    _quotesProvider.refreshVisibleQuotes();
-    _quotesProvider.sortCollection(false);
-
     return Scaffold(
       floatingActionButton:
           Provider.of<CollectionSettings>(context).showScrollFab

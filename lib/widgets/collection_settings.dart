@@ -38,14 +38,13 @@ class _SettingsDialogState extends State<SettingsDialog> {
     if (_isInit) {
       _collectionSettingsProvider = Provider.of<CollectionSettings>(context);
       _collectionSettingsProvider.initOptions();
+      FocusScope.of(context).unfocus();
       _isInit = false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    FocusScope.of(context).unfocus();
-
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(_padding),

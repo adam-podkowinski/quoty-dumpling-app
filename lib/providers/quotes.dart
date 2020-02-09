@@ -176,68 +176,40 @@ class Quotes extends ChangeNotifier {
     _areQuotesLoading = false;
   }
 
+  String _simplifyString(String val) {
+    return val
+        .toLowerCase()
+        .trim()
+        .replaceAll(' ', '')
+        .replaceAll(',', '')
+        .replaceAll('.', '')
+        .replaceAll('\'', '')
+        .replaceAll(':', '')
+        .replaceAll('-', '');
+  }
+
 //searching
   void searchCollection(String value) {
-    if (value != null && value != '') {
+    if (value != '') {
       _visibleQuotes = _unlockedQuotes
           .where(
             (e) =>
                 //first
-                e.quote
-                    .toLowerCase()
-                    .trim()
-                    .replaceAll(' ', '')
-                    .replaceAll(',', '')
-                    .replaceAll('.', '')
-                    .replaceAll('-', '')
-                    //
-                    .contains(
-                      value
-                          .toLowerCase()
-                          .trim()
-                          .replaceAll(' ', '')
-                          .replaceAll(',', '')
-                          .replaceAll('.', '')
-                          .replaceAll('-', ''),
-                    ) ||
+                _simplifyString(e.quote).contains(
+                  _simplifyString(value),
+                ) ||
                 //second
-                e.author
-                    .toLowerCase()
-                    .trim()
-                    .replaceAll(' ', '')
-                    //
-                    .contains(
-                      value
-                          .toLowerCase()
-                          .trim()
-                          .replaceAll(' ', '')
-                          .replaceAll(',', '')
-                          .replaceAll('.', '')
-                          .replaceAll('-', ''),
-                    ) ||
+                _simplifyString(e.author).contains(
+                  _simplifyString(value),
+                ) ||
                 //third
-                e
-                    .rarityText()
-                    .toLowerCase()
-                    .trim()
-                    .replaceAll(' ', '')
-                    .replaceAll(',', '')
-                    .replaceAll('.', '')
-                    .replaceAll('-', '')
-                    //
-                    .contains(
-                      value
-                          .toLowerCase()
-                          .trim()
-                          .replaceAll(' ', '')
-                          .replaceAll(',', '')
-                          .replaceAll('.', '')
-                          .replaceAll('-', ''),
-                    ),
+                _simplifyString(e.rarityText()).contains(
+                  _simplifyString(value),
+                ),
           )
           .toList();
     } else {
-      _visibleQuotes = _unlockedQuotes;
+      refreshVisibleQuotes();
     }
     sortCollection(false);
   }
