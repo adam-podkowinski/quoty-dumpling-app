@@ -8,15 +8,8 @@ class DumplingProvider extends ChangeNotifier {
   //if progress bar status is equal to 1 (full)
   var _isFull = false;
 
-  //if true, page is changing to collection screen
-  var _goToCollectionScreen = false;
-
   bool get isFull {
     return _isFull;
-  }
-
-  bool get goToCollectionScreen {
-    return _goToCollectionScreen;
   }
 
   double get progressBarStatus {
@@ -41,12 +34,7 @@ class DumplingProvider extends ChangeNotifier {
     }
   }
 
-  void changeGoToCollectionScreen(bool val) {
-    _goToCollectionScreen = val;
-    notifyListeners();
-  }
-
-  void notifyIsFullStateChanged() {
+  void isFullStateChanged() {
     _isFull = false;
     notifyListeners();
   }

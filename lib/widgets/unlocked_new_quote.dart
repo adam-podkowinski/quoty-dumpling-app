@@ -6,6 +6,7 @@ import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
+import 'package:quoty_dumpling_app/providers/tabs.dart';
 
 class UnlockedNewQuote extends StatefulWidget {
   @override
@@ -179,7 +180,7 @@ class CardContent extends StatelessWidget {
               rarityColor: newQuote.rarityColor(context),
               textContent: 'Eat more!',
               onTap: () {
-                _dumplingProvider.notifyIsFullStateChanged();
+                _dumplingProvider.isFullStateChanged();
                 controller.reverse();
               },
             ),
@@ -188,8 +189,8 @@ class CardContent extends StatelessWidget {
               textContent: 'Go to collection!',
               onTap: () {
                 controller.reverse().then((_) {
-                  _dumplingProvider.notifyIsFullStateChanged();
-                  _dumplingProvider.changeGoToCollectionScreen(true);
+                  _dumplingProvider.isFullStateChanged();
+                  Provider.of<Tabs>(context, listen: false).navigateToPage(2);
                 });
               },
             ),

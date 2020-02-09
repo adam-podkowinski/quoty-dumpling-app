@@ -5,6 +5,7 @@ import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
+import 'package:quoty_dumpling_app/providers/tabs.dart';
 import 'package:quoty_dumpling_app/widgets/collection_grid.dart';
 import 'package:quoty_dumpling_app/widgets/collection_settings.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
@@ -122,7 +123,8 @@ class NothingInCollectionWidget extends StatelessWidget {
               Container(
                 width: SizeConfig.screenWidth * 0.5,
                 child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: () => Provider.of<Tabs>(context, listen: false)
+                      .navigateToPage(1),
                   shape: RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.circular(SizeConfig.screenWidth * .05092),
