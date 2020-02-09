@@ -182,25 +182,58 @@ class Quotes extends ChangeNotifier {
       _visibleQuotes = _unlockedQuotes
           .where(
             (e) =>
+                //first
                 e.quote
                     .toLowerCase()
                     .trim()
                     .replaceAll(' ', '')
+                    .replaceAll(',', '')
+                    .replaceAll('.', '')
+                    .replaceAll('-', '')
                     //
-                    .contains(value.toLowerCase().trim().replaceAll(' ', '')) ||
+                    .contains(
+                      value
+                          .toLowerCase()
+                          .trim()
+                          .replaceAll(' ', '')
+                          .replaceAll(',', '')
+                          .replaceAll('.', '')
+                          .replaceAll('-', ''),
+                    ) ||
+                //second
                 e.author
                     .toLowerCase()
                     .trim()
                     .replaceAll(' ', '')
                     //
-                    .contains(value.toLowerCase().trim().replaceAll(' ', '')) ||
+                    .contains(
+                      value
+                          .toLowerCase()
+                          .trim()
+                          .replaceAll(' ', '')
+                          .replaceAll(',', '')
+                          .replaceAll('.', '')
+                          .replaceAll('-', ''),
+                    ) ||
+                //third
                 e
                     .rarityText()
                     .toLowerCase()
                     .trim()
                     .replaceAll(' ', '')
+                    .replaceAll(',', '')
+                    .replaceAll('.', '')
+                    .replaceAll('-', '')
                     //
-                    .contains(value.toLowerCase().trim().replaceAll(' ', '')),
+                    .contains(
+                      value
+                          .toLowerCase()
+                          .trim()
+                          .replaceAll(' ', '')
+                          .replaceAll(',', '')
+                          .replaceAll('.', '')
+                          .replaceAll('-', ''),
+                    ),
           )
           .toList();
     } else {
