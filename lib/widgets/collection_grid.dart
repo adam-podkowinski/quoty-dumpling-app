@@ -184,10 +184,12 @@ class _GridCellState extends State<GridCell>
                       onTap: () => setState(() {
                         _quotesProvider.visibleQuotes[widget.index]
                             .changeFavorite();
-                        Future.delayed(
-                          Duration(milliseconds: 100),
-                          () => _quotesProvider.sortCollection(true),
-                        );
+
+                        if (_quotesProvider.favoritesOnTop)
+                          Future.delayed(
+                            Duration(milliseconds: 100),
+                            () => _quotesProvider.sortCollection(true),
+                          );
                       }),
                       child: Icon(
                         _quotesProvider.visibleQuotes[widget.index].isFavorite

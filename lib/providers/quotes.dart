@@ -29,6 +29,10 @@ class Quotes extends ChangeNotifier {
     return _areQuotesLoading;
   }
 
+  bool get favoritesOnTop {
+    return _favoritesOnTop;
+  }
+
   List<Quote> get quotes {
     return [..._quotes];
   }
@@ -176,6 +180,7 @@ class Quotes extends ChangeNotifier {
     _areQuotesLoading = false;
   }
 
+//searching
   String _simplifyString(String val) {
     return val
         .toLowerCase()
@@ -185,10 +190,10 @@ class Quotes extends ChangeNotifier {
         .replaceAll('.', '')
         .replaceAll('\'', '')
         .replaceAll(':', '')
+        .replaceAll('"', '')
         .replaceAll('-', '');
   }
 
-//searching
   void searchCollection(String value) {
     if (value != '') {
       _visibleQuotes = _unlockedQuotes
