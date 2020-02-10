@@ -94,7 +94,7 @@ class CollectionSettings extends ChangeNotifier {
     ],
     [
       'By Author',
-      'Show the oldest quotes at the top',
+      'Sort alphabetically depending on author',
     ],
     [
       'From Newest',
@@ -102,7 +102,7 @@ class CollectionSettings extends ChangeNotifier {
     ],
     [
       'From Oldest',
-      'Sort alphabetically depending on author',
+      'Show the oldest quotes at the top',
     ],
   ];
   List<List<String>> get titlesWithSubtitlesOfOptions {
