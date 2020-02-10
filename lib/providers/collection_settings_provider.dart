@@ -7,6 +7,7 @@ import 'package:quoty_dumpling_app/providers/quotes.dart';
 enum SortEnum {
   RARITY,
   RARITY_DESCENDING,
+  AUTHOR,
   NEWEST,
   OLDEST,
 }
@@ -92,12 +93,16 @@ class CollectionSettings extends ChangeNotifier {
       'Sort from the commonest to the rarest',
     ],
     [
+      'By Author',
+      'Show the oldest quotes at the top',
+    ],
+    [
       'From Newest',
       'Show the newest quotes at the top',
     ],
     [
       'From Oldest',
-      'Show the oldest quotes at the top',
+      'Sort alphabetically depending on author',
     ],
   ];
   List<List<String>> get titlesWithSubtitlesOfOptions {

@@ -92,20 +92,6 @@ class Quotes extends ChangeNotifier {
       );
   }
 
-  void updateSortOptions(SortEnum option, bool showOnlyFavorite) {
-    _sortOption = option;
-    _favoritesOnTop = showOnlyFavorite;
-  }
-
-  void sortByFavorite() {
-    if (_favoritesOnTop) {
-      List<Quote> favoritedQuotes =
-          _visibleQuotes.where((e) => e.isFavorite).toList();
-      _visibleQuotes = _visibleQuotes.where((e) => !e.isFavorite).toList();
-      _visibleQuotes.insertAll(0, favoritedQuotes);
-    }
-  }
-
   void initCollectionTilesToAnimate() {
     _collectionTilesToAnimate.clear();
     _visibleQuotes.asMap().forEach((index, quote) {
@@ -123,6 +109,20 @@ class Quotes extends ChangeNotifier {
   }
 
 //Sorting options
+  void updateSortOptions(SortEnum option, bool showOnlyFavorite) {
+    _sortOption = option;
+    _favoritesOnTop = showOnlyFavorite;
+  }
+
+  void _sortByFavorite() {
+    if (_favoritesOnTop) {
+      List<Quote> favoritedQuotes =
+          _visibleQuotes.where((e) => e.isFavorite).toList();
+      _visibleQuotes = _visibleQuotes.where((e) => !e.isFavorite).toList();
+      _visibleQuotes.insertAll(0, favoritedQuotes);
+    }
+  }
+
   void _sortByNewest() {
     _visibleQuotes.sort(
       (a, b) => b.unlockingTime.compareTo(a.unlockingTime),
@@ -148,6 +148,23 @@ class Quotes extends ChangeNotifier {
       (a, b) => b.rarity.index.compareTo(a.rarity.index),
     );
   }
+
+  void _sortByAuthor() {
+    _visibleQuotes.sort(
+      (a, b) {
+        for (int i = 0; i < a.author.length; i++) {
+          try {
+            if (a.author[i].compareTo(b.author[i]) != 0) {
+              return a.author[i].compareTo(b.author[i]);
+            }
+          } on RangeError catch (_) {
+            return a.author[i - 1].compareTo(b.author[i - 1]);
+          }
+        }
+        return a.author.compareTo(b.author);
+      },
+    );
+  }
   //
 
   void refreshVisibleQuotes() {
@@ -168,10 +185,13 @@ class Quotes extends ChangeNotifier {
       case SortEnum.RARITY:
         _sortByRarity();
         break;
+      case SortEnum.AUTHOR:
+        _sortByAuthor();
+        break;
       default:
         _sortByRarityDescending();
     }
-    sortByFavorite();
+    _sortByFavorite();
     if (shouldAnimate) {
       initCollectionTilesToAnimate();
     } else {

@@ -105,8 +105,13 @@ class _GridCellState extends State<GridCell>
     );
     _inOutAnimation = Tween<double>(
       begin: 1,
-      end: .5,
-    ).animate(_controller);
+      end: .6,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInSine,
+      ),
+    );
   }
 
   void animateCollectionTiles() {
