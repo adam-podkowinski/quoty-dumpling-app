@@ -14,6 +14,9 @@ class Quotes extends ChangeNotifier {
   List<Quote> _visibleQuotes = [];
   List<Quote> _unlockedQuotes = [];
   List<Quote> _quotesToUnlock = [];
+
+  // This list is sorted first and after playing half of the animation visibleQuotes are set to this. This affects to the animation
+  List<Quote> _visibleQuotesCopy = [];
   List<int> _collectionTilesToAnimate = [];
   SortEnum _sortOption = SortEnum.RARITY_DESCENDING;
   var _favoritesOnTop = false;
@@ -94,7 +97,7 @@ class Quotes extends ChangeNotifier {
 
   void initCollectionTilesToAnimate() {
     _collectionTilesToAnimate.clear();
-    _visibleQuotes.asMap().forEach((index, quote) {
+    _visibleQuotesCopy.asMap().forEach((index, quote) {
       if (!(quote == _previousQuotes[index])) {
         _collectionTilesToAnimate.add(index);
       }
@@ -102,8 +105,9 @@ class Quotes extends ChangeNotifier {
     _animateCollectionTiles = true;
     _areQuotesLoading = false;
     notifyListeners();
-    Future.delayed(Duration(milliseconds: 200), () {
+    Future.delayed(Duration(milliseconds: 250), () {
       _animateCollectionTiles = false;
+      _visibleQuotes = [..._visibleQuotesCopy];
       notifyListeners();
     });
   }
@@ -117,40 +121,42 @@ class Quotes extends ChangeNotifier {
   void _sortByFavorite() {
     if (_favoritesOnTop) {
       List<Quote> favoritedQuotes =
-          _visibleQuotes.where((e) => e.isFavorite).toList();
-      _visibleQuotes = _visibleQuotes.where((e) => !e.isFavorite).toList();
-      _visibleQuotes.insertAll(0, favoritedQuotes);
+          _visibleQuotesCopy.where((e) => e.isFavorite).toList();
+      _visibleQuotesCopy =
+          _visibleQuotesCopy.where((e) => !e.isFavorite).toList();
+      _visibleQuotesCopy.insertAll(0, favoritedQuotes);
     }
   }
 
   void _sortByNewest() {
-    _visibleQuotes.sort(
+    _visibleQuotesCopy.sort(
       (a, b) => b.unlockingTime.compareTo(a.unlockingTime),
     );
   }
 
   void _sortByOldest() {
-    _visibleQuotes.sort(
+    _visibleQuotesCopy.sort(
       (a, b) => a.unlockingTime.compareTo(b.unlockingTime),
     );
   }
 
   void _sortByRarity() {
     _sortByNewest();
-    _visibleQuotes.sort(
+    _visibleQuotesCopy.sort(
       (a, b) => a.rarity.index.compareTo(b.rarity.index),
     );
   }
 
   void _sortByRarityDescending() {
     _sortByNewest();
-    _visibleQuotes.sort(
+    _visibleQuotesCopy.sort(
       (a, b) => b.rarity.index.compareTo(a.rarity.index),
     );
   }
 
   void _sortByAuthor() {
-    _visibleQuotes.sort(
+    _sortByRarity();
+    _visibleQuotesCopy.sort(
       (a, b) {
         for (int i = 0; i < a.author.length; i++) {
           try {
@@ -175,6 +181,7 @@ class Quotes extends ChangeNotifier {
     _areQuotesLoading = true;
     WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
     _previousQuotes = [..._visibleQuotes];
+    _visibleQuotesCopy = [..._visibleQuotes];
     switch (_sortOption) {
       case SortEnum.NEWEST:
         _sortByNewest();
@@ -195,6 +202,7 @@ class Quotes extends ChangeNotifier {
     if (shouldAnimate) {
       initCollectionTilesToAnimate();
     } else {
+      _visibleQuotes = _visibleQuotesCopy;
       WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
     }
     _areQuotesLoading = false;

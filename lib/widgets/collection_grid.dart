@@ -101,11 +101,11 @@ class _GridCellState extends State<GridCell>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 225),
+      duration: Duration(milliseconds: 300),
     );
     _inOutAnimation = Tween<double>(
       begin: 1,
-      end: .6,
+      end: .2,
     ).animate(
       CurvedAnimation(
         parent: _controller,
@@ -187,10 +187,7 @@ class _GridCellState extends State<GridCell>
                             .changeFavorite();
 
                         if (_quotesProvider.favoritesOnTop)
-                          Future.delayed(
-                            Duration(milliseconds: 100),
-                            () => _quotesProvider.sortCollection(true),
-                          );
+                          _quotesProvider.sortCollection(true);
                       }),
                       child: Icon(
                         _quotesProvider.visibleQuotes[widget.index].isFavorite
