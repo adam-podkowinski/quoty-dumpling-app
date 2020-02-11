@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quoty_dumpling_app/helpers/constants.dart';
 
 class RoundedButton extends StatelessWidget {
   final Function onPressed;
@@ -29,7 +30,7 @@ class RoundedButton extends StatelessWidget {
           child: Text(
             text ?? 'Button',
             style: DefaultTextStyle.of(context).style.copyWith(
-                  fontFamily: 'Lato',
+                  fontFamily: Styles.fontFamily,
                   fontWeight: FontWeight.bold,
                   color: textColor,
                 ),

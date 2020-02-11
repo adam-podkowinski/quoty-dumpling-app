@@ -163,11 +163,7 @@ class _GridCellState extends State<GridCell>
                         _quotesProvider.visibleQuotes[widget.index].quote,
                         textAlign: TextAlign.center,
                         maxLines: 7,
-                        style: TextStyle(
-                          fontFamily: 'Lato',
-                          fontSize: SizeConfig.screenWidth * 0.04328,
-                          color: Theme.of(context).textTheme.title.color,
-                        ),
+                        style: Styles.kQuoteStyle,
                       ),
                     ),
                   ),
@@ -206,7 +202,7 @@ class _GridCellState extends State<GridCell>
                     title: Text(
                       _quotesProvider.visibleQuotes[widget.index].author,
                       style: TextStyle(
-                        fontFamily: 'Lato',
+                        fontFamily: Styles.fontFamily,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).textTheme.title.color,
                       ),
@@ -215,7 +211,7 @@ class _GridCellState extends State<GridCell>
                       _quotesProvider.visibleQuotes[widget.index].rarityText(),
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
-                        fontFamily: 'Lato',
+                        fontFamily: Styles.fontFamily,
                         color: Theme.of(context).textTheme.title.color,
                       ),
                     ),

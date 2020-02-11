@@ -6,6 +6,8 @@ class Styles {
   static final epicColor = Colors.purpleAccent;
   static final legendaryColor = Colors.yellow;
 
+  static final fontFamily = 'SofiaPro';
+
   static double _screenWidth = SizeConfig.screenWidth;
 
   static final mainTheme = ThemeData.light().copyWith(
@@ -17,7 +19,7 @@ class Styles {
     appBarTheme: AppBarTheme(
       textTheme: TextTheme(
         title: TextStyle(
-          fontFamily: 'Lato',
+          fontFamily: fontFamily,
           fontWeight: FontWeight.bold,
           color: Color(0xffFFFFEA),
           fontSize: 23,
@@ -27,14 +29,14 @@ class Styles {
   );
 
   static TextStyle kTitleStyle = TextStyle(
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
     color: Color(0xff3A2E39),
     fontSize: _screenWidth * 0.08,
   );
 
   static TextStyle kQuoteStyle = TextStyle(
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
     fontStyle: FontStyle.italic,
     color: kTitleStyle.color,
     decorationStyle: TextDecorationStyle.dashed,
@@ -42,7 +44,7 @@ class Styles {
   );
 
   static TextStyle kAuthorStyle = TextStyle(
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
     color: kTitleStyle.color,
     fontSize: _screenWidth * 0.05,
@@ -50,16 +52,16 @@ class Styles {
   );
 
   static TextStyle kButtonTextStyle = TextStyle(
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
     color: kTitleStyle.color,
     fontSize: _screenWidth * 0.045,
   );
 
   static TextStyle kCommonTextStyle = TextStyle(
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
     color: kTitleStyle.color,
-    fontSize: _screenWidth * 0.04,
+    fontSize: _screenWidth * 0.04328,
   );
 
   static OutlineInputBorder kSearchBarBorder = OutlineInputBorder(
@@ -74,7 +76,7 @@ class Styles {
 
   static TextStyle kSearchBarTextStyle = TextStyle(
     color: mainTheme.backgroundColor,
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
     fontSize: _screenWidth * 0.05,
   );
 
