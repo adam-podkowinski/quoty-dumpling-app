@@ -62,7 +62,16 @@ class _QuoteDetailsState extends State<QuoteDetails> {
                 ),
               ),
               Container(
-                color: widget.quote.rarityColor(context),
+                decoration: BoxDecoration(
+                  color: widget.quote.rarityColor(context),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: widget.quote.rarityColor(context).withOpacity(.7),
+                      blurRadius: 99,
+                      spreadRadius: 10,
+                    ),
+                  ],
+                ),
                 child: Padding(
                   padding: EdgeInsets.all(SizeConfig.screenWidth * 0.03),
                   child: Row(
