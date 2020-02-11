@@ -6,6 +6,7 @@ import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:quoty_dumpling_app/widgets/quote_details.dart';
 
 class CollectionGrid extends StatefulWidget {
   @override
@@ -141,82 +142,92 @@ class _GridCellState extends State<GridCell>
       child: SlideAnimation(
         verticalOffset: 50.0,
         child: FadeInAnimation(
-          child: Card(
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(SizeConfig.screenWidth * 0.0381),
+          child: GestureDetector(
+            onTap: () => showDialog(
+              context: context,
+              builder: (context) => QuoteDetails(
+                _quotesProvider.visibleQuotes[widget.index],
+              ),
             ),
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.all(
-                      SizeConfig.screenWidth * .022,
-                    ),
-                    color: Theme.of(context).backgroundColor,
-                    child: Center(
-                      child: AutoSizeText(
-                        _quotesProvider.visibleQuotes[widget.index].quote,
-                        textAlign: TextAlign.center,
-                        maxLines: 7,
-                        style: Styles.kQuoteStyle,
+            child: Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(SizeConfig.screenWidth * 0.0381),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.all(
+                        SizeConfig.screenWidth * .022,
+                      ),
+                      color: Theme.of(context).backgroundColor,
+                      child: Center(
+                        child: AutoSizeText(
+                          _quotesProvider.visibleQuotes[widget.index].quote,
+                          textAlign: TextAlign.center,
+                          maxLines: 7,
+                          style: Styles.kQuoteStyle,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        color: _quotesProvider.visibleQuotes[widget.index]
-                            .rarityColor(context)
-                            .withOpacity(.7),
-                        blurRadius: 99,
-                        spreadRadius: 10,
-                      ),
-                    ],
-                  ),
-                  child: GridTileBar(
-                    leading: InkWell(
-                      onTap: () => setState(() {
-                        _quotesProvider.visibleQuotes[widget.index]
-                            .changeFavorite();
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                          color: _quotesProvider.visibleQuotes[widget.index]
+                              .rarityColor(context)
+                              .withOpacity(.7),
+                          blurRadius: 99,
+                          spreadRadius: 10,
+                        ),
+                      ],
+                    ),
+                    child: GridTileBar(
+                      leading: InkWell(
+                        onTap: () => setState(() {
+                          _quotesProvider.visibleQuotes[widget.index]
+                              .changeFavorite();
 
-                        if (_quotesProvider.favoritesOnTop)
-                          _quotesProvider.sortCollection(true);
-                      }),
-                      child: Icon(
-                        _quotesProvider.visibleQuotes[widget.index].isFavorite
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: heartColor,
+                          if (_quotesProvider.favoritesOnTop)
+                            _quotesProvider.sortCollection(true);
+                        }),
+                        child: Icon(
+                          _quotesProvider.visibleQuotes[widget.index].isFavorite
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: heartColor,
+                        ),
                       ),
-                    ),
-                    title: Text(
-                      _quotesProvider.visibleQuotes[widget.index].author,
-                      style: TextStyle(
-                        fontFamily: Styles.fontFamily,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).textTheme.title.color,
+                      title: Text(
+                        _quotesProvider.visibleQuotes[widget.index].author,
+                        style: TextStyle(
+                          fontFamily: Styles.fontFamily,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).textTheme.title.color,
+                        ),
                       ),
-                    ),
-                    subtitle: Text(
-                      _quotesProvider.visibleQuotes[widget.index].rarityText(),
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontFamily: Styles.fontFamily,
-                        color: Theme.of(context).textTheme.title.color,
+                      subtitle: Text(
+                        _quotesProvider.visibleQuotes[widget.index]
+                            .rarityText(),
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontFamily: Styles.fontFamily,
+                          color: Theme.of(context).textTheme.title.color,
+                        ),
                       ),
+                      backgroundColor: _quotesProvider
+                          .visibleQuotes[widget.index]
+                          .rarityColor(context),
                     ),
-                    backgroundColor: _quotesProvider.visibleQuotes[widget.index]
-                        .rarityColor(context),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -224,6 +235,9 @@ class _GridCellState extends State<GridCell>
     );
   }
 }
+// subtitle: Text(
+//               DateFormat('d|M|y').add_Hm().format(quote.unlockingTime),
+//             ),
 // subtitle: Text(
 //               DateFormat('d|M|y').add_Hm().format(quote.unlockingTime),
 //             ),

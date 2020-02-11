@@ -64,6 +64,13 @@ class Styles {
     fontSize: _screenWidth * 0.04328,
   );
 
+  static TextStyle kQuoteDetailsTextStyle = TextStyle(
+    fontFamily: fontFamily,
+    color: kTitleStyle.color,
+    fontWeight: FontWeight.bold,
+    fontSize: _screenWidth * 0.04,
+  );
+
   static OutlineInputBorder kSearchBarBorder = OutlineInputBorder(
     borderSide: BorderSide(
       color: mainTheme.buttonColor,
