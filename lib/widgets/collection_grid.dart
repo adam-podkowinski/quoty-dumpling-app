@@ -101,7 +101,7 @@ class _GridCellState extends State<GridCell>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 225),
     );
     _inOutAnimation = Tween<double>(
       begin: 1,

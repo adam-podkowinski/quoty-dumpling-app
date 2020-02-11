@@ -44,15 +44,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).accentColor.withOpacity(.8),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [.66, 1],
-          ),
+          gradient: Styles.backgroundGradient,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

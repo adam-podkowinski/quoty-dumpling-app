@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/helpers/constants.dart';
 
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
@@ -38,15 +39,7 @@ class _DumplingScreenState extends State<DumplingScreen>
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).accentColor.withOpacity(.8),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [.66, 1],
-          ),
+          gradient: Styles.backgroundGradient,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
