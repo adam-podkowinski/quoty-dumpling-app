@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 
 class Styles {
-  static final rareColor = Colors.amber;
-  static final epicColor = Colors.purpleAccent;
-  static final legendaryColor = Colors.yellow;
+  static const rareColor = Colors.amber;
+  static const epicColor = Colors.purpleAccent;
+  static const legendaryColor = Colors.yellow;
+  static const appBarTextColor = Color(0xffFFFFEA);
 
   static final fontFamily = 'SofiaPro';
 
@@ -21,7 +22,7 @@ class Styles {
         title: TextStyle(
           fontFamily: fontFamily,
           fontWeight: FontWeight.bold,
-          color: Color(0xffFFFFEA),
+          color: appBarTextColor,
           fontSize: 23,
         ),
       ),

@@ -51,11 +51,21 @@ class _CollectionScreenState extends State<CollectionScreen> {
           mainAxisSize: MainAxisSize.max,
           children: _quotesProvider.unlockedQuotes.length <= 0
               ? <Widget>[
-                  CustomAppBar('Collection'),
+                  CustomAppBar(
+                    'Collection',
+                  ),
                   NothingInCollectionWidget(),
                 ]
               : <Widget>[
-                  CustomAppBar('Collection'),
+                  CustomAppBar(
+                    'Collection',
+                    suffix: Text(
+                      'Quotes: ${_quotesProvider.unlockedQuotes.length}',
+                      style: Styles.kSearchBarTextStyle.copyWith(
+                        color: Styles.appBarTextColor,
+                      ),
+                    ),
+                  ),
                   SlideAnimation(
                     verticalOffset: 50.0,
                     child: FadeInAnimation(

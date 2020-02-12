@@ -20,8 +20,10 @@ class _DumplingState extends State<Dumpling> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    if (_isInit) _dumplingProvider = Provider.of<DumplingProvider>(context);
-    _isInit = false;
+    if (_isInit) {
+      _dumplingProvider = Provider.of<DumplingProvider>(context);
+      _isInit = false;
+    }
   }
 
   @override
