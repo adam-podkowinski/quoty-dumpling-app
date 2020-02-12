@@ -25,16 +25,14 @@ class Quote {
     this.unlockingTime,
   });
 
-  static Quote fromMap(Map<String, dynamic> map) {
-    return Quote(
-      quote: map['quoteText'],
-      author: map['quoteAuthor'] == '' ? 'Unknown' : map['quoteAuthor'],
-      rarity: Quote.getRarityByText(map['rarity']),
-      //debug
-      // isUnlocked: true,
-      // unlockingTime: DateTime.now(),
-    );
-  }
+  factory Quote.fromMap(Map<String, dynamic> map) => Quote(
+        quote: map['quoteText'],
+        author: map['quoteAuthor'] == '' ? 'Unknown' : map['quoteAuthor'],
+        rarity: Quote.getRarityByText(map['rarity']),
+        //debug
+        // isUnlocked: true,
+        // unlockingTime: DateTime.now(),
+      );
 
   Color rarityColor(BuildContext context) {
     switch (rarity) {
