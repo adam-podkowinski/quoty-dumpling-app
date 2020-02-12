@@ -56,18 +56,23 @@ class Quotes extends ChangeNotifier {
     return [..._collectionTilesToAnimate];
   }
 
+  // Future<void> fetchUnlockedQuotesFromDatabase() {
+
+  // }
+
   Future<void> fetchQuotes() async {
     List<dynamic> contents;
     ByteData contentsB = await rootBundle.load('assets/quotes/quotes.json');
-    contents = jsonDecode(
+    contents = await jsonDecode(
       utf8.decode(contentsB.buffer.asUint8List(), allowMalformed: true),
     );
     _quotes.clear();
+
     _quotes.addAll(
-      contents.map(
-        (e) => Quote.fromMap(e),
-      ),
+      contents.map((e) => Quote.fromMap(e)),
     );
+
+    _quotes.forEach((e) => e.fetchFromDatabase());
 
     _unlockedQuotes.addAll(
       _quotes.where((e) => e.isUnlocked == true),
@@ -92,6 +97,7 @@ class Quotes extends ChangeNotifier {
         author: 'No quotes loaded',
         quote: 'No quotes loaded',
         rarity: Rarities.LEGENDARY,
+        id: 'No quotes loaded',
       );
   }
 
