@@ -41,11 +41,9 @@ class CustomAppBar extends StatelessWidget {
             alignment: Alignment.centerRight,
           ),
           Center(
-            child: FittedBox(
-              child: Text(
-                title,
-                style: Theme.of(context).appBarTheme.textTheme.title,
-              ),
+            child: Text(
+              title,
+              style: Theme.of(context).appBarTheme.textTheme.title,
             ),
           ),
         ],
