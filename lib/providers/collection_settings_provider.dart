@@ -3,6 +3,7 @@ import 'package:flutter/material.dart'
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum SortEnum {
   RARITY,
@@ -13,17 +14,9 @@ enum SortEnum {
 }
 
 class CollectionSettings extends ChangeNotifier {
-  SortEnum _selectedOption = SortEnum.RARITY_DESCENDING;
-  SortEnum get selectedOption {
-    return _selectedOption;
-  }
-
-  bool _favoritesOnTop = false;
-  bool get favoritesOnTop {
-    return _favoritesOnTop;
-  }
-
-  Map<String, dynamic> _previousOptions = {};
+  Map<String, dynamic> _selectedOptions = {};
+  Map<String, dynamic> get selectedOptions => _selectedOptions;
+  Map<String, dynamic> _savedOptions = {};
 
   ScrollController _scrollController;
   ScrollController get scrollController {
@@ -57,29 +50,46 @@ class CollectionSettings extends ChangeNotifier {
         duration: Duration(milliseconds: 400), curve: Curves.easeIn);
   }
 
-  void initOptions() {
-    _previousOptions['selectedOption'] = _selectedOption;
-    _previousOptions['favoritesOnTop'] = _favoritesOnTop;
+  Future<void> initOptions(context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    _savedOptions['sortOption'] = SortEnum
+        .values[prefs.getInt('sortOption') ?? SortEnum.RARITY_DESCENDING];
+    _savedOptions['favoritesOnTop'] = prefs.getBool('favoritesOnTop') ?? false;
   }
 
-  void cancelOptions() {
-    _selectedOption = _previousOptions['selectedOption'];
-    _favoritesOnTop = _previousOptions['favoritesOnTop'];
+  void initOptionsDialog() {
+    _selectedOptions = {
+      'sortOption': _savedOptions['sortOption'],
+      'favoritesOnTop': _savedOptions['favoritesOnTop'],
+    };
   }
 
-  void saveOptions(BuildContext context) {
-    Provider.of<Quotes>(context, listen: false)
-        .updateSortOptions(_selectedOption, _favoritesOnTop);
+  Future<void> saveOptions(BuildContext context) async {
+    _savedOptions = _selectedOptions;
+
+    Provider.of<Quotes>(context, listen: false).updateSortOptions(
+      _savedOptions,
+    );
     Provider.of<Quotes>(context, listen: false).sortCollection(true);
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(
+      'sortOption',
+      _savedOptions['sortOption'].index,
+    );
+    await prefs.setBool(
+      'favoritesOnTop',
+      _savedOptions['favoritesOnTop'] ?? false,
+    );
   }
 
-  void changeFavoritesOnTop(bool val) {
-    _favoritesOnTop = val;
+  void changeSelectedFavoritesOnTop(bool val) {
+    _selectedOptions['favoritesOnTop'] = val;
     notifyListeners();
   }
 
-  void changeSelectedVal(int n) {
-    _selectedOption = SortEnum.values[n];
+  void changeSelectedSortOption(int n) {
+    _selectedOptions['sortOption'] = SortEnum.values[n];
     notifyListeners();
   }
 

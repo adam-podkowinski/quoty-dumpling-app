@@ -29,7 +29,7 @@ class SettingsDialog extends StatefulWidget {
 
 class _SettingsDialogState extends State<SettingsDialog> {
   final _padding = SizeConfig.screenWidth * .035;
-  var _collectionSettingsProvider;
+  CollectionSettings _collectionSettingsProvider;
   var _isInit = true;
 
   @override
@@ -37,7 +37,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
     super.didChangeDependencies();
     if (_isInit) {
       _collectionSettingsProvider = Provider.of<CollectionSettings>(context);
-      _collectionSettingsProvider.initOptions();
+      _collectionSettingsProvider.initOptionsDialog();
       FocusScope.of(context).unfocus();
       _isInit = false;
     }
@@ -99,9 +99,10 @@ class _SettingsDialogState extends State<SettingsDialog> {
               ),
               CheckboxListTile(
                 activeColor: Theme.of(context).accentColor,
-                value: _collectionSettingsProvider.favoritesOnTop,
-                onChanged: (val) =>
-                    _collectionSettingsProvider.changeFavoritesOnTop(val),
+                value: _collectionSettingsProvider
+                    .selectedOptions['favoritesOnTop'],
+                onChanged: (val) => _collectionSettingsProvider
+                    .changeSelectedFavoritesOnTop(val),
                 title: Text(
                   'Show Favorites On Top',
                   style: Styles.kButtonTextStyle,
@@ -116,8 +117,8 @@ class _SettingsDialogState extends State<SettingsDialog> {
                   Spacer(),
                   RoundedButton(
                     text: 'Save',
-                    onPressed: () {
-                      _collectionSettingsProvider.saveOptions(context);
+                    onPressed: () async {
+                      await _collectionSettingsProvider.saveOptions(context);
                       Navigator.of(context).pop();
                     },
                     color: Theme.of(context).secondaryHeaderColor,
@@ -128,7 +129,6 @@ class _SettingsDialogState extends State<SettingsDialog> {
                   RoundedButton(
                     text: 'Cancel',
                     onPressed: () {
-                      _collectionSettingsProvider.cancelOptions();
                       Navigator.of(context).pop();
                     },
                     width: SizeConfig.screenWidth * .2546,
@@ -185,8 +185,10 @@ class _ListElementState extends State<ListElement> {
       child: RadioListTile(
         value: widget.value,
         activeColor: Theme.of(context).accentColor,
-        groupValue: collectionSettingsProvider.selectedOption.index,
-        onChanged: (val) => collectionSettingsProvider.changeSelectedVal(val),
+        groupValue:
+            collectionSettingsProvider.selectedOptions['sortOption'].index,
+        onChanged: (val) =>
+            collectionSettingsProvider.changeSelectedSortOption(val),
         title: Text(
           title,
           style: Styles.kCommonTextStyle,

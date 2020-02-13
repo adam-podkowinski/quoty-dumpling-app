@@ -34,7 +34,7 @@ class Quote {
       author: map['quoteAuthor'] == '' ? 'Unknown' : map['quoteAuthor'],
       rarity: Quote.getRarityByText(map['rarity']),
       id: map['id'],
-      // //debug
+      //debug
       // isUnlocked: true,
       // unlockingTime: DateTime.now(),
     );

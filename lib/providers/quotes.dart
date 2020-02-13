@@ -9,6 +9,7 @@ import 'package:quoty_dumpling_app/data/DBProvider.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart'
     show SortEnum;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Quotes extends ChangeNotifier {
   List<Quote> _quotes = [];
@@ -19,7 +20,7 @@ class Quotes extends ChangeNotifier {
   // This list is sorted first and after playing half of the animation visibleQuotes are set to this. This affects to the animation
   List<Quote> _visibleQuotesCopy = [];
   List<int> _collectionTilesToAnimate = [];
-  SortEnum _sortOption = SortEnum.RARITY_DESCENDING;
+  SortEnum _sortOption;
   var _favoritesOnTop = false;
   var _animateCollectionTiles = false;
   var _previousQuotes = [];
@@ -85,6 +86,10 @@ class Quotes extends ChangeNotifier {
     _quotesToUnlock.addAll(
       _quotes.where((e) => e.isUnlocked != true),
     );
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    _favoritesOnTop = prefs.getBool('favoritesOnTop') ?? false;
+    _sortOption = SortEnum.values[prefs.getInt('sortOption') ?? 1];
   }
 
   Quote unlockRandomQuote() {
@@ -123,9 +128,9 @@ class Quotes extends ChangeNotifier {
   }
 
 //Sorting options
-  void updateSortOptions(SortEnum option, bool showOnlyFavorite) {
-    _sortOption = option;
-    _favoritesOnTop = showOnlyFavorite;
+  void updateSortOptions(Map<String, dynamic> options) {
+    _sortOption = options['sortOption'];
+    _favoritesOnTop = options['favoritesOnTop'];
   }
 
   void _sortByFavorite() {

@@ -19,6 +19,9 @@ class CollectionScreen extends StatefulWidget {
 
 class _CollectionScreenState extends State<CollectionScreen> {
   Quotes _quotesProvider;
+  CollectionSettings _collectionSettings;
+  var _isInit = true;
+
   @override
   void initState() {
     super.initState();
@@ -28,18 +31,26 @@ class _CollectionScreenState extends State<CollectionScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      _collectionSettings = Provider.of<CollectionSettings>(context)
+        ..initOptions(context);
+      _isInit = false;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton:
-          Provider.of<CollectionSettings>(context).showScrollFab
-              ? FloatingActionButton(
-                  onPressed: () =>
-                      Provider.of<CollectionSettings>(context).scrollUp(),
-                  child: Icon(Icons.arrow_upward),
-                  backgroundColor: Theme.of(context).buttonColor,
-                  splashColor: Theme.of(context).accentColor,
-                )
-              : null,
+      floatingActionButton: _collectionSettings.showScrollFab
+          ? FloatingActionButton(
+              onPressed: () => _collectionSettings.scrollUp(),
+              child: Icon(Icons.arrow_upward),
+              backgroundColor: Theme.of(context).buttonColor,
+              splashColor: Theme.of(context).accentColor,
+            )
+          : null,
       body: Container(
         width: double.infinity,
         height: double.infinity,
