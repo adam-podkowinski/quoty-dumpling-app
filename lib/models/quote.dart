@@ -98,14 +98,23 @@ class Quote {
     isUnlocked = true;
     unlockingTime = DateTime.now();
 
-    await DBProvider.db.insert('UnlockedQuotes', {
-      'id': id,
-      'isFavorite': 0,
-      'unlockingTime': unlockingTime.toIso8601String(),
-    });
+    await DBProvider.db.insert(
+      'UnlockedQuotes',
+      {
+        'id': id,
+        'isFavorite': 0,
+        'unlockingTime': unlockingTime.toIso8601String(),
+      },
+    );
   }
 
   void changeFavorite() {
     isFavorite = !isFavorite;
+
+    DBProvider.db.updateElementById(
+      'UnlockedQuotes',
+      id,
+      {'isFavorite': isFavorite ? 1 : 0},
+    );
   }
 }

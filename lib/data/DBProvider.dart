@@ -55,6 +55,15 @@ class DBProvider {
 
   Future deleteAllElements(String table) async {
     final db = await _databaseGet;
-    return db.delete(table);
+    db.delete(table);
+  }
+
+  Future updateElementById(
+    String table,
+    String id,
+    Map<String, dynamic> values,
+  ) async {
+    final db = await _databaseGet;
+    db.update(table, values, where: 'id=?', whereArgs: [id]);
   }
 }
