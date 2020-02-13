@@ -44,8 +44,8 @@ class CollectionSettings extends ChangeNotifier {
 
   Future<void> initOptions() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    _savedOptions['sortOption'] = SortEnum
-        .values[prefs.getInt('sortOption') ?? SortEnum.RARITY_DESCENDING];
+    _savedOptions['sortOption'] =
+        SortEnum.values[prefs.getInt('sortOption') ?? 1];
     _savedOptions['favoritesOnTop'] = prefs.getBool('favoritesOnTop') ?? false;
   }
 

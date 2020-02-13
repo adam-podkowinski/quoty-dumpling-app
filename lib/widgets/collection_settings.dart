@@ -103,8 +103,9 @@ class _SettingsDialogState extends State<SettingsDialog> {
                     .selectedOptions['favoritesOnTop'],
                 onChanged: (val) => _collectionSettingsProvider
                     .changeSelectedFavoritesOnTop(val),
-                title: Text(
+                title: AutoSizeText(
                   'Show Favorites On Top',
+                  maxLines: 1,
                   style: Styles.kButtonTextStyle,
                 ),
               ),
