@@ -34,26 +34,16 @@ class Quote {
       author: map['quoteAuthor'] == '' ? 'Unknown' : map['quoteAuthor'],
       rarity: Quote.getRarityByText(map['rarity']),
       id: map['id'],
-      // isUnlocked: isUnlocked ? true : false,
-      // isFavorite:
-      //     isUnlocked ? unlockedQuote['isFavorite'] == 1 ? true : false : null,
-      // unlockingTime:
-      //     isUnlocked ? DateTime.parse(unlockedQuote['unlockingTime']) : null,
       // //debug
       // isUnlocked: true,
       // unlockingTime: DateTime.now(),
     );
   }
 
-  Future fetchFromDatabase() async {
-    var unlockedQuote = await DBProvider.db.getElement('UnlockedQuotes', id);
-    var isUnlocked = unlockedQuote != Null;
-    if (isUnlocked) {
-      print('hello');
-      isUnlocked = isUnlocked;
-      isFavorite = unlockedQuote['isFavorite'] == 1 ? true : false;
-      unlockingTime = DateTime.parse(unlockedQuote['unlockingTime']);
-    }
+  void unlockedFromDatabase(Map<String, dynamic> map) {
+    isUnlocked = true;
+    isFavorite = map['isFavorite'] == 1 ? true : false;
+    unlockingTime = DateTime.parse(map['unlockingTime']);
   }
 
   Color rarityColor(BuildContext context) {

@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:quoty_dumpling_app/data/DBProvider.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart'
     show SortEnum;
@@ -56,10 +57,6 @@ class Quotes extends ChangeNotifier {
     return [..._collectionTilesToAnimate];
   }
 
-  // Future<void> fetchUnlockedQuotesFromDatabase() {
-
-  // }
-
   Future<void> fetchQuotes() async {
     List<dynamic> contents;
     ByteData contentsB = await rootBundle.load('assets/quotes/quotes.json');
@@ -72,7 +69,12 @@ class Quotes extends ChangeNotifier {
       contents.map((e) => Quote.fromMap(e)),
     );
 
-    _quotes.forEach((e) => e.fetchFromDatabase());
+    final _unlockedQuotesFromDB =
+        await DBProvider.db.getAllElements('UnlockedQuotes');
+
+    _unlockedQuotesFromDB.forEach((e) {
+      _quotes.firstWhere((q) => q.id == e['id']).unlockedFromDatabase(e);
+    });
 
     _unlockedQuotes.addAll(
       _quotes.where((e) => e.isUnlocked == true),
@@ -80,7 +82,6 @@ class Quotes extends ChangeNotifier {
     _quotesToUnlock.addAll(
       _quotes.where((e) => e.isUnlocked != true),
     );
-    _visibleQuotes = [...unlockedQuotes];
   }
 
   Quote unlockRandomQuote() {

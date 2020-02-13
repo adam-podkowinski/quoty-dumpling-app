@@ -5,35 +5,51 @@ class DBProvider {
   DBProvider._();
   static final DBProvider db = DBProvider._();
 
-  Future<sql.Database> database() async {
+  static sql.Database _database;
+
+  Future<sql.Database> get _databaseGet async {
+    if (_database != null) {
+      print('lol');
+      return _database;
+    }
+
+    _database = await initDB();
+    return _database;
+  }
+
+  Future<sql.Database> initDB() async {
     final dbPath = await sql.getDatabasesPath();
     String path = join(dbPath, "database.db");
     return await sql.openDatabase(
       path,
       version: 1,
-      onOpen: (db) {},
       onCreate: (db, version) async {
         await db.execute(
-            'CREATE TABLE UnlockedQuotes(id TEXT PRIMARY KEY, isFavorite INTEGER, unlockingTime TEXT)');
+          'CREATE TABLE UnlockedQuotes(id TEXT PRIMARY KEY, isFavorite INTEGER, unlockingTime TEXT)',
+        );
       },
     );
   }
 
   Future insert(String table, Map<String, dynamic> data) async {
-    final db = await database();
+    final db = await _databaseGet;
     var res = await db.insert(
       table,
       data,
       conflictAlgorithm: sql.ConflictAlgorithm.replace,
     );
-    print(await getElement('UnlockedQuotes', data['id']));
     return res;
   }
 
-  getElement(String table, String id) async {
-    final db = await database();
+  Future<Map<String, dynamic>> getElement(String table, String id) async {
+    final db = await _databaseGet;
     var res = await db.query(table, where: "id = ?", whereArgs: [id]);
-    print(res.isNotEmpty ? res.first : '');
     return res.isNotEmpty ? res.first : Null;
+  }
+
+  Future<List<Map<String, dynamic>>> getAllElements(String table) async {
+    final db = await _databaseGet;
+    var res = await db.query('UnlockedQuotes');
+    return res.isNotEmpty ? res : [];
   }
 }
