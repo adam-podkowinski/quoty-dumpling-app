@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:provider/provider.dart';
 
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
@@ -15,6 +18,7 @@ class _DumplingState extends State<Dumpling> {
 
   var _dumplingProvider;
   var _isInit = true;
+  AudioCache _audioPlayer = AudioCache();
 
   @override
   void didChangeDependencies() {
@@ -49,7 +53,15 @@ class _DumplingState extends State<Dumpling> {
           });
         },
         onTap: () {
-          _dumplingProvider.clickedOnDumpling();
+          if (_dumplingProvider.progressBarStatus < 1)
+            _audioPlayer
+                .play(
+                  'sounds/eating_sound.mp3',
+                  mode: PlayerMode.LOW_LATENCY,
+                )
+                .then(
+                  (_) => _dumplingProvider.clickedOnDumpling(),
+                );
         },
         child: ColorFiltered(
           colorFilter: ColorFilter.mode(
