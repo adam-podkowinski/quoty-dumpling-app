@@ -52,4 +52,9 @@ class DBProvider {
     var res = await db.query('UnlockedQuotes');
     return res.isNotEmpty ? res : [];
   }
+
+  Future deleteAllElements(String table) async {
+    final db = await _databaseGet;
+    return db.delete(table);
+  }
 }

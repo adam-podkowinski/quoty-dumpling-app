@@ -102,11 +102,11 @@ class _GridCellState extends State<GridCell>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 250),
+      duration: Quotes.animationTime,
     );
     _inOutAnimation = Tween<double>(
       begin: 1,
-      end: .2,
+      end: .1,
     ).animate(
       CurvedAnimation(
         parent: _controller,

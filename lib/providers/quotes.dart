@@ -24,6 +24,7 @@ class Quotes extends ChangeNotifier {
   var _animateCollectionTiles = false;
   var _previousQuotes = [];
   var _areQuotesLoading = false;
+  static const Duration animationTime = const Duration(milliseconds: 300);
 
   bool get animateCollectionTiles {
     return _animateCollectionTiles;
@@ -69,16 +70,18 @@ class Quotes extends ChangeNotifier {
       contents.map((e) => Quote.fromMap(e)),
     );
 
+    //debug
+    // DBProvider.db.deleteAllElements('UnlockedQuotes');
+
     final _unlockedQuotesFromDB =
         await DBProvider.db.getAllElements('UnlockedQuotes');
 
     _unlockedQuotesFromDB.forEach((e) {
-      _quotes.firstWhere((q) => q.id == e['id']).unlockedFromDatabase(e);
+      _unlockedQuotes.add(
+        _quotes.firstWhere((q) => q.id == e['id'])..unlockedFromDatabase(e),
+      );
     });
 
-    _unlockedQuotes.addAll(
-      _quotes.where((e) => e.isUnlocked == true),
-    );
     _quotesToUnlock.addAll(
       _quotes.where((e) => e.isUnlocked != true),
     );
@@ -112,7 +115,7 @@ class Quotes extends ChangeNotifier {
     _animateCollectionTiles = true;
     _areQuotesLoading = false;
     notifyListeners();
-    Future.delayed(Duration(milliseconds: 250), () {
+    Future.delayed(Duration(milliseconds: 300), () {
       _animateCollectionTiles = false;
       _visibleQuotes = [..._visibleQuotesCopy];
       notifyListeners();
