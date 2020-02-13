@@ -34,8 +34,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
-      _collectionSettings = Provider.of<CollectionSettings>(context)
-        ..initOptions(context);
+      _collectionSettings = Provider.of<CollectionSettings>(context);
       _isInit = false;
     }
   }

@@ -9,7 +9,6 @@ class DBProvider {
 
   Future<sql.Database> get _databaseGet async {
     if (_database != null) {
-      print('lol');
       return _database;
     }
 

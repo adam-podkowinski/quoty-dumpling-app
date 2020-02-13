@@ -19,14 +19,10 @@ class CollectionSettings extends ChangeNotifier {
   Map<String, dynamic> _savedOptions = {};
 
   ScrollController _scrollController;
-  ScrollController get scrollController {
-    return _scrollController;
-  }
+  ScrollController get scrollController => _scrollController;
 
   bool _showScrollFab = false;
-  bool get showScrollFab {
-    return _showScrollFab;
-  }
+  bool get showScrollFab => _showScrollFab;
 
   void initScrollControlller() {
     _scrollController = ScrollController();
@@ -41,16 +37,12 @@ class CollectionSettings extends ChangeNotifier {
     });
   }
 
-  void disposeScrollController() {
-    _scrollController.dispose();
-  }
+  void disposeScrollController() => _scrollController.dispose();
 
-  void scrollUp() {
-    _scrollController.animateTo(0,
-        duration: Duration(milliseconds: 400), curve: Curves.easeIn);
-  }
+  void scrollUp() => _scrollController.animateTo(0,
+      duration: Duration(milliseconds: 400), curve: Curves.easeIn);
 
-  Future<void> initOptions(context) async {
+  Future<void> initOptions() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     _savedOptions['sortOption'] = SortEnum
         .values[prefs.getInt('sortOption') ?? SortEnum.RARITY_DESCENDING];
@@ -115,7 +107,6 @@ class CollectionSettings extends ChangeNotifier {
       'Show the oldest quotes at the top',
     ],
   ];
-  List<List<String>> get titlesWithSubtitlesOfOptions {
-    return _titlesWithSubtitlesOfOptions;
-  }
+  List<List<String>> get titlesWithSubtitlesOfOptions =>
+      _titlesWithSubtitlesOfOptions;
 }
