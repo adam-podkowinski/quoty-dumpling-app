@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/helpers/audio_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
@@ -45,7 +46,15 @@ class _DumplingScreenState extends State<DumplingScreen>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            CustomAppBar('Dumpling'),
+            CustomAppBar(
+              'Dumpling',
+              suffix: IconButton(
+                onPressed: () {
+                  AudioProvider.audio.stopAudio();
+                },
+                icon: Icon(Icons.settings),
+              ),
+            ),
             FadeInAnimation(
               duration: Duration(milliseconds: 200),
               child: AnimatedSwitcher(

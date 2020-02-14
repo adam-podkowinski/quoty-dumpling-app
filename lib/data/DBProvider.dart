@@ -5,7 +5,7 @@ class DBProvider {
   DBProvider._();
   static final DBProvider db = DBProvider._();
 
-  static sql.Database _database;
+  sql.Database _database;
 
   Future<sql.Database> get _databaseGet async {
     if (_database != null) {

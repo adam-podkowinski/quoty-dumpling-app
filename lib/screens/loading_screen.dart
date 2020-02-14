@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/helpers/audio_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
@@ -16,6 +17,8 @@ class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
   Future _setData(context) async {
     SizeConfig.init(context);
+    await AudioProvider.audio.stopAudio();
+    await AudioProvider.audio.playLoopAudio();
     await Provider.of<Quotes>(context, listen: false).fetchQuotes();
     await Provider.of<CollectionSettings>(context, listen: false).initOptions();
   }

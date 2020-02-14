@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/helpers/audio_provider.dart';
 
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
@@ -18,7 +17,6 @@ class _DumplingState extends State<Dumpling> {
 
   var _dumplingProvider;
   var _isInit = true;
-  AudioCache _audioPlayer = AudioCache();
 
   @override
   void didChangeDependencies() {
@@ -54,12 +52,7 @@ class _DumplingState extends State<Dumpling> {
         },
         onTap: () {
           if (_dumplingProvider.progressBarStatus < 1)
-            _audioPlayer
-                .play(
-                  'sounds/eating_sound.mp3',
-                  mode: PlayerMode.LOW_LATENCY,
-                )
-                .then(
+            AudioProvider.audio.playDumplingEating().then(
                   (_) => _dumplingProvider.clickedOnDumpling(),
                 );
         },
