@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
-import 'package:quoty_dumpling_app/helpers/audio_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
 import 'package:quoty_dumpling_app/widgets/dumpling.dart';
+import 'package:quoty_dumpling_app/widgets/global_settings_dialog.dart';
 import 'package:quoty_dumpling_app/widgets/unlocked_new_quote.dart';
 
 class DumplingScreen extends StatefulWidget {
-  static const routeId = 'dumpling-screen';
-
   @override
   _DumplingScreenState createState() => _DumplingScreenState();
 }
@@ -49,9 +47,10 @@ class _DumplingScreenState extends State<DumplingScreen>
             CustomAppBar(
               'Dumpling',
               suffix: IconButton(
-                onPressed: () {
-                  AudioProvider.audio.stopAudio();
-                },
+                onPressed: () => showDialog(
+                  context: context,
+                  builder: (ctx) => GlobalSettingsDialog(),
+                ),
                 icon: Icon(Icons.settings),
               ),
             ),

@@ -5,33 +5,36 @@ class AudioProvider {
   AudioProvider._();
   static final AudioProvider audio = AudioProvider._();
 
+  double _volume = 1.0;
+
   static AudioPlayer _loopPlayer = AudioPlayer(playerId: 'loopId');
-  AudioPlayer _eatPlayer = AudioPlayer();
 
   AudioCache _audioCacheLoop = AudioCache(
     prefix: 'sounds/',
     fixedPlayer: _loopPlayer,
   );
 
-  AudioCache _audioCache = AudioCache(
-    prefix: 'sounds/',
-  );
+  AudioCache _audioCache = AudioCache(prefix: 'sounds/');
 
   Future playDumplingEating() async {
-    await _audioCache.play('eating_sound.mp3', mode: PlayerMode.LOW_LATENCY);
+    await _audioCache.play(
+      'eating_sound.mp3',
+      mode: PlayerMode.LOW_LATENCY,
+      volume: _volume,
+    );
   }
 
   Future playLoopAudio() async {
     _loopPlayer =
-        await _audioCacheLoop.loop('background_music.mp3', volume: .2);
+        await _audioCacheLoop.loop('background_music.mp3', volume: _volume);
   }
 
   Future stopAudio() async {
     await _loopPlayer.stop();
-    await _eatPlayer.stop();
   }
 
   void changeVolume(double newVolume) {
-    // _audioCache.fixedPlayer.setVolume(newVolume);
+    _volume = newVolume;
+    _audioCacheLoop.fixedPlayer.setVolume(newVolume);
   }
 }
