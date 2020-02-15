@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart' as launcher;
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:quoty_dumpling_app/data/DBProvider.dart';
 import 'package:quoty_dumpling_app/helpers/audio_provider.dart';
@@ -16,12 +16,15 @@ class GlobalSettingsDialog extends StatefulWidget {
 }
 
 class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
-  final _padding = SizeConfig.screenWidth * .035;
-  AudioProvider _audioProvider;
-  var _isInit = true;
+  static const String _dumplingIconURL =
+      'https://www.flaticon.com/free-icon/dumpling_678078?term=dumpling&page=1&position=10';
 
   static const String _dumplingImageURL =
       'https://pl.freepik.com/darmowe-wektory/realistyczny-zestaw-pierogow-vareniki-pierogi-ravioli-khinkali-pelmeni-manti-momo-tortellini_2238437.htm#';
+
+  AudioProvider _audioProvider;
+  var _isInit = true;
+  final _padding = SizeConfig.screenWidth * .035;
 
   @override
   void didChangeDependencies() {
@@ -49,10 +52,15 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
             Align(
               heightFactor: 1,
               alignment: Alignment.topRight,
-              child: IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () => Navigator.of(context).pop(),
-                color: Styles.kSettingsTitleStyle.color,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(_padding),
+                clipBehavior: Clip.hardEdge,
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () => Navigator.of(context).pop(),
+                  highlightColor: Colors.transparent,
+                  color: Styles.kSettingsTitleStyle.color,
+                ),
               ),
             ),
             Padding(
@@ -117,23 +125,38 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                         style: Styles.kSettingsTextStyle,
                       ),
                       RichText(
+                        textAlign: TextAlign.center,
                         text: TextSpan(
-                          style: Styles.kSettingsTextStyle,
+                          style: Styles.kSettingsTextStyle.copyWith(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
                           children: [
                             TextSpan(
-                              text: 'Dumpling Image: Vector Pouch',
+                              text: 'Dumpling Image: Vector Pouch\n',
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  launcher.launch(
+                                  launch(
                                     _dumplingImageURL,
                                   );
                                 },
                             ),
-                            TextSpan(text: ''),
+                            TextSpan(
+                              text: 'Dumpling Icon: Free Pik',
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  launch(
+                                    _dumplingIconURL,
+                                  );
+                                },
+                            ),
                           ],
                         ),
                       ),
                     ],
+                  ),
+                  SizedBox(
+                    height: 5,
                   ),
                   Divider(
                     color: Theme.of(context).accentColor,

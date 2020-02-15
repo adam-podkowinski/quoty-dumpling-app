@@ -1,4 +1,5 @@
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:path/path.dart';
 
@@ -57,8 +58,13 @@ class DBProvider {
     final dbPath = await sql.getDatabasesPath();
     String path = join(dbPath, "database.db");
     final db = await _databaseGet;
+
     await db.close();
     await sql.deleteDatabase(path);
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+
     Phoenix.rebirth(context);
   }
 

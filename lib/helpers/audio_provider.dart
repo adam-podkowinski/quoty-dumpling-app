@@ -54,15 +54,9 @@ class AudioProvider extends ChangeNotifier {
   void changeMute() {
     _isMuted = !_isMuted;
 
-    if (_isMuted) {
-      _volume = 0;
-      _loopPlayer.setVolume(_volume);
-      _loopPlayer.pause();
-    } else {
-      _volume = 1;
-      _loopPlayer.setVolume(_volume);
-      _loopPlayer.resume();
-    }
-    notifyListeners();
+    if (_isMuted)
+      changeVolume(0);
+    else
+      changeVolume(1);
   }
 }
