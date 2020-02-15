@@ -1,3 +1,4 @@
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:path/path.dart';
 
@@ -8,7 +9,7 @@ class DBProvider {
   sql.Database _database;
 
   Future<sql.Database> get _databaseGet async {
-    if (_database != null) {
+    if (_database != null && _database.isOpen) {
       return _database;
     }
 
@@ -52,10 +53,13 @@ class DBProvider {
     return res.isNotEmpty ? res : [];
   }
 
-  static Future resetGame(String table) async {
+  Future resetGame(context) async {
     final dbPath = await sql.getDatabasesPath();
     String path = join(dbPath, "database.db");
+    final db = await _databaseGet;
+    await db.close();
     await sql.deleteDatabase(path);
+    Phoenix.rebirth(context);
   }
 
   Future updateElementById(

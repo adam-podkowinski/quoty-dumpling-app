@@ -52,6 +52,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                   builder: (ctx) => GlobalSettingsDialog(),
                 ),
                 icon: Icon(Icons.settings),
+                color: Styles.appBarTextColor,
               ),
             ),
             FadeInAnimation(

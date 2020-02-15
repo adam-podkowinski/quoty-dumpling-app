@@ -103,21 +103,21 @@ class _QuoteDetailsState extends State<QuoteDetails> {
                         children: <Widget>[
                           AutoSizeText(
                             'By: ${widget.quote.author}',
-                            style: Styles.kQuoteDetailsTextStyle,
+                            style: Styles.kSettingsTextStyle,
                           ),
                           SizedBox(
                             height: 5,
                           ),
                           Text(
                             'Rarity: ${widget.quote.rarityText()}',
-                            style: Styles.kQuoteDetailsTextStyle,
+                            style: Styles.kSettingsTextStyle,
                           ),
                           SizedBox(
                             height: 5,
                           ),
                           Text(
                             'Unlocking day: ${DateFormat('d | M | y').format(widget.quote.unlockingTime)}',
-                            style: Styles.kQuoteDetailsTextStyle,
+                            style: Styles.kSettingsTextStyle,
                           ),
                         ],
                       ),

@@ -69,7 +69,7 @@ class Styles {
     fontSize: _screenWidth * 0.04328,
   );
 
-  static TextStyle kQuoteDetailsTextStyle = TextStyle(
+  static TextStyle kSettingsTextStyle = TextStyle(
     fontFamily: fontFamily,
     color: kTitleStyle.color,
     fontWeight: FontWeight.bold,

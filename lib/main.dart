@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/audio_provider.dart';
@@ -9,7 +10,7 @@ import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
 import 'package:quoty_dumpling_app/screens/loading_screen.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Phoenix(child: MyApp()));
 
 class MyApp extends StatelessWidget {
   @override
