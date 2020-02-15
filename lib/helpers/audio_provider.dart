@@ -1,6 +1,7 @@
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AudioProvider extends ChangeNotifier {
   double _volume = 1.0;
@@ -34,13 +35,25 @@ class AudioProvider extends ChangeNotifier {
     );
   }
 
+  void changeLoopVolume() {
+    _loopPlayer.setVolume(_volume / 1.5);
+  }
+
   Future stopAudio() async {
     await _loopPlayer.stop();
   }
 
+  Future initAudio() async {
+    final prefs = await SharedPreferences.getInstance();
+    _volume = prefs.getDouble('volume') ?? .5;
+    _isMuted = _volume <= 0 ? true : false;
+    await stopAudio();
+    await playLoopAudio();
+  }
+
   void changeVolume(double newVolume) {
     _volume = newVolume;
-    _loopPlayer.setVolume(newVolume);
+    changeLoopVolume();
     if (_volume <= 0) {
       _isMuted = true;
       _loopPlayer.pause();
@@ -48,6 +61,10 @@ class AudioProvider extends ChangeNotifier {
       _isMuted = false;
       _loopPlayer.resume();
     }
+
+    SharedPreferences.getInstance().then(
+      (prefs) => prefs.setDouble('volume', _volume),
+    );
     notifyListeners();
   }
 
