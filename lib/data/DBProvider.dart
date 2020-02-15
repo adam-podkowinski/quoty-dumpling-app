@@ -52,9 +52,10 @@ class DBProvider {
     return res.isNotEmpty ? res : [];
   }
 
-  Future deleteAllElements(String table) async {
-    final db = await _databaseGet;
-    db.delete(table);
+  static Future resetGame(String table) async {
+    final dbPath = await sql.getDatabasesPath();
+    String path = join(dbPath, "database.db");
+    await sql.deleteDatabase(path);
   }
 
   Future updateElementById(

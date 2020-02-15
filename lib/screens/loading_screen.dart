@@ -17,8 +17,8 @@ class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
   Future _setData(context) async {
     SizeConfig.init(context);
-    await AudioProvider.audio.stopAudio();
-    await AudioProvider.audio.playLoopAudio();
+    await Provider.of<AudioProvider>(context, listen: false).stopAudio();
+    await Provider.of<AudioProvider>(context, listen: false).playLoopAudio();
     await Provider.of<Quotes>(context, listen: false).fetchQuotes();
     await Provider.of<CollectionSettings>(context, listen: false).initOptions();
   }

@@ -52,7 +52,9 @@ class _DumplingState extends State<Dumpling> {
         },
         onTap: () {
           if (_dumplingProvider.progressBarStatus < 1)
-            AudioProvider.audio.playDumplingEating().then(
+            Provider.of<AudioProvider>(context, listen: false)
+                .playDumplingEating()
+                .then(
                   (_) => _dumplingProvider.clickedOnDumpling(),
                 );
         },

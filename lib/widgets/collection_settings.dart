@@ -50,94 +50,100 @@ class _SettingsDialogState extends State<SettingsDialog> {
         borderRadius: BorderRadius.circular(_padding),
       ),
       elevation: 5,
-      backgroundColor: Theme.of(context).backgroundColor,
-      child: Padding(
-        padding: EdgeInsets.all(_padding),
-        child: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Align(
-                alignment: Alignment.center,
-                child: AutoSizeText(
-                  'Customize Collection',
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                  style: Styles.kSettingsTitleStyle,
+      backgroundColor: Colors.transparent,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(_padding),
+          color: Theme.of(context).backgroundColor,
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(_padding),
+          child: SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.center,
+                  child: AutoSizeText(
+                    'Customize Collection',
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: Styles.kSettingsTitleStyle,
+                  ),
                 ),
-              ),
-              Divider(
-                color: Theme.of(context).accentColor,
-                thickness: 2,
-                endIndent: SizeConfig.screenWidth * .05092,
-                indent: SizeConfig.screenWidth * .05092,
-              ),
-              SizedBox(
-                height: SizeConfig.screenHeight * .01,
-              ),
-              Text(
-                'Sort:',
-                textAlign: TextAlign.left,
-                style: Styles.kButtonTextStyle,
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: _collectionSettingsProvider
-                    .titlesWithSubtitlesOfOptions.length,
-                itemBuilder: (_, i) => ListElement(
-                  value: i,
+                Divider(
+                  color: Theme.of(context).accentColor,
+                  thickness: 2,
+                  endIndent: SizeConfig.screenWidth * .05092,
+                  indent: SizeConfig.screenWidth * .05092,
                 ),
-              ),
-              Divider(
-                color: Theme.of(context).accentColor,
-                thickness: .75,
-              ),
-              CheckboxListTile(
-                activeColor: Theme.of(context).accentColor,
-                value: _collectionSettingsProvider
-                    .selectedOptions['favoritesOnTop'],
-                onChanged: (val) => _collectionSettingsProvider
-                    .changeSelectedFavoritesOnTop(val),
-                title: AutoSizeText(
-                  'Show Favorites On Top',
-                  maxLines: 1,
+                SizedBox(
+                  height: SizeConfig.screenHeight * .01,
+                ),
+                Text(
+                  'Sort:',
+                  textAlign: TextAlign.left,
                   style: Styles.kButtonTextStyle,
                 ),
-              ),
-              Divider(
-                color: Theme.of(context).accentColor,
-                thickness: .75,
-              ),
-              Row(
-                children: <Widget>[
-                  Spacer(),
-                  RoundedButton(
-                    text: 'Save',
-                    onPressed: () async {
-                      await _collectionSettingsProvider.saveOptions(context);
-                      Navigator.of(context).pop();
-                    },
-                    color: Theme.of(context).secondaryHeaderColor,
-                    textColor: Theme.of(context).backgroundColor,
-                    width: SizeConfig.screenWidth * .2546,
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: _collectionSettingsProvider
+                      .titlesWithSubtitlesOfOptions.length,
+                  itemBuilder: (_, i) => ListElement(
+                    value: i,
                   ),
-                  Spacer(),
-                  RoundedButton(
-                    text: 'Cancel',
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    width: SizeConfig.screenWidth * .2546,
-                    color: Theme.of(context).errorColor,
-                    textColor: Theme.of(context).backgroundColor,
+                ),
+                Divider(
+                  color: Theme.of(context).accentColor,
+                  thickness: .75,
+                ),
+                CheckboxListTile(
+                  activeColor: Theme.of(context).accentColor,
+                  value: _collectionSettingsProvider
+                      .selectedOptions['favoritesOnTop'],
+                  onChanged: (val) => _collectionSettingsProvider
+                      .changeSelectedFavoritesOnTop(val),
+                  title: AutoSizeText(
+                    'Show Favorites On Top',
+                    maxLines: 1,
+                    style: Styles.kButtonTextStyle,
                   ),
-                  Spacer(),
-                ],
-              ),
-            ],
+                ),
+                Divider(
+                  color: Theme.of(context).accentColor,
+                  thickness: .75,
+                ),
+                Row(
+                  children: <Widget>[
+                    Spacer(),
+                    RoundedButton(
+                      text: 'Save',
+                      onPressed: () async {
+                        await _collectionSettingsProvider.saveOptions(context);
+                        Navigator.of(context).pop();
+                      },
+                      color: Theme.of(context).secondaryHeaderColor,
+                      textColor: Theme.of(context).backgroundColor,
+                      width: SizeConfig.screenWidth * .2546,
+                    ),
+                    Spacer(),
+                    RoundedButton(
+                      text: 'Cancel',
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      width: SizeConfig.screenWidth * .2546,
+                      color: Theme.of(context).errorColor,
+                      textColor: Theme.of(context).backgroundColor,
+                    ),
+                    Spacer(),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

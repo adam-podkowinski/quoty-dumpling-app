@@ -1,13 +1,12 @@
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
 
-class AudioProvider {
-  AudioProvider._();
-  static final AudioProvider audio = AudioProvider._();
-
+class AudioProvider extends ChangeNotifier {
   double _volume = 1.0;
+  double get volume => _volume;
 
-  var _isMuted = false;
+  bool _isMuted = false;
   bool get isMuted => _isMuted;
 
   static AudioPlayer _loopPlayer = AudioPlayer(playerId: 'loopId');
@@ -29,8 +28,10 @@ class AudioProvider {
   }
 
   Future playLoopAudio() async {
-    _loopPlayer =
-        await _audioCacheLoop.loop('background_music.mp3', volume: _volume);
+    _loopPlayer = await _audioCacheLoop.loop(
+      'background_music.mp3',
+      volume: _volume,
+    );
   }
 
   Future stopAudio() async {
@@ -39,8 +40,29 @@ class AudioProvider {
 
   void changeVolume(double newVolume) {
     _volume = newVolume;
-    _audioCacheLoop.fixedPlayer.setVolume(newVolume);
+    _loopPlayer.setVolume(newVolume);
+    if (_volume <= 0) {
+      _isMuted = true;
+      _loopPlayer.pause();
+    } else {
+      _isMuted = false;
+      _loopPlayer.resume();
+    }
+    notifyListeners();
   }
 
-  void changeMute() {}
+  void changeMute() {
+    _isMuted = !_isMuted;
+
+    if (_isMuted) {
+      _volume = 0;
+      _loopPlayer.setVolume(_volume);
+      _loopPlayer.pause();
+    } else {
+      _volume = 1;
+      _loopPlayer.setVolume(_volume);
+      _loopPlayer.resume();
+    }
+    notifyListeners();
+  }
 }
