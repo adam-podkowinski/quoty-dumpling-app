@@ -7,6 +7,9 @@ class AudioProvider {
 
   double _volume = 1.0;
 
+  var _isMuted = false;
+  bool get isMuted => _isMuted;
+
   static AudioPlayer _loopPlayer = AudioPlayer(playerId: 'loopId');
 
   AudioCache _audioCacheLoop = AudioCache(
@@ -17,6 +20,7 @@ class AudioProvider {
   AudioCache _audioCache = AudioCache(prefix: 'sounds/');
 
   Future playDumplingEating() async {
+    if (_isMuted || _volume <= 0) return;
     await _audioCache.play(
       'eating_sound.mp3',
       mode: PlayerMode.LOW_LATENCY,
@@ -37,4 +41,6 @@ class AudioProvider {
     _volume = newVolume;
     _audioCacheLoop.fixedPlayer.setVolume(newVolume);
   }
+
+  void changeMute() {}
 }

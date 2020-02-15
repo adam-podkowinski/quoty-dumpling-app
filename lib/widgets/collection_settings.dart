@@ -65,9 +65,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
                   'Customize Collection',
                   maxLines: 1,
                   textAlign: TextAlign.center,
-                  style: Styles.kAuthorStyle.copyWith(
-                    fontSize: SizeConfig.screenWidth * 0.065,
-                  ),
+                  style: Styles.kSettingsTitleStyle,
                 ),
               ),
               Divider(

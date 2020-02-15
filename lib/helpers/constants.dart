@@ -36,6 +36,10 @@ class Styles {
     fontSize: _screenWidth * 0.08,
   );
 
+  static TextStyle kSettingsTitleStyle = kTitleStyle.copyWith(
+    fontSize: _screenWidth * 0.065,
+  );
+
   static TextStyle kQuoteStyle = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.italic,
