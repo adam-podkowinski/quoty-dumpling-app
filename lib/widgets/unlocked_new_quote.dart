@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/helpers/audio_provider.dart';
 
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
@@ -42,6 +43,7 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
 
     _newQuote = Provider.of<Quotes>(context, listen: false).unlockRandomQuote();
     _controller.forward();
+    Provider.of<AudioProvider>(context, listen: false).playUnlockQuote();
   }
 
   @override

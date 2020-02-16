@@ -22,6 +22,8 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
   static const String _dumplingImageURL =
       'https://pl.freepik.com/darmowe-wektory/realistyczny-zestaw-pierogow-vareniki-pierogi-ravioli-khinkali-pelmeni-manti-momo-tortellini_2238437.htm#';
 
+  static const String _backgroundMusicURL = 'https://www.zapsplat.com';
+
   AudioProvider _audioProvider;
   var _isInit = true;
   final _padding = SizeConfig.screenWidth * .035;
@@ -43,6 +45,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
       elevation: 5,
       backgroundColor: Colors.transparent,
       child: Container(
+        width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Theme.of(context).backgroundColor,
@@ -59,6 +62,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                   icon: Icon(Icons.close),
                   onPressed: () => Navigator.of(context).pop(),
                   highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
                   color: Styles.kSettingsTitleStyle.color,
                 ),
               ),
@@ -124,35 +128,20 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                         'Game assets created by:',
                         style: Styles.kSettingsTextStyle,
                       ),
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          style: Styles.kSettingsTextStyle.copyWith(
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'Dumpling Image: Vector Pouch\n',
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  launch(
-                                    _dumplingImageURL,
-                                  );
-                                },
-                            ),
-                            TextSpan(
-                              text: 'Dumpling Icon: Free Pik',
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  launch(
-                                    _dumplingIconURL,
-                                  );
-                                },
-                            ),
-                          ],
-                        ),
+                      SizedBox(
+                        height: 5,
                       ),
+                      assetsCreator(
+                          'Dumpling Icon: Free Pik', _dumplingIconURL),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      assetsCreator(
+                          'Dumpling Image: Vector Pouch', _dumplingImageURL),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      assetsCreator('Music: zapsplat.com', _backgroundMusicURL),
                     ],
                   ),
                   SizedBox(
@@ -235,6 +224,29 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  assetsCreator(String text, String url) {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        style: Styles.kSettingsTextStyle.copyWith(
+          color: Colors.blue,
+          decoration: TextDecoration.underline,
+        ),
+        children: [
+          TextSpan(
+            text: text,
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                launch(
+                  url,
+                );
+              },
+          ),
+        ],
       ),
     );
   }

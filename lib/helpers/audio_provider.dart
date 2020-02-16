@@ -28,15 +28,24 @@ class AudioProvider extends ChangeNotifier {
     );
   }
 
-  Future playLoopAudio() async {
-    _loopPlayer = await _audioCacheLoop.loop(
-      'background_music.mp3',
+  Future playUnlockQuote() async {
+    if (_isMuted || _volume <= 0) return;
+    await _audioCache.play(
+      'unlock_sound.mp3',
+      mode: PlayerMode.LOW_LATENCY,
       volume: _volume,
     );
   }
 
+  Future playLoopAudio() async {
+    _loopPlayer = await _audioCacheLoop.loop(
+      'background_music.mp3',
+      volume: _volume / 2,
+    );
+  }
+
   void changeLoopVolume() {
-    _loopPlayer.setVolume(_volume / 1.5);
+    _loopPlayer.setVolume(_volume / 2);
   }
 
   Future stopAudio() async {
