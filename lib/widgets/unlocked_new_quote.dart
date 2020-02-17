@@ -81,6 +81,7 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
             borderRadius: BorderRadius.circular(10),
           ),
           child: SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
             padding: EdgeInsets.symmetric(
               vertical: SizeConfig.screenHeight * 0.01,
               horizontal: SizeConfig.screenWidth * 0.04,

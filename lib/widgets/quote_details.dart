@@ -42,6 +42,7 @@ class _QuoteDetailsState extends State<QuoteDetails> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
+      backgroundColor: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
@@ -62,7 +63,7 @@ class _QuoteDetailsState extends State<QuoteDetails> {
                   ),
                 ),
               ),
-              Container(
+              DecoratedBox(
                 decoration: BoxDecoration(
                   color: widget.quote.rarityColor(context),
                   boxShadow: <BoxShadow>[
@@ -98,28 +99,32 @@ class _QuoteDetailsState extends State<QuoteDetails> {
                       SizedBox(
                         width: 5,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          AutoSizeText(
-                            'By: ${widget.quote.author}',
-                            style: Styles.kSettingsTextStyle,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'Rarity: ${widget.quote.rarityText()}',
-                            style: Styles.kSettingsTextStyle,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'Unlocking day: ${DateFormat('d | M | y').format(widget.quote.unlockingTime)}',
-                            style: Styles.kSettingsTextStyle,
-                          ),
-                        ],
+                      Container(
+                        width: SizeConfig.screenWidth * .6,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            AutoSizeText(
+                              'By: ${widget.quote.author}',
+                              maxLines: 1,
+                              style: Styles.kSettingsTextStyle,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'Rarity: ${widget.quote.rarityText()}',
+                              style: Styles.kSettingsTextStyle,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'Unlocking day: ${DateFormat('d | M | y').format(widget.quote.unlockingTime)}',
+                              style: Styles.kSettingsTextStyle,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
