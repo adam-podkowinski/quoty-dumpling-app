@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -99,15 +98,15 @@ class _QuoteDetailsState extends State<QuoteDetails> {
                       SizedBox(
                         width: 5,
                       ),
-                      Container(
-                        width: SizeConfig.screenWidth * .6,
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            AutoSizeText(
-                              'By: ${widget.quote.author}',
-                              maxLines: 1,
-                              style: Styles.kSettingsTextStyle,
+                            FittedBox(
+                              child: Text(
+                                'By: ${widget.quote.author}',
+                                style: Styles.kSettingsTextStyle,
+                              ),
                             ),
                             SizedBox(
                               height: 5,
