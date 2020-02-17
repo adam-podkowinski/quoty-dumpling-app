@@ -51,15 +51,15 @@ class _CollectionScreenState extends State<CollectionScreen> {
             )
           : null,
       body: Container(
-        width: double.infinity,
         height: double.infinity,
+        width: double.infinity,
         decoration: BoxDecoration(
           gradient: Styles.backgroundGradient,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: _quotesProvider.unlockedQuotes.length <= 0
+          children: _quotesProvider.unlockedQuotes.length <= 0 &&
+                  _quotesProvider.newQuotes.length <= 0
               ? <Widget>[
                   CustomAppBar(
                     'Collection',

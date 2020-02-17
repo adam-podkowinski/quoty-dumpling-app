@@ -16,9 +16,10 @@ class Quotes extends ChangeNotifier {
   List<Quote> _visibleQuotes = [];
   List<Quote> _unlockedQuotes = [];
   List<Quote> _quotesToUnlock = [];
-
+  List<Quote> _newQuotes = [];
   // This list is sorted first and after playing half of the animation visibleQuotes are set to this. This affects to the animation
   List<Quote> _visibleQuotesCopy = [];
+
   List<int> _collectionTilesToAnimate = [];
   SortEnum _sortOption;
   var _favoritesOnTop = false;
@@ -53,6 +54,10 @@ class Quotes extends ChangeNotifier {
 
   List<Quote> get quotesToUnlock {
     return [..._quotesToUnlock];
+  }
+
+  List<Quote> get newQuotes {
+    return [..._newQuotes];
   }
 
   List<int> get collectionTilesToAnimate {
@@ -97,7 +102,7 @@ class Quotes extends ChangeNotifier {
       int index = Random().nextInt(_quotesToUnlock.length - 1);
       _quotesToUnlock[index].unlockThisQuote();
       Quote unlockedQuote = _quotesToUnlock[index];
-      _unlockedQuotes.add(_quotesToUnlock[index]);
+      _newQuotes.add(_quotesToUnlock[index]);
       _visibleQuotes = [..._unlockedQuotes];
       _quotesToUnlock.remove(_quotesToUnlock[index]);
       return unlockedQuote;
@@ -108,6 +113,13 @@ class Quotes extends ChangeNotifier {
         rarity: Rarities.LEGENDARY,
         id: 'No quotes loaded',
       );
+  }
+
+  void addToUnlockedFromNew() {
+    _unlockedQuotes.addAll(_newQuotes);
+    _newQuotes.clear();
+    sortCollection(true);
+    notifyListeners();
   }
 
   void initCollectionTilesToAnimate() {
