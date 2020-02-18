@@ -26,7 +26,8 @@ class Quotes extends ChangeNotifier {
   var _animateCollectionTiles = false;
   var _previousQuotes = [];
   var _areQuotesLoading = false;
-  static const Duration animationTime = const Duration(milliseconds: 300);
+  String _searchValue = '';
+  static const Duration animationDuration = const Duration(milliseconds: 300);
 
   bool get animateCollectionTiles {
     return _animateCollectionTiles;
@@ -120,6 +121,7 @@ class Quotes extends ChangeNotifier {
     _visibleQuotes = [...unlockedQuotes];
     _newQuotes.clear();
     sortCollection(false);
+    searchCollection(_searchValue);
   }
 
   void initCollectionTilesToAnimate() {
@@ -132,7 +134,7 @@ class Quotes extends ChangeNotifier {
     _animateCollectionTiles = true;
     _areQuotesLoading = false;
     notifyListeners();
-    Future.delayed(Duration(milliseconds: 300), () {
+    Future.delayed(animationDuration, () {
       _animateCollectionTiles = false;
       _visibleQuotes = [..._visibleQuotesCopy];
       notifyListeners();
@@ -230,9 +232,9 @@ class Quotes extends ChangeNotifier {
       initCollectionTilesToAnimate();
     } else {
       _visibleQuotes = _visibleQuotesCopy;
+      _areQuotesLoading = false;
       WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
     }
-    _areQuotesLoading = false;
   }
 
 //searching
@@ -250,6 +252,7 @@ class Quotes extends ChangeNotifier {
   }
 
   void searchCollection(String value) {
+    _searchValue = value;
     if (value != '') {
       _visibleQuotes = _unlockedQuotes
           .where(

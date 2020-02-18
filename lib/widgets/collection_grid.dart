@@ -223,7 +223,7 @@ class _GridCellState extends State<GridCell>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Quotes.animationTime,
+      duration: Quotes.animationDuration,
     );
     _inOutAnimation = Tween<double>(
       begin: 1,
