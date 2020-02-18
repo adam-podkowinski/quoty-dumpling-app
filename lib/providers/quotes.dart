@@ -103,7 +103,6 @@ class Quotes extends ChangeNotifier {
       _quotesToUnlock[index].unlockThisQuote();
       Quote unlockedQuote = _quotesToUnlock[index];
       _newQuotes.add(_quotesToUnlock[index]);
-      _visibleQuotes = [..._unlockedQuotes];
       _quotesToUnlock.remove(_quotesToUnlock[index]);
       return unlockedQuote;
     } else
