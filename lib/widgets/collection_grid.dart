@@ -39,7 +39,6 @@ class _CollectionGridState extends State<CollectionGrid>
     _controller.forward();
 
     Future.delayed(Duration.zero, () {
-      Provider.of<CollectionSettings>(context).initScrollControlller();
       disposeController =
           Provider.of<CollectionSettings>(context).disposeScrollController;
       _quotesProvider = Provider.of<Quotes>(context);

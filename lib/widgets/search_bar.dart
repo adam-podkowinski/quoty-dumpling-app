@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
 
 class SearchBar extends StatefulWidget {
@@ -70,6 +71,8 @@ class _SearchBarState extends State<SearchBar> {
                 ),
                 onTap: () {
                   if (_controller.text != '') {
+                    Provider.of<CollectionSettings>(context, listen: false)
+                        .initScrollControlller();
                     setState(() {
                       FocusScope.of(context).unfocus();
                       //error which is a flutter's fault... have to use this kind of workaround
