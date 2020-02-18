@@ -15,21 +15,34 @@ class CollectionGrid extends StatefulWidget {
   _CollectionGridState createState() => _CollectionGridState();
 }
 
-class _CollectionGridState extends State<CollectionGrid> {
+class _CollectionGridState extends State<CollectionGrid>
+    with SingleTickerProviderStateMixin {
   Quotes _quotesProvider;
   Function disposeController;
   var _isInit = true;
-  var _areThereNewQuotes = false;
+
+  AnimationController _controller;
+  Animation _newQuotesAnimation;
 
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 250),
+    );
+    _newQuotesAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(_controller);
+
+    _controller.forward();
+
     Future.delayed(Duration.zero, () {
       Provider.of<CollectionSettings>(context).initScrollControlller();
       disposeController =
           Provider.of<CollectionSettings>(context).disposeScrollController;
       _quotesProvider = Provider.of<Quotes>(context);
-      _areThereNewQuotes = _quotesProvider.newQuotes.length > 0;
     });
   }
 
@@ -44,9 +57,63 @@ class _CollectionGridState extends State<CollectionGrid> {
 
   @override
   void dispose() {
-    super.dispose();
     disposeController();
+    _controller.dispose();
+    super.dispose();
   }
+
+  Widget _buildNewQuotesTopDivider() => ScaleTransition(
+        scale: _newQuotesAnimation,
+        child: Row(
+          children: <Widget>[
+            Flexible(
+              flex: 1,
+              child: Divider(
+                thickness: 3,
+                color: Theme.of(context).accentColor,
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              'New quotes',
+              style: Styles.kSettingsTextStyle,
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Flexible(
+              flex: 4,
+              child: Divider(
+                thickness: 3,
+                color: Theme.of(context).accentColor,
+              ),
+            ),
+            SizedBox(width: 5),
+            FlatButton(
+              onPressed: () {
+                _controller.reverse().then(
+                      (e) => _quotesProvider.addToUnlockedFromNew(),
+                    );
+              },
+              child: Text(
+                'OK',
+                style: Styles.kSettingsTextStyle,
+              ),
+              color: Theme.of(context).accentColor.withOpacity(.8),
+            ),
+            SizedBox(width: 5),
+            Flexible(
+              flex: 1,
+              child: Divider(
+                thickness: 3,
+                color: Theme.of(context).accentColor,
+              ),
+            ),
+          ],
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -67,44 +134,24 @@ class _CollectionGridState extends State<CollectionGrid> {
                     crossAxisSpacing: SizeConfig.screenWidth * 0.0268,
                     controller: Provider.of<CollectionSettings>(context)
                         .scrollController,
-                    children: _areThereNewQuotes
+                    children: _quotesProvider.newQuotes.length > 0
                         ? <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Flexible(
-                                  flex: 1,
-                                  child: Divider(
-                                    thickness: 3,
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  'New quotes',
-                                  style: Styles.kSettingsTextStyle,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Flexible(
-                                  flex: 4,
-                                  child: Divider(
-                                    thickness: 3,
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                                ),
-                              ],
-                            ),
+                            _buildNewQuotesTopDivider(),
                             for (var q in _quotesProvider.newQuotes)
-                              GridCell(
-                                q,
-                                _quotesProvider.newQuotes.indexOf(q),
+                              ScaleTransition(
+                                scale: Tween<double>(begin: 0, end: 1)
+                                    .animate(_controller),
+                                child: GridCell(
+                                  q,
+                                  _quotesProvider.newQuotes.indexOf(q),
+                                ),
                               ),
-                            Divider(
-                              thickness: 3,
-                              color: Theme.of(context).accentColor,
+                            ScaleTransition(
+                              scale: _newQuotesAnimation,
+                              child: Divider(
+                                thickness: 3,
+                                color: Theme.of(context).accentColor,
+                              ),
                             ),
                             for (var q in _quotesProvider.visibleQuotes)
                               GridCell(
@@ -119,7 +166,7 @@ class _CollectionGridState extends State<CollectionGrid> {
                                 _quotesProvider.visibleQuotes.indexOf(q),
                               ),
                           ],
-                    staggeredTiles: _areThereNewQuotes
+                    staggeredTiles: _quotesProvider.newQuotes.length > 0
                         ? [
                             StaggeredTile.fit(2),
                             for (int i = 0;
@@ -197,16 +244,16 @@ class _GridCellState extends State<GridCell>
   }
 
   void animateCollectionTiles() {
-    // if (_quotesProvider.animateCollectionTiles) {
-    //   if (_quotesProvider.collectionTilesToAnimate.contains(
-    //         _quotesProvider.visibleQuotes.indexOf(widget.quote),
-    //       ) &&
-    //       _controller != null) {
-    //     _controller.forward().then(
-    //           (_) => _controller.reverse(),
-    //         );
-    //   }
-    // }
+    if (!(_quotesProvider.newQuotes.contains(widget.quote)) &&
+        _quotesProvider.animateCollectionTiles &&
+        _quotesProvider.collectionTilesToAnimate.contains(
+          _quotesProvider.visibleQuotes.indexOf(widget.quote),
+        ) &&
+        _controller != null) {
+      _controller.forward().then(
+            (_) => _controller.reverse(),
+          );
+    }
   }
 
   @override

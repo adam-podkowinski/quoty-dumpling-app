@@ -102,7 +102,7 @@ class Quotes extends ChangeNotifier {
       int index = Random().nextInt(_quotesToUnlock.length - 1);
       _quotesToUnlock[index].unlockThisQuote();
       Quote unlockedQuote = _quotesToUnlock[index];
-      _newQuotes.add(_quotesToUnlock[index]);
+      _newQuotes.insert(0, _quotesToUnlock[index]);
       _quotesToUnlock.remove(_quotesToUnlock[index]);
       return unlockedQuote;
     } else
@@ -115,10 +115,11 @@ class Quotes extends ChangeNotifier {
   }
 
   void addToUnlockedFromNew() {
+    if (!(_newQuotes.length > 0)) return;
     _unlockedQuotes.addAll(_newQuotes);
+    _visibleQuotes = [...unlockedQuotes];
     _newQuotes.clear();
-    sortCollection(true);
-    notifyListeners();
+    sortCollection(false);
   }
 
   void initCollectionTilesToAnimate() {
