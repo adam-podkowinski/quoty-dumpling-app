@@ -19,7 +19,13 @@ class CollectionSettings extends ChangeNotifier {
   Map<String, dynamic> _savedOptions = {};
 
   ScrollController _scrollController;
-  ScrollController get scrollController => _scrollController;
+  ScrollController get scrollController {
+    if (_scrollController != null)
+      return _scrollController;
+    else
+      initScrollControlller();
+    return _scrollController;
+  }
 
   bool _showScrollFab = false;
   bool get showScrollFab => _showScrollFab;
@@ -39,7 +45,7 @@ class CollectionSettings extends ChangeNotifier {
   }
 
   void refreshScrollFab() {
-    if (_showScrollFab != null) {
+    if (_showScrollFab != null && _showScrollFab) {
       _showScrollFab = false;
       notifyListeners();
     }

@@ -92,8 +92,14 @@ class Styles {
     fontSize: _screenWidth * 0.05,
   );
 
+  static TextStyle kTabBarTextStyle = TextStyle(
+    color: appBarTextColor,
+    fontFamily: fontFamily,
+    fontSize: _screenWidth * 0.04,
+  );
+
   static TextStyle kMoneyTextStyle = TextStyle(
-    color: mainTheme.backgroundColor,
+    color: appBarTextColor,
     fontFamily: fontFamily,
     fontSize: _screenWidth * 0.05,
   );

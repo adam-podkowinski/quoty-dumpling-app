@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:quoty_dumpling_app/screens/collection_screen.dart';
 import 'package:quoty_dumpling_app/screens/dumpling_screen.dart';
+import 'package:quoty_dumpling_app/screens/shop_screen.dart';
 
 class Tabs extends ChangeNotifier {
   final List pages = [
-    CollectionScreen(),
+    ShopScreen(),
     DumplingScreen(),
     CollectionScreen(),
   ];

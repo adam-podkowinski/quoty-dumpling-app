@@ -65,7 +65,7 @@ class _LoadingScreenState extends State<LoadingScreen>
     return FadeTransition(
       opacity: Tween<double>(begin: 1, end: 0).animate(_controller),
       child: Scaffold(
-        body: Container(
+        body: DecoratedBox(
           decoration: BoxDecoration(
             gradient: Styles.backgroundGradient,
           ),
