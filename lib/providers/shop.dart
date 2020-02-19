@@ -16,7 +16,7 @@ class Shop extends ChangeNotifier {
   void openDumpling() {
     _bills += _billsPerClick * 100;
     _diamonds += 20;
-    notifyListeners();
+    // notifyListeners();
   }
 
   void buyItem({int priceInBills = 0, int priceInDiamond = 0}) {
