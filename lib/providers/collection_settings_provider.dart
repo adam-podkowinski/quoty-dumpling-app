@@ -25,8 +25,10 @@ class CollectionSettings extends ChangeNotifier {
   bool get showScrollFab => _showScrollFab;
 
   void initScrollControlller() {
-    _showScrollFab = false;
-    notifyListeners();
+    if (_showScrollFab) {
+      _showScrollFab = false;
+      notifyListeners();
+    }
     _scrollController = ScrollController()
       ..addListener(() {
         if (_scrollController.offset > 300 && !_showScrollFab) {

@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DumplingProvider extends ChangeNotifier {
   //shows progress of status bar
@@ -16,7 +17,15 @@ class DumplingProvider extends ChangeNotifier {
     return _progressBarStatus;
   }
 
+  Future initClickingProgress() async {
+    final prefs = await SharedPreferences.getInstance();
+    _progressBarStatus = prefs.getDouble('clickingProgress') ?? 0.0;
+  }
+
   void clearClickingProgressWhenFull() {
+    SharedPreferences.getInstance().then(
+      (prefs) => prefs.setDouble('clickingProgress', _progressBarStatus),
+    );
     Future.delayed(
       Duration(milliseconds: 300),
       () => _progressBarStatus = 0,
@@ -32,6 +41,9 @@ class DumplingProvider extends ChangeNotifier {
         notifyListeners();
       });
     }
+    SharedPreferences.getInstance().then(
+      (prefs) => prefs.setDouble('clickingProgress', _progressBarStatus),
+    );
   }
 
   void isFullStateChanged() {
