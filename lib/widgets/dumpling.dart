@@ -5,6 +5,7 @@ import 'package:quoty_dumpling_app/helpers/audio_provider.dart';
 
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
+import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
 
 class Dumpling extends StatefulWidget {
@@ -55,8 +56,11 @@ class _DumplingState extends State<Dumpling> {
             Provider.of<AudioProvider>(context, listen: false)
                 .playDumplingEating()
                 .then(
-                  (_) => _dumplingProvider.clickedOnDumpling(),
-                );
+              (_) {
+                _dumplingProvider.clickedOnDumpling();
+                Provider.of<Shop>(context, listen: false).clickOnDumpling();
+              },
+            );
         },
         child: ColorFiltered(
           colorFilter: ColorFilter.mode(

@@ -92,6 +92,12 @@ class Styles {
     fontSize: _screenWidth * 0.05,
   );
 
+  static TextStyle kMoneyTextStyle = TextStyle(
+    color: mainTheme.backgroundColor,
+    fontFamily: fontFamily,
+    fontSize: _screenWidth * 0.05,
+  );
+
   static LinearGradient backgroundGradient = LinearGradient(
     colors: [
       mainTheme.primaryColor,

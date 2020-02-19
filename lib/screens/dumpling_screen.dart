@@ -1,9 +1,12 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
+import 'package:quoty_dumpling_app/helpers/size_config.dart';
 
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
+import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
 import 'package:quoty_dumpling_app/widgets/dumpling.dart';
 import 'package:quoty_dumpling_app/widgets/global_settings_dialog.dart';
@@ -54,7 +57,46 @@ class _DumplingScreenState extends State<DumplingScreen>
                 icon: Icon(Icons.settings),
                 color: Styles.appBarTextColor,
               ),
+              prefix: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    Icons.attach_money,
+                    color: Theme.of(context).secondaryHeaderColor,
+                  ),
+                  AutoSizeText(
+                    Provider.of<Shop>(context).bills.toString(),
+                    maxLines: 1,
+                    style: Styles.kMoneyTextStyle,
+                  ),
+                  Icon(
+                    Icons.brightness_1,
+                    color: Colors.blue,
+                  ),
+                  Text(
+                    Provider.of<Shop>(context).gems.toString(),
+                    style: Styles.kMoneyTextStyle,
+                  ),
+                ],
+              ),
             ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(SizeConfig.screenWidth * 0.05),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (ctx) => GlobalSettingsDialog(),
+                    ),
+                    icon: Icon(Icons.settings),
+                    color: Styles.appBarTextColor,
+                  ),
+                ),
+              ),
+            ),
+            // Spacer(),
             FadeInAnimation(
               duration: Duration(milliseconds: 200),
               child: AnimatedSwitcher(
@@ -64,7 +106,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                     : DumplingScreenWhileClicking(),
               ),
             ),
-            SizedBox(),
+            Spacer(),
           ],
         ),
       ),

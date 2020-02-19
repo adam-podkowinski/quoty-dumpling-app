@@ -7,6 +7,7 @@ import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
+import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
 import 'package:quoty_dumpling_app/screens/loading_screen.dart';
 
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: AudioProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Shop(),
         ),
       ],
       child: MaterialApp(

@@ -58,8 +58,8 @@ class _TabsScreenState extends State<TabsScreen> {
           showLabel: true,
           items: [
             TabInfo(
-              icon: Icons.settings,
-              label: 'Settings',
+              icon: Icons.shopping_cart,
+              label: 'Shop',
             ),
             TabInfo(
               icon: DumplingIcon.dumpling,
