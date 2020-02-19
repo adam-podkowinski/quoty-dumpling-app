@@ -49,42 +49,46 @@ class _DumplingScreenState extends State<DumplingScreen>
           children: <Widget>[
             CustomAppBar(
               'Dumpling',
-              suffix: IconButton(
-                onPressed: () => showDialog(
-                  context: context,
-                  builder: (ctx) => GlobalSettingsDialog(),
-                ),
-                icon: Icon(Icons.settings),
-                color: Styles.appBarTextColor,
-              ),
               prefix: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Icon(
                     Icons.attach_money,
                     color: Theme.of(context).secondaryHeaderColor,
                   ),
-                  AutoSizeText(
-                    Provider.of<Shop>(context).bills.toString(),
-                    maxLines: 1,
-                    style: Styles.kMoneyTextStyle,
-                  ),
-                  Icon(
-                    Icons.brightness_1,
-                    color: Colors.blue,
-                  ),
-                  Text(
-                    Provider.of<Shop>(context).gems.toString(),
-                    style: Styles.kMoneyTextStyle,
+                  Flexible(
+                    child: AutoSizeText(
+                      Provider.of<Shop>(context).bills.toString(),
+                      maxLines: 1,
+                      style: Styles.kMoneyTextStyle,
+                    ),
                   ),
                 ],
               ),
+              suffix: Align(
+                alignment: Alignment.centerRight,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Flexible(
+                      child: AutoSizeText(
+                        Provider.of<Shop>(context).gems.toString(),
+                        style: Styles.kMoneyTextStyle,
+                        maxLines: 1,
+                      ),
+                    ),
+                    Icon(
+                      Icons.brightness_1,
+                      color: Colors.blue,
+                    ),
+                  ],
+                ),
+              ),
             ),
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(SizeConfig.screenWidth * 0.05),
-                child: Align(
-                  alignment: Alignment.topRight,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: EdgeInsets.all(SizeConfig.screenWidth * 0.05),
                   child: IconButton(
                     onPressed: () => showDialog(
                       context: context,
@@ -96,7 +100,6 @@ class _DumplingScreenState extends State<DumplingScreen>
                 ),
               ),
             ),
-            // Spacer(),
             FadeInAnimation(
               duration: Duration(milliseconds: 200),
               child: AnimatedSwitcher(

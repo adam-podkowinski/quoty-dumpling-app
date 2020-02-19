@@ -30,20 +30,27 @@ class CustomAppBar extends StatelessWidget {
           BoxShadow(color: Colors.black12, blurRadius: 8),
         ],
       ),
-      child: Stack(
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Align(
-            child: prefix,
-            alignment: Alignment.centerLeft,
+          Expanded(
+            child: Align(
+              child: prefix,
+              alignment: Alignment.centerLeft,
+            ),
           ),
-          Align(
-            child: suffix,
-            alignment: Alignment.centerRight,
+          Expanded(
+            child: Center(
+              child: Text(
+                title,
+                style: Theme.of(context).appBarTheme.textTheme.title,
+              ),
+            ),
           ),
-          Center(
-            child: Text(
-              title,
-              style: Theme.of(context).appBarTheme.textTheme.title,
+          Expanded(
+            child: Align(
+              child: suffix,
+              alignment: Alignment.centerRight,
             ),
           ),
         ],

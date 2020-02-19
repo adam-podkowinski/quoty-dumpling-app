@@ -33,8 +33,8 @@ class _DumplingState extends State<Dumpling> {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 120),
-      width: SizeConfig.screenWidth * .85,
-      height: SizeConfig.screenWidth * .85,
+      width: SizeConfig.screenWidth * .81,
+      height: SizeConfig.screenWidth * .81,
       padding: _isPressed
           ? EdgeInsets.all(
               SizeConfig.screenWidth * .03,
@@ -83,6 +83,7 @@ class DumplingScreenWhileClicking extends StatelessWidget {
     return Column(
       children: <Widget>[
         Dumpling(),
+        SizedBox(height: SizeConfig.screenHeight * 0.02),
         ProgressBar(),
       ],
     );
