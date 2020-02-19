@@ -72,7 +72,7 @@ class _SearchBarState extends State<SearchBar> {
                 onTap: () {
                   if (_controller.text != '') {
                     Provider.of<CollectionSettings>(context, listen: false)
-                        .initScrollControlller();
+                        .refreshScrollFab();
                     setState(() {
                       FocusScope.of(context).unfocus();
                       //error which is a flutter's fault... have to use this kind of workaround

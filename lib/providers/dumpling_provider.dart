@@ -24,7 +24,7 @@ class DumplingProvider extends ChangeNotifier {
 
   void clearClickingProgressWhenFull() {
     SharedPreferences.getInstance().then(
-      (prefs) => prefs.setDouble('clickingProgress', _progressBarStatus),
+      (prefs) => prefs.setDouble('clickingProgress', 0),
     );
     Future.delayed(
       Duration(milliseconds: 300),

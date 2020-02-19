@@ -37,12 +37,6 @@ class _CollectionGridState extends State<CollectionGrid>
     ).animate(_controller);
 
     _controller.forward();
-
-    Future.delayed(Duration.zero, () {
-      disposeController =
-          Provider.of<CollectionSettings>(context).disposeScrollController;
-      _quotesProvider = Provider.of<Quotes>(context);
-    });
   }
 
   @override
@@ -50,6 +44,14 @@ class _CollectionGridState extends State<CollectionGrid>
     super.didChangeDependencies();
     if (_isInit) {
       _quotesProvider = Provider.of<Quotes>(context);
+      _quotesProvider = Provider.of<Quotes>(context)
+        ..addListener(() {
+          if (_quotesProvider.visibleQuotes.length <= 0)
+            Provider.of<CollectionSettings>(context, listen: false)
+                .refreshScrollFab();
+        });
+      disposeController =
+          Provider.of<CollectionSettings>(context).disposeScrollController;
       _isInit = false;
     }
   }
