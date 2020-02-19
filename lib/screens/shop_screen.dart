@@ -70,7 +70,7 @@ class ShopScreen extends StatelessWidget {
                           height: SizeConfig.screenHeight * 0.07,
                           child: TabBar(
                             labelStyle: Styles.kTabBarTextStyle,
-                            indicatorColor: Theme.of(context).accentColor,
+                            indicatorColor: Theme.of(context).buttonColor,
                             labelPadding: EdgeInsets.only(top: 5),
                             indicatorWeight: 5,
                             tabs: [
@@ -84,7 +84,7 @@ class ShopScreen extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          child: ShopTabBar(),
+                          child: ShopTabBarView(),
                         ),
                       ],
                     ),
@@ -99,19 +99,158 @@ class ShopScreen extends StatelessWidget {
   }
 }
 
-class ShopTabBar extends StatefulWidget {
+class ShopTabBarView extends StatefulWidget {
   @override
-  _ShopTabBarState createState() => _ShopTabBarState();
+  _ShopTabBarViewState createState() => _ShopTabBarViewState();
 }
 
-class _ShopTabBarState extends State<ShopTabBar> {
+class _ShopTabBarViewState extends State<ShopTabBarView> {
+  Widget shopItem(
+    String name, {
+    String description = '',
+    int priceBills = 0,
+    int priceDiamonds = 0,
+  }) {
+    bool isFree = priceBills <= 0 && priceDiamonds <= 0;
+    return Padding(
+      padding: EdgeInsets.all(SizeConfig.screenWidth * 0.02),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25.0),
+          border: Border.all(
+            width: 3.0,
+            color: Theme.of(context).accentColor,
+          ),
+        ),
+        padding: EdgeInsets.all(SizeConfig.screenWidth * 0.02),
+        child: Row(
+          children: <Widget>[
+            Container(
+              width: SizeConfig.screenWidth * 0.24,
+              height: SizeConfig.screenWidth * 0.24,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  SizeConfig.screenWidth * 0.05,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 25,
+                    color:
+                        Theme.of(context).textTheme.title.color.withOpacity(.3),
+                    spreadRadius: 1,
+                  ),
+                ],
+                color: Theme.of(context).accentColor,
+              ),
+              child: Icon(
+                Icons.exposure,
+                color: Styles.appBarTextColor,
+              ),
+            ),
+            SizedBox(
+              width: SizeConfig.screenWidth * 0.03,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    name,
+                    style: Styles.kShopItemTitleStyle,
+                  ),
+                  if (description != null)
+                    Text(
+                      description,
+                      style: Styles.kShopItemDescriptionStyle,
+                    ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: SizeConfig.screenWidth * 0.03,
+            ),
+            Column(
+              children: <Widget>[
+                if (isFree)
+                  Chip(
+                    label: Text(
+                      'FREE',
+                      style: Styles.kMoneyInShopTextStyle,
+                    ),
+                    avatar: Icon(
+                      Icons.attach_money,
+                      color: Theme.of(context).secondaryHeaderColor,
+                    ),
+                    backgroundColor: Styles.appBarTextColor,
+                  ),
+                if (priceBills != 0)
+                  Chip(
+                    label: Text(
+                      '${priceBills ?? 0}',
+                      style: Styles.kMoneyInShopTextStyle,
+                    ),
+                    avatar: Icon(
+                      Icons.attach_money,
+                      color: Theme.of(context).secondaryHeaderColor,
+                    ),
+                    backgroundColor: Styles.appBarTextColor,
+                  ),
+                if (priceDiamonds != 0)
+                  Chip(
+                    label: Text(
+                      '${priceDiamonds ?? 0}',
+                      style: Styles.kMoneyInShopTextStyle,
+                    ),
+                    avatar: Padding(
+                      padding: EdgeInsets.all(SizeConfig.screenWidth * 0.01),
+                      child: Icon(
+                        CustomIcons.diamond,
+                        size: 20,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    backgroundColor: Styles.appBarTextColor,
+                  ),
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.add_shopping_cart),
+                    color: Styles.appBarTextColor,
+                    onPressed: () {
+                      Provider.of<Shop>(context).buyItem(
+                          priceInBills: priceBills,
+                          priceInDiamond: priceDiamonds);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return TabBarView(
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-        Container(
-          color: Colors.greenAccent.withOpacity(.5),
+        ListView(
+          children: <Widget>[
+            for (int i in Iterable.generate(10))
+              shopItem(
+                '$i Item',
+                description: i == 0
+                    ? 'Omg it\'s the best item!'
+                    : '${i}th item is $i times better than the ${i - 1} item',
+                priceBills: i * 100,
+                // priceDiamonds: i * Random().nextInt(10),
+              ),
+          ],
         ),
         Container(
           color: Colors.yellow.withOpacity(.5),

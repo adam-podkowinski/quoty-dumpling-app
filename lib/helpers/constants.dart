@@ -36,6 +36,13 @@ class Styles {
     fontSize: _screenWidth * 0.08,
   );
 
+  static TextStyle kMoneyInShopTextStyle = TextStyle(
+    fontFamily: fontFamily,
+    fontWeight: FontWeight.bold,
+    color: Color(0xff3A2E39),
+    fontSize: _screenWidth * 0.04,
+  );
+
   static TextStyle kSettingsTitleStyle = kTitleStyle.copyWith(
     fontSize: _screenWidth * 0.065,
   );
@@ -102,6 +109,18 @@ class Styles {
     color: appBarTextColor,
     fontFamily: fontFamily,
     fontSize: _screenWidth * 0.05,
+  );
+
+  static TextStyle kShopItemTitleStyle = TextStyle(
+    color: appBarTextColor,
+    fontFamily: fontFamily,
+    fontWeight: FontWeight.bold,
+    fontSize: _screenWidth * 0.06,
+  );
+  static TextStyle kShopItemDescriptionStyle = TextStyle(
+    color: appBarTextColor,
+    fontFamily: fontFamily,
+    fontSize: _screenWidth * 0.04,
   );
 
   static LinearGradient backgroundGradient = LinearGradient(

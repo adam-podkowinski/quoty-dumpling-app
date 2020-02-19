@@ -77,11 +77,13 @@ class Quotes extends ChangeNotifier {
       contents.map((e) => Quote.fromMap(e)),
     );
 
-    //debug
-    // DBProvider.db.deleteAllElements('UnlockedQuotes');
-
     final _unlockedQuotesFromDB =
         await DBProvider.db.getAllElements('UnlockedQuotes');
+
+    //debug
+    // _unlockedQuotes.addAll(
+    //   _quotes.where((e) => e.isUnlocked),
+    // );
 
     _unlockedQuotesFromDB.forEach((e) {
       _unlockedQuotes.add(

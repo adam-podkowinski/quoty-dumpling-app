@@ -7,6 +7,7 @@ import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
+import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
 
 class UnlockedNewQuote extends StatefulWidget {
@@ -44,6 +45,7 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
     _newQuote = Provider.of<Quotes>(context, listen: false).unlockRandomQuote();
     _controller.forward();
     Provider.of<AudioProvider>(context, listen: false).playUnlockQuote();
+    Provider.of<Shop>(context, listen: false).openDumpling();
   }
 
   @override
