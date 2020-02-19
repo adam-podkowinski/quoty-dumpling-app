@@ -78,12 +78,15 @@ flutter:
           style: italic
         - asset: assets/fonts/SofiaProBold.ttf
           weight: 700
-    - family: DumplingIcon
-      fonts:
-        - asset: assets/icons/DumplingIcon.ttf
     - family: Pacifico
       fonts:
         - asset: assets/fonts/Pacifico-Regular.ttf
+    - family: DumplingIcon
+      fonts:
+        - asset: assets/icons/DumplingIcon.ttf
+    - family: DiamondIcon
+      fonts:
+        - asset: assets/icons/DiamondIcon.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

@@ -16,8 +16,7 @@ class GlobalSettingsDialog extends StatefulWidget {
 }
 
 class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
-  static const String _dumplingIconURL =
-      'https://www.flaticon.com/free-icon/dumpling_678078?term=dumpling&page=1&position=10';
+  static const String _iconsURL = 'https://www.flaticon.com/authors/freepik';
 
   static const String _dumplingImageURL =
       'https://pl.freepik.com/darmowe-wektory/realistyczny-zestaw-pierogow-vareniki-pierogi-ravioli-khinkali-pelmeni-manti-momo-tortellini_2238437.htm#';
@@ -131,8 +130,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                       SizedBox(
                         height: 5,
                       ),
-                      assetsCreator(
-                          'Dumpling Icon: Free Pik', _dumplingIconURL),
+                      assetsCreator('Icons: Free Pik', _iconsURL),
                       SizedBox(
                         height: 5,
                       ),

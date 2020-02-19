@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
@@ -54,6 +55,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                   Icon(
                     Icons.attach_money,
                     color: Theme.of(context).secondaryHeaderColor,
+                    size: SizeConfig.screenWidth * 0.063,
                   ),
                   Flexible(
                     child: AutoSizeText(
@@ -76,9 +78,13 @@ class _DumplingScreenState extends State<DumplingScreen>
                         maxLines: 1,
                       ),
                     ),
+                    SizedBox(
+                      width: 5,
+                    ),
                     Icon(
-                      Icons.brightness_1,
+                      CustomIcons.diamond,
                       color: Colors.blue,
+                      size: SizeConfig.screenWidth * 0.06,
                     ),
                   ],
                 ),
@@ -86,7 +92,7 @@ class _DumplingScreenState extends State<DumplingScreen>
             ),
             Expanded(
               child: Align(
-                alignment: Alignment.topRight,
+                alignment: Alignment.topCenter,
                 child: Padding(
                   padding: EdgeInsets.all(SizeConfig.screenWidth * 0.05),
                   child: IconButton(

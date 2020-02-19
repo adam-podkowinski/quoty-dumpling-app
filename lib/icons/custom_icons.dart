@@ -15,11 +15,16 @@
 ///
 import 'package:flutter/widgets.dart';
 
-class DumplingIcon {
-  DumplingIcon._();
+class CustomIcons {
+  CustomIcons._();
 
-  static const _kFontFam = 'DumplingIcon';
+  static const _kDumplingFam = 'DumplingIcon';
 
   static const IconData dumpling =
-      const IconData(0xe801, fontFamily: _kFontFam);
+      const IconData(0xe801, fontFamily: _kDumplingFam);
+
+  static const _kDiamondFam = 'DiamondIcon';
+
+  static const IconData diamond =
+      const IconData(0xe800, fontFamily: _kDiamondFam);
 }

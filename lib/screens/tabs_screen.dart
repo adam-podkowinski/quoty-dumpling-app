@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:gradient_nav_bar/gradient_nav_bar.dart';
 import 'package:gradient_nav_bar/model/tab_info.dart';
-import 'package:quoty_dumpling_app/icons/dumpling_icon_icons.dart';
+import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
 
@@ -62,7 +62,7 @@ class _TabsScreenState extends State<TabsScreen> {
               label: 'Shop',
             ),
             TabInfo(
-              icon: DumplingIcon.dumpling,
+              icon: CustomIcons.dumpling,
               label: 'Dumpling',
             ),
             TabInfo(
