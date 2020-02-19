@@ -43,10 +43,12 @@ class _CollectionGridState extends State<CollectionGrid>
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
-      _quotesProvider = Provider.of<Quotes>(context);
       _quotesProvider = Provider.of<Quotes>(context)
         ..addListener(() {
-          if (_quotesProvider.visibleQuotes.length <= 0)
+          if (Provider.of<CollectionSettings>(context, listen: false)
+                  .scrollController
+                  .offset <
+              300)
             Provider.of<CollectionSettings>(context, listen: false)
                 .refreshScrollFab();
         });

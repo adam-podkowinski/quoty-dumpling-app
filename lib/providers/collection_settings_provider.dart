@@ -39,8 +39,10 @@ class CollectionSettings extends ChangeNotifier {
   }
 
   void refreshScrollFab() {
-    _showScrollFab = false;
-    notifyListeners();
+    if (_showScrollFab != null) {
+      _showScrollFab = false;
+      notifyListeners();
+    }
   }
 
   void disposeScrollController() => _scrollController.dispose();

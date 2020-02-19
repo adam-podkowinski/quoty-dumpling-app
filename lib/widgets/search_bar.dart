@@ -41,6 +41,10 @@ class _SearchBarState extends State<SearchBar> {
           TextField(
             onChanged: (value) {
               _quotesProvider.searchCollection(_controller.text);
+              if (_quotesProvider.visibleQuotes.length <= 0 &&
+                  _quotesProvider.newQuotes.length <= 0)
+                Provider.of<CollectionSettings>(context, listen: false)
+                    .refreshScrollFab();
             },
             style: Styles.kSearchBarTextStyle,
             controller: _controller,
@@ -71,14 +75,18 @@ class _SearchBarState extends State<SearchBar> {
                 ),
                 onTap: () {
                   if (_controller.text != '') {
-                    Provider.of<CollectionSettings>(context, listen: false)
-                        .refreshScrollFab();
                     setState(() {
                       FocusScope.of(context).unfocus();
-                      //error which is a flutter's fault... have to use this kind of workaround
+                      //error which is a flutter's fault.. .have to use this kind of workaround
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         _controller.clear();
                         _quotesProvider.searchCollection(_controller.text);
+
+                        if (_quotesProvider.visibleQuotes.length <= 0 &&
+                            _quotesProvider.newQuotes.length <= 0)
+                          Provider.of<CollectionSettings>(context,
+                                  listen: false)
+                              .refreshScrollFab();
                       });
                     });
                   }
