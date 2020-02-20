@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 class Shop extends ChangeNotifier {
@@ -5,7 +6,7 @@ class Shop extends ChangeNotifier {
   int _bills = 999;
   int _billsPerClick = 1;
 
-  int get gems => _diamonds;
+  int get diamonds => _diamonds;
   int get bills => _bills;
 
   void clickOnDumpling() {
@@ -16,7 +17,9 @@ class Shop extends ChangeNotifier {
   void openDumpling() {
     _bills += _billsPerClick * 100;
     _diamonds += 20;
-    // notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => notifyListeners(),
+    );
   }
 
   void buyItem({int priceInBills = 0, int priceInDiamond = 0}) {

@@ -73,7 +73,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                   children: <Widget>[
                     Flexible(
                       child: AutoSizeText(
-                        Provider.of<Shop>(context).gems.toString(),
+                        Provider.of<Shop>(context).diamonds.toString(),
                         style: Styles.kMoneyTextStyle,
                         maxLines: 1,
                       ),
