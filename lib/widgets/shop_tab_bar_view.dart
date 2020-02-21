@@ -54,37 +54,39 @@ class ShopItem extends StatefulWidget {
   _ShopItemState createState() => _ShopItemState();
 }
 
-class _ShopItemState extends State<ShopItem>
-    with SingleTickerProviderStateMixin {
+class _ShopItemState extends State<ShopItem> with TickerProviderStateMixin {
   Shop _shopProvider;
   bool _isFree = false;
   bool _isActive = true;
   var _isInit = true;
 
-  AnimationController _controller;
+  AnimationController _iconColorcontroller;
   Animation _iconColorAnim;
+
+  AnimationController _scaleController;
+  Animation _scaleAnim;
 
   void _shopListener() {
     _isActive = _shopProvider.bills >= widget.priceBills &&
         _shopProvider.diamonds >= widget.priceDiamonds;
     if (!_isActive)
-      _controller?.forward();
+      _iconColorcontroller?.forward();
     else
-      _controller?.reverse();
+      _iconColorcontroller?.reverse();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
-      _controller = AnimationController(
+      _iconColorcontroller = AnimationController(
         vsync: this,
         duration: Duration(milliseconds: 300),
       );
       _iconColorAnim = ColorTween(
         begin: Styles.appBarTextColor,
         end: Theme.of(context).disabledColor,
-      ).animate(_controller);
+      ).animate(_iconColorcontroller);
 
       _isFree = widget.priceBills <= 0 && widget.priceDiamonds <= 0;
 
@@ -93,9 +95,17 @@ class _ShopItemState extends State<ShopItem>
       _isActive = _shopProvider.bills >= widget.priceBills &&
           _shopProvider.diamonds >= widget.priceDiamonds;
       if (!_isActive)
-        _controller.forward();
+        _iconColorcontroller.forward();
       else
-        _controller.reverse();
+        _iconColorcontroller.reverse();
+
+      //
+
+      _scaleController = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: 120),
+      );
+      _scaleAnim = Tween<double>(begin: 1, end: .85).animate(_scaleController);
 
       _isInit = false;
     }
@@ -104,7 +114,8 @@ class _ShopItemState extends State<ShopItem>
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    _iconColorcontroller.dispose();
+    _scaleController.dispose();
     _shopProvider.removeListener(_shopListener);
   }
 
@@ -209,28 +220,35 @@ class _ShopItemState extends State<ShopItem>
                     ),
                     backgroundColor: Styles.appBarTextColor,
                   ),
-                AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color:
-                        _isActive ? Theme.of(context).accentColor : Colors.grey,
-                  ),
-                  child: AnimatedBuilder(
-                    animation: _iconColorAnim,
-                    child: Icon(Icons.add),
-                    builder: (_, ch) => IconButton(
-                      icon: ch,
-                      color: _iconColorAnim.value,
-                      onPressed: () async {
-                        if (_isActive) {
-                          await Provider.of<AudioProvider>(context)
-                              .playBuyUpgrade();
-                          _shopProvider.buyItem(
-                              priceInBills: widget.priceBills,
-                              priceInDiamond: widget.priceDiamonds);
-                        }
-                      },
+                ScaleTransition(
+                  scale: _scaleAnim,
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _isActive
+                          ? Theme.of(context).accentColor
+                          : Colors.grey,
+                    ),
+                    child: AnimatedBuilder(
+                      animation: _iconColorAnim,
+                      child: Icon(Icons.add),
+                      builder: (_, ch) => IconButton(
+                        icon: ch,
+                        color: _iconColorAnim.value,
+                        onPressed: () async {
+                          if (_isActive) {
+                            _scaleController.forward().then(
+                                  (_) => _scaleController.reverse(),
+                                );
+                            await Provider.of<AudioProvider>(context)
+                                .playBuyUpgrade();
+                            _shopProvider.buyItem(
+                                priceInBills: widget.priceBills,
+                                priceInDiamond: widget.priceDiamonds);
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ),
