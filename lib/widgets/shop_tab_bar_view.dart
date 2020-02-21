@@ -167,11 +167,10 @@ class _ShopItemState extends State<ShopItem> with TickerProviderStateMixin {
                     widget.name,
                     style: Styles.kShopItemTitleStyle,
                   ),
-                  if (widget.description != null)
-                    Text(
-                      widget.description,
-                      style: Styles.kShopItemDescriptionStyle,
-                    ),
+                  Text(
+                    widget.description,
+                    style: Styles.kShopItemDescriptionStyle,
+                  ),
                 ],
               ),
             ),

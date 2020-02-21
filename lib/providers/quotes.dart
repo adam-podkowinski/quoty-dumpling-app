@@ -25,16 +25,11 @@ class Quotes extends ChangeNotifier {
   var _favoritesOnTop = false;
   var _animateCollectionTiles = false;
   var _previousQuotes = [];
-  var _areQuotesLoading = false;
   String _searchValue = '';
   static const Duration animationDuration = const Duration(milliseconds: 300);
 
   bool get animateCollectionTiles {
     return _animateCollectionTiles;
-  }
-
-  bool get areQuotesLoading {
-    return _areQuotesLoading;
   }
 
   bool get favoritesOnTop {
@@ -136,7 +131,6 @@ class Quotes extends ChangeNotifier {
       }
     });
     _animateCollectionTiles = true;
-    _areQuotesLoading = false;
     notifyListeners();
     Future.delayed(animationDuration, () {
       _animateCollectionTiles = false;
@@ -211,7 +205,6 @@ class Quotes extends ChangeNotifier {
   }
 
   void sortCollection(bool shouldAnimate) {
-    _areQuotesLoading = true;
     WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
     _previousQuotes = [..._visibleQuotes];
     _visibleQuotesCopy = [..._visibleQuotes];
@@ -236,7 +229,6 @@ class Quotes extends ChangeNotifier {
       initCollectionTilesToAnimate();
     } else {
       _visibleQuotes = _visibleQuotesCopy;
-      _areQuotesLoading = false;
       WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
     }
   }
