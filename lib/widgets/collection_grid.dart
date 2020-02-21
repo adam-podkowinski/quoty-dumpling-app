@@ -123,63 +123,67 @@ class _CollectionGridState extends State<CollectionGrid>
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                : StaggeredGridView.count(
+                : StaggeredGridView.countBuilder(
                     crossAxisCount: 2,
                     mainAxisSpacing: SizeConfig.screenWidth * 0.0268,
                     crossAxisSpacing: SizeConfig.screenWidth * 0.0268,
                     controller: Provider.of<CollectionSettings>(context)
                         .scrollController,
-                    children: _quotesProvider.newQuotes.length > 0
-                        ? <Widget>[
-                            _buildNewQuotesTopDivider(),
-                            for (var q in _quotesProvider.newQuotes)
-                              ScaleTransition(
+
+                    // if new quotes list is empty there are no new quotes so building additional dividers and new quotes tiles is unnecessary
+                    //else we have to add 2 to an item count because there are two dividers which divides new quotes with old ones and we need to add new quotes length because they will be displayed
+                    itemCount: _quotesProvider.newQuotes.length > 0
+                        ? _quotesProvider.newQuotes.length +
+                            _quotesProvider.visibleQuotes.length +
+                            2
+                        : _quotesProvider.visibleQuotes.length,
+
+                    //first we need to put one widget on top so on index = 1 => staggered.fit(2), then new quotes are displayed with old quotes because in staggered tiles they are equal. Divider seperates them so one staggeredTile.fit(2) is necessary
+                    staggeredTileBuilder: _quotesProvider.newQuotes.length > 0
+                        ? (index) {
+                            if (index == 0)
+                              return StaggeredTile.fit(2);
+                            else if (index ==
+                                _quotesProvider.newQuotes.length + 1)
+                              return StaggeredTile.fit(2);
+                            else
+                              return StaggeredTile.count(1, 1);
+                          }
+                        : (index) => StaggeredTile.count(1, 1),
+                    //
+                    itemBuilder: _quotesProvider.newQuotes.length > 0
+                        ? (ctx, index) {
+                            if (index == 0)
+                              return _buildNewQuotesTopDivider();
+                            else if (index ==
+                                _quotesProvider.newQuotes.length + 1)
+                              return ScaleTransition(
+                                scale: _newQuotesAnimation,
+                                child: Divider(
+                                  thickness: 3,
+                                  color: Theme.of(context).accentColor,
+                                ),
+                              );
+                            else if (index <
+                                _quotesProvider.newQuotes.length + 1)
+                              return ScaleTransition(
                                 scale: Tween<double>(begin: 0, end: 1)
                                     .animate(_controller),
                                 child: GridCell(
-                                  q,
-                                  _quotesProvider.newQuotes.indexOf(q),
+                                  _quotesProvider.newQuotes[index - 1],
                                 ),
-                              ),
-                            ScaleTransition(
-                              scale: _newQuotesAnimation,
-                              child: Divider(
-                                thickness: 3,
-                                color: Theme.of(context).accentColor,
-                              ),
+                              );
+                            // else if (_quotesProvider.visibleQuotes.length > 0)
+                            return GridCell(
+                              _quotesProvider.visibleQuotes[
+                                  index - _quotesProvider.newQuotes.length - 2],
+                            );
+                            // return SizedBox();
+                          }
+                        //
+                        : (ctx, index) => GridCell(
+                              _quotesProvider.visibleQuotes[index],
                             ),
-                            for (var q in _quotesProvider.visibleQuotes)
-                              GridCell(
-                                q,
-                                _quotesProvider.visibleQuotes.indexOf(q),
-                              ),
-                          ]
-                        : <Widget>[
-                            for (var q in _quotesProvider.visibleQuotes)
-                              GridCell(
-                                q,
-                                _quotesProvider.visibleQuotes.indexOf(q),
-                              ),
-                          ],
-                    staggeredTiles: _quotesProvider.newQuotes.length > 0
-                        ? [
-                            StaggeredTile.fit(2),
-                            for (int i = 0;
-                                i < _quotesProvider.newQuotes.length;
-                                i++)
-                              StaggeredTile.count(1, 1),
-                            StaggeredTile.fit(2),
-                            for (int i = 0;
-                                i < _quotesProvider.visibleQuotes.length;
-                                i++)
-                              StaggeredTile.count(1, 1),
-                          ]
-                        : [
-                            for (int i = 0;
-                                i < _quotesProvider.visibleQuotes.length;
-                                i++)
-                              StaggeredTile.count(1, 1),
-                          ],
                   )
             : SlideAnimation(
                 verticalOffset: 50,
@@ -197,8 +201,7 @@ class _CollectionGridState extends State<CollectionGrid>
 
 class GridCell extends StatefulWidget {
   final Quote quote;
-  final int index;
-  GridCell(this.quote, this.index);
+  GridCell(this.quote);
 
   @override
   _GridCellState createState() => _GridCellState();

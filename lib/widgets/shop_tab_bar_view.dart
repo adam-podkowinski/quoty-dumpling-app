@@ -71,7 +71,6 @@ class _ShopItemState extends State<ShopItem>
       _controller?.forward();
     else
       _controller?.reverse();
-    print('ll');
   }
 
   @override

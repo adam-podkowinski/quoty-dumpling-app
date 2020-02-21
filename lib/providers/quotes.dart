@@ -93,6 +93,8 @@ class Quotes extends ChangeNotifier {
 
     _quotesToUnlock.addAll(
       _quotes.where((e) => e.isUnlocked != true),
+      // debug
+      // _quotes
     );
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
