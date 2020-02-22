@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:quoty_dumpling_app/helpers/audio_provider.dart';
+import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';

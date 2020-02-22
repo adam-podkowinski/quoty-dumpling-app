@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
-import 'package:quoty_dumpling_app/helpers/audio_provider.dart';
+import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
+import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/screens/tabs_screen.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
   Future _setData(context) async {
     SizeConfig.init(context);
+    await Provider.of<Shop>(context, listen: false).initShop();
     await Provider.of<DumplingProvider>(context, listen: false)
         .initClickingProgress();
     await Provider.of<AudioProvider>(context, listen: false).initAudio();
