@@ -17,9 +17,10 @@ class DumplingProvider extends ChangeNotifier {
     return _progressBarStatus;
   }
 
-  Future initClickingProgress() async {
+  Future initDumpling() async {
     final prefs = await SharedPreferences.getInstance();
     _progressBarStatus = prefs.getDouble('clickingProgress') ?? 0.0;
+    _clickMultiplier = prefs.getDouble('clickMultiplier') ?? .1;
   }
 
   void clearClickingProgressWhenFull() {
@@ -50,5 +51,16 @@ class DumplingProvider extends ChangeNotifier {
   void isFullStateChanged() {
     _isFull = false;
     notifyListeners();
+  }
+
+  //! UPGRADE FUNCTIONS
+
+  void increaseClickMultiplier(double howMuch) {
+    _clickMultiplier += howMuch;
+    SharedPreferences.getInstance().then(
+      (prefs) {
+        prefs.setDouble('clickMultiplier', _clickMultiplier);
+      },
+    );
   }
 }

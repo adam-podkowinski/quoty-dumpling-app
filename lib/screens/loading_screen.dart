@@ -20,8 +20,7 @@ class _LoadingScreenState extends State<LoadingScreen>
   Future _setData(context) async {
     SizeConfig.init(context);
     await Provider.of<Shop>(context, listen: false).initShop();
-    await Provider.of<DumplingProvider>(context, listen: false)
-        .initClickingProgress();
+    await Provider.of<DumplingProvider>(context, listen: false).initDumpling();
     await Provider.of<AudioProvider>(context, listen: false).initAudio();
     await Provider.of<Quotes>(context, listen: false).fetchQuotes();
     await Provider.of<CollectionSettings>(context, listen: false).initOptions();

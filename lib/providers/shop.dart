@@ -6,6 +6,7 @@ class Shop extends ChangeNotifier {
   int _diamonds = 0;
   int _bills = 0;
   int _billsPerClick = 1;
+  double _cashMultiplierOnOpening = 1.5;
 
   int get diamonds => _diamonds;
   int get bills => _bills;
@@ -15,6 +16,8 @@ class Shop extends ChangeNotifier {
     _bills = prefs.getInt('bills') ?? 0;
     _diamonds = prefs.getInt('diamonds') ?? 0;
     _billsPerClick = prefs.getInt('billsPerClick') ?? 1;
+    _cashMultiplierOnOpening =
+        prefs.getDouble('cashMultiplierOnOpening') ?? 1.5;
   }
 
   void clickOnDumpling() {
@@ -27,7 +30,7 @@ class Shop extends ChangeNotifier {
   }
 
   void openDumpling() {
-    _bills += _billsPerClick * 100;
+    _bills += _billsPerClick * (_cashMultiplierOnOpening * 100).toInt();
     _diamonds += 20;
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => notifyListeners(),
@@ -54,5 +57,26 @@ class Shop extends ChangeNotifier {
         },
       );
     }
+  }
+
+  //! UPGRADE FUNCTIONS
+
+  void increaseBillsOnClick(int howMuch) {
+    _billsPerClick += howMuch;
+
+    SharedPreferences.getInstance().then(
+      (prefs) {
+        prefs.setInt('billsPerClick', _billsPerClick);
+      },
+    );
+  }
+
+  void increaseCashMultiplierOnOpening(double howMuch) {
+    _cashMultiplierOnOpening += howMuch;
+    SharedPreferences.getInstance().then(
+      (prefs) {
+        prefs.setDouble('cashMultiplierOnOpening', _cashMultiplierOnOpening);
+      },
+    );
   }
 }
