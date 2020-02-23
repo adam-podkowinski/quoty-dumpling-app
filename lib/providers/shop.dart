@@ -50,9 +50,10 @@ class Shop extends ChangeNotifier {
         upgrade.actualPriceDiamonds <= _diamonds) {
       _bills -= upgrade.actualPriceBills;
       _diamonds -= upgrade.actualPriceDiamonds;
-      notifyListeners();
 
       upgrade.useUpgrade(context);
+
+      notifyListeners();
 
       SharedPreferences.getInstance().then(
         (prefs) {

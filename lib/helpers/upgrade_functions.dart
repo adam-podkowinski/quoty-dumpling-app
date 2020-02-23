@@ -4,14 +4,14 @@ import 'package:quoty_dumpling_app/providers/shop.dart';
 
 class UpgradeFunctions {
   static void increaseBillsOnClickByOne(context) {
-    Provider.of<Shop>(context).increaseBillsOnClick(2);
+    Provider.of<Shop>(context).increaseBillsOnClick(1);
   }
 
   static void increaseClickMultiplierByLow(context) {
-    Provider.of<DumplingProvider>(context).increaseClickMultiplier(2);
+    Provider.of<DumplingProvider>(context).increaseClickMultiplier(.1);
   }
 
   static void increaseCashOnOpeningMultiplier(context) {
-    Provider.of<Shop>(context).increaseCashMultiplierOnOpening(2);
+    Provider.of<Shop>(context).increaseCashMultiplierOnOpening(1);
   }
 }

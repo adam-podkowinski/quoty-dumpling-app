@@ -38,6 +38,10 @@ class Upgrade {
   void fetchFromDB(Map<String, dynamic> map) {
     level = map.isEmpty ? 1 : map['level'];
 
+    refreshActualPrices();
+  }
+
+  void refreshActualPrices() {
     actualPriceBills = level * defaultPriceBills;
     actualPriceDiamonds = level * defaultPriceDiamonds;
   }
@@ -54,5 +58,7 @@ class Upgrade {
         UpgradeFunctions.increaseCashOnOpeningMultiplier(context);
         break;
     }
+    level++;
+    refreshActualPrices();
   }
 }

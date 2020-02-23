@@ -3,7 +3,7 @@
       "id": "001",
       "name": "Bills Power",
       "description": "Get additional money on clicking on dumpling",
-      "defaultPriceBills": 3,
+      "defaultPriceBills": 10,
       "defaultPriceDiamonds": 0,
       "priceUSD": 0
    },
@@ -11,15 +11,15 @@
       "id": "002",
       "name": "Clicking Power",
       "description": "Unlock quotes faster",
-      "defaultPriceBills": 6,
-      "defaultPriceDiamonds": 1,
+      "defaultPriceBills": 15,
+      "defaultPriceDiamonds": 0,
       "priceUSD": 0
    },
    {
       "id": "003",
       "name": "Dumpling Power",
       "description": "Get additional money on dumpling opening",
-      "defaultPriceBills": 9,
+      "defaultPriceBills": 20,
       "defaultPriceDiamonds": 0,
       "priceUSD": 0
    }
