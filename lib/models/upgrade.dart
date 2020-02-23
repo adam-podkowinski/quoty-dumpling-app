@@ -5,19 +5,23 @@ class Upgrade {
   final String description;
   final int defaultPriceBills;
   final int defaultPriceDiamonds;
-  final int defaultPriceUSD;
+  final int priceUSD;
   final Function function;
-  final int level;
   final String id;
+
+  int level;
+
+  int actualPriceBills;
+  int actualPriceDiamonds;
+  int actualPriceUSD;
 
   Upgrade._({
     this.name,
     this.description,
     this.defaultPriceBills,
     this.defaultPriceDiamonds,
-    this.defaultPriceUSD,
+    this.priceUSD,
     this.function,
-    this.level,
     this.id,
   });
 
@@ -25,12 +29,18 @@ class Upgrade {
     return Upgrade._(
       name: map['name'],
       description: map['description'],
-      defaultPriceBills: map['description'],
-      defaultPriceDiamonds: map['priceDiamonds'],
-      defaultPriceUSD: map['priceUSD'],
-      level: map['level'],
+      defaultPriceBills: map['defaultPriceBills'],
+      defaultPriceDiamonds: map['defaultPriceDiamonds'],
+      priceUSD: map['priceUSD'],
       id: map['id'],
     );
+  }
+
+  void fetchFromDB(Map<String, dynamic> map) {
+    level = map.isEmpty ? 1 : map['level'];
+
+    actualPriceBills = level * defaultPriceBills;
+    actualPriceDiamonds = level * defaultPriceDiamonds;
   }
 
   void useUpgrade(context) {

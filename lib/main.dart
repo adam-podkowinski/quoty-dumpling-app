@@ -9,6 +9,7 @@ import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
+import 'package:quoty_dumpling_app/providers/upgrades.dart';
 import 'package:quoty_dumpling_app/screens/loading_screen.dart';
 
 void main() => runApp(Phoenix(child: MyApp()));
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: Shop(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Upgrades(),
         ),
       ],
       child: MaterialApp(

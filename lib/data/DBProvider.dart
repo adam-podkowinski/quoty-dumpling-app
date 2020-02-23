@@ -28,6 +28,8 @@ class DBProvider {
         await db.execute(
           'CREATE TABLE UnlockedQuotes(id TEXT PRIMARY KEY, isFavorite INTEGER, unlockingTime TEXT)',
         );
+        await db.execute(
+            'CREATE TABLE Upgrades(id TEXT PRIMARY KEY, level INTEGER)');
       },
     );
   }
@@ -45,12 +47,12 @@ class DBProvider {
   Future<Map<String, dynamic>> getElement(String table, String id) async {
     final db = await _databaseGet;
     var res = await db.query(table, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? res.first : Null;
+    return res.isNotEmpty ? res.first : Map();
   }
 
   Future<List<Map<String, dynamic>>> getAllElements(String table) async {
     final db = await _databaseGet;
-    var res = await db.query('UnlockedQuotes');
+    var res = await db.query(table);
     return res.isNotEmpty ? res : [];
   }
 
