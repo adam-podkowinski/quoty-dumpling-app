@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:quoty_dumpling_app/models/upgrade.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Shop extends ChangeNotifier {
@@ -44,11 +45,14 @@ class Shop extends ChangeNotifier {
     );
   }
 
-  void buyItem({int priceInBills = 0, int priceInDiamond = 0}) {
-    if (priceInBills <= _bills && priceInDiamond <= _diamonds) {
-      _bills -= priceInBills;
-      _diamonds -= priceInDiamond;
+  void buyItem(Upgrade upgrade, context) {
+    if (upgrade.actualPriceBills <= _bills &&
+        upgrade.actualPriceDiamonds <= _diamonds) {
+      _bills -= upgrade.actualPriceBills;
+      _diamonds -= upgrade.actualPriceDiamonds;
       notifyListeners();
+
+      upgrade.useUpgrade(context);
 
       SharedPreferences.getInstance().then(
         (prefs) {

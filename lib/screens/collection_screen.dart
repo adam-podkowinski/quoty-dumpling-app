@@ -70,7 +70,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
                   CustomAppBar(
                     'Collection',
                     suffix: Text(
-                      'Quotes: ${_quotesProvider.unlockedQuotes.length}',
+                      'Quotes: ${_quotesProvider.unlockedQuotes.length + _quotesProvider.newQuotes.length}',
                       style: Styles.kSearchBarTextStyle.copyWith(
                         color: Styles.appBarTextColor,
                       ),

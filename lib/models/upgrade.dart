@@ -13,7 +13,6 @@ class Upgrade {
 
   int actualPriceBills;
   int actualPriceDiamonds;
-  int actualPriceUSD;
 
   Upgrade._({
     this.name,
