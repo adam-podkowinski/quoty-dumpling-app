@@ -184,7 +184,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                             2.3,
                                   ),
                                   Text(
-                                    'Your game data will be lost. All of your upgrades and quotes will be deleted and you won\'t be able to restore them!',
+                                    'Your game data will be lost. All of your items and quotes will be deleted and you won\'t be able to restore them!',
                                     textAlign: TextAlign.justify,
                                     style: Styles.kSettingsTextStyle,
                                   ),

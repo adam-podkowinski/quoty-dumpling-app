@@ -56,7 +56,7 @@ flutter:
   assets:
    - assets/images/dumpling.png
    - assets/quotes/
-   - assets/upgrades/
+   - assets/items/
    - assets/sounds/
   #  - images/a_dot_ham.jpeg
 

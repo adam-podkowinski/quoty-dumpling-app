@@ -53,7 +53,7 @@ class DumplingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  //! UPGRADE FUNCTIONS
+  //! ITEM FUNCTIONS
 
   void increaseClickMultiplier(double howMuch) {
     _clickMultiplier += howMuch;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quoty_dumpling_app/models/upgrade.dart';
+import 'package:quoty_dumpling_app/models/item.dart';
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
+import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
-import 'package:quoty_dumpling_app/providers/upgrades.dart';
 
 class ShopTabBarView extends StatefulWidget {
   @override
@@ -20,9 +20,9 @@ class _ShopTabBarViewState extends State<ShopTabBarView> {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         ListView(
-          children: Provider.of<Upgrades>(context)
-              .upgrades
-              .map((u) => ShopItem(u))
+          children: Provider.of<ShopItems>(context)
+              .items
+              .map((u) => Item(u))
               .toList(),
         ),
         Container(
@@ -33,16 +33,16 @@ class _ShopTabBarViewState extends State<ShopTabBarView> {
   }
 }
 
-class ShopItem extends StatefulWidget {
-  final Upgrade upgrade;
+class Item extends StatefulWidget {
+  final ShopItem item;
 
-  ShopItem(this.upgrade);
+  Item(this.item);
 
   @override
-  _ShopItemState createState() => _ShopItemState();
+  _ItemState createState() => _ItemState();
 }
 
-class _ShopItemState extends State<ShopItem> with TickerProviderStateMixin {
+class _ItemState extends State<Item> with TickerProviderStateMixin {
   Shop _shopProvider;
   bool _isFree = false;
   bool _isActive = true;
@@ -55,8 +55,8 @@ class _ShopItemState extends State<ShopItem> with TickerProviderStateMixin {
   Animation _scaleAnim;
 
   void _shopListener() {
-    _isActive = _shopProvider.bills >= widget.upgrade.actualPriceBills &&
-        _shopProvider.diamonds >= widget.upgrade.actualPriceDiamonds;
+    _isActive = _shopProvider.bills >= widget.item.actualPriceBills &&
+        _shopProvider.diamonds >= widget.item.actualPriceDiamonds;
     if (!_isActive)
       _iconColorcontroller?.forward();
     else
@@ -76,13 +76,13 @@ class _ShopItemState extends State<ShopItem> with TickerProviderStateMixin {
         end: Theme.of(context).disabledColor,
       ).animate(_iconColorcontroller);
 
-      _isFree = widget.upgrade.actualPriceBills <= 0 &&
-          widget.upgrade.actualPriceDiamonds <= 0;
+      _isFree = widget.item.actualPriceBills <= 0 &&
+          widget.item.actualPriceDiamonds <= 0;
 
       _shopProvider = Provider.of<Shop>(context)..addListener(_shopListener);
 
-      _isActive = _shopProvider.bills >= widget.upgrade.actualPriceBills &&
-          _shopProvider.diamonds >= widget.upgrade.actualPriceDiamonds;
+      _isActive = _shopProvider.bills >= widget.item.actualPriceBills &&
+          _shopProvider.diamonds >= widget.item.actualPriceDiamonds;
       if (!_isActive)
         _iconColorcontroller.forward();
       else
@@ -153,11 +153,11 @@ class _ShopItemState extends State<ShopItem> with TickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    widget.upgrade.name,
+                    widget.item.name,
                     style: Styles.kShopItemTitleStyle,
                   ),
                   Text(
-                    widget.upgrade.description,
+                    widget.item.description,
                     style: Styles.kShopItemDescriptionStyle,
                   ),
                 ],
@@ -180,10 +180,10 @@ class _ShopItemState extends State<ShopItem> with TickerProviderStateMixin {
                     ),
                     backgroundColor: Styles.appBarTextColor,
                   ),
-                if (widget.upgrade.actualPriceBills != 0)
+                if (widget.item.actualPriceBills != 0)
                   Chip(
                     label: Text(
-                      '${widget.upgrade.actualPriceBills ?? 0}',
+                      '${widget.item.actualPriceBills ?? 0}',
                       style: Styles.kMoneyInShopTextStyle,
                     ),
                     avatar: Icon(
@@ -192,10 +192,10 @@ class _ShopItemState extends State<ShopItem> with TickerProviderStateMixin {
                     ),
                     backgroundColor: Styles.appBarTextColor,
                   ),
-                if (widget.upgrade.actualPriceDiamonds != 0)
+                if (widget.item.actualPriceDiamonds != 0)
                   Chip(
                     label: Text(
-                      '${widget.upgrade.actualPriceDiamonds ?? 0}',
+                      '${widget.item.actualPriceDiamonds ?? 0}',
                       style: Styles.kMoneyInShopTextStyle,
                     ),
                     avatar: Padding(
@@ -208,7 +208,7 @@ class _ShopItemState extends State<ShopItem> with TickerProviderStateMixin {
                     ),
                     backgroundColor: Styles.appBarTextColor,
                   ),
-                if (widget.upgrade.priceUSD != 0)
+                if (widget.item.priceUSD != 0)
                   Chip(
                     label: Row(
                       children: <Widget>[
@@ -219,7 +219,7 @@ class _ShopItemState extends State<ShopItem> with TickerProviderStateMixin {
                           ),
                         ),
                         Text(
-                          '${widget.upgrade.priceUSD}',
+                          '${widget.item.priceUSD}',
                           style: Styles.kMoneyInShopTextStyle,
                         ),
                       ],
@@ -248,8 +248,8 @@ class _ShopItemState extends State<ShopItem> with TickerProviderStateMixin {
                                   (_) => _scaleController.reverse(),
                                 );
                             await Provider.of<AudioProvider>(context)
-                                .playBuyUpgrade();
-                            _shopProvider.buyItem(widget.upgrade, context);
+                                .playBuyItem();
+                            _shopProvider.buyItem(widget.item, context);
                           }
                         },
                       ),

@@ -6,10 +6,10 @@ import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
+import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
-import 'package:quoty_dumpling_app/providers/upgrades.dart';
 import 'package:quoty_dumpling_app/screens/loading_screen.dart';
 
 void main() => runApp(Phoenix(child: MyApp()));
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           value: Shop(),
         ),
         ChangeNotifierProvider.value(
-          value: Upgrades(),
+          value: ShopItems(),
         ),
       ],
       child: MaterialApp(

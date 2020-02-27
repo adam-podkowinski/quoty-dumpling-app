@@ -1,6 +1,6 @@
-import 'package:quoty_dumpling_app/helpers/upgrade_functions.dart';
+import 'package:quoty_dumpling_app/helpers/item_functions.dart';
 
-class Upgrade {
+class ShopItem {
   final String name;
   final String description;
   final int defaultPriceBills;
@@ -14,7 +14,7 @@ class Upgrade {
   int actualPriceBills;
   int actualPriceDiamonds;
 
-  Upgrade._({
+  ShopItem._({
     this.name,
     this.description,
     this.defaultPriceBills,
@@ -24,8 +24,8 @@ class Upgrade {
     this.id,
   });
 
-  factory Upgrade.fromMap(Map<String, dynamic> map) {
-    return Upgrade._(
+  factory ShopItem.fromMap(Map<String, dynamic> map) {
+    return ShopItem._(
       name: map['name'],
       description: map['description'],
       defaultPriceBills: map['defaultPriceBills'],
@@ -46,16 +46,16 @@ class Upgrade {
     actualPriceDiamonds = level * defaultPriceDiamonds;
   }
 
-  void useUpgrade(context) {
+  void useItem(context) {
     switch (id) {
       case '001':
-        UpgradeFunctions.increaseBillsOnClickByOne(context);
+        ItemFunctions.increaseBillsOnClickByOne(context);
         break;
       case '002':
-        UpgradeFunctions.increaseClickMultiplierByLow(context);
+        ItemFunctions.increaseClickMultiplierByLow(context);
         break;
       case '003':
-        UpgradeFunctions.increaseCashOnOpeningMultiplier(context);
+        ItemFunctions.increaseCashOnOpeningMultiplier(context);
         break;
     }
     level++;

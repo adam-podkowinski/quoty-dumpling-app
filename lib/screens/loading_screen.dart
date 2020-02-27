@@ -6,9 +6,9 @@ import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
+import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
-import 'package:quoty_dumpling_app/providers/upgrades.dart';
 import 'package:quoty_dumpling_app/screens/tabs_screen.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -21,7 +21,7 @@ class _LoadingScreenState extends State<LoadingScreen>
   Future _setData(context) async {
     SizeConfig.init(context);
     await Provider.of<Shop>(context, listen: false).initShop();
-    await Provider.of<Upgrades>(context, listen: false).fetchUpgrades();
+    await Provider.of<ShopItems>(context, listen: false).fetchItems();
     await Provider.of<DumplingProvider>(context, listen: false).initDumpling();
     await Provider.of<AudioProvider>(context, listen: false).initAudio();
     await Provider.of<Quotes>(context, listen: false).fetchQuotes();

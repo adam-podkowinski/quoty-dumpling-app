@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 
-class UpgradeFunctions {
+class ItemFunctions {
   static void increaseBillsOnClickByOne(context) {
     Provider.of<Shop>(context).increaseBillsOnClick(1);
   }

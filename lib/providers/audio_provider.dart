@@ -37,7 +37,7 @@ class AudioProvider extends ChangeNotifier {
     );
   }
 
-  Future playBuyUpgrade() async {
+  Future playBuyItem() async {
     if (_isMuted || _volume <= 0) return;
     await _audioCache.play(
       'item_purchase.wav',

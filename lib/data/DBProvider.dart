@@ -28,8 +28,8 @@ class DBProvider {
         await db.execute(
           'CREATE TABLE UnlockedQuotes(id TEXT PRIMARY KEY, isFavorite INTEGER, unlockingTime TEXT)',
         );
-        await db.execute(
-            'CREATE TABLE Upgrades(id TEXT PRIMARY KEY, level INTEGER)');
+        await db
+            .execute('CREATE TABLE Items(id TEXT PRIMARY KEY, level INTEGER)');
       },
     );
   }

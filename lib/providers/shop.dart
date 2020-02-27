@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:quoty_dumpling_app/models/upgrade.dart';
+import 'package:quoty_dumpling_app/models/item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Shop extends ChangeNotifier {
@@ -45,13 +45,13 @@ class Shop extends ChangeNotifier {
     );
   }
 
-  void buyItem(Upgrade upgrade, context) {
-    if (upgrade.actualPriceBills <= _bills &&
-        upgrade.actualPriceDiamonds <= _diamonds) {
-      _bills -= upgrade.actualPriceBills;
-      _diamonds -= upgrade.actualPriceDiamonds;
+  void buyItem(ShopItem item, context) {
+    if (item.actualPriceBills <= _bills &&
+        item.actualPriceDiamonds <= _diamonds) {
+      _bills -= item.actualPriceBills;
+      _diamonds -= item.actualPriceDiamonds;
 
-      upgrade.useUpgrade(context);
+      item.useItem(context);
 
       notifyListeners();
 
@@ -64,7 +64,7 @@ class Shop extends ChangeNotifier {
     }
   }
 
-  //! UPGRADE FUNCTIONS
+  //! ITEM FUNCTIONS
 
   void increaseBillsOnClick(int howMuch) {
     _billsPerClick += howMuch;

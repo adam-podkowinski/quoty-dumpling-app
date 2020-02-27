@@ -79,7 +79,7 @@ class ShopScreen extends StatelessWidget {
                                 'Upgrades',
                               ),
                               Text(
-                                'Coins',
+                                'Currency',
                               ),
                             ],
                           ),
