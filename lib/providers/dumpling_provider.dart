@@ -36,7 +36,6 @@ class DumplingProvider extends ChangeNotifier {
   void clickedOnDumpling() {
     _progressBarStatus += _clickMultiplier / 100;
     notifyListeners();
-    print(_progressBarStatus);
     if (_progressBarStatus >= 1) {
       Future.delayed(Duration(milliseconds: 100), () {
         _isFull = true;

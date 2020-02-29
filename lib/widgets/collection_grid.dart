@@ -283,9 +283,10 @@ class _GridCellState extends State<GridCell>
               ),
               clipBehavior: Clip.antiAlias,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Expanded(
+                    flex: 3,
                     child: Container(
                       padding: EdgeInsets.all(
                         SizeConfig.screenWidth * .022,
@@ -294,56 +295,63 @@ class _GridCellState extends State<GridCell>
                       child: Center(
                         child: AutoSizeText(
                           widget.quote.quote,
-                          textAlign: TextAlign.center,
-                          maxLines: 7,
-                          style: Styles.kQuoteStyle,
+                          minFontSize: 1,
+                          textAlign: TextAlign.justify,
+                          style: Styles.kQuoteStyle.copyWith(
+                              fontSize: SizeConfig.screenWidth * .045),
                         ),
                       ),
                     ),
                   ),
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          color:
-                              widget.quote.rarityColor(context).withOpacity(.7),
-                          blurRadius: 99,
-                          spreadRadius: 10,
-                        ),
-                      ],
-                    ),
-                    child: GridTileBar(
-                      leading: InkWell(
-                        onTap: () => setState(() {
-                          widget.quote.changeFavorite();
+                  Expanded(
+                    flex: 2,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                            color: widget.quote
+                                .rarityColor(context)
+                                .withOpacity(.7),
+                            blurRadius: 99,
+                            spreadRadius: 10,
+                          ),
+                        ],
+                      ),
+                      child: GridTileBar(
+                        leading: InkWell(
+                          onTap: () => setState(() {
+                            widget.quote.changeFavorite();
 
-                          if (_quotesProvider.favoritesOnTop)
-                            _quotesProvider.sortCollection(true);
-                        }),
-                        child: Icon(
-                          widget.quote.isFavorite
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color: heartColor,
+                            if (_quotesProvider.favoritesOnTop)
+                              _quotesProvider.sortCollection(true);
+                          }),
+                          child: Icon(
+                            widget.quote.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color: heartColor,
+                          ),
                         ),
-                      ),
-                      title: Text(
-                        widget.quote.author,
-                        style: TextStyle(
-                          fontFamily: Styles.fontFamily,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).textTheme.title.color,
+                        title: AutoSizeText(
+                          widget.quote.author,
+                          style: TextStyle(
+                            fontFamily: Styles.fontFamily,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).textTheme.title.color,
+                            fontSize: SizeConfig.screenWidth * .035,
+                          ),
                         ),
-                      ),
-                      subtitle: Text(
-                        widget.quote.rarityText(),
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontFamily: Styles.fontFamily,
-                          color: Theme.of(context).textTheme.title.color,
+                        subtitle: Text(
+                          widget.quote.rarityText(),
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontFamily: Styles.fontFamily,
+                            color: Theme.of(context).textTheme.title.color,
+                            fontSize: SizeConfig.screenWidth * .035,
+                          ),
                         ),
+                        backgroundColor: widget.quote.rarityColor(context),
                       ),
-                      backgroundColor: widget.quote.rarityColor(context),
                     ),
                   ),
                 ],

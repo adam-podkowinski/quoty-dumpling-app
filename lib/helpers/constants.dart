@@ -36,7 +36,7 @@ class Styles {
     fontSize: _screenWidth * 0.08,
   );
 
-  static TextStyle kMoneyInShopTextStyle = TextStyle(
+  static TextStyle kMoneyInShopItemTextStyle = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
     color: Color(0xff3A2E39),

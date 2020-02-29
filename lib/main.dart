@@ -12,7 +12,11 @@ import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
 import 'package:quoty_dumpling_app/screens/loading_screen.dart';
 
-void main() => runApp(Phoenix(child: MyApp()));
+void main() => runApp(
+      Phoenix(
+        child: MyApp(),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   @override

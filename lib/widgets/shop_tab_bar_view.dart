@@ -22,7 +22,7 @@ class _ShopTabBarViewState extends State<ShopTabBarView> {
         ListView(
           children: Provider.of<ShopItems>(context)
               .items
-              .map((u) => Item(u))
+              .map((i) => Item(i))
               .toList(),
         ),
         Container(
@@ -108,10 +108,20 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
     _shopProvider.removeListener(_shopListener);
   }
 
+  Widget buildPriceChip(Widget label, {Widget avatar}) {
+    return SizedBox(
+      child: Chip(
+        label: label,
+        avatar: avatar,
+        backgroundColor: Styles.appBarTextColor,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(SizeConfig.screenWidth * 0.02),
+      padding: EdgeInsets.all(SizeConfig.screenWidth * 0.03),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.0),
@@ -169,34 +179,32 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
             Column(
               children: <Widget>[
                 if (_isFree)
-                  Chip(
-                    label: Text(
+                  buildPriceChip(
+                    Text(
                       'FREE',
-                      style: Styles.kMoneyInShopTextStyle,
+                      style: Styles.kMoneyInShopItemTextStyle,
                     ),
                     avatar: Icon(
                       Icons.attach_money,
                       color: Theme.of(context).secondaryHeaderColor,
                     ),
-                    backgroundColor: Styles.appBarTextColor,
                   ),
                 if (widget.item.actualPriceBills != 0)
-                  Chip(
-                    label: Text(
+                  buildPriceChip(
+                    Text(
                       '${widget.item.actualPriceBills ?? 0}',
-                      style: Styles.kMoneyInShopTextStyle,
+                      style: Styles.kMoneyInShopItemTextStyle,
                     ),
                     avatar: Icon(
                       Icons.attach_money,
                       color: Theme.of(context).secondaryHeaderColor,
                     ),
-                    backgroundColor: Styles.appBarTextColor,
                   ),
                 if (widget.item.actualPriceDiamonds != 0)
-                  Chip(
-                    label: Text(
+                  buildPriceChip(
+                    Text(
                       '${widget.item.actualPriceDiamonds ?? 0}',
-                      style: Styles.kMoneyInShopTextStyle,
+                      style: Styles.kMoneyInShopItemTextStyle,
                     ),
                     avatar: Padding(
                       padding: EdgeInsets.all(SizeConfig.screenWidth * 0.01),
@@ -206,25 +214,23 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                         color: Colors.blue,
                       ),
                     ),
-                    backgroundColor: Styles.appBarTextColor,
                   ),
                 if (widget.item.priceUSD != 0)
-                  Chip(
-                    label: Row(
+                  buildPriceChip(
+                    Row(
                       children: <Widget>[
                         Text(
                           'USD ',
-                          style: Styles.kMoneyInShopTextStyle.copyWith(
+                          style: Styles.kMoneyInShopItemTextStyle.copyWith(
                             color: Theme.of(context).secondaryHeaderColor,
                           ),
                         ),
                         Text(
                           '${widget.item.priceUSD}',
-                          style: Styles.kMoneyInShopTextStyle,
+                          style: Styles.kMoneyInShopItemTextStyle,
                         ),
                       ],
                     ),
-                    backgroundColor: Styles.appBarTextColor,
                   ),
                 ScaleTransition(
                   scale: _scaleAnim,

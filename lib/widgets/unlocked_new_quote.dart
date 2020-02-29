@@ -232,7 +232,7 @@ class NewQuoteButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(50),
         child: Container(
           height: SizeConfig.screenHeight * .05,
-          width: SizeConfig.screenHeight * .2,
+          width: SizeConfig.screenWidth * .4,
           padding: EdgeInsets.all(6),
           decoration: BoxDecoration(
             border: Border.all(

@@ -69,10 +69,12 @@ class _CollectionScreenState extends State<CollectionScreen> {
               : <Widget>[
                   CustomAppBar(
                     'Collection',
-                    suffix: Text(
-                      'Quotes: ${_quotesProvider.unlockedQuotes.length + _quotesProvider.newQuotes.length}',
-                      style: Styles.kSearchBarTextStyle.copyWith(
-                        color: Styles.appBarTextColor,
+                    suffix: FittedBox(
+                      child: Text(
+                        'Quotes: ${_quotesProvider.unlockedQuotes.length + _quotesProvider.newQuotes.length}',
+                        style: Styles.kSearchBarTextStyle.copyWith(
+                          color: Styles.appBarTextColor,
+                        ),
                       ),
                     ),
                   ),
