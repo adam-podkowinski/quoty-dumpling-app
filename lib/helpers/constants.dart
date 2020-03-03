@@ -115,8 +115,9 @@ class Styles {
     color: appBarTextColor,
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
-    fontSize: _screenWidth * 0.06,
+    fontSize: _screenWidth * 0.055,
   );
+
   static TextStyle kShopItemDescriptionStyle = TextStyle(
     color: appBarTextColor,
     fontFamily: fontFamily,

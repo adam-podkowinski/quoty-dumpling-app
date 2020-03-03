@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/models/item.dart';
@@ -54,6 +56,9 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
   AnimationController _scaleController;
   Animation _scaleAnim;
 
+  var textPainter;
+  var textSpan;
+
   void _shopListener() {
     _isActive = _shopProvider.bills >= widget.item.actualPriceBills &&
         _shopProvider.diamonds >= widget.item.actualPriceDiamonds;
@@ -97,6 +102,11 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
       _scaleAnim = Tween<double>(begin: 1, end: .85).animate(_scaleController);
 
       _isInit = false;
+
+      textSpan = TextSpan(text: '999', style: Styles.kMoneyInShopItemTextStyle);
+      textPainter =
+          TextPainter(text: textSpan, textDirection: TextDirection.ltr)
+            ..layout();
     }
   }
 
@@ -109,12 +119,13 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
   }
 
   Widget buildPriceChip(Widget label, {Widget avatar}) {
-    return SizedBox(
-      child: Chip(
-        label: label,
-        avatar: avatar,
-        backgroundColor: Styles.appBarTextColor,
+    return Chip(
+      label: ConstrainedBox(
+        constraints: BoxConstraints(minWidth: textPainter.width),
+        child: label,
       ),
+      avatar: avatar,
+      backgroundColor: Styles.appBarTextColor,
     );
   }
 
@@ -158,13 +169,16 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
             SizedBox(
               width: SizeConfig.screenWidth * 0.03,
             ),
-            Expanded(
+            Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
                     widget.item.name,
                     style: Styles.kShopItemTitleStyle,
+                  ),
+                  SizedBox(
+                    height: SizeConfig.screenHeight * 0.005,
                   ),
                   Text(
                     widget.item.description,
@@ -193,6 +207,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                   buildPriceChip(
                     Text(
                       '${widget.item.actualPriceBills ?? 0}',
+                      textAlign: TextAlign.center,
                       style: Styles.kMoneyInShopItemTextStyle,
                     ),
                     avatar: Icon(

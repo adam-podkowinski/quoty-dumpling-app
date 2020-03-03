@@ -19,6 +19,10 @@ class Shop extends ChangeNotifier {
     _billsPerClick = prefs.getInt('billsPerClick') ?? 1;
     _cashMultiplierOnOpening =
         prefs.getDouble('cashMultiplierOnOpening') ?? 1.5;
+
+    // init
+    _bills = 9999999;
+    _diamonds = 99999999;
   }
 
   void clickOnDumpling() {
