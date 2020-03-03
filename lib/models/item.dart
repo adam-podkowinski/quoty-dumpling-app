@@ -1,3 +1,4 @@
+import 'package:quoty_dumpling_app/data/DBProvider.dart';
 import 'package:quoty_dumpling_app/helpers/item_functions.dart';
 
 class ShopItem {
@@ -46,7 +47,7 @@ class ShopItem {
     actualPriceDiamonds = level * defaultPriceDiamonds;
   }
 
-  void useItem(context) {
+  void buyItem(context) {
     switch (id) {
       case '001':
         ItemFunctions.increaseBillsOnClickByOne(context);
@@ -60,5 +61,19 @@ class ShopItem {
     }
     level++;
     refreshActualPrices();
+
+    DBProvider.db.getElement('Items', id).then((i) {
+      if (i.isEmpty)
+        DBProvider.db.insert(
+          'Items',
+          {'id': id, 'level': level},
+        );
+      else
+        DBProvider.db.updateElementById(
+          'Items',
+          id,
+          {'level': level},
+        );
+    });
   }
 }

@@ -51,7 +51,7 @@ class Shop extends ChangeNotifier {
       _bills -= item.actualPriceBills;
       _diamonds -= item.actualPriceDiamonds;
 
-      item.useItem(context);
+      item.buyItem(context);
 
       notifyListeners();
 
