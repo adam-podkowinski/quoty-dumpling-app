@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:quoty_dumpling_app/data/DBProvider.dart';
 import 'package:quoty_dumpling_app/helpers/item_functions.dart';
 
@@ -23,7 +25,12 @@ class ShopItem {
     this.priceUSD,
     this.function,
     this.id,
-  });
+    this.actualPriceBills,
+    this.actualPriceDiamonds,
+  }) {
+    actualPriceBills = defaultPriceBills;
+    actualPriceDiamonds = defaultPriceDiamonds;
+  }
 
   factory ShopItem.fromMap(Map<String, dynamic> map) {
     return ShopItem._(
@@ -43,8 +50,8 @@ class ShopItem {
   }
 
   void refreshActualPrices() {
-    actualPriceBills = level * defaultPriceBills;
-    actualPriceDiamonds = level * defaultPriceDiamonds;
+    actualPriceBills = (defaultPriceBills * (pow(1.2, level))).round();
+    actualPriceDiamonds = (defaultPriceDiamonds * (pow(1.2, level))).round();
   }
 
   void buyItem(context) {
