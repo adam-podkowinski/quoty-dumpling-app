@@ -103,7 +103,8 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
 
       _isInit = false;
 
-      textSpan = TextSpan(text: '999', style: Styles.kMoneyInShopItemTextStyle);
+      textSpan =
+          TextSpan(text: '999.K', style: Styles.kMoneyInShopItemTextStyle);
       textPainter =
           TextPainter(text: textSpan, textDirection: TextDirection.ltr)
             ..layout();
@@ -206,7 +207,8 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                 if (widget.item.actualPriceBills != 0)
                   buildPriceChip(
                     Text(
-                      '${widget.item.actualPriceBills ?? 0}',
+                      _shopProvider
+                          .numberAbbreviation(widget.item.actualPriceBills),
                       textAlign: TextAlign.center,
                       style: Styles.kMoneyInShopItemTextStyle,
                     ),
@@ -218,7 +220,8 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                 if (widget.item.actualPriceDiamonds != 0)
                   buildPriceChip(
                     Text(
-                      '${widget.item.actualPriceDiamonds ?? 0}',
+                      _shopProvider
+                          .numberAbbreviation(widget.item.actualPriceDiamonds),
                       style: Styles.kMoneyInShopItemTextStyle,
                     ),
                     avatar: Padding(
@@ -241,7 +244,8 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                           ),
                         ),
                         Text(
-                          '${widget.item.priceUSD}',
+                          _shopProvider
+                              .numberAbbreviation(widget.item.priceUSD),
                           style: Styles.kMoneyInShopItemTextStyle,
                         ),
                       ],

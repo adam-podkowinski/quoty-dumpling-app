@@ -68,6 +68,33 @@ class Shop extends ChangeNotifier {
     }
   }
 
+  String numberAbbreviation(int number) {
+    int nLen = number.toString().length;
+    String text = '';
+
+    bool changeText(String abbreviation, int x) {
+      if (nLen > x && nLen < x + 4) {
+        for (int i = 0; i < nLen - x; i++) {
+          text += number.toString()[i];
+        }
+        if (!(number.toString()[nLen - x] == '0' &&
+            number.toString()[nLen - (x - 1)] == '0')) {
+          text += '.';
+          text += number.toString()[nLen - x];
+          if (!(number.toString()[nLen - (x - 1)] == '0'))
+            text += number.toString()[nLen - (x - 1)];
+        }
+        text += abbreviation;
+        return true;
+      }
+      return false;
+    }
+
+    if (!changeText('K', 3)) if (!changeText('M', 6)) if (!changeText(
+        'B', 9)) if (!changeText('q', 12)) text = number.toString();
+    return text;
+  }
+
   //! ITEM FUNCTIONS
 
   void increaseBillsOnClick(int howMuch) {

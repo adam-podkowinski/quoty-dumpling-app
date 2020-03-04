@@ -21,6 +21,7 @@ class DumplingScreen extends StatefulWidget {
 class _DumplingScreenState extends State<DumplingScreen>
     with TickerProviderStateMixin {
   var _dumplingProvider;
+  var _shopProvider;
   var _isInit = true;
 
   @override
@@ -33,6 +34,7 @@ class _DumplingScreenState extends State<DumplingScreen>
             _dumplingProvider.clearClickingProgressWhenFull();
           }
         });
+      _shopProvider = Provider.of<Shop>(context);
       _isInit = false;
     }
   }
@@ -59,7 +61,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                   ),
                   Flexible(
                     child: AutoSizeText(
-                      Provider.of<Shop>(context).bills.toString(),
+                      _shopProvider.numberAbbreviation(_shopProvider.bills),
                       maxLines: 1,
                       style: Styles.kMoneyTextStyle,
                     ),
@@ -73,7 +75,8 @@ class _DumplingScreenState extends State<DumplingScreen>
                   children: <Widget>[
                     Flexible(
                       child: AutoSizeText(
-                        Provider.of<Shop>(context).diamonds.toString(),
+                        _shopProvider
+                            .numberAbbreviation(_shopProvider.diamonds),
                         style: Styles.kMoneyTextStyle,
                         maxLines: 1,
                       ),
