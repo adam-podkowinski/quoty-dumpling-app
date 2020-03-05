@@ -90,6 +90,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                       ),
                       Expanded(
                         child: Stack(
+                          overflow: Overflow.visible,
                           children: <Widget>[
                             IconButton(
                               icon: Icon(
@@ -100,7 +101,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                               color: Theme.of(context).accentColor,
                               onPressed: () => _audioProvider.changeMute(),
                             ),
-                            Positioned(
+                            Positioned.fill(
                               left: SizeConfig.screenWidth * 0.08,
                               child: Slider(
                                 value: _audioProvider.volume,

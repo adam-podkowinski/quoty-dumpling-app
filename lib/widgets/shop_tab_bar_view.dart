@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -56,8 +57,11 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
   AnimationController _scaleController;
   Animation _scaleAnim;
 
-  var textPainter;
-  var textSpan;
+  TextSpan textSpanSmall;
+  TextPainter textPainterSmall;
+
+  TextSpan textSpanBig;
+  TextPainter textPainterBig;
 
   void _shopListener() {
     _isActive = _shopProvider.bills >= widget.item.actualPriceBills &&
@@ -103,10 +107,16 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
 
       _isInit = false;
 
-      textSpan =
-          TextSpan(text: '999.K', style: Styles.kMoneyInShopItemTextStyle);
-      textPainter =
-          TextPainter(text: textSpan, textDirection: TextDirection.ltr)
+      textSpanSmall =
+          TextSpan(text: '999', style: Styles.kMoneyInShopItemTextStyle);
+      textPainterSmall =
+          TextPainter(text: textSpanSmall, textDirection: TextDirection.ltr)
+            ..layout();
+
+      textSpanBig =
+          TextSpan(text: '999.9W', style: Styles.kMoneyInShopItemTextStyle);
+      textPainterBig =
+          TextPainter(text: textSpanBig, textDirection: TextDirection.ltr)
             ..layout();
     }
   }
@@ -121,8 +131,20 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
 
   Widget buildPriceChip(Widget label, {Widget avatar}) {
     return Chip(
-      label: ConstrainedBox(
-        constraints: BoxConstraints(minWidth: textPainter.width),
+      label: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
+        constraints: BoxConstraints(
+          minWidth: max(widget.item.actualPriceBills,
+                      widget.item.actualPriceDiamonds) >
+                  999
+              ? textPainterBig.width
+              : textPainterSmall.width,
+          maxWidth: max(widget.item.actualPriceBills,
+                      widget.item.actualPriceDiamonds) >
+                  999
+              ? textPainterBig.width
+              : textPainterSmall.width,
+        ),
         child: label,
       ),
       avatar: avatar,
