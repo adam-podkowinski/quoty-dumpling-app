@@ -201,7 +201,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Icon(
-                      Icons.exposure,
+                      widget.item.itemTypeIcon(),
                       color: Styles.appBarTextColor,
                     ),
                     SizedBox(

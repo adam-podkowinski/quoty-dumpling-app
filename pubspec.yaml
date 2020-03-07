@@ -89,6 +89,12 @@ flutter:
     - family: DiamondIcon
       fonts:
         - asset: assets/icons/DiamondIcon.ttf
+    - family: DollarIcon
+      fonts:
+        - asset: assets/icons/DollarIcon.ttf
+    - family: ClickIcon
+      fonts:
+        - asset: assets/icons/ClickIcon.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

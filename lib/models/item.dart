@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:flutter/widgets.dart';
 import 'package:quoty_dumpling_app/data/DBProvider.dart';
 import 'package:quoty_dumpling_app/helpers/item_functions.dart';
+import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 
 enum ItemType {
   UPGRADE,
@@ -23,7 +25,7 @@ class ShopItem {
   final Function function;
   final String id;
   final ItemType type;
-  final IconType upgradeType;
+  final IconType iconType;
 
   int _level;
   int get level => _level;
@@ -42,7 +44,7 @@ class ShopItem {
     this.actualPriceBills,
     this.actualPriceDiamonds,
     this.type,
-    this.upgradeType,
+    this.iconType,
   }) {
     actualPriceBills = defaultPriceBills;
     actualPriceDiamonds = defaultPriceDiamonds;
@@ -57,7 +59,7 @@ class ShopItem {
       priceUSD: map['priceUSD'],
       id: map['id'],
       type: typeFromString(map['type']),
-      upgradeType: iconTypeFromString(map['iconType']),
+      iconType: iconTypeFromString(map['iconType']),
     );
   }
 
@@ -69,6 +71,19 @@ class ShopItem {
         return ItemType.MONEY;
       default:
         return ItemType.POWERUP;
+    }
+  }
+
+  IconData itemTypeIcon() {
+    switch (iconType) {
+      case IconType.BILLS:
+        {
+          return CustomIcons.dollar;
+        }
+      default:
+        {
+          return CustomIcons.click;
+        }
     }
   }
 

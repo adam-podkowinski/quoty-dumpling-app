@@ -27,4 +27,13 @@ class CustomIcons {
 
   static const IconData diamond =
       const IconData(0xe800, fontFamily: _kDiamondFam);
+
+  static const _kDollarFam = 'DollarIcon';
+
+  static const IconData dollar =
+      const IconData(0xe805, fontFamily: _kDollarFam);
+
+  static const _kClickFam = 'ClickIcon';
+
+  static const IconData click = const IconData(0xe803, fontFamily: _kClickFam);
 }
