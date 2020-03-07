@@ -3,6 +3,17 @@ import 'dart:math';
 import 'package:quoty_dumpling_app/data/DBProvider.dart';
 import 'package:quoty_dumpling_app/helpers/item_functions.dart';
 
+enum ItemType {
+  UPGRADE,
+  MONEY,
+  POWERUP,
+}
+
+enum IconType {
+  BILLS,
+  CLICKS,
+}
+
 class ShopItem {
   final String name;
   final String description;
@@ -11,8 +22,11 @@ class ShopItem {
   final int priceUSD;
   final Function function;
   final String id;
+  final ItemType type;
+  final IconType upgradeType;
 
-  int level;
+  int _level;
+  int get level => _level;
 
   int actualPriceBills;
   int actualPriceDiamonds;
@@ -27,6 +41,8 @@ class ShopItem {
     this.id,
     this.actualPriceBills,
     this.actualPriceDiamonds,
+    this.type,
+    this.upgradeType,
   }) {
     actualPriceBills = defaultPriceBills;
     actualPriceDiamonds = defaultPriceDiamonds;
@@ -40,18 +56,41 @@ class ShopItem {
       defaultPriceDiamonds: map['defaultPriceDiamonds'],
       priceUSD: map['priceUSD'],
       id: map['id'],
+      type: typeFromString(map['type']),
+      upgradeType: iconTypeFromString(map['iconType']),
     );
   }
 
+  static ItemType typeFromString(String type) {
+    switch (type) {
+      case 'upgrade':
+        return ItemType.UPGRADE;
+      case 'money':
+        return ItemType.MONEY;
+      default:
+        return ItemType.POWERUP;
+    }
+  }
+
+  static IconType iconTypeFromString(String iType) {
+    switch (iType) {
+      case 'bills':
+        return IconType.BILLS;
+      case 'clicks':
+        return IconType.CLICKS;
+    }
+    return null;
+  }
+
   void fetchFromDB(Map<String, dynamic> map) {
-    level = map.isEmpty ? 1 : map['level'];
+    _level = map.isEmpty ? 1 : map['level'];
 
     refreshActualPrices();
   }
 
   void refreshActualPrices() {
-    actualPriceBills = (defaultPriceBills * (pow(1.2, level))).round();
-    actualPriceDiamonds = (defaultPriceDiamonds * (pow(1.2, level))).round();
+    actualPriceBills = (defaultPriceBills * (pow(1.2, _level))).round();
+    actualPriceDiamonds = (defaultPriceDiamonds * (pow(1.2, _level))).round();
   }
 
   void buyItem(context) {
@@ -66,20 +105,20 @@ class ShopItem {
         ItemFunctions.increaseCashOnOpeningMultiplier(context);
         break;
     }
-    level++;
+    _level++;
     refreshActualPrices();
 
     DBProvider.db.getElement('Items', id).then((i) {
       if (i.isEmpty)
         DBProvider.db.insert(
           'Items',
-          {'id': id, 'level': level},
+          {'id': id, 'level': _level},
         );
       else
         DBProvider.db.updateElementById(
           'Items',
           id,
-          {'level': level},
+          {'level': _level},
         );
     });
   }

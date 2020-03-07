@@ -24,12 +24,21 @@ class _ShopTabBarViewState extends State<ShopTabBarView> {
       children: <Widget>[
         ListView(
           children: Provider.of<ShopItems>(context)
-              .items
-              .map((i) => Item(i))
+              .upgrades
+              .map((u) => Item(u))
               .toList(),
         ),
-        Container(
-          color: Colors.yellow.withOpacity(.5),
+        ListView(
+          children: Provider.of<ShopItems>(context)
+              .powerups
+              .map((u) => Item(u))
+              .toList(),
+        ),
+        ListView(
+          children: Provider.of<ShopItems>(context)
+              .money
+              .map((u) => Item(u))
+              .toList(),
         ),
       ],
     );
@@ -108,13 +117,13 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
       _isInit = false;
 
       textSpanSmall =
-          TextSpan(text: '999', style: Styles.kMoneyInShopItemTextStyle);
+          TextSpan(text: '444', style: Styles.kMoneyInShopItemTextStyle);
       textPainterSmall =
           TextPainter(text: textSpanSmall, textDirection: TextDirection.ltr)
             ..layout();
 
       textSpanBig =
-          TextSpan(text: '999.9W', style: Styles.kMoneyInShopItemTextStyle);
+          TextSpan(text: '444.44W', style: Styles.kMoneyInShopItemTextStyle);
       textPainterBig =
           TextPainter(text: textSpanBig, textDirection: TextDirection.ltr)
             ..layout();
@@ -166,8 +175,10 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
         ),
         padding: EdgeInsets.all(SizeConfig.screenWidth * 0.02),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
+            AnimatedContainer(
+              duration: Duration(milliseconds: 300),
               width: SizeConfig.screenWidth * 0.24,
               height: SizeConfig.screenWidth * 0.24,
               decoration: BoxDecoration(
@@ -184,9 +195,26 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                 ],
                 color: Theme.of(context).accentColor,
               ),
-              child: Icon(
-                Icons.exposure,
-                color: Styles.appBarTextColor,
+              child: Padding(
+                padding: EdgeInsets.all(SizeConfig.screenWidth * .02),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.exposure,
+                      color: Styles.appBarTextColor,
+                    ),
+                    SizedBox(
+                      height: SizeConfig.screenHeight * .01,
+                    ),
+                    FittedBox(
+                      child: Text(
+                        'Level: ${widget.item.level.toString()}',
+                        style: Styles.kItemLevelTextStyle,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(

@@ -124,6 +124,12 @@ class Styles {
     fontSize: _screenWidth * 0.04,
   );
 
+  static TextStyle kItemLevelTextStyle = TextStyle(
+    color: appBarTextColor,
+    fontFamily: fontFamily,
+    fontSize: _screenWidth * .045,
+  );
+
   static LinearGradient backgroundGradient = LinearGradient(
     colors: [
       mainTheme.primaryColor,

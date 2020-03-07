@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 
@@ -39,10 +40,10 @@ class MyApp extends StatelessWidget {
           value: AudioProvider(),
         ),
         ChangeNotifierProvider.value(
-          value: Shop(),
+          value: ShopItems(),
         ),
         ChangeNotifierProvider.value(
-          value: ShopItems(),
+          value: Shop(),
         ),
       ],
       child: MaterialApp(

@@ -9,7 +9,17 @@ class ShopItems extends ChangeNotifier {
   List<ShopItem> _items = [];
   List<ShopItem> get items => [..._items];
 
+  List<ShopItem> _upgrades = [];
+  List<ShopItem> get upgrades => [..._upgrades];
+
+  List<ShopItem> _money = [];
+  List<ShopItem> get money => [..._money];
+
+  List<ShopItem> _powerups = [];
+  List<ShopItem> get powerups => [..._powerups];
+
   Future fetchItems() async {
+    print('fetching');
     List<dynamic> content;
 
     content = jsonDecode(
@@ -30,6 +40,23 @@ class ShopItems extends ChangeNotifier {
       u.fetchFromDB(
         dbItems.firstWhere((e) => e['id'] == u.id, orElse: () => Map()),
       );
+
+      switch (u.type) {
+        case ItemType.UPGRADE:
+          {
+            _upgrades.add(u);
+          }
+          break;
+        case ItemType.MONEY:
+          {
+            _money.add(u);
+          }
+          break;
+        default:
+          {
+            _powerups.add(u);
+          }
+      }
     });
   }
 }

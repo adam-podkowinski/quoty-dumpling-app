@@ -66,11 +66,11 @@ class ShopScreen extends StatelessWidget {
                 verticalOffset: 50.0,
                 child: FadeInAnimation(
                   child: DefaultTabController(
-                    length: 2,
+                    length: 3,
                     child: Column(
                       children: <Widget>[
                         SizedBox(
-                          height: SizeConfig.screenHeight * 0.07,
+                          height: SizeConfig.screenHeight * 0.08,
                           child: TabBar(
                             labelStyle: Styles.kTabBarTextStyle,
                             indicatorColor: Theme.of(context).buttonColor,
@@ -79,6 +79,9 @@ class ShopScreen extends StatelessWidget {
                             tabs: [
                               Text(
                                 'Upgrades',
+                              ),
+                              Text(
+                                'Powerups',
                               ),
                               Text(
                                 'Currency',
