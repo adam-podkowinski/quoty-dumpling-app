@@ -3,47 +3,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quoty_dumpling_app/models/item.dart';
-import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
+import 'package:quoty_dumpling_app/models/item.dart';
+import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
-
-class ShopTabBarView extends StatefulWidget {
-  @override
-  _ShopTabBarViewState createState() => _ShopTabBarViewState();
-}
-
-class _ShopTabBarViewState extends State<ShopTabBarView> {
-  @override
-  Widget build(BuildContext context) {
-    return TabBarView(
-      physics: NeverScrollableScrollPhysics(),
-      children: <Widget>[
-        ListView(
-          children: Provider.of<ShopItems>(context)
-              .upgrades
-              .map((u) => Item(u))
-              .toList(),
-        ),
-        ListView(
-          children: Provider.of<ShopItems>(context)
-              .powerups
-              .map((u) => Item(u))
-              .toList(),
-        ),
-        ListView(
-          children: Provider.of<ShopItems>(context)
-              .money
-              .map((u) => Item(u))
-              .toList(),
-        ),
-      ],
-    );
-  }
-}
 
 class Item extends StatefulWidget {
   final ShopItem item;
@@ -52,6 +18,11 @@ class Item extends StatefulWidget {
 
   @override
   _ItemState createState() => _ItemState();
+}
+
+class ShopTabBarView extends StatefulWidget {
+  @override
+  _ShopTabBarViewState createState() => _ShopTabBarViewState();
 }
 
 class _ItemState extends State<Item> with TickerProviderStateMixin {
@@ -71,95 +42,6 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
 
   TextSpan textSpanBig;
   TextPainter textPainterBig;
-
-  void _shopListener() {
-    _isActive = _shopProvider.bills >= widget.item.actualPriceBills &&
-        _shopProvider.diamonds >= widget.item.actualPriceDiamonds;
-    if (!_isActive)
-      _iconColorcontroller?.forward();
-    else
-      _iconColorcontroller?.reverse();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      _iconColorcontroller = AnimationController(
-        vsync: this,
-        duration: Duration(milliseconds: 300),
-      );
-      _iconColorAnim = ColorTween(
-        begin: Styles.appBarTextColor,
-        end: Theme.of(context).disabledColor,
-      ).animate(_iconColorcontroller);
-
-      _isFree = widget.item.actualPriceBills <= 0 &&
-          widget.item.actualPriceDiamonds <= 0;
-
-      _shopProvider = Provider.of<Shop>(context)..addListener(_shopListener);
-
-      _isActive = _shopProvider.bills >= widget.item.actualPriceBills &&
-          _shopProvider.diamonds >= widget.item.actualPriceDiamonds;
-      if (!_isActive)
-        _iconColorcontroller.forward();
-      else
-        _iconColorcontroller.reverse();
-
-      //
-
-      _scaleController = AnimationController(
-        vsync: this,
-        duration: Duration(milliseconds: 120),
-      );
-      _scaleAnim = Tween<double>(begin: 1, end: .85).animate(_scaleController);
-
-      _isInit = false;
-
-      textSpanSmall =
-          TextSpan(text: '444', style: Styles.kMoneyInShopItemTextStyle);
-      textPainterSmall =
-          TextPainter(text: textSpanSmall, textDirection: TextDirection.ltr)
-            ..layout();
-
-      textSpanBig =
-          TextSpan(text: '444.44W', style: Styles.kMoneyInShopItemTextStyle);
-      textPainterBig =
-          TextPainter(text: textSpanBig, textDirection: TextDirection.ltr)
-            ..layout();
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _iconColorcontroller.dispose();
-    _scaleController.dispose();
-    _shopProvider.removeListener(_shopListener);
-  }
-
-  Widget buildPriceChip(Widget label, {Widget avatar}) {
-    return Chip(
-      label: AnimatedContainer(
-        duration: Duration(milliseconds: 200),
-        constraints: BoxConstraints(
-          minWidth: max(widget.item.actualPriceBills,
-                      widget.item.actualPriceDiamonds) >
-                  999
-              ? textPainterBig.width
-              : textPainterSmall.width,
-          maxWidth: max(widget.item.actualPriceBills,
-                      widget.item.actualPriceDiamonds) >
-                  999
-              ? textPainterBig.width
-              : textPainterSmall.width,
-        ),
-        child: label,
-      ),
-      avatar: avatar,
-      backgroundColor: Styles.appBarTextColor,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -336,6 +218,124 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildPriceChip(Widget label, {Widget avatar}) {
+    return Chip(
+      label: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
+        constraints: BoxConstraints(
+          minWidth: max(widget.item.actualPriceBills,
+                      widget.item.actualPriceDiamonds) >
+                  999
+              ? textPainterBig.width
+              : textPainterSmall.width,
+          //maxWidth: max(widget.item.actualPriceBills,
+          //widget.item.actualPriceDiamonds) >
+          //999
+          //? textPainterBig.width
+          //: textPainterSmall.width,
+        ),
+        child: label,
+      ),
+      avatar: avatar,
+      backgroundColor: Styles.appBarTextColor,
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      _iconColorcontroller = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: 300),
+      );
+      _iconColorAnim = ColorTween(
+        begin: Styles.appBarTextColor,
+        end: Theme.of(context).disabledColor,
+      ).animate(_iconColorcontroller);
+
+      _isFree = widget.item.actualPriceBills <= 0 &&
+          widget.item.actualPriceDiamonds <= 0;
+
+      _shopProvider = Provider.of<Shop>(context)..addListener(_shopListener);
+
+      _isActive = _shopProvider.bills >= widget.item.actualPriceBills &&
+          _shopProvider.diamonds >= widget.item.actualPriceDiamonds;
+      if (!_isActive)
+        _iconColorcontroller.forward();
+      else
+        _iconColorcontroller.reverse();
+
+      //
+
+      _scaleController = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: 120),
+      );
+      _scaleAnim = Tween<double>(begin: 1, end: .85).animate(_scaleController);
+
+      _isInit = false;
+
+      textSpanSmall =
+          TextSpan(text: '444', style: Styles.kMoneyInShopItemTextStyle);
+      textPainterSmall =
+          TextPainter(text: textSpanSmall, textDirection: TextDirection.ltr)
+            ..layout();
+
+      textSpanBig =
+          TextSpan(text: '444.4W', style: Styles.kMoneyInShopItemTextStyle);
+      textPainterBig =
+          TextPainter(text: textSpanBig, textDirection: TextDirection.ltr)
+            ..layout();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _iconColorcontroller.dispose();
+    _scaleController.dispose();
+    _shopProvider.removeListener(_shopListener);
+  }
+
+  void _shopListener() {
+    _isActive = _shopProvider.bills >= widget.item.actualPriceBills &&
+        _shopProvider.diamonds >= widget.item.actualPriceDiamonds;
+    if (!_isActive)
+      _iconColorcontroller?.forward();
+    else
+      _iconColorcontroller?.reverse();
+  }
+}
+
+class _ShopTabBarViewState extends State<ShopTabBarView> {
+  @override
+  Widget build(BuildContext context) {
+    return TabBarView(
+      physics: NeverScrollableScrollPhysics(),
+      children: <Widget>[
+        ListView(
+          children: Provider.of<ShopItems>(context)
+              .upgrades
+              .map((u) => Item(u))
+              .toList(),
+        ),
+        ListView(
+          children: Provider.of<ShopItems>(context)
+              .powerups
+              .map((u) => Item(u))
+              .toList(),
+        ),
+        ListView(
+          children: Provider.of<ShopItems>(context)
+              .money
+              .map((u) => Item(u))
+              .toList(),
+        ),
+      ],
     );
   }
 }

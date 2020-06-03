@@ -20,7 +20,7 @@ class Shop extends ChangeNotifier {
     _cashMultiplierOnOpening =
         prefs.getDouble('cashMultiplierOnOpening') ?? 1.5;
 
-    // init
+    //* init
     _bills = 9999999;
     _diamonds = 99999999;
   }
@@ -94,8 +94,6 @@ class Shop extends ChangeNotifier {
         'B', 9)) if (!changeText('q', 12)) text = number.toString();
     return text;
   }
-
-  //! ITEM FUNCTIONS
 
   void increaseBillsOnClick(int howMuch) {
     _billsPerClick += howMuch;
