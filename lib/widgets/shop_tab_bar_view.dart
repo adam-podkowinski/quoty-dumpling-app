@@ -286,7 +286,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
             ..layout();
 
       textSpanBig =
-          TextSpan(text: '444.4W', style: Styles.kMoneyInShopItemTextStyle);
+          TextSpan(text: '444.3W', style: Styles.kMoneyInShopItemTextStyle);
       textPainterBig =
           TextPainter(text: textSpanBig, textDirection: TextDirection.ltr)
             ..layout();

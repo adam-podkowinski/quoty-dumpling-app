@@ -11,6 +11,7 @@ class Shop extends ChangeNotifier {
 
   int get diamonds => _diamonds;
   int get bills => _bills;
+  int get billsPerClick => _billsPerClick;
 
   Future initShop() async {
     final prefs = await SharedPreferences.getInstance();
@@ -73,6 +74,7 @@ class Shop extends ChangeNotifier {
     String text = '';
 
     bool changeText(String abbreviation, int x) {
+      //! Really messy algorithm, just makes text shorter
       if (nLen > x && nLen < x + 4) {
         for (int i = 0; i < nLen - x; i++) {
           text += number.toString()[i];
