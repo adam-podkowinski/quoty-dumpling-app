@@ -12,6 +12,7 @@ class Shop extends ChangeNotifier {
   int get diamonds => _diamonds;
   int get bills => _bills;
   int get billsPerClick => _billsPerClick;
+  double get cashMultiplierOnOpening => _cashMultiplierOnOpening;
 
   Future initShop() async {
     final prefs = await SharedPreferences.getInstance();

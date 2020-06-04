@@ -110,7 +110,7 @@ class CollectionSettings extends ChangeNotifier {
     ],
     [
       'By Author',
-      'Sort alphabetically depending on author',
+      'Sort alphabetically',
     ],
     [
       'From Newest',

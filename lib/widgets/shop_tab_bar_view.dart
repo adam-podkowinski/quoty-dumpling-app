@@ -52,7 +52,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
           borderRadius: BorderRadius.circular(25.0),
           border: Border.all(
             width: 3.0,
-            color: Theme.of(context).accentColor,
+            color: _isActive ? Theme.of(context).accentColor : Colors.grey,
           ),
         ),
         padding: EdgeInsets.all(SizeConfig.screenWidth * 0.02),
@@ -75,7 +75,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                     spreadRadius: 1,
                   ),
                 ],
-                color: Theme.of(context).accentColor,
+                color: _isActive ? Theme.of(context).accentColor : Colors.grey,
               ),
               child: Padding(
                 padding: EdgeInsets.all(SizeConfig.screenWidth * .02),

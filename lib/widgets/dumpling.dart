@@ -1,12 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
-import 'package:quoty_dumpling_app/providers/audio_provider.dart';
-
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
@@ -26,7 +24,6 @@ class _DumplingState extends State<Dumpling>
   AnimationController _moneyAnimController;
   Animation _moneyAnimation;
 
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
@@ -49,11 +46,17 @@ class _DumplingState extends State<Dumpling>
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _moneyAnimController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         Positioned(
-          left: 15,
+          top: 10,
           child: FadeTransition(
             opacity: _moneyAnimation,
             child: Transform(
@@ -62,7 +65,7 @@ class _DumplingState extends State<Dumpling>
                 '+' +
                     Provider.of<Shop>(context).billsPerClick.toString() +
                     '\$',
-                style: Styles.kMoneyTextStyle,
+                style: Styles.kShopItemTitleStyle,
               ),
             ),
           ),
