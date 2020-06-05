@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
-import 'package:quoty_dumpling_app/models/item.dart';
+import 'package:quoty_dumpling_app/models/items/item.dart';
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
@@ -116,15 +116,17 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                       widget.item.itemTypeIcon(),
                       color: Styles.appBarTextColor,
                     ),
-                    SizedBox(
-                      height: SizeConfig.screenHeight * .01,
-                    ),
-                    FittedBox(
-                      child: Text(
-                        'Level: ${widget.item.level.toString()}',
-                        style: Styles.kItemLevelTextStyle,
+                    if (widget.item.hasLevel())
+                      SizedBox(
+                        height: SizeConfig.screenHeight * .01,
                       ),
-                    ),
+                    if (widget.item.hasLevel())
+                      FittedBox(
+                        child: Text(
+                          'Level: ${widget.item.level.toString()}',
+                          style: Styles.kItemLevelTextStyle,
+                        ),
+                      ),
                   ],
                 ),
               ),

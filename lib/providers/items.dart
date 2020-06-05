@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:quoty_dumpling_app/data/DBProvider.dart';
-import 'package:quoty_dumpling_app/models/item.dart';
+import 'package:quoty_dumpling_app/models/items/item.dart';
+import 'package:quoty_dumpling_app/models/items/powerupItem.dart';
+import 'package:quoty_dumpling_app/models/items/upgradeItem.dart';
 
 class ShopItems extends ChangeNotifier {
   List<ShopItem> _items = [];
@@ -29,9 +31,9 @@ class ShopItems extends ChangeNotifier {
     _items.clear();
 
     _items.addAll(
-      content.map(
-        (e) => ShopItem.fromMap(e),
-      ),
+      content.map((e) {
+        return ShopItem.fromItemType(e);
+      }),
     );
 
     final dbItems = await DBProvider.db.getAllElements('Items');
@@ -40,16 +42,15 @@ class ShopItems extends ChangeNotifier {
       u.fetchFromDB(
         dbItems.firstWhere((e) => e['id'] == u.id, orElse: () => Map()),
       );
-
-      switch (u.type) {
-        case ItemType.UPGRADE:
+      switch (u.runtimeType) {
+        case UpgradeItem:
           _upgrades.add(u);
           break;
-        case ItemType.MONEY:
-          _money.add(u);
+        case PowerupItem:
+          _powerups.add(u);
           break;
         default:
-          _powerups.add(u);
+          _money.add(u);
       }
     });
   }
