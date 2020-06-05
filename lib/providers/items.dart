@@ -12,11 +12,11 @@ class ShopItems extends ChangeNotifier {
   List<ShopItem> _upgrades = [];
   List<ShopItem> get upgrades => [..._upgrades];
 
-  List<ShopItem> _money = [];
-  List<ShopItem> get money => [..._money];
-
   List<ShopItem> _powerups = [];
   List<ShopItem> get powerups => [..._powerups];
+
+  List<ShopItem> _money = [];
+  List<ShopItem> get money => [..._money];
 
   Future fetchItems() async {
     print('fetching');
@@ -43,19 +43,13 @@ class ShopItems extends ChangeNotifier {
 
       switch (u.type) {
         case ItemType.UPGRADE:
-          {
-            _upgrades.add(u);
-          }
+          _upgrades.add(u);
           break;
         case ItemType.MONEY:
-          {
-            _money.add(u);
-          }
+          _money.add(u);
           break;
         default:
-          {
-            _powerups.add(u);
-          }
+          _powerups.add(u);
       }
     });
   }

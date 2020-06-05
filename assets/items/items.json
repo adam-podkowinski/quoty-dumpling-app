@@ -1,32 +1,73 @@
 [
-   {
-      "id": "001",
-      "name": "Bills Power",
-      "description": "Get additional money on clicking on dumpling",
-      "type": "upgrade",
-      "iconType": "bills",
-      "defaultPriceBills": 10,
-      "defaultPriceDiamonds": 0,
-      "priceUSD": 0
-   },
-   {
-      "id": "002",
-      "name": "Clicking Power",
-      "description": "Unlock quotes faster",
-      "type": "upgrade",
-      "iconType": "clicks",
-      "defaultPriceBills": 15,
-      "defaultPriceDiamonds": 0,
-      "priceUSD": 0
-   },
-   {
-      "id": "003",
-      "name": "Dumpling Power",
-      "description": "Get additional money on dumpling opening",
-      "type": "upgrade",
-      "iconType": "bills",
-      "defaultPriceBills": 20,
-      "defaultPriceDiamonds": 0,
-      "priceUSD": 0
-   }
+  {
+    "id": "001",
+    "name": "Bills Power",
+    "description": "Get additional money on clicking on dumpling",
+    "type": "upgrade",
+    "iconType": "bills",
+    "defaultPriceBills": 10,
+    "defaultPriceDiamonds": 0,
+    "priceUSD": 0
+  },
+  {
+    "id": "002",
+    "name": "Clicking Power",
+    "description": "Unlock quotes faster",
+    "type": "upgrade",
+    "iconType": "clicks",
+    "defaultPriceBills": 15,
+    "defaultPriceDiamonds": 0,
+    "priceUSD": 0
+  },
+  {
+    "id": "003",
+    "name": "Dumpling Power",
+    "description": "Get additional money on dumpling opening",
+    "type": "upgrade",
+    "iconType": "bills",
+    "defaultPriceBills": 20,
+    "defaultPriceDiamonds": 0,
+    "priceUSD": 0
+  },
+  {
+    "id": "004",
+    "name": "Money Storm",
+    "description": "Increase your money on dumpling click for some time",
+    "type": "powerup",
+    "iconType": "bills",
+    "defaultPriceBills": 0,
+    "defaultPriceDiamonds": 20,
+    "priceUSD": 0
+  },
+  {
+    "id": "005",
+    "name": "Clicking Storm",
+    "description": "Unlock quotes extremely faster for some time",
+    "type": "powerup",
+    "iconType": "clicks",
+    "defaultPriceBills": 0,
+    "defaultPriceDiamonds": 30,
+    "priceUSD": 0
+  },
+  {
+    "id": "006",
+    "name": "Lucky Storm",
+    "description": "Get extremely more money on dumpling opening",
+    "type": "powerup",
+    "iconType": "bills",
+    "defaultPriceBills": 0,
+    "defaultPriceDiamonds": 40,
+    "priceUSD": 0
+  },
+  {
+    "id": "007",
+    "name": "1k Bills",
+    "description": "",
+    "type": "money",
+    "iconType": "bills",
+    "defaultPriceBills": 0,
+    "defaultPriceDiamonds": 0,
+    "priceUSD": 15
+  }
 ]
+

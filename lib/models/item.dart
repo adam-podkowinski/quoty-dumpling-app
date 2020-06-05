@@ -104,8 +104,8 @@ class ShopItem {
   }
 
   void refreshActualPrices() {
-    actualPriceBills = (defaultPriceBills * (pow(1.2, _level))).round();
-    actualPriceDiamonds = (defaultPriceDiamonds * (pow(1.2, _level))).round();
+    actualPriceBills = (defaultPriceBills * (pow(1.3, _level))).round();
+    actualPriceDiamonds = (defaultPriceDiamonds * (pow(1.3, _level))).round();
   }
 
   void buyItem(context) {

@@ -11,18 +11,48 @@ import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 
-class Item extends StatefulWidget {
-  final ShopItem item;
-
-  Item(this.item);
-
-  @override
-  _ItemState createState() => _ItemState();
-}
-
 class ShopTabBarView extends StatefulWidget {
   @override
   _ShopTabBarViewState createState() => _ShopTabBarViewState();
+}
+
+class _ShopTabBarViewState extends State<ShopTabBarView> {
+  @override
+  Widget build(BuildContext context) {
+    return TabBarView(
+      physics: NeverScrollableScrollPhysics(),
+      children: <Widget>[
+        ListView(
+          children: Provider.of<ShopItems>(context)
+              .upgrades
+              .map((u) => Item(u, Theme.of(context).accentColor))
+              .toList(),
+        ),
+        ListView(
+          children: Provider.of<ShopItems>(context)
+              .powerups
+              .map((u) => Item(u, Theme.of(context).buttonColor))
+              .toList(),
+        ),
+        ListView(
+          children: Provider.of<ShopItems>(context)
+              .money
+              .map((u) => Item(u, Theme.of(context).secondaryHeaderColor))
+              .toList(),
+        ),
+      ],
+    );
+  }
+}
+
+class Item extends StatefulWidget {
+  final ShopItem item;
+  final Color activeColor;
+
+  Item(this.item, this.activeColor);
+
+  @override
+  _ItemState createState() => _ItemState();
 }
 
 class _ItemState extends State<Item> with TickerProviderStateMixin {
@@ -52,7 +82,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
           borderRadius: BorderRadius.circular(25.0),
           border: Border.all(
             width: 3.0,
-            color: _isActive ? Theme.of(context).accentColor : Colors.grey,
+            color: _isActive ? widget.activeColor : Colors.grey,
           ),
         ),
         padding: EdgeInsets.all(SizeConfig.screenWidth * 0.02),
@@ -75,7 +105,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                     spreadRadius: 1,
                   ),
                 ],
-                color: _isActive ? Theme.of(context).accentColor : Colors.grey,
+                color: _isActive ? widget.activeColor : Colors.grey,
               ),
               child: Padding(
                 padding: EdgeInsets.all(SizeConfig.screenWidth * .02),
@@ -110,13 +140,15 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                     widget.item.name,
                     style: Styles.kShopItemTitleStyle,
                   ),
-                  SizedBox(
-                    height: SizeConfig.screenHeight * 0.005,
-                  ),
-                  Text(
-                    widget.item.description,
-                    style: Styles.kShopItemDescriptionStyle,
-                  ),
+                  if (widget.item.description.length > 0)
+                    SizedBox(
+                      height: SizeConfig.screenHeight * 0.005,
+                    ),
+                  if (widget.item.description.length > 0)
+                    Text(
+                      widget.item.description,
+                      style: Styles.kShopItemDescriptionStyle,
+                    ),
                 ],
               ),
             ),
@@ -154,6 +186,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                     Text(
                       _shopProvider
                           .numberAbbreviation(widget.item.actualPriceDiamonds),
+                      textAlign: TextAlign.center,
                       style: Styles.kMoneyInShopItemTextStyle,
                     ),
                     avatar: Padding(
@@ -189,9 +222,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                     duration: Duration(milliseconds: 300),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: _isActive
-                          ? Theme.of(context).accentColor
-                          : Colors.grey,
+                      color: _isActive ? widget.activeColor : Colors.grey,
                     ),
                     child: AnimatedBuilder(
                       animation: _iconColorAnim,
@@ -258,7 +289,8 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
       ).animate(_iconColorcontroller);
 
       _isFree = widget.item.actualPriceBills <= 0 &&
-          widget.item.actualPriceDiamonds <= 0;
+          widget.item.actualPriceDiamonds <= 0 &&
+          widget.item.priceUSD <= 0;
 
       _shopProvider = Provider.of<Shop>(context)..addListener(_shopListener);
 
@@ -311,31 +343,3 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
   }
 }
 
-class _ShopTabBarViewState extends State<ShopTabBarView> {
-  @override
-  Widget build(BuildContext context) {
-    return TabBarView(
-      physics: NeverScrollableScrollPhysics(),
-      children: <Widget>[
-        ListView(
-          children: Provider.of<ShopItems>(context)
-              .upgrades
-              .map((u) => Item(u))
-              .toList(),
-        ),
-        ListView(
-          children: Provider.of<ShopItems>(context)
-              .powerups
-              .map((u) => Item(u))
-              .toList(),
-        ),
-        ListView(
-          children: Provider.of<ShopItems>(context)
-              .money
-              .map((u) => Item(u))
-              .toList(),
-        ),
-      ],
-    );
-  }
-}
