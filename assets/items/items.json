@@ -37,7 +37,8 @@
     "iconType": "bills",
     "defaultPriceBills": 0,
     "defaultPriceDiamonds": 20,
-    "priceUSD": 0
+    "priceUSD": 0,
+    "useTime": 10
   },
   {
     "id": "005",
@@ -47,7 +48,8 @@
     "iconType": "clicks",
     "defaultPriceBills": 0,
     "defaultPriceDiamonds": 30,
-    "priceUSD": 0
+    "priceUSD": 0,
+    "useTime": 10
   },
   {
     "id": "006",
@@ -57,7 +59,8 @@
     "iconType": "bills",
     "defaultPriceBills": 0,
     "defaultPriceDiamonds": 40,
-    "priceUSD": 0
+    "priceUSD": 0,
+    "useTime": 10
   },
   {
     "id": "007",
@@ -70,4 +73,3 @@
     "priceUSD": 15
   }
 ]
-

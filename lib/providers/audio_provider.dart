@@ -7,6 +7,8 @@ class AudioProvider extends ChangeNotifier {
   double _volume = 1.0;
   double get volume => _volume;
 
+  double backgroundVolDivider = 2.5;
+
   bool _isMuted = false;
   bool get isMuted => _isMuted;
 
@@ -49,12 +51,12 @@ class AudioProvider extends ChangeNotifier {
   Future playLoopAudio() async {
     _loopPlayer = await _audioCacheLoop.loop(
       'background_music.mp3',
-      volume: _volume / 2,
+      volume: _volume / backgroundVolDivider,
     );
   }
 
   void changeLoopVolume() {
-    _loopPlayer.setVolume(_volume / 2);
+    _loopPlayer.setVolume(_volume / backgroundVolDivider);
   }
 
   Future stopAudio() async {

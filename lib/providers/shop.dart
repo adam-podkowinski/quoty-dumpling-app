@@ -9,47 +9,12 @@ class Shop extends ChangeNotifier {
   int _billsPerClick = 1;
   double _cashMultiplierOnOpening = 1.5;
 
-  int get diamonds => _diamonds;
   int get bills => _bills;
   int get billsPerClick => _billsPerClick;
   double get cashMultiplierOnOpening => _cashMultiplierOnOpening;
+  int get diamonds => _diamonds;
 
-  Future initShop() async {
-    final prefs = await SharedPreferences.getInstance();
-    _bills = prefs.getInt('bills') ?? 0;
-    _diamonds = prefs.getInt('diamonds') ?? 0;
-    _billsPerClick = prefs.getInt('billsPerClick') ?? 1;
-    _cashMultiplierOnOpening =
-        prefs.getDouble('cashMultiplierOnOpening') ?? 1.5;
-
-    //* init
-    _bills = 9999999;
-    _diamonds = 99999999;
-  }
-
-  void clickOnDumpling() {
-    _bills += _billsPerClick;
-    notifyListeners();
-
-    SharedPreferences.getInstance().then(
-      (prefs) => prefs.setInt('bills', _bills),
-    );
-  }
-
-  void openDumpling() {
-    _bills += _billsPerClick * (_cashMultiplierOnOpening * 100).toInt();
-    _diamonds += 20;
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => notifyListeners(),
-    );
-
-    SharedPreferences.getInstance().then(
-      (prefs) {
-        prefs.setInt('bills', _bills);
-        prefs.setInt('diamonds', _diamonds);
-      },
-    );
-  }
+  void activateBillsOnClickPowerup(int howMuch, Duration duration) {}
 
   void buyItem(ShopItem item, context) {
     if (item.actualPriceBills <= _bills &&
@@ -68,6 +33,47 @@ class Shop extends ChangeNotifier {
         },
       );
     }
+  }
+
+  void clickOnDumpling() {
+    _bills += _billsPerClick;
+    notifyListeners();
+
+    SharedPreferences.getInstance().then(
+      (prefs) => prefs.setInt('bills', _bills),
+    );
+  }
+
+  void increaseBillsOnClick(int howMuch) {
+    _billsPerClick += howMuch;
+
+    SharedPreferences.getInstance().then(
+      (prefs) {
+        prefs.setInt('billsPerClick', _billsPerClick);
+      },
+    );
+  }
+
+  void increaseCashMultiplierOnOpening(double howMuch) {
+    _cashMultiplierOnOpening += howMuch;
+    SharedPreferences.getInstance().then(
+      (prefs) {
+        prefs.setDouble('cashMultiplierOnOpening', _cashMultiplierOnOpening);
+      },
+    );
+  }
+
+  Future initShop() async {
+    final prefs = await SharedPreferences.getInstance();
+    _bills = prefs.getInt('bills') ?? 0;
+    _diamonds = prefs.getInt('diamonds') ?? 0;
+    _billsPerClick = prefs.getInt('billsPerClick') ?? 1;
+    _cashMultiplierOnOpening =
+        prefs.getDouble('cashMultiplierOnOpening') ?? 1.5;
+
+    //* init
+    _bills = 9999999;
+    _diamonds = 99999;
   }
 
   String numberAbbreviation(int number) {
@@ -98,21 +104,17 @@ class Shop extends ChangeNotifier {
     return text;
   }
 
-  void increaseBillsOnClick(int howMuch) {
-    _billsPerClick += howMuch;
-
-    SharedPreferences.getInstance().then(
-      (prefs) {
-        prefs.setInt('billsPerClick', _billsPerClick);
-      },
+  void openDumpling() {
+    _bills += _billsPerClick * (_cashMultiplierOnOpening * 100).toInt();
+    _diamonds += 20;
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => notifyListeners(),
     );
-  }
 
-  void increaseCashMultiplierOnOpening(double howMuch) {
-    _cashMultiplierOnOpening += howMuch;
     SharedPreferences.getInstance().then(
       (prefs) {
-        prefs.setDouble('cashMultiplierOnOpening', _cashMultiplierOnOpening);
+        prefs.setInt('bills', _bills);
+        prefs.setInt('diamonds', _diamonds);
       },
     );
   }

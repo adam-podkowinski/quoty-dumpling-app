@@ -7,6 +7,7 @@ import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
+import 'package:quoty_dumpling_app/models/items/upgradeItem.dart';
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
@@ -116,17 +117,19 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                       widget.item.itemTypeIcon(),
                       color: Styles.appBarTextColor,
                     ),
-                    if (widget.item.hasLevel())
-                      SizedBox(
-                        height: SizeConfig.screenHeight * .01,
-                      ),
-                    if (widget.item.hasLevel())
-                      FittedBox(
-                        child: Text(
-                          'Level: ${widget.item.level.toString()}',
-                          style: Styles.kItemLevelTextStyle,
+                    if (widget.item is LabeledItem)
+                      if ((widget.item as LabeledItem).hasLabel)
+                        SizedBox(
+                          height: SizeConfig.screenHeight * .01,
                         ),
-                      ),
+                    if (widget.item is LabeledItem)
+                      if ((widget.item as LabeledItem).hasLabel)
+                        FittedBox(
+                          child: Text(
+                            (widget.item as LabeledItem).getLabel(),
+                            style: Styles.kItemLevelTextStyle,
+                          ),
+                        ),
                   ],
                 ),
               ),
@@ -264,11 +267,6 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                   999
               ? textPainterBig.width
               : textPainterSmall.width,
-          //maxWidth: max(widget.item.actualPriceBills,
-          //widget.item.actualPriceDiamonds) >
-          //999
-          //? textPainterBig.width
-          //: textPainterSmall.width,
         ),
         child: label,
       ),

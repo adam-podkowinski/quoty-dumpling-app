@@ -3,22 +3,12 @@ import 'dart:math';
 import 'package:quoty_dumpling_app/data/DBProvider.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
 
-class UpgradeItem extends ShopItem {
+class UpgradeItem extends LabeledItem {
   int _level = 0;
-  int get level => _level;
+
   UpgradeItem(map) : super.fromMap(map);
 
-  @override
-  void fetchFromDB(Map<String, dynamic> map) {
-    _level = map.isEmpty ? 1 : map['level'];
-
-    refreshActualPrices();
-  }
-
-  void refreshActualPrices() {
-    actualPriceBills = (defaultPriceBills * (pow(1.3, _level))).round();
-    actualPriceDiamonds = (defaultPriceDiamonds * (pow(1.3, _level))).round();
-  }
+  int get level => _level;
 
   @override
   void buyItem(context) {
@@ -43,5 +33,19 @@ class UpgradeItem extends ShopItem {
   }
 
   @override
-  bool hasLevel() => true;
+  void fetchFromDB(Map<String, dynamic> map) {
+    _level = map.isEmpty ? 1 : map['level'];
+
+    refreshActualPrices();
+  }
+
+  @override
+  String getLabel() {
+    return 'Level: ${_level.toString()}';
+  }
+
+  void refreshActualPrices() {
+    actualPriceBills = (defaultPriceBills * (pow(1.3, _level))).round();
+    actualPriceDiamonds = (defaultPriceDiamonds * (pow(1.3, _level))).round();
+  }
 }
