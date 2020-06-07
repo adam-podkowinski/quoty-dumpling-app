@@ -138,7 +138,7 @@ class NothingInCollectionWidget extends StatelessWidget {
                 onPressed: () =>
                     Provider.of<Tabs>(context, listen: false).navigateToPage(1),
                 text: 'Open Dumplings!',
-                textColor: Theme.of(context).textTheme.title.color,
+                textColor: Theme.of(context).textTheme.headline6.color,
                 width: SizeConfig.screenWidth * 0.5,
               ),
             ],

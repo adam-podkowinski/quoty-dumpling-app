@@ -43,7 +43,7 @@ class CustomAppBar extends StatelessWidget {
             child: FittedBox(
               child: Text(
                 title,
-                style: Theme.of(context).appBarTheme.textTheme.title,
+                style: Theme.of(context).appBarTheme.textTheme.headline6,
               ),
             ),
           ),

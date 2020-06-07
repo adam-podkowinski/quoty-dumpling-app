@@ -7,7 +7,6 @@ import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
-import 'package:quoty_dumpling_app/models/items/upgradeItem.dart';
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
@@ -101,8 +100,11 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                 boxShadow: [
                   BoxShadow(
                     blurRadius: 25,
-                    color:
-                        Theme.of(context).textTheme.title.color.withOpacity(.3),
+                    color: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        .color
+                        .withOpacity(.3),
                     spreadRadius: 1,
                   ),
                 ],

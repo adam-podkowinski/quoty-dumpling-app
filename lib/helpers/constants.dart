@@ -19,7 +19,7 @@ class Styles {
     backgroundColor: Color(0xffFFEBCC),
     appBarTheme: AppBarTheme(
       textTheme: TextTheme(
-        title: TextStyle(
+        headline6: TextStyle(
           fontFamily: fontFamily,
           fontWeight: FontWeight.bold,
           color: appBarTextColor,

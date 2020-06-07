@@ -52,9 +52,9 @@ class _TabsScreenState extends State<TabsScreen> {
           iconColor: Theme.of(context).primaryColor,
           labelColor: Theme.of(context).primaryColor,
           selectedIconColor:
-              Theme.of(context).appBarTheme.textTheme.title.color,
+              Theme.of(context).appBarTheme.textTheme.headline6.color,
           selectedLabelColor:
-              Theme.of(context).appBarTheme.textTheme.title.color,
+              Theme.of(context).appBarTheme.textTheme.headline6.color,
           showLabel: true,
           items: [
             TabInfo(

@@ -337,7 +337,7 @@ class _GridCellState extends State<GridCell>
                           style: TextStyle(
                             fontFamily: Styles.fontFamily,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).textTheme.title.color,
+                            color: Theme.of(context).textTheme.headline6.color,
                             fontSize: SizeConfig.screenWidth * .035,
                           ),
                         ),
@@ -346,7 +346,7 @@ class _GridCellState extends State<GridCell>
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontFamily: Styles.fontFamily,
-                            color: Theme.of(context).textTheme.title.color,
+                            color: Theme.of(context).textTheme.headline6.color,
                             fontSize: SizeConfig.screenWidth * .035,
                           ),
                         ),
