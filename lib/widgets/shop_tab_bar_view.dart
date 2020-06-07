@@ -296,13 +296,6 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
 
       _shopProvider = Provider.of<Shop>(context)..addListener(_shopListener);
 
-      _isActive = _shopProvider.bills >= widget.item.actualPriceBills &&
-          _shopProvider.diamonds >= widget.item.actualPriceDiamonds;
-      if (!_isActive)
-        _iconColorcontroller.forward();
-      else
-        _iconColorcontroller.reverse();
-
       //
 
       _scaleController = AnimationController(
@@ -325,6 +318,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
           TextPainter(text: textSpanBig, textDirection: TextDirection.ltr)
             ..layout();
     }
+    _isActive = _shopProvider.checkIsActiveItem(widget.item, context);
   }
 
   @override
@@ -336,8 +330,6 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
   }
 
   void _shopListener() {
-    _isActive = _shopProvider.bills >= widget.item.actualPriceBills &&
-        _shopProvider.diamonds >= widget.item.actualPriceDiamonds;
     if (!_isActive)
       _iconColorcontroller?.forward();
     else

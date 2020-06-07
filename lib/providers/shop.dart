@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
+import 'package:quoty_dumpling_app/models/items/powerupItem.dart';
+import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Shop extends ChangeNotifier {
@@ -117,5 +120,16 @@ class Shop extends ChangeNotifier {
         prefs.setInt('diamonds', _diamonds);
       },
     );
+  }
+
+  bool checkIsActiveItem(ShopItem item, context) {
+    if (item is PowerupItem) {
+      if (Provider.of<ShopItems>(context).currentPowerup != null) return false;
+    }
+    if (item.actualPriceBills >= _bills ||
+        item.actualPriceDiamonds >= _diamonds)
+      return false;
+    else
+      return true;
   }
 }
