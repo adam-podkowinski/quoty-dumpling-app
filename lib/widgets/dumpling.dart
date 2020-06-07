@@ -47,8 +47,8 @@ class _DumplingState extends State<Dumpling>
 
   @override
   void dispose() {
-    super.dispose();
     _moneyAnimController.dispose();
+    super.dispose();
   }
 
   @override

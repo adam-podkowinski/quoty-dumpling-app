@@ -57,6 +57,7 @@ class Item extends StatefulWidget {
 
 class _ItemState extends State<Item> with TickerProviderStateMixin {
   Shop _shopProvider;
+  ShopItems _shopItemsProvider;
   bool _isFree = false;
   bool _isActive = true;
   var _isInit = true;
@@ -294,7 +295,8 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
           widget.item.actualPriceDiamonds <= 0 &&
           widget.item.priceUSD <= 0;
 
-      Provider.of<ShopItems>(context).addListener(_itemListener);
+      _shopItemsProvider = Provider.of<ShopItems>(context)
+        ..addListener(_itemListener);
       _shopProvider = Provider.of<Shop>(context)..addListener(_itemListener);
       _itemListener();
 
@@ -303,8 +305,6 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
         duration: Duration(milliseconds: 120),
       );
       _scaleAnim = Tween<double>(begin: 1, end: .85).animate(_scaleController);
-
-      _isInit = false;
 
       textSpanSmall =
           TextSpan(text: '444', style: Styles.kMoneyInShopItemTextStyle);
@@ -317,17 +317,18 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
       textPainterBig =
           TextPainter(text: textSpanBig, textDirection: TextDirection.ltr)
             ..layout();
+
+      _isInit = false;
     }
   }
 
   @override
   void dispose() {
-    super.dispose();
     _iconColorcontroller.dispose();
     _scaleController.dispose();
     _shopProvider.removeListener(_itemListener);
-    Provider.of<ShopItems>(context, listen: false)
-        .removeListener(_itemListener);
+    _shopItemsProvider.removeListener(_itemListener);
+    super.dispose();
   }
 
   void _itemListener() {
