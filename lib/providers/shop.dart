@@ -76,7 +76,7 @@ class Shop extends ChangeNotifier {
 
     //* init
     _bills = 9999999;
-    _diamonds = 99999;
+    _diamonds = 999;
   }
 
   String numberAbbreviation(int number) {
@@ -124,10 +124,10 @@ class Shop extends ChangeNotifier {
 
   bool checkIsActiveItem(ShopItem item, context) {
     if (item is PowerupItem) {
-      if (Provider.of<ShopItems>(context).currentPowerup != null) return false;
+      if (Provider.of<ShopItems>(context, listen: false).currentPowerup != null)
+        return false;
     }
-    if (item.actualPriceBills >= _bills ||
-        item.actualPriceDiamonds >= _diamonds)
+    if (item.actualPriceBills > _bills || item.actualPriceDiamonds > _diamonds)
       return false;
     else
       return true;
