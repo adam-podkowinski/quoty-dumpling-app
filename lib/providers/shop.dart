@@ -17,8 +17,6 @@ class Shop extends ChangeNotifier {
   double get cashMultiplierOnOpening => _cashMultiplierOnOpening;
   int get diamonds => _diamonds;
 
-  void activateBillsOnClickPowerup(int howMuch, Duration duration) {}
-
   void buyItem(ShopItem item, context) {
     if (item.actualPriceBills <= _bills &&
         item.actualPriceDiamonds <= _diamonds) {
@@ -47,7 +45,7 @@ class Shop extends ChangeNotifier {
     );
   }
 
-  void increaseBillsOnClick(int howMuch) {
+  void changeBillsOnClick(int howMuch) {
     _billsPerClick += howMuch;
 
     SharedPreferences.getInstance().then(
@@ -57,7 +55,7 @@ class Shop extends ChangeNotifier {
     );
   }
 
-  void increaseCashMultiplierOnOpening(double howMuch) {
+  void changeCashMultiplierOnOpening(double howMuch) {
     _cashMultiplierOnOpening += howMuch;
     SharedPreferences.getInstance().then(
       (prefs) {

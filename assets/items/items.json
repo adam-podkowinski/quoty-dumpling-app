@@ -1,6 +1,6 @@
 [
   {
-    "id": "001",
+    "id": "000",
     "name": "Bills Power",
     "description": "Get additional money on clicking on dumpling",
     "type": "upgrade",
@@ -10,7 +10,7 @@
     "priceUSD": 0
   },
   {
-    "id": "002",
+    "id": "001",
     "name": "Clicking Power",
     "description": "Unlock quotes faster",
     "type": "upgrade",
@@ -20,7 +20,7 @@
     "priceUSD": 0
   },
   {
-    "id": "003",
+    "id": "002",
     "name": "Dumpling Power",
     "description": "Get additional money on dumpling opening",
     "type": "upgrade",
@@ -30,7 +30,7 @@
     "priceUSD": 0
   },
   {
-    "id": "004",
+    "id": "003",
     "name": "Money Storm",
     "description": "Increase your money on dumpling click for some time",
     "type": "powerup",
@@ -38,10 +38,10 @@
     "defaultPriceBills": 0,
     "defaultPriceDiamonds": 20,
     "priceUSD": 0,
-    "useTime": 10
+    "useTime": 5
   },
   {
-    "id": "005",
+    "id": "004",
     "name": "Clicking Storm",
     "description": "Unlock quotes extremely faster for some time",
     "type": "powerup",
@@ -52,7 +52,7 @@
     "useTime": 10
   },
   {
-    "id": "006",
+    "id": "005",
     "name": "Lucky Storm",
     "description": "Get extremely more money on dumpling opening",
     "type": "powerup",
@@ -60,10 +60,10 @@
     "defaultPriceBills": 0,
     "defaultPriceDiamonds": 40,
     "priceUSD": 0,
-    "useTime": 10
+    "useTime": 15
   },
   {
-    "id": "007",
+    "id": "006",
     "name": "1k Bills",
     "description": "",
     "type": "money",

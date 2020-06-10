@@ -32,7 +32,7 @@ class ShopItems extends ChangeNotifier {
         notifyListeners();
       });
       sub.onDone(() {
-        currentPowerup.doneTimer();
+        currentPowerup.finishPowerup();
         currentPowerup = null;
         sub.cancel();
         notifyListeners();

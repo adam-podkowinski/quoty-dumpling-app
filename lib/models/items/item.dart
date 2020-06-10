@@ -25,6 +25,7 @@ abstract class ShopItem {
   int priceUSD;
   String id;
   IconType iconType;
+  Function onBuyFunction;
 
   int actualPriceBills;
   int actualPriceDiamonds;
@@ -50,20 +51,12 @@ abstract class ShopItem {
     iconType = iconTypeFromString(map['iconType']);
     actualPriceBills = defaultPriceBills;
     actualPriceDiamonds = defaultPriceDiamonds;
+    onBuyFunction = ItemFunctions.itemFunctions['onBuyFunction$id'] ??
+        () => print('Function for this item is not yet prepared');
   }
 
   void buyItem(context) {
-    switch (id) {
-      case '001':
-        ItemFunctions.increaseBillsOnClickByOne(context);
-        break;
-      case '002':
-        ItemFunctions.increaseClickMultiplierByLow(context);
-        break;
-      case '003':
-        ItemFunctions.increaseCashOnOpeningMultiplier(context);
-        break;
-    }
+    onBuyFunction(context);
   }
 
   void fetchFromDB(Map<String, dynamic> map) {}
