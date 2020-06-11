@@ -48,7 +48,7 @@ abstract class ShopItem {
     defaultPriceDiamonds = map['defaultPriceDiamonds'];
     priceUSD = map['priceUSD'];
     id = map['id'];
-    iconType = iconTypeFromString(map['iconType']);
+    iconType = iconTypeFromString(map['useCase']);
     actualPriceBills = defaultPriceBills;
     actualPriceDiamonds = defaultPriceDiamonds;
     onBuyFunction = ItemFunctions.itemFunctions['onBuyFunction$id'] ??
@@ -74,11 +74,10 @@ abstract class ShopItem {
 
   static IconType iconTypeFromString(String iType) {
     switch (iType) {
-      case 'bills':
-        return IconType.BILLS;
       case 'clicks':
         return IconType.CLICKS;
+      default:
+        return IconType.BILLS;
     }
-    return null;
   }
 }

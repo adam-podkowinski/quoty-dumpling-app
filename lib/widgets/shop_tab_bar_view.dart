@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/helpers/animations.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
@@ -333,33 +334,9 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
           widget.item.actualPriceDiamonds <= 0 &&
           widget.item.priceUSD <= 0;
 
-      _runningPowerupColor = TweenSequence<Color>(
-        [
-          TweenSequenceItem(
-            weight: 1.0,
-            tween: ColorTween(
-              begin: Styles.legendaryColor,
-              end: Styles.epicColor,
-            ),
-          ),
-          TweenSequenceItem(
-            weight: 1.0,
-            tween: ColorTween(
-              begin: Styles.epicColor,
-              end: Theme.of(context).secondaryHeaderColor,
-            ),
-          ),
-          TweenSequenceItem(
-            weight: 1.0,
-            tween: ColorTween(
-              begin: Theme.of(context).secondaryHeaderColor,
-              end: Styles.legendaryColor,
-            ),
-          ),
-        ],
-      );
+      _runningPowerupColor = runningPowerupColor(context);
       _runningPowerupColorController = AnimationController(
-        duration: const Duration(seconds: 5),
+        duration: const Duration(milliseconds: 4500),
         vsync: this,
       );
 
