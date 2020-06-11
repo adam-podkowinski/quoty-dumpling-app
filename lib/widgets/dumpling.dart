@@ -34,8 +34,9 @@ class _DumplingState extends State<Dumpling>
 
       _moneyAnimController.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          Future.delayed(Duration(milliseconds: 200),
-              () => _moneyAnimController.reverse());
+          Future.delayed(Duration(milliseconds: 200), () {
+            if (_moneyAnimController != null) _moneyAnimController.reverse();
+          });
         }
       });
 
@@ -48,6 +49,7 @@ class _DumplingState extends State<Dumpling>
   @override
   void dispose() {
     _moneyAnimController.dispose();
+    _moneyAnimController = null;
     super.dispose();
   }
 

@@ -15,6 +15,9 @@ class PowerupItem extends LabeledItem {
   @override
   bool hasLabel = false;
 
+  bool _isRunning = false;
+  bool get isRunning => _isRunning;
+
   CountdownTimer timer;
   int _useTime;
   int _current;
@@ -32,6 +35,7 @@ class PowerupItem extends LabeledItem {
   void buyItem(context) {
     buyProvider = onBuyFunction(context);
     hasLabel = true;
+    _isRunning = true;
     timer = CountdownTimer(Duration(seconds: _useTime), Duration(seconds: 1));
     Provider.of<ShopItems>(context, listen: false).addPowerup(this);
   }
@@ -44,5 +48,6 @@ class PowerupItem extends LabeledItem {
     _undoBuyFunction(buyProvider);
     _current = _useTime;
     hasLabel = false;
+    _isRunning = false;
   }
 }
