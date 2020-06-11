@@ -52,7 +52,7 @@ abstract class ShopItem {
     actualPriceBills = defaultPriceBills;
     actualPriceDiamonds = defaultPriceDiamonds;
     onBuyFunction = ItemFunctions.itemFunctions['onBuyFunction$id'] ??
-        () => print('Function for this item is not yet prepared');
+        (context) => print('Function for this item is not yet prepared');
   }
 
   void buyItem(context) => onBuyFunction(context);

@@ -9,7 +9,7 @@ class PowerupItem extends LabeledItem {
     _useTime = map['useTime'];
     _current = _useTime;
     _undoBuyFunction = ItemFunctions.itemFunctions['undoBuyFunction$id'] ??
-        () => print('Undo function for this item is not yet prepared');
+        (provider) => print('Undo function for this item is not yet prepared');
   }
 
   @override

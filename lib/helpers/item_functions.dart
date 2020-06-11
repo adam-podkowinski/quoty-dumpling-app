@@ -9,7 +9,7 @@ class ItemFunctions {
         Provider.of<Shop>(context, listen: false).changeBillsOnClick(1),
     'onBuyFunction001': (context) =>
         Provider.of<DumplingProvider>(context, listen: false)
-            .increaseClickMultiplier(.1),
+            .changeClickMultiplier(.1),
     'onBuyFunction002': (context) => Provider.of<Shop>(context, listen: false)
         .changeCashMultiplierOnOpening(1),
 
@@ -17,8 +17,17 @@ class ItemFunctions {
     // Double dot is necessary
     'onBuyFunction003': (context) =>
         Provider.of<Shop>(context, listen: false)..changeBillsOnClick(10),
+    'onBuyFunction004': (context) =>
+        Provider.of<DumplingProvider>(context, listen: false)
+          ..changeClickMultiplier(1),
+    'onBuyFunction005': (context) => Provider.of<Shop>(context, listen: false)
+      ..changeCashMultiplierOnOpening(10),
 
     //Undo powerup functions
-    'undoBuyFunction003': (provider) => provider.changeBillsOnClick(-10),
+    'undoBuyFunction003': (Shop provider) => provider.changeBillsOnClick(-10),
+    'undoBuyFunction004': (DumplingProvider provider) =>
+        provider.changeClickMultiplier(-1),
+    'undoBuyFunction005': (Shop provider) =>
+        provider.changeCashMultiplierOnOpening(-10),
   };
 }

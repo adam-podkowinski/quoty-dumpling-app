@@ -5,7 +5,7 @@ class DumplingProvider extends ChangeNotifier {
   //shows progress of status bar
   double _progressBarStatus = 0.0;
   //multiplier which shows how much we can add to progressBarStatus each click
-  double _clickMultiplier = 5;
+  double _clickMultiplier = 1;
   //if progress bar status is equal to 1 (full)
   var _isFull = false;
 
@@ -20,7 +20,7 @@ class DumplingProvider extends ChangeNotifier {
   Future initDumpling() async {
     final prefs = await SharedPreferences.getInstance();
     _progressBarStatus = prefs.getDouble('clickingProgress') ?? 0.0;
-    _clickMultiplier = prefs.getDouble('clickMultiplier') ?? 11;
+    _clickMultiplier = prefs.getDouble('clickMultiplier') ?? 1;
   }
 
   void clearClickingProgressWhenFull() {
@@ -54,7 +54,7 @@ class DumplingProvider extends ChangeNotifier {
 
   //! ITEM FUNCTIONS
 
-  void increaseClickMultiplier(double howMuch) {
+  void changeClickMultiplier(double howMuch) {
     _clickMultiplier += howMuch;
     SharedPreferences.getInstance().then(
       (prefs) {
