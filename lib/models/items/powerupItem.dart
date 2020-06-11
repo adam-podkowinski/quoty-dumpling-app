@@ -19,6 +19,9 @@ class PowerupItem extends LabeledItem {
   int _useTime;
   int _current;
   Function _undoBuyFunction;
+  // Allow deactivating powerup when state of the context was destroyed.
+  //E.g player went to the other screen which will be a likely behaviour
+  dynamic buyProvider;
 
   @override
   String getLabel() {
@@ -27,7 +30,7 @@ class PowerupItem extends LabeledItem {
 
   @override
   void buyItem(context) {
-    super.buyItem(context);
+    buyProvider = onBuyFunction(context);
     hasLabel = true;
     timer = CountdownTimer(Duration(seconds: _useTime), Duration(seconds: 1));
     Provider.of<ShopItems>(context, listen: false).addPowerup(this);
@@ -37,9 +40,9 @@ class PowerupItem extends LabeledItem {
     _current = _useTime - durationTillEnd;
   }
 
-  void finishPowerup() {
-    _undoBuyFunction();
+  void deactivatePowerup() {
+    _undoBuyFunction(buyProvider);
     _current = _useTime;
-    this.hasLabel = false;
+    hasLabel = false;
   }
 }

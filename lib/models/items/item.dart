@@ -55,9 +55,7 @@ abstract class ShopItem {
         () => print('Function for this item is not yet prepared');
   }
 
-  void buyItem(context) {
-    onBuyFunction(context);
-  }
+  void buyItem(context) => onBuyFunction(context);
 
   void fetchFromDB(Map<String, dynamic> map) {}
 
