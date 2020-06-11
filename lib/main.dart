@@ -23,26 +23,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(
-          value: DumplingProvider(),
+        ChangeNotifierProvider(
+          create: (_) => DumplingProvider(),
         ),
-        ChangeNotifierProvider.value(
-          value: Quotes(),
+        ChangeNotifierProvider(
+          create: (_) => Quotes(),
         ),
-        ChangeNotifierProvider.value(
-          value: CollectionSettings(),
+        ChangeNotifierProvider(
+          create: (_) => CollectionSettings(),
         ),
-        ChangeNotifierProvider.value(
-          value: Tabs(),
+        ChangeNotifierProvider(
+          create: (_) => Tabs(),
         ),
-        ChangeNotifierProvider.value(
-          value: AudioProvider(),
+        ChangeNotifierProvider(
+          create: (_) => AudioProvider(),
         ),
-        ChangeNotifierProvider.value(
-          value: ShopItems(),
+        ChangeNotifierProvider(
+          create: (_) => ShopItems(),
         ),
-        ChangeNotifierProvider.value(
-          value: Shop(),
+        ChangeNotifierProvider(
+          create: (_) => Shop(),
         ),
       ],
       child: MaterialApp(
