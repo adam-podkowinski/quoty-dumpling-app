@@ -106,61 +106,62 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 AnimatedBuilder(
-                    animation: _runningPowerupColorController,
-                    builder: (context, _) {
-                      return AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
-                        width: SizeConfig.screenWidth * 0.24,
-                        height: SizeConfig.screenWidth * 0.24,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            SizeConfig.screenWidth * 0.05,
+                  animation: _runningPowerupColorController,
+                  builder: (context, _) {
+                    return AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      width: SizeConfig.screenWidth * 0.24,
+                      height: SizeConfig.screenWidth * 0.24,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          SizeConfig.screenWidth * 0.05,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 25,
+                            color: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                .color
+                                .withOpacity(.3),
+                            spreadRadius: 1,
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 25,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  .color
-                                  .withOpacity(.3),
-                              spreadRadius: 1,
+                        ],
+                        color: _isRunningPowerup
+                            ? _runningPowerupColor.evaluate(
+                                AlwaysStoppedAnimation(
+                                    _runningPowerupColorController.value),
+                              )
+                            : _isActive ? widget.activeColor : Colors.grey,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(SizeConfig.screenWidth * .02),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              widget.item.itemTypeIcon(),
+                              color: Styles.appBarTextColor,
                             ),
+                            if (widget.item is LabeledItem)
+                              if ((widget.item as LabeledItem).hasLabel)
+                                SizedBox(
+                                  height: SizeConfig.screenHeight * .01,
+                                ),
+                            if (widget.item is LabeledItem)
+                              if ((widget.item as LabeledItem).hasLabel)
+                                FittedBox(
+                                  child: Text(
+                                    (widget.item as LabeledItem).getLabel(),
+                                    style: Styles.kItemLevelTextStyle,
+                                  ),
+                                ),
                           ],
-                          color: _isRunningPowerup
-                              ? _runningPowerupColor.evaluate(
-                                  AlwaysStoppedAnimation(
-                                      _runningPowerupColorController.value),
-                                )
-                              : _isActive ? widget.activeColor : Colors.grey,
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.all(SizeConfig.screenWidth * .02),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                widget.item.itemTypeIcon(),
-                                color: Styles.appBarTextColor,
-                              ),
-                              if (widget.item is LabeledItem)
-                                if ((widget.item as LabeledItem).hasLabel)
-                                  SizedBox(
-                                    height: SizeConfig.screenHeight * .01,
-                                  ),
-                              if (widget.item is LabeledItem)
-                                if ((widget.item as LabeledItem).hasLabel)
-                                  FittedBox(
-                                    child: Text(
-                                      (widget.item as LabeledItem).getLabel(),
-                                      style: Styles.kItemLevelTextStyle,
-                                    ),
-                                  ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
+                      ),
+                    );
+                  },
+                ),
                 SizedBox(
                   width: SizeConfig.screenWidth * 0.03,
                 ),

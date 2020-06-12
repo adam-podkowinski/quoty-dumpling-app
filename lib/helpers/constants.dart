@@ -23,7 +23,7 @@ class Styles {
           fontFamily: fontFamily,
           fontWeight: FontWeight.bold,
           color: appBarTextColor,
-          fontSize: 23,
+          fontSize: 26,
         ),
       ),
     ),

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
@@ -72,46 +73,51 @@ class _DumplingState extends State<Dumpling>
             ),
           ),
         ),
-        AnimatedContainer(
-          duration: Duration(milliseconds: 120),
-          width: SizeConfig.screenWidth * .81,
-          height: SizeConfig.screenWidth * .81,
-          padding: _isPressed
-              ? EdgeInsets.all(
-                  SizeConfig.screenWidth * .03,
-                )
-              : EdgeInsets.zero,
-          child: GestureDetector(
-            onTapDown: (_) {
-              setState(() {
-                _isPressed = true;
-              });
-            },
-            onTapUp: (_) {
-              setState(() {
-                _isPressed = false;
-              });
-            },
-            onTap: () {
-              if (_dumplingProvider.progressBarStatus < 1)
-                Provider.of<AudioProvider>(context, listen: false)
-                    .playDumplingEating()
-                    .then(
-                  (_) {
-                    _dumplingProvider.clickedOnDumpling();
-                    Provider.of<Shop>(context, listen: false).clickOnDumpling();
-                    _moneyAnimController.forward();
-                  },
-                );
-            },
-            child: ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                Theme.of(context).backgroundColor.withRed(255),
-                BlendMode.modulate,
-              ),
-              child: Image.asset(
-                'assets/images/dumpling.png',
-                colorBlendMode: BlendMode.colorBurn,
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: SizeConfig.screenWidth * .9,
+            maxHeight: SizeConfig.screenWidth * .9,
+          ),
+          child: AnimatedContainer(
+            duration: Duration(milliseconds: 120),
+            padding: _isPressed
+                ? EdgeInsets.all(
+                    SizeConfig.screenWidth * .03,
+                  )
+                : EdgeInsets.zero,
+            child: GestureDetector(
+              onTapDown: (_) {
+                setState(() {
+                  _isPressed = true;
+                });
+              },
+              onTapUp: (_) {
+                setState(() {
+                  _isPressed = false;
+                });
+              },
+              onTap: () {
+                if (_dumplingProvider.progressBarStatus < 1)
+                  Provider.of<AudioProvider>(context, listen: false)
+                      .playDumplingEating()
+                      .then(
+                    (_) {
+                      _dumplingProvider.clickedOnDumpling();
+                      Provider.of<Shop>(context, listen: false)
+                          .clickOnDumpling();
+                      _moneyAnimController.forward();
+                    },
+                  );
+              },
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  Theme.of(context).backgroundColor.withRed(255),
+                  BlendMode.modulate,
+                ),
+                child: Image.asset(
+                  'assets/images/dumpling.png',
+                  colorBlendMode: BlendMode.colorBurn,
+                ),
               ),
             ),
           ),

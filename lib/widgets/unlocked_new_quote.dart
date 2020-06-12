@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
@@ -102,7 +102,6 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
 class CardContent extends StatelessWidget {
   final Quote newQuote;
   final AnimationController controller;
-  DumplingProvider _dumplingProvider;
   CardContent({
     @required this.newQuote,
     @required this.controller,
@@ -110,7 +109,10 @@ class CardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _dumplingProvider = Provider.of<DumplingProvider>(context, listen: false);
+    DumplingProvider _dumplingProvider =
+        Provider.of<DumplingProvider>(context, listen: false);
+    Shop shopProvider = Provider.of<Shop>(context, listen: false);
+
     return Column(
       children: <Widget>[
         //title
@@ -173,11 +175,31 @@ class CardContent extends StatelessWidget {
             style: Styles.kAuthorStyle,
           ),
         ),
+        Divider(
+          color: Styles.kAuthorStyle.color,
+          thickness: 1,
+          height: 30.h,
+        ),
+        RichText(
+          text: TextSpan(
+            text: 'Additional bills: ',
+            style: Styles.kAuthorStyle,
+            children: <TextSpan>[
+              TextSpan(
+                text: '\$${shopProvider.billsOnOpening}',
+                style: Styles.kAuthorStyle
+                    .copyWith(color: Theme.of(context).secondaryHeaderColor),
+              ),
+            ],
+          ),
+        ),
+        Divider(
+          color: Styles.kAuthorStyle.color,
+          thickness: 1,
+          height: 30.h,
+        ),
 
         //Buttons
-        SizedBox(
-          height: SizeConfig.screenWidth * .04,
-        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[

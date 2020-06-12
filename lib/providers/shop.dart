@@ -12,9 +12,10 @@ class Shop extends ChangeNotifier {
   int _billsPerClick = 1;
   double _cashMultiplierOnOpening = 1.5;
 
+  int _billsOnOpening;
   int get bills => _bills;
+  int get billsOnOpening => _billsOnOpening;
   int get billsPerClick => _billsPerClick;
-  double get cashMultiplierOnOpening => _cashMultiplierOnOpening;
   int get diamonds => _diamonds;
 
   void buyItem(ShopItem item, context) {
@@ -36,15 +37,6 @@ class Shop extends ChangeNotifier {
     }
   }
 
-  void clickOnDumpling() {
-    _bills += _billsPerClick;
-    notifyListeners();
-
-    SharedPreferences.getInstance().then(
-      (prefs) => prefs.setInt('bills', _bills),
-    );
-  }
-
   void changeBillsOnClick(int howMuch) {
     _billsPerClick += howMuch;
 
@@ -57,10 +49,31 @@ class Shop extends ChangeNotifier {
 
   void changeCashMultiplierOnOpening(double howMuch) {
     _cashMultiplierOnOpening += howMuch;
+    _updateBillsOnOpening();
     SharedPreferences.getInstance().then(
       (prefs) {
         prefs.setDouble('cashMultiplierOnOpening', _cashMultiplierOnOpening);
       },
+    );
+  }
+
+  bool checkIsActiveItem(ShopItem item, context) {
+    if (item is PowerupItem) {
+      if (Provider.of<ShopItems>(context, listen: false).currentPowerup != null)
+        return false;
+    }
+    if (item.actualPriceBills > _bills || item.actualPriceDiamonds > _diamonds)
+      return false;
+    else
+      return true;
+  }
+
+  void clickOnDumpling() {
+    _bills += _billsPerClick;
+    notifyListeners();
+
+    SharedPreferences.getInstance().then(
+      (prefs) => prefs.setInt('bills', _bills),
     );
   }
 
@@ -71,6 +84,7 @@ class Shop extends ChangeNotifier {
     _billsPerClick = prefs.getInt('billsPerClick') ?? 1;
     _cashMultiplierOnOpening =
         prefs.getDouble('cashMultiplierOnOpening') ?? 1.5;
+    _updateBillsOnOpening();
 
     //* init
     _bills = 9999999;
@@ -106,7 +120,7 @@ class Shop extends ChangeNotifier {
   }
 
   void openDumpling() {
-    _bills += _billsPerClick * (_cashMultiplierOnOpening * 100).toInt();
+    _bills += _billsOnOpening;
     _diamonds += 20;
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => notifyListeners(),
@@ -120,14 +134,7 @@ class Shop extends ChangeNotifier {
     );
   }
 
-  bool checkIsActiveItem(ShopItem item, context) {
-    if (item is PowerupItem) {
-      if (Provider.of<ShopItems>(context, listen: false).currentPowerup != null)
-        return false;
-    }
-    if (item.actualPriceBills > _bills || item.actualPriceDiamonds > _diamonds)
-      return false;
-    else
-      return true;
+  void _updateBillsOnOpening() {
+    _billsOnOpening = _billsPerClick * (_cashMultiplierOnOpening * 100).toInt();
   }
 }
