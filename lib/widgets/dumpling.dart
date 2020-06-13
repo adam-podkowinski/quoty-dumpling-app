@@ -59,7 +59,7 @@ class _DumplingState extends State<Dumpling>
     return Stack(
       children: <Widget>[
         Positioned(
-          top: 10,
+          top: 10.h,
           child: FadeTransition(
             opacity: _moneyAnimation,
             child: Transform(
@@ -75,8 +75,8 @@ class _DumplingState extends State<Dumpling>
         ),
         ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: SizeConfig.screenWidth * .9,
-            maxHeight: SizeConfig.screenWidth * .9,
+            maxWidth: SizeConfig.screenWidth * .85,
+            maxHeight: SizeConfig.screenWidth * .85,
           ),
           child: AnimatedContainer(
             duration: Duration(milliseconds: 120),
@@ -86,15 +86,20 @@ class _DumplingState extends State<Dumpling>
                   )
                 : EdgeInsets.zero,
             child: GestureDetector(
-              onTapDown: (_) {
-                setState(() {
-                  _isPressed = true;
-                });
+              onPanDown: (_) => setState(
+                () => _isPressed = true,
+              ),
+              onVerticalDragCancel: () {
+                if (_isPressed)
+                  setState(
+                    () => _isPressed = false,
+                  );
               },
-              onTapUp: (_) {
-                setState(() {
-                  _isPressed = false;
-                });
+              onHorizontalDragCancel: () {
+                if (_isPressed)
+                  setState(
+                    () => _isPressed = false,
+                  );
               },
               onTap: () {
                 if (_dumplingProvider.progressBarStatus < 1)

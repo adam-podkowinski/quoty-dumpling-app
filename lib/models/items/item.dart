@@ -10,6 +10,12 @@ enum IconType {
   CLICKS,
 }
 
+enum UseCase {
+  BILLS_ON_CLICK,
+  CASH_ON_OPENING,
+  CLICK_MULTIPLIER,
+}
+
 abstract class LabeledItem extends ShopItem {
   bool hasLabel = true;
   LabeledItem.fromMap(map) : super.fromMap(map);
@@ -26,6 +32,7 @@ abstract class ShopItem {
   String id;
   IconType iconType;
   Function onBuyFunction;
+  UseCase useCase;
 
   int actualPriceBills;
   int actualPriceDiamonds;
@@ -48,6 +55,7 @@ abstract class ShopItem {
     defaultPriceDiamonds = map['defaultPriceDiamonds'];
     priceUSD = map['priceUSD'];
     id = map['id'];
+    useCase = useCaseFromString(map['useCase']);
     iconType = iconTypeFromString(map['useCase']);
     actualPriceBills = defaultPriceBills;
     actualPriceDiamonds = defaultPriceDiamonds;
@@ -72,9 +80,20 @@ abstract class ShopItem {
     }
   }
 
+  static UseCase useCaseFromString(String uType) {
+    switch (uType) {
+      case 'clickMultiplier':
+        return UseCase.CLICK_MULTIPLIER;
+      case 'billsOnClick':
+        return UseCase.BILLS_ON_CLICK;
+      default:
+        return UseCase.CASH_ON_OPENING;
+    }
+  }
+
   static IconType iconTypeFromString(String iType) {
     switch (iType) {
-      case 'clicks':
+      case 'clickMultiplier':
         return IconType.CLICKS;
       default:
         return IconType.BILLS;
