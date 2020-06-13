@@ -5,8 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/models/items/item.dart' show UseCase;
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
+import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
 
@@ -19,7 +21,11 @@ class _DumplingState extends State<Dumpling>
     with SingleTickerProviderStateMixin {
   var _isPressed = false;
 
-  var _dumplingProvider;
+  bool _isPowerupBillsOnClick = false;
+
+  DumplingProvider _dumplingProvider;
+  ShopItems _itemsProvider;
+
   var _isInit = true;
 
   AnimationController _moneyAnimController;
@@ -30,12 +36,17 @@ class _DumplingState extends State<Dumpling>
 
     if (_isInit) {
       _dumplingProvider = Provider.of<DumplingProvider>(context);
-      _moneyAnimController = AnimationController(
-          duration: Duration(milliseconds: 150), vsync: this);
+      _itemsProvider = Provider.of<ShopItems>(context)
+        ..addListener(_powerupListener);
+      _powerupListener();
 
+      _moneyAnimController = AnimationController(
+        duration: Duration(milliseconds: 150),
+        vsync: this,
+      );
       _moneyAnimController.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          Future.delayed(Duration(milliseconds: 200), () {
+          Future.delayed(Duration(milliseconds: 250), () {
             if (_moneyAnimController != null) _moneyAnimController.reverse();
           });
         }
@@ -51,7 +62,17 @@ class _DumplingState extends State<Dumpling>
   void dispose() {
     _moneyAnimController.dispose();
     _moneyAnimController = null;
+    _itemsProvider.removeListener(_powerupListener);
     super.dispose();
+  }
+
+  void _powerupListener() {
+    var currentPowerup = _itemsProvider.currentPowerup;
+    if (currentPowerup == null) {
+      if (_isPowerupBillsOnClick) _isPowerupBillsOnClick = false;
+      return;
+    }
+    _isPowerupBillsOnClick = currentPowerup.useCase == UseCase.BILLS_ON_CLICK;
   }
 
   @override
@@ -64,11 +85,19 @@ class _DumplingState extends State<Dumpling>
             opacity: _moneyAnimation,
             child: Transform(
               transform: Matrix4.rotationZ(-pi / 5),
-              child: Text(
-                '+' +
-                    Provider.of<Shop>(context).billsPerClick.toString() +
-                    '\$',
-                style: Styles.kShopItemTitleStyle,
+              child: AnimatedDefaultTextStyle(
+                duration: Duration(milliseconds: 200),
+                style: _isPowerupBillsOnClick
+                    ? Styles.kShopItemTitleStyle.copyWith(
+                        color: Theme.of(context).errorColor,
+                        fontSize: 30.sp,
+                      )
+                    : Styles.kShopItemTitleStyle,
+                child: Text(
+                  '+' +
+                      Provider.of<Shop>(context).billsPerClick.toString() +
+                      '\$',
+                ),
               ),
             ),
           ),
