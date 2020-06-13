@@ -18,7 +18,7 @@ class CollectionGrid extends StatefulWidget {
 class _CollectionGridState extends State<CollectionGrid>
     with SingleTickerProviderStateMixin {
   Quotes _quotesProvider;
-  Function disposeController;
+  Function _disposeController;
   var _isInit = true;
 
   AnimationController _controller;
@@ -44,7 +44,7 @@ class _CollectionGridState extends State<CollectionGrid>
     super.didChangeDependencies();
     if (_isInit) {
       _quotesProvider = Provider.of<Quotes>(context);
-      disposeController =
+      _disposeController =
           Provider.of<CollectionSettings>(context).disposeScrollController;
       _isInit = false;
     }
@@ -52,7 +52,7 @@ class _CollectionGridState extends State<CollectionGrid>
 
   @override
   void dispose() {
-    disposeController();
+    _disposeController();
     _controller.dispose();
     super.dispose();
   }
@@ -72,7 +72,7 @@ class _CollectionGridState extends State<CollectionGrid>
               width: 5,
             ),
             Text(
-              'New quotes',
+              'New quotes (${_quotesProvider.newQuotes.length})',
               style: Styles.kSettingsTextStyle,
             ),
             SizedBox(
