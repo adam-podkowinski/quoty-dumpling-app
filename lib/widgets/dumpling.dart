@@ -88,20 +88,19 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
                   )
                 : EdgeInsets.zero,
             child: GestureDetector(
-              onPanDown: (_) =>
-                  setState(
-                        () => _isPressed = true,
-                  ),
+              onPanDown: (_) => setState(
+                () => _isPressed = true,
+              ),
               onVerticalDragCancel: () {
                 if (_isPressed)
                   setState(
-                        () => _isPressed = false,
+                    () => _isPressed = false,
                   );
               },
               onHorizontalDragCancel: () {
                 if (_isPressed)
                   setState(
-                        () => _isPressed = false,
+                    () => _isPressed = false,
                   );
               },
               onTap: () {
