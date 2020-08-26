@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -7,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
-
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
@@ -111,10 +108,11 @@ class _DumplingScreenState extends State<DumplingScreen>
                 ),
               ),
             ),
+            SizedBox(height: SizeConfig.screenHeight * 0.06),
             FadeInAnimation(
-              duration: Duration(milliseconds: 200),
+              duration: Duration(milliseconds: 300),
               child: AnimatedSwitcher(
-                duration: Duration(milliseconds: 300),
+                duration: Duration(milliseconds: 350),
                 child: _dumplingProvider.isFull
                     ? UnlockedNewQuote()
                     : DumplingScreenWhileClicking(),

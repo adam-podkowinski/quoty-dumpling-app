@@ -35,8 +35,8 @@ class Quote {
       rarity: Quote.getRarityByText(map['rarity']),
       id: map['id'],
       //debug
-      // isUnlocked: true,
-      // unlockingTime: DateTime.now(),
+      //isUnlocked: true,
+      //unlockingTime: DateTime.now(),
     );
   }
 

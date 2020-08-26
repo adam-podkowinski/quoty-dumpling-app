@@ -144,18 +144,17 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                               color: Styles.appBarTextColor,
                             ),
                             if (widget.item is LabeledItem)
-                              if ((widget.item as LabeledItem).hasLabel)
+                              if ((widget.item as LabeledItem).hasLabel) ...[
                                 SizedBox(
                                   height: SizeConfig.screenHeight * .01,
                                 ),
-                            if (widget.item is LabeledItem)
-                              if ((widget.item as LabeledItem).hasLabel)
                                 FittedBox(
                                   child: Text(
                                     (widget.item as LabeledItem).getLabel(),
                                     style: Styles.kItemLevelTextStyle,
                                   ),
                                 ),
+                              ],
                           ],
                         ),
                       ),

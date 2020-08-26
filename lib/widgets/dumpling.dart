@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/helpers/animations.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart' show UseCase;
@@ -17,11 +18,24 @@ class Dumpling extends StatefulWidget {
   _DumplingState createState() => _DumplingState();
 }
 
-class _DumplingState extends State<Dumpling>
-    with SingleTickerProviderStateMixin {
+class DumplingScreenWhileClicking extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Dumpling(),
+        SizedBox(height: SizeConfig.screenHeight * 0.06),
+        ProgressBar(),
+      ],
+    );
+  }
+}
+
+class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
   var _isPressed = false;
 
   bool _isPowerupBillsOnClick = false;
+  bool _isPowerupClicks = false;
 
   DumplingProvider _dumplingProvider;
   ShopItems _itemsProvider;
@@ -31,10 +45,118 @@ class _DumplingState extends State<Dumpling>
   AnimationController _moneyAnimController;
   Animation _moneyAnimation;
 
+  Animatable<Color> _clicksPowerupColor;
+  AnimationController _clicksPowerupController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          top: 10.h,
+          child: FadeTransition(
+            opacity: _moneyAnimation,
+            child: Transform(
+              transform: Matrix4.rotationZ(-pi / 5),
+              child: AnimatedDefaultTextStyle(
+                duration: Duration(milliseconds: 200),
+                style: _isPowerupBillsOnClick
+                    ? Styles.kShopItemTitleStyle.copyWith(
+                        color: Theme.of(context).errorColor,
+                        fontSize: 30.sp,
+                      )
+                    : Styles.kShopItemTitleStyle.copyWith(fontSize: 25.sp),
+                child: Text(
+                  '+' +
+                      Provider.of<Shop>(context).billsPerClick.toString() +
+                      '\$',
+                ),
+              ),
+            ),
+          ),
+        ),
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: SizeConfig.screenWidth * .85,
+            maxHeight: SizeConfig.screenWidth * .85,
+          ),
+          child: AnimatedContainer(
+            duration: Duration(milliseconds: 100),
+            padding: _isPressed
+                ? EdgeInsets.all(
+              SizeConfig.screenWidth * .03,
+            )
+                : EdgeInsets.zero,
+            child: GestureDetector(
+              onPanDown: (_) =>
+                  setState(
+                        () => _isPressed = true,
+                  ),
+              onVerticalDragCancel: () {
+                if (_isPressed)
+                  setState(
+                    () => _isPressed = false,
+                  );
+              },
+              onHorizontalDragCancel: () {
+                if (_isPressed)
+                  setState(
+                    () => _isPressed = false,
+                  );
+              },
+              onTap: () {
+                if (_dumplingProvider.progressBarStatus < 1)
+                  Provider.of<AudioProvider>(context, listen: false)
+                      .playDumplingEating()
+                      .then(
+                        (_) {
+                      _dumplingProvider.clickedOnDumpling();
+                      Provider.of<Shop>(context, listen: false)
+                          .clickOnDumpling();
+                      _moneyAnimController.forward();
+                    },
+                  );
+              },
+              child: AnimatedBuilder(
+                animation: _clicksPowerupController,
+                builder: (context, _) {
+                  return ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      _isPowerupClicks
+                          ? _clicksPowerupColor.evaluate(
+                        AlwaysStoppedAnimation(
+                          _clicksPowerupController.value,
+                        ),
+                      )
+                          : Theme
+                          .of(context)
+                          .backgroundColor
+                          .withRed(255),
+                      BlendMode.modulate,
+                    ),
+                    child: Image.asset(
+                      'assets/images/dumpling2.png',
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     if (_isInit) {
+      _clicksPowerupColor = runningPowerupColor(context);
+      _clicksPowerupController = AnimationController(
+        duration: Duration(milliseconds: 3000),
+        vsync: this,
+      );
+
       _dumplingProvider = Provider.of<DumplingProvider>(context);
       _itemsProvider = Provider.of<ShopItems>(context)
         ..addListener(_powerupListener);
@@ -62,6 +184,7 @@ class _DumplingState extends State<Dumpling>
   void dispose() {
     _moneyAnimController.dispose();
     _moneyAnimController = null;
+    _clicksPowerupController.dispose();
     _itemsProvider.removeListener(_powerupListener);
     super.dispose();
   }
@@ -70,106 +193,21 @@ class _DumplingState extends State<Dumpling>
     var currentPowerup = _itemsProvider.currentPowerup;
     if (currentPowerup == null) {
       if (_isPowerupBillsOnClick) _isPowerupBillsOnClick = false;
+      if (_isPowerupClicks) _isPowerupClicks = false;
       return;
     }
-    _isPowerupBillsOnClick = currentPowerup.useCase == UseCase.BILLS_ON_CLICK;
-  }
+    switch (currentPowerup.useCase) {
+      case UseCase.BILLS_ON_CLICK:
+        _isPowerupBillsOnClick = true;
+        break;
+      case UseCase.CLICK_MULTIPLIER:
+        _isPowerupClicks = true;
+        _clicksPowerupController.repeat();
+        break;
+      default:
+        break;
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: 10.h,
-          child: FadeTransition(
-            opacity: _moneyAnimation,
-            child: Transform(
-              transform: Matrix4.rotationZ(-pi / 5),
-              child: AnimatedDefaultTextStyle(
-                duration: Duration(milliseconds: 200),
-                style: _isPowerupBillsOnClick
-                    ? Styles.kShopItemTitleStyle.copyWith(
-                        color: Theme.of(context).errorColor,
-                        fontSize: 30.sp,
-                      )
-                    : Styles.kShopItemTitleStyle,
-                child: Text(
-                  '+' +
-                      Provider.of<Shop>(context).billsPerClick.toString() +
-                      '\$',
-                ),
-              ),
-            ),
-          ),
-        ),
-        ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: SizeConfig.screenWidth * .85,
-            maxHeight: SizeConfig.screenWidth * .85,
-          ),
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: 120),
-            padding: _isPressed
-                ? EdgeInsets.all(
-                    SizeConfig.screenWidth * .03,
-                  )
-                : EdgeInsets.zero,
-            child: GestureDetector(
-              onPanDown: (_) => setState(
-                () => _isPressed = true,
-              ),
-              onVerticalDragCancel: () {
-                if (_isPressed)
-                  setState(
-                    () => _isPressed = false,
-                  );
-              },
-              onHorizontalDragCancel: () {
-                if (_isPressed)
-                  setState(
-                    () => _isPressed = false,
-                  );
-              },
-              onTap: () {
-                if (_dumplingProvider.progressBarStatus < 1)
-                  Provider.of<AudioProvider>(context, listen: false)
-                      .playDumplingEating()
-                      .then(
-                    (_) {
-                      _dumplingProvider.clickedOnDumpling();
-                      Provider.of<Shop>(context, listen: false)
-                          .clickOnDumpling();
-                      _moneyAnimController.forward();
-                    },
-                  );
-              },
-              child: ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                  Theme.of(context).backgroundColor.withRed(255),
-                  BlendMode.modulate,
-                ),
-                child: Image.asset(
-                  'assets/images/dumpling.png',
-                  colorBlendMode: BlendMode.colorBurn,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class DumplingScreenWhileClicking extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Dumpling(),
-        SizedBox(height: SizeConfig.screenHeight * 0.02),
-        ProgressBar(),
-      ],
-    );
+    if (!_isPowerupClicks) _clicksPowerupController.reset();
   }
 }
