@@ -108,7 +108,7 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
                   Provider.of<AudioProvider>(context, listen: false)
                       .playDumplingEating()
                       .then(
-                        (_) {
+                    (_) {
                       _dumplingProvider.clickedOnDumpling();
                       Provider.of<Shop>(context, listen: false)
                           .clickOnDumpling();
@@ -123,14 +123,11 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
                     colorFilter: ColorFilter.mode(
                       _isPowerupClicks
                           ? _clicksPowerupColor.evaluate(
-                        AlwaysStoppedAnimation(
-                          _clicksPowerupController.value,
-                        ),
-                      )
-                          : Theme
-                          .of(context)
-                          .backgroundColor
-                          .withRed(255),
+                              AlwaysStoppedAnimation(
+                                _clicksPowerupController.value,
+                              ),
+                            )
+                          : Theme.of(context).backgroundColor.withRed(255),
                       BlendMode.modulate,
                     ),
                     child: Image.asset(
