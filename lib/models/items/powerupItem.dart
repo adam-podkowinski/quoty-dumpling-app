@@ -1,7 +1,7 @@
 import 'package:provider/provider.dart';
+import 'package:quiver/async.dart';
 import 'package:quoty_dumpling_app/helpers/item_functions.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
-import 'package:quiver/async.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
 
 class PowerupItem extends LabeledItem {
@@ -23,7 +23,7 @@ class PowerupItem extends LabeledItem {
   int _current;
   Function _undoBuyFunction;
   // Allow deactivating powerup when state of the context was destroyed.
-  //E.g player went to the other screen which will be a likely behaviour
+  //E.g player went to the other screen which is a likely behaviour
   dynamic buyProvider;
 
   @override

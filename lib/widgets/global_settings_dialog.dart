@@ -1,14 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import 'package:quoty_dumpling_app/data/DBProvider.dart';
-import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/icons/custom_icons.dart';
+import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
+import 'package:tuple/tuple.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GlobalSettingsDialog extends StatefulWidget {
   @override
@@ -18,10 +18,24 @@ class GlobalSettingsDialog extends StatefulWidget {
 class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
   static const String _iconsURL = 'https://www.flaticon.com/authors/freepik';
 
-  static const String _dumplingImageURL =
-      'https://pl.freepik.com/darmowe-wektory/realistyczny-zestaw-pierogow-vareniki-pierogi-ravioli-khinkali-pelmeni-manti-momo-tortellini_2238437.htm#';
+  static const String _dumplingImageURL = 'https://www.freepik.com';
 
   static const String _backgroundMusicURL = 'https://www.zapsplat.com';
+
+  static const List<Tuple2<String, String>> _assetsCreators = [
+    Tuple2<String, String>(
+      "Icons: Free Pik",
+      _iconsURL,
+    ),
+    Tuple2<String, String>(
+      "Dumpling: macrovector / Freepik",
+      _dumplingImageURL,
+    ),
+    Tuple2<String, String>(
+      "Music: zapsplat.com",
+      _backgroundMusicURL,
+    ),
+  ];
 
   AudioProvider _audioProvider;
   var _isInit = true;
@@ -122,26 +136,104 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                   SizedBox(
                     height: 5,
                   ),
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        'Game assets created by:',
-                        style: Styles.kSettingsTextStyle,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      assetsCreator('Icons: Free Pik', _iconsURL),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      assetsCreator(
-                          'Dumpling Image: Vector Pouch', _dumplingImageURL),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      assetsCreator('Music: zapsplat.com', _backgroundMusicURL),
-                    ],
+                  RoundedButton(
+                    color: Theme.of(context).secondaryHeaderColor,
+                    width: SizeConfig.screenWidth * .5,
+                    textColor: Theme.of(context).backgroundColor,
+                    text: 'Credits',
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => Dialog(
+                          backgroundColor: Colors.transparent,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).backgroundColor,
+                              borderRadius: BorderRadius.circular(_padding),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(_padding),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Text(
+                                    'Credits',
+                                    style: Styles.kSettingsTitleStyle,
+                                  ),
+                                  Divider(
+                                    color: Theme.of(context).accentColor,
+                                    thickness: 2,
+                                    endIndent:
+                                        Styles.kSettingsTitleStyle.fontSize *
+                                            3.8,
+                                    indent:
+                                        Styles.kSettingsTitleStyle.fontSize *
+                                            3.8,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Programming: ',
+                                        style: Styles.kSettingsTextStyle,
+                                      ),
+                                      linkCreator(
+                                        'Adam Podkowinski',
+                                        "https://github.com/adam-podkowinski",
+                                      ),
+                                    ],
+                                  ),
+                                  Divider(
+                                    color: Theme.of(context).accentColor,
+                                    thickness: .75,
+                                  ),
+                                  Text(
+                                    'Game assets created by:',
+                                    style: Styles.kSettingsTextStyle,
+                                  ),
+                                  ..._assetsCreators.map(
+                                    (e) => Column(
+                                      children: <Widget>[
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        linkCreator(e.item1, e.item2),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    color: Theme.of(context).accentColor,
+                                    thickness: .75,
+                                  ),
+                                  RoundedButton(
+                                    text: 'Other Licenses',
+                                    onPressed: () => showLicensePage(
+                                      context: context,
+                                      applicationIcon:
+                                          Icon(CustomIcons.dumpling),
+                                      applicationName: "Quoty Dumpling",
+                                      applicationVersion: "1.0.0",
+                                    ),
+                                    color: Theme.of(context).accentColor,
+                                    textColor:
+                                        Theme.of(context).backgroundColor,
+                                  ),
+                                  RoundedButton(
+                                    text: 'OK',
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                    textColor:
+                                        Theme.of(context).backgroundColor,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 5,
@@ -227,13 +319,14 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
     );
   }
 
-  assetsCreator(String text, String url) {
+  linkCreator(String text, String url) {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
         style: Styles.kSettingsTextStyle.copyWith(
           color: Colors.blue,
           decoration: TextDecoration.underline,
+          fontWeight: FontWeight.normal,
         ),
         children: [
           TextSpan(

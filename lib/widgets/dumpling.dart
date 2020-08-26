@@ -75,11 +75,9 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
             ),
           ),
         ),
-        ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: SizeConfig.screenWidth * .85,
-            maxHeight: SizeConfig.screenWidth * .85,
-          ),
+        Container(
+          width: SizeConfig.screenWidth * .85,
+          height: SizeConfig.screenWidth * .85,
           child: AnimatedContainer(
             duration: Duration(milliseconds: 100),
             padding: _isPressed
