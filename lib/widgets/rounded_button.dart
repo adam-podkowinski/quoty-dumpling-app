@@ -7,6 +7,9 @@ class RoundedButton extends StatelessWidget {
   final text;
   final textColor;
   final width;
+  final height;
+  final textStyle;
+  final borderRadius;
 
   RoundedButton({
     @required this.onPressed,
@@ -14,6 +17,9 @@ class RoundedButton extends StatelessWidget {
     this.text,
     this.textColor,
     this.width,
+    this.height,
+    this.textStyle,
+    this.borderRadius = const BorderRadius.all(const Radius.circular(100)),
   });
 
   @override
@@ -21,19 +27,21 @@ class RoundedButton extends StatelessWidget {
     return RaisedButton(
       onPressed: onPressed,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: borderRadius,
       ),
       color: color ?? Theme.of(context).buttonColor,
       child: SizedBox(
         width: width,
+        height: height,
         child: Center(
           child: Text(
             text ?? 'Button',
-            style: DefaultTextStyle.of(context).style.copyWith(
-                  fontFamily: Styles.fontFamily,
-                  fontWeight: FontWeight.bold,
-                  color: textColor,
-                ),
+            style: textStyle ??
+                DefaultTextStyle.of(context).style.copyWith(
+                      fontFamily: Styles.fontFamily,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                    ),
           ),
         ),
       ),

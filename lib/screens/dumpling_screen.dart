@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
@@ -7,9 +8,11 @@ import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
+import 'package:quoty_dumpling_app/widgets/achievements_dialog.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
 import 'package:quoty_dumpling_app/widgets/dumpling.dart';
 import 'package:quoty_dumpling_app/widgets/global_settings_dialog.dart';
+import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
 import 'package:quoty_dumpling_app/widgets/unlocked_new_quote.dart';
 
 class DumplingScreen extends StatefulWidget {
@@ -92,12 +95,29 @@ class _DumplingScreenState extends State<DumplingScreen>
                 ),
               ),
             ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: EdgeInsets.all(SizeConfig.screenWidth * 0.05),
-                  child: IconButton(
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                SizeConfig.screenWidth * 0.05,
+                SizeConfig.screenWidth * 0.075,
+                SizeConfig.screenWidth * 0.05,
+                0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RoundedButton(
+                    text: 'Achievements',
+                    borderRadius: BorderRadius.circular(10.h),
+                    width: 100.w,
+                    height: 45.w,
+                    textColor: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).accentColor,
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (ctx) => AchievementsDialog(),
+                    ),
+                  ),
+                  IconButton(
                     onPressed: () => showDialog(
                       context: context,
                       builder: (ctx) => GlobalSettingsDialog(),
@@ -105,10 +125,19 @@ class _DumplingScreenState extends State<DumplingScreen>
                     icon: Icon(Icons.settings),
                     color: Styles.appBarTextColor,
                   ),
-                ),
+                  RoundedButton(
+                    text: 'Quests',
+                    borderRadius: BorderRadius.circular(10.h),
+                    width: 100.w,
+                    height: 45.w,
+                    textColor: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).secondaryHeaderColor,
+                    onPressed: () {},
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: SizeConfig.screenHeight * 0.06),
+            Spacer(),
             FadeInAnimation(
               duration: Duration(milliseconds: 300),
               child: AnimatedSwitcher(
@@ -118,7 +147,9 @@ class _DumplingScreenState extends State<DumplingScreen>
                     : DumplingScreenWhileClicking(),
               ),
             ),
-            Spacer(),
+            Spacer(
+              flex: 2,
+            ),
           ],
         ),
       ),

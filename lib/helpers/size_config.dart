@@ -9,5 +9,7 @@ class SizeConfig {
     _mediaQueryData = MediaQuery.of(context);
     screenWidth = _mediaQueryData.size.width;
     screenHeight = _mediaQueryData.size.height;
+    //debug
+    print(screenWidth.toString() + 'x' + screenHeight.toString());
   }
 }
