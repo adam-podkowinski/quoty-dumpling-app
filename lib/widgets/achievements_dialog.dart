@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
+import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/models/achievement.dart';
 import 'package:quoty_dumpling_app/providers/achievements.dart';
 
 class AchievementsDialog extends StatefulWidget {
@@ -32,7 +34,7 @@ class _AchievementsDialog extends State<AchievementsDialog> {
             physics: NeverScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Align(
                   alignment: Alignment.center,
@@ -44,28 +46,73 @@ class _AchievementsDialog extends State<AchievementsDialog> {
                   ),
                 ),
                 Divider(
-                  color: Theme
-                      .of(context)
-                      .accentColor,
+                  color: Theme.of(context).accentColor,
                   indent: 11.sp * 5,
                   endIndent: 11.sp * 5,
                   thickness: 2,
                 ),
-                ListView.builder(
-                  itemCount:
-                  Provider
-                      .of<Achievements>(context)
-                      .achievements
-                      .length,
-                  itemBuilder: (_, i) =>
-                      ListTile(
-                        title: Text("Title"),
-                      ),
+                SizedBox(height: 5.h),
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: SizeConfig.screenHeight * .6,
+                  ),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount:
+                        Provider.of<Achievements>(context).achievements.length,
+                    itemBuilder: (_, i) => ListElement(
+                      value: i,
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ListElement extends StatefulWidget {
+  final value;
+
+  ListElement({
+    @required this.value,
+  });
+
+  @override
+  _ListElementState createState() => _ListElementState();
+}
+
+class _ListElementState extends State<ListElement> {
+  bool _isInit = true;
+  Achievements achievementsProvider;
+  Achievement achievement;
+  String title;
+  String description;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      achievementsProvider = Provider.of<Achievements>(context);
+      achievement = achievementsProvider.achievements[widget.value];
+      title = achievement.title;
+      description = achievement.description;
+      _isInit = false;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: widget.value != 3
+          ? EdgeInsets.only(bottom: SizeConfig.screenWidth * .006)
+          : EdgeInsets.all(0),
+      child: ListTile(
+        title: Text(title ?? 'Error'),
+        subtitle: Text(description ?? 'Error'),
       ),
     );
   }

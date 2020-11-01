@@ -61,8 +61,11 @@ class Quotes extends ChangeNotifier {
   }
 
   Future<void> fetchQuotes() async {
+    print("fetching quotes");
     List<dynamic> contents;
     ByteData contentsB = await rootBundle.load('assets/quotes/quotes.json');
+
+    //because json file is huge
     contents = await jsonDecode(
       utf8.decode(contentsB.buffer.asUint8List(), allowMalformed: true),
     );

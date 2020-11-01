@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/providers/achievements.dart';
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
@@ -24,6 +25,7 @@ class _LoadingScreenState extends State<LoadingScreen>
     SizeConfig.init(context);
     await Provider.of<Shop>(context, listen: false).initShop();
     await Provider.of<ShopItems>(context, listen: false).fetchItems();
+    await Provider.of<Achievements>(context, listen: false).fetchAchievements();
     await Provider.of<DumplingProvider>(context, listen: false).initDumpling();
     await Provider.of<AudioProvider>(context, listen: false).initAudio();
     await Provider.of<Quotes>(context, listen: false).fetchQuotes();

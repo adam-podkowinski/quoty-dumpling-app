@@ -1,7 +1,7 @@
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart' as sql;
-import 'package:path/path.dart';
 
 class DBProvider {
   DBProvider._();
@@ -30,6 +30,9 @@ class DBProvider {
         );
         await db
             .execute('CREATE TABLE Items(id TEXT PRIMARY KEY, level INTEGER)');
+        await db.execute(
+          'CREATE TABLE Achievements(id TEXT PRIMARY KEY, doneVal INTEGER)',
+        );
       },
     );
   }
