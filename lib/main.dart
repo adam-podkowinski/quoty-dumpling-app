@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
+import 'package:quoty_dumpling_app/providers/achievements.dart';
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => Shop(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Achievements(),
         ),
       ],
       child: MaterialApp(

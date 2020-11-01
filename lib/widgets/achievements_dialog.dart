@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
+import 'package:quoty_dumpling_app/providers/achievements.dart';
 
 class AchievementsDialog extends StatefulWidget {
   @override
@@ -42,10 +44,23 @@ class _AchievementsDialog extends State<AchievementsDialog> {
                   ),
                 ),
                 Divider(
-                  color: Theme.of(context).accentColor,
+                  color: Theme
+                      .of(context)
+                      .accentColor,
                   indent: 11.sp * 5,
                   endIndent: 11.sp * 5,
                   thickness: 2,
+                ),
+                ListView.builder(
+                  itemCount:
+                  Provider
+                      .of<Achievements>(context)
+                      .achievements
+                      .length,
+                  itemBuilder: (_, i) =>
+                      ListTile(
+                        title: Text("Title"),
+                      ),
                 ),
               ],
             ),

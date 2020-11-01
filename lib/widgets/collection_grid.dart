@@ -57,58 +57,68 @@ class _CollectionGridState extends State<CollectionGrid>
     super.dispose();
   }
 
-  Widget _buildNewQuotesTopDivider() => ScaleTransition(
-    scale: _newQuotesAnimation,
-    child: Row(
-      children: <Widget>[
-        Flexible(
-          flex: 1,
-          child: Divider(
-            thickness: 3,
-            color: Theme.of(context).accentColor,
-          ),
+  Widget _buildNewQuotesTopDivider() =>
+      ScaleTransition(
+        scale: _newQuotesAnimation,
+        child: Row(
+          children: <Widget>[
+            Flexible(
+              flex: 1,
+              child: Divider(
+                thickness: 3,
+                color: Theme
+                    .of(context)
+                    .accentColor,
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              'New quotes (${_quotesProvider.newQuotes.length})',
+              style: Styles.kSettingsTextStyle,
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Flexible(
+              flex: 4,
+              child: Divider(
+                thickness: 3,
+                color: Theme
+                    .of(context)
+                    .accentColor,
+              ),
+            ),
+            SizedBox(width: 5),
+            FlatButton(
+              onPressed: () {
+                _controller.reverse().then(
+                      (e) => _quotesProvider.addToUnlockedFromNew(),
+                );
+              },
+              child: Text(
+                'OK',
+                style: Styles.kSettingsTextStyle,
+              ),
+              color: Theme
+                  .of(context)
+                  .accentColor
+                  .withOpacity(.8),
+            ),
+            SizedBox(width: 5),
+            Flexible(
+              flex: 1,
+              child: Divider(
+                thickness: 3,
+                color: Theme
+                    .of(context)
+                    .accentColor,
+              ),
+            ),
+          ],
         ),
-        SizedBox(
-          width: 5,
-        ),
-        Text(
-          'New quotes (${_quotesProvider.newQuotes.length})',
-          style: Styles.kSettingsTextStyle,
-        ),
-        SizedBox(
-          width: 5,
-        ),
-        Flexible(
-          flex: 4,
-          child: Divider(
-            thickness: 3,
-            color: Theme.of(context).accentColor,
-          ),
-        ),
-        SizedBox(width: 5),
-        FlatButton(
-          onPressed: () {
-            _controller.reverse().then(
-                  (e) => _quotesProvider.addToUnlockedFromNew(),
-            );
-          },
-          child: Text(
-            'OK',
-            style: Styles.kSettingsTextStyle,
-          ),
-          color: Theme.of(context).accentColor.withOpacity(.8),
-        ),
-        SizedBox(width: 5),
-        Flexible(
-          flex: 1,
-          child: Divider(
-            thickness: 3,
-            color: Theme.of(context).accentColor,
-          ),
-        ),
-      ],
-    ),
-  );
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -123,11 +133,13 @@ class _CollectionGridState extends State<CollectionGrid>
         child: _quotesProvider.visibleQuotes.length > 0 ||
                 _quotesProvider.newQuotes.length > 0
             ? StaggeredGridView.countBuilder(
-                crossAxisCount: 2,
-                mainAxisSpacing: SizeConfig.screenWidth * 0.0268,
-                crossAxisSpacing: SizeConfig.screenWidth * 0.0268,
-                controller:
-                    Provider.of<CollectionSettings>(context).scrollController,
+          crossAxisCount: 2,
+          mainAxisSpacing: SizeConfig.screenWidth * 0.0268,
+          crossAxisSpacing: SizeConfig.screenWidth * 0.0268,
+          controller:
+          Provider
+              .of<CollectionSettings>(context)
+              .scrollController,
 
           //*if new quotes list is empty there are no new quotes so building additional
           //* dividers and new quotes tiles is unnecessary
@@ -164,7 +176,9 @@ class _CollectionGridState extends State<CollectionGrid>
                 scale: _newQuotesAnimation,
                 child: Divider(
                   thickness: 3,
-                  color: Theme.of(context).accentColor,
+                  color: Theme
+                      .of(context)
+                      .accentColor,
                 ),
               );
             else if (index < _quotesProvider.newQuotes.length + 1)
@@ -181,9 +195,10 @@ class _CollectionGridState extends State<CollectionGrid>
             );
           }
           //?
-              : (ctx, index) => GridCell(
-            _quotesProvider.visibleQuotes[index],
-          ),
+              : (ctx, index) =>
+              GridCell(
+                _quotesProvider.visibleQuotes[index],
+              ),
         )
             : SlideAnimation(
           verticalOffset: 50,
