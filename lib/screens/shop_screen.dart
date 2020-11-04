@@ -73,6 +73,7 @@ class ShopScreen extends StatelessWidget {
                           height: SizeConfig.screenHeight * 0.08,
                           child: TabBar(
                             labelStyle: Styles.kTabBarTextStyle,
+                            labelColor: Styles.appBarTextColor,
                             indicatorColor: Theme.of(context).buttonColor,
                             labelPadding: EdgeInsets.only(top: 5),
                             indicatorWeight: 5,

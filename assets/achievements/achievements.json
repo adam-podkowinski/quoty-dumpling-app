@@ -3,6 +3,8 @@
     "id": "000",
     "title": "First dumpling",
     "description": "Open your first dumpling",
-    "maxToDoVal": 1
+    "maxToDoVal": 1,
+    "billsReward": 1000,
+    "diamondsReward": 25
   }
 ]

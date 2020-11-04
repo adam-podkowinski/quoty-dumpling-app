@@ -11,7 +11,8 @@ class Styles {
 
   static double _screenWidth = SizeConfig.screenWidth;
 
-  static final mainTheme = ThemeData.light().copyWith(
+  static final ThemeData mainTheme = ThemeData(
+    fontFamily: 'SofiaPro',
     primaryColor: Color(0xffFFA259),
     accentColor: Color(0xffFF7860),
     buttonColor: Color(0xffFED766),

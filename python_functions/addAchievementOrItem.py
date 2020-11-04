@@ -45,9 +45,12 @@ if choice == "1":
     title = input("\nTitle: ")
     description = input("\nDescription: ")
     maxToDoVal = input("\nMax to do value: ")
+    billsReward = input("\nBills reward: ")
+    diamondsReward = input("\nDiamonds reward: ")
 
     data.append(
-        {"id": nextId, "title": title, "description": description, "maxToDoVal": int(maxToDoVal)})
+        {"id": nextId, "title": title, "description": description, "maxToDoVal": int(maxToDoVal),
+         "billsReward": billsReward, "diamondsReward": diamondsReward})
     print(data)
 
 with open(filepath, 'w') as f:
