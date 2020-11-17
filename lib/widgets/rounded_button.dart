@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 
 class RoundedButton extends StatelessWidget {
@@ -38,8 +39,9 @@ class RoundedButton extends StatelessWidget {
             text ?? 'Button',
             style: textStyle ??
                 DefaultTextStyle.of(context).style.copyWith(
-                      fontFamily: Styles.fontFamily,
+                  fontFamily: Styles.fontFamily,
                       fontWeight: FontWeight.bold,
+                      fontSize: 14.5.sp,
                       color: textColor,
                     ),
           ),

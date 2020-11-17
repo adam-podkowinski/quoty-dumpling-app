@@ -32,15 +32,14 @@ class DumplingScreenWhileClicking extends StatelessWidget {
 }
 
 class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
-  var _isPressed = false;
-
+  bool _isPressed = false;
+  bool _isInit = true;
   bool _isPowerupBillsOnClick = false;
   bool _isPowerupClicks = false;
+  ValueNotifier<bool> _isTextOnRight = ValueNotifier(false);
 
   DumplingProvider _dumplingProvider;
   ShopItems _itemsProvider;
-
-  var _isInit = true;
 
   AnimationController _moneyAnimController;
   Animation _moneyAnimation;
@@ -54,10 +53,15 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
       children: <Widget>[
         Positioned(
           top: 10.h,
+          right: _isTextOnRight.value ? 16.w : null,
+          left: _isTextOnRight.value ? null : 16.w,
           child: FadeTransition(
             opacity: _moneyAnimation,
             child: Transform(
-              transform: Matrix4.rotationZ(-pi / 5),
+              transform: _isTextOnRight.value
+                  ? Matrix4.rotationZ(pi / 5)
+                  : Matrix4.rotationZ(-pi / 5),
+              alignment: Alignment.center,
               child: AnimatedDefaultTextStyle(
                 duration: Duration(milliseconds: 200),
                 style: _isPowerupBillsOnClick
@@ -110,6 +114,8 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
                       _dumplingProvider.clickedOnDumpling();
                       Provider.of<Shop>(context, listen: false)
                           .clickOnDumpling();
+                      if (_moneyAnimController.status ==
+                          AnimationStatus.reverse) _moneyAnimController.stop();
                       _moneyAnimController.forward();
                     },
                   );
@@ -165,7 +171,8 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
           Future.delayed(Duration(milliseconds: 250), () {
             if (_moneyAnimController != null) _moneyAnimController.reverse();
           });
-        }
+        } else if (status == AnimationStatus.dismissed)
+          _isTextOnRight.value = !_isTextOnRight.value;
       });
 
       _moneyAnimation =

@@ -18,10 +18,14 @@ class LoadingScreen extends StatefulWidget {
   _LoadingScreenState createState() => _LoadingScreenState();
 }
 
+var pixel3 = [393, 737];
+var lgg6 = [360, 720];
+var currentSize = pixel3;
+
 class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
   Future _setData(context) async {
-    ScreenUtil.init(context, width: 360, height: 720);
+    ScreenUtil.init(context, width: currentSize[0], height: currentSize[1]);
     SizeConfig.init(context);
     await Provider.of<Shop>(context, listen: false).initShop();
     await Provider.of<ShopItems>(context, listen: false).fetchItems();

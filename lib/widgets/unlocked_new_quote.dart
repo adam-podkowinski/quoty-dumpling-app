@@ -37,7 +37,7 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
         parent: _controller,
       ),
     )..addListener(
-          () => setState(() {}),
+        () => setState(() {}),
       );
 
     _newQuote = Provider.of<Quotes>(context, listen: false).unlockRandomQuote();
