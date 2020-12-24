@@ -98,7 +98,9 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                         AlwaysStoppedAnimation(
                             _runningPowerupColorController.value),
                       )
-                    : _isActive ? widget.activeColor : Colors.grey,
+                    : _isActive
+                        ? widget.activeColor
+                        : Colors.grey,
               ),
             ),
             padding: EdgeInsets.all(SizeConfig.screenWidth * 0.02),
@@ -132,7 +134,9 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                                 AlwaysStoppedAnimation(
                                     _runningPowerupColorController.value),
                               )
-                            : _isActive ? widget.activeColor : Colors.grey,
+                            : _isActive
+                                ? widget.activeColor
+                                : Colors.grey,
                       ),
                       child: Padding(
                         padding: EdgeInsets.all(SizeConfig.screenWidth * .02),

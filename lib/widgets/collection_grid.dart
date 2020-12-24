@@ -57,8 +57,7 @@ class _CollectionGridState extends State<CollectionGrid>
     super.dispose();
   }
 
-  Widget _buildNewQuotesTopDivider() =>
-      ScaleTransition(
+  Widget _buildNewQuotesTopDivider() => ScaleTransition(
         scale: _newQuotesAnimation,
         child: Row(
           children: <Widget>[
@@ -66,9 +65,7 @@ class _CollectionGridState extends State<CollectionGrid>
               flex: 1,
               child: Divider(
                 thickness: 3,
-                color: Theme
-                    .of(context)
-                    .accentColor,
+                color: Theme.of(context).accentColor,
               ),
             ),
             SizedBox(
@@ -85,9 +82,7 @@ class _CollectionGridState extends State<CollectionGrid>
               flex: 4,
               child: Divider(
                 thickness: 3,
-                color: Theme
-                    .of(context)
-                    .accentColor,
+                color: Theme.of(context).accentColor,
               ),
             ),
             SizedBox(width: 5),
@@ -95,25 +90,20 @@ class _CollectionGridState extends State<CollectionGrid>
               onPressed: () {
                 _controller.reverse().then(
                       (e) => _quotesProvider.addToUnlockedFromNew(),
-                );
+                    );
               },
               child: Text(
                 'OK',
                 style: Styles.kSettingsTextStyle,
               ),
-              color: Theme
-                  .of(context)
-                  .accentColor
-                  .withOpacity(.8),
+              color: Theme.of(context).accentColor.withOpacity(.8),
             ),
             SizedBox(width: 5),
             Flexible(
               flex: 1,
               child: Divider(
                 thickness: 3,
-                color: Theme
-                    .of(context)
-                    .accentColor,
+                color: Theme.of(context).accentColor,
               ),
             ),
           ],
@@ -133,82 +123,77 @@ class _CollectionGridState extends State<CollectionGrid>
         child: _quotesProvider.visibleQuotes.length > 0 ||
                 _quotesProvider.newQuotes.length > 0
             ? StaggeredGridView.countBuilder(
-          crossAxisCount: 2,
-          mainAxisSpacing: SizeConfig.screenWidth * 0.0268,
-          crossAxisSpacing: SizeConfig.screenWidth * 0.0268,
-          controller:
-          Provider
-              .of<CollectionSettings>(context)
-              .scrollController,
+                crossAxisCount: 2,
+                mainAxisSpacing: SizeConfig.screenWidth * 0.0268,
+                crossAxisSpacing: SizeConfig.screenWidth * 0.0268,
+                controller:
+                    Provider.of<CollectionSettings>(context).scrollController,
 
-          //*if new quotes list is empty there are no new quotes so building additional
-          //* dividers and new quotes tiles is unnecessary
-          //*else we have to add 2 to an item count because there are two dividers which
-          //*divides new quotes with old ones and we need to add new quotes length because
-          //*they will be displayed
-          itemCount: _quotesProvider.newQuotes.length > 0
-              ? _quotesProvider.newQuotes.length +
-              _quotesProvider.visibleQuotes.length +
-              2
-              : _quotesProvider.visibleQuotes.length,
+                //*if new quotes list is empty there are no new quotes so building additional
+                //* dividers and new quotes tiles is unnecessary
+                //*else we have to add 2 to an item count because there are two dividers which
+                //*divides new quotes with old ones and we need to add new quotes length because
+                //*they will be displayed
+                itemCount: _quotesProvider.newQuotes.length > 0
+                    ? _quotesProvider.newQuotes.length +
+                        _quotesProvider.visibleQuotes.length +
+                        2
+                    : _quotesProvider.visibleQuotes.length,
 
-          //*first we need to put one widget on top so on index = 1 => staggered.fit(2), then
-          //*new quotes are displayed with old quotes because implementations of them in
-          //*staggered tiles is equal. Divider seperates them so another staggeredTile.fit(2)
-          //*is necessary
-          staggeredTileBuilder: _quotesProvider.newQuotes.length > 0
-              ? (index) {
-            if (index == 0)
-              return StaggeredTile.fit(2);
-            else if (index == _quotesProvider.newQuotes.length + 1)
-              return StaggeredTile.fit(2);
-            else
-              return StaggeredTile.count(1, 1);
-          }
-              : (index) => StaggeredTile.count(1, 1),
-          //?
-          itemBuilder: _quotesProvider.newQuotes.length > 0
-              ? (ctx, index) {
-            if (index == 0)
-              return _buildNewQuotesTopDivider();
-            else if (index == _quotesProvider.newQuotes.length + 1)
-              return ScaleTransition(
-                scale: _newQuotesAnimation,
-                child: Divider(
-                  thickness: 3,
-                  color: Theme
-                      .of(context)
-                      .accentColor,
-                ),
-              );
-            else if (index < _quotesProvider.newQuotes.length + 1)
-              return ScaleTransition(
-                scale: Tween<double>(begin: 0, end: 1)
-                    .animate(_controller),
-                child: GridCell(
-                  _quotesProvider.newQuotes[index - 1],
-                ),
-              );
-            return GridCell(
-              _quotesProvider.visibleQuotes[
-              index - _quotesProvider.newQuotes.length - 2],
-            );
-          }
-          //?
-              : (ctx, index) =>
-              GridCell(
-                _quotesProvider.visibleQuotes[index],
-              ),
-        )
+                //*first we need to put one widget on top so on index = 1 => staggered.fit(2), then
+                //*new quotes are displayed with old quotes because implementations of them in
+                //*staggered tiles is equal. Divider seperates them so another staggeredTile.fit(2)
+                //*is necessary
+                staggeredTileBuilder: _quotesProvider.newQuotes.length > 0
+                    ? (index) {
+                        if (index == 0)
+                          return StaggeredTile.fit(2);
+                        else if (index == _quotesProvider.newQuotes.length + 1)
+                          return StaggeredTile.fit(2);
+                        else
+                          return StaggeredTile.count(1, 1);
+                      }
+                    : (index) => StaggeredTile.count(1, 1),
+                //?
+                itemBuilder: _quotesProvider.newQuotes.length > 0
+                    ? (ctx, index) {
+                        if (index == 0)
+                          return _buildNewQuotesTopDivider();
+                        else if (index == _quotesProvider.newQuotes.length + 1)
+                          return ScaleTransition(
+                            scale: _newQuotesAnimation,
+                            child: Divider(
+                              thickness: 3,
+                              color: Theme.of(context).accentColor,
+                            ),
+                          );
+                        else if (index < _quotesProvider.newQuotes.length + 1)
+                          return ScaleTransition(
+                            scale: Tween<double>(begin: 0, end: 1)
+                                .animate(_controller),
+                            child: GridCell(
+                              _quotesProvider.newQuotes[index - 1],
+                            ),
+                          );
+                        return GridCell(
+                          _quotesProvider.visibleQuotes[
+                              index - _quotesProvider.newQuotes.length - 2],
+                        );
+                      }
+                    //?
+                    : (ctx, index) => GridCell(
+                          _quotesProvider.visibleQuotes[index],
+                        ),
+              )
             : SlideAnimation(
-          verticalOffset: 50,
-          child: AutoSizeText(
-            'Not found quotes with this particular phrase.',
-            maxLines: 2,
-            textAlign: TextAlign.center,
-            style: Styles.kSearchBarTextStyle,
-          ),
-        ),
+                verticalOffset: 50,
+                child: AutoSizeText(
+                  'Not found quotes with this particular phrase.',
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: Styles.kSearchBarTextStyle,
+                ),
+              ),
       ),
     );
   }
@@ -266,7 +251,7 @@ class _GridCellState extends State<GridCell>
         _controller != null) {
       _controller.forward().then(
             (_) => _controller.reverse(),
-      );
+          );
     }
   }
 
@@ -298,7 +283,7 @@ class _GridCellState extends State<GridCell>
               elevation: 5,
               shape: RoundedRectangleBorder(
                 borderRadius:
-                BorderRadius.circular(SizeConfig.screenWidth * 0.0381),
+                    BorderRadius.circular(SizeConfig.screenWidth * 0.0381),
               ),
               clipBehavior: Clip.antiAlias,
               child: Column(

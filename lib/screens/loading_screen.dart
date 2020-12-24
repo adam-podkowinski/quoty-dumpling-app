@@ -20,7 +20,7 @@ class LoadingScreen extends StatefulWidget {
 
 var pixel3 = [393, 737];
 var lgg6 = [360, 720];
-var currentSize = pixel3;
+var currentSize = lgg6;
 
 class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
