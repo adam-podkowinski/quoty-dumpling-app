@@ -10,7 +10,6 @@ dependencies:
   auto_size_text: ^2.1.0
   flutter_staggered_animations: ^0.1.2
   sqflite: ^1.2.0
-  path_provider: ^1.6.0
   shared_preferences: ^0.5.6+1
   audioplayers: ^0.14.0
   flutter_phoenix: ^0.1.0

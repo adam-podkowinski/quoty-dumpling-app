@@ -9,13 +9,15 @@ class DumplingProvider extends ChangeNotifier {
   //if progress bar status is equal to 1 (full)
   var _isFull = false;
 
-  bool get isFull {
-    return _isFull;
-  }
+  int _numberOfClicks = 0;
+  int _numberOfDumplingsOpened = 0;
 
-  double get progressBarStatus {
-    return _progressBarStatus;
-  }
+  bool get isFull => _isFull;
+
+  double get progressBarStatus => _progressBarStatus;
+
+  int get numberOfClicks => _numberOfClicks;
+  int get numberOfDumplingsOpened => _numberOfDumplingsOpened;
 
   Future initDumpling() async {
     final prefs = await SharedPreferences.getInstance();
@@ -35,16 +37,15 @@ class DumplingProvider extends ChangeNotifier {
 
   void clickedOnDumpling() {
     _progressBarStatus += _clickMultiplier / 100;
-    notifyListeners();
+    _numberOfClicks++;
     if (_progressBarStatus >= 1) {
-      Future.delayed(Duration(milliseconds: 100), () {
-        _isFull = true;
-        notifyListeners();
-      });
+      _isFull = true;
+      _numberOfDumplingsOpened++;
     }
     SharedPreferences.getInstance().then(
       (prefs) => prefs.setDouble('clickingProgress', _progressBarStatus),
     );
+    notifyListeners();
   }
 
   void isFullStateChanged() {

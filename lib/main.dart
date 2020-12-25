@@ -44,8 +44,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => Shop(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProxyProvider2<DumplingProvider, Shop, Achievements>(
           create: (_) => Achievements(),
+          update: (_, dumpling, shop, achievements) =>
+              achievements..update(dumpling, shop),
         ),
       ],
       child: MaterialApp(

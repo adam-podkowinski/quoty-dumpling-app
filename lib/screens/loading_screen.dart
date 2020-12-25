@@ -27,9 +27,9 @@ class _LoadingScreenState extends State<LoadingScreen>
   Future _setData(context) async {
     ScreenUtil.init(context, width: currentSize[0], height: currentSize[1]);
     SizeConfig.init(context);
+    await Provider.of<Achievements>(context, listen: false).fetchAchievements();
     await Provider.of<Shop>(context, listen: false).initShop();
     await Provider.of<ShopItems>(context, listen: false).fetchItems();
-    await Provider.of<Achievements>(context, listen: false).fetchAchievements();
     await Provider.of<DumplingProvider>(context, listen: false).initDumpling();
     await Provider.of<AudioProvider>(context, listen: false).initAudio();
     await Provider.of<Quotes>(context, listen: false).fetchQuotes();
