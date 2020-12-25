@@ -8,7 +8,7 @@ import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
-import 'package:quoty_dumpling_app/models/items/powerupItem.dart';
+import 'package:quoty_dumpling_app/models/items/powerup_item.dart';
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';

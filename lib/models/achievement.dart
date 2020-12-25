@@ -7,7 +7,7 @@ class Achievement {
   int _billsReward;
   int _diamondsReward;
 
-  int _doneVal; // How much user accomplished
+  int doneVal; // How much user accomplished
   int _maxToDoVal; // When achievement is done
 
   String get title => _title;
@@ -20,16 +20,10 @@ class Achievement {
 
   int get diamondsReward => _diamondsReward;
 
-  int get doneVal => _doneVal;
-
   int get maxToDoVal => _maxToDoVal;
 
   bool isRewardReceived = false;
-  bool get isDone => _doneVal >= _maxToDoVal;
-
-  set doneValue(int val) {
-    _doneVal = val;
-  }
+  bool get isDone => doneVal >= _maxToDoVal;
 
   Achievement(Map<String, dynamic> map) {
     _title = map['title'];
@@ -39,12 +33,12 @@ class Achievement {
     _maxToDoVal = map['maxToDoVal'];
     _id = map["id"];
 
-    _doneVal = 0;
+    doneVal = 0;
   }
 
   void fetchFromDB(Map<String, dynamic> map) {
-    _doneVal = map["doneVal"] ?? 0;
-    print("\nHere is a done value: $_doneVal \n \n");
+    doneVal = map["doneVal"] ?? 0;
+    print("\nHere is a done value: $doneVal \n \n");
     print("Here is a boolean: $isDone \n \n");
   }
 

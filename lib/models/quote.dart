@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:quoty_dumpling_app/data/DBProvider.dart';
+import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 
 enum Rarities {
-  COMMON,
-  RARE,
-  EPIC,
-  LEGENDARY,
+  common,
+  rare,
+  epic,
+  legendary,
 }
 
 class Quote {
@@ -48,13 +48,13 @@ class Quote {
 
   Color rarityColor(BuildContext context) {
     switch (rarity) {
-      case Rarities.COMMON:
+      case Rarities.common:
         return Theme.of(context).primaryColor;
         break;
-      case Rarities.RARE:
+      case Rarities.rare:
         return Styles.rareColor;
         break;
-      case Rarities.EPIC:
+      case Rarities.epic:
         return Styles.epicColor;
         break;
       default:
@@ -64,13 +64,13 @@ class Quote {
 
   String rarityText() {
     switch (rarity) {
-      case Rarities.COMMON:
+      case Rarities.common:
         return 'Common';
         break;
-      case Rarities.RARE:
+      case Rarities.rare:
         return 'Rare';
         break;
-      case Rarities.EPIC:
+      case Rarities.epic:
         return 'Epic';
         break;
       default:
@@ -81,16 +81,16 @@ class Quote {
   static Rarities getRarityByText(String rarityText) {
     switch (rarityText) {
       case 'common':
-        return Rarities.COMMON;
+        return Rarities.common;
         break;
       case 'rare':
-        return Rarities.RARE;
+        return Rarities.rare;
         break;
       case 'epic':
-        return Rarities.EPIC;
+        return Rarities.epic;
         break;
       default:
-        return Rarities.LEGENDARY;
+        return Rarities.legendary;
     }
   }
 

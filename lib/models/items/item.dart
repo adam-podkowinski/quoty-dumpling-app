@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:quoty_dumpling_app/helpers/item_functions.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
-import 'package:quoty_dumpling_app/models/items/moneyItem.dart';
-import 'package:quoty_dumpling_app/models/items/powerupItem.dart';
-import 'package:quoty_dumpling_app/models/items/upgradeItem.dart';
+import 'package:quoty_dumpling_app/models/items/money_item.dart';
+import 'package:quoty_dumpling_app/models/items/powerup_item.dart';
+import 'package:quoty_dumpling_app/models/items/upgrade_item.dart';
 
 enum IconType {
   BILLS,
@@ -59,7 +59,7 @@ abstract class ShopItem {
     iconType = iconTypeFromString(map['useCase']);
     actualPriceBills = defaultPriceBills;
     actualPriceDiamonds = defaultPriceDiamonds;
-    onBuyFunction = ItemFunctions.itemFunctions['onBuyFunction$id'] ??
+    onBuyFunction = itemFunctions['onBuyFunction$id'] ??
         (context) => print('Function for this item is not yet prepared');
   }
 

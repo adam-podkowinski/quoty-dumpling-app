@@ -8,7 +8,7 @@ class PowerupItem extends LabeledItem {
   PowerupItem(Map<String, dynamic> map) : super.fromMap(map) {
     _useTime = map['useTime'];
     _current = _useTime;
-    _undoBuyFunction = ItemFunctions.itemFunctions['undoBuyFunction$id'] ??
+    _undoBuyFunction = itemFunctions['undoBuyFunction$id'] ??
         (provider) => print('Undo function for this item is not yet prepared');
   }
 

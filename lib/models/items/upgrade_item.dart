@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:quoty_dumpling_app/data/DBProvider.dart';
+import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
 
 class UpgradeItem extends LabeledItem {

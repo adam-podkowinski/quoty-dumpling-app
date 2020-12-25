@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:quoty_dumpling_app/data/DBProvider.dart';
+import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
-import 'package:quoty_dumpling_app/models/items/moneyItem.dart';
-import 'package:quoty_dumpling_app/models/items/powerupItem.dart';
-import 'package:quoty_dumpling_app/models/items/upgradeItem.dart';
+import 'package:quoty_dumpling_app/models/items/money_item.dart';
+import 'package:quoty_dumpling_app/models/items/powerup_item.dart';
+import 'package:quoty_dumpling_app/models/items/upgrade_item.dart';
 
 class ShopItems extends ChangeNotifier {
   List<ShopItem> _items = [];

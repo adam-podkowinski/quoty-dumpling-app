@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:quoty_dumpling_app/data/DBProvider.dart';
+import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/helpers/achievement_functions.dart';
 import 'package:quoty_dumpling_app/models/achievement.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 
 class Achievements extends ChangeNotifier {
-  List<Achievement> _achievements = [];
+  final List<Achievement> _achievements = [];
 
   List<Achievement> get achievements => [..._achievements];
 
@@ -38,7 +38,7 @@ class Achievements extends ChangeNotifier {
 
     _achievements.forEach(
       (a) => a.fetchFromDB(
-        dbItems.firstWhere((e) => e['id'] == a.id, orElse: () => Map()),
+        dbItems.firstWhere((e) => e['id'] == a.id, orElse: () => {}),
       ),
     );
   }
@@ -54,8 +54,7 @@ class Achievements extends ChangeNotifier {
         ..toList()
         ..forEach((achievement) {
           bool finished =
-              AchievementFunctions.achievementFunctions[achievement.id](
-                  achievement, dumpling, shop);
+              achievementFunctions[achievement.id](achievement, dumpling, shop);
 
           if (!shouldUpdate) shouldUpdate = finished;
         });

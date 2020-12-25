@@ -14,12 +14,12 @@ class AudioProvider extends ChangeNotifier {
 
   static AudioPlayer _loopPlayer = AudioPlayer(playerId: 'loopId');
 
-  AudioCache _audioCacheLoop = AudioCache(
+  final AudioCache _audioCacheLoop = AudioCache(
     prefix: 'sounds/',
     fixedPlayer: _loopPlayer,
   );
 
-  AudioCache _audioCache = AudioCache(prefix: 'sounds/');
+  final AudioCache _audioCache = AudioCache(prefix: 'sounds/');
 
   Future playDumplingEating() async {
     if (_isMuted || _volume <= 0) return;

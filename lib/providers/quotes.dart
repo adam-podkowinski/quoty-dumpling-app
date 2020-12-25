@@ -5,7 +5,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:quoty_dumpling_app/data/DBProvider.dart';
+import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart'
     show SortEnum;
@@ -112,7 +112,7 @@ class Quotes extends ChangeNotifier {
       return Quote(
         author: 'No quotes loaded',
         quote: 'No quotes loaded',
-        rarity: Rarities.LEGENDARY,
+        rarity: Rarities.legendary,
         id: 'No quotes loaded',
       );
   }

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
-import 'package:quoty_dumpling_app/models/items/powerupItem.dart';
+import 'package:quoty_dumpling_app/models/items/powerup_item.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
