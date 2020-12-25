@@ -79,6 +79,6 @@ class DBProvider {
     Map<String, dynamic> values,
   ) async {
     final db = await _databaseGet;
-    db.update(table, values, where: 'id=?', whereArgs: [id]);
+    await db.update(table, values, where: 'id=?', whereArgs: [id]);
   }
 }
