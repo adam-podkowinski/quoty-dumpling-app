@@ -89,7 +89,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                     Icon(
                       CustomIcons.diamond,
                       color: Colors.blue,
-                      size: SizeConfig.screenWidth * 0.06,
+                      size: SizeConfig.screenWidth * 0.05,
                     ),
                   ],
                 ),

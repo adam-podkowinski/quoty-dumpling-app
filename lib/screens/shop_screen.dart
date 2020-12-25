@@ -55,7 +55,7 @@ class ShopScreen extends StatelessWidget {
                     Icon(
                       CustomIcons.diamond,
                       color: Colors.blue,
-                      size: SizeConfig.screenWidth * 0.06,
+                      size: SizeConfig.screenWidth * 0.05,
                     ),
                   ],
                 ),

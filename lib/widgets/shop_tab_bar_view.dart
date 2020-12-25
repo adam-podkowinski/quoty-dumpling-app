@@ -230,7 +230,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                               EdgeInsets.all(SizeConfig.screenWidth * 0.01),
                           child: Icon(
                             CustomIcons.diamond,
-                            size: 20,
+                            size: SizeConfig.screenWidth * 0.05,
                             color: Colors.blue,
                           ),
                         ),
