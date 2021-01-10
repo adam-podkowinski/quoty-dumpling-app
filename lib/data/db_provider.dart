@@ -20,7 +20,7 @@ class DBProvider {
 
   Future<sql.Database> initDB() async {
     final dbPath = await sql.getDatabasesPath();
-    String path = join(dbPath, "database.db");
+    var path = join(dbPath, 'database.db');
     return await sql.openDatabase(
       path,
       version: 1,
@@ -49,8 +49,8 @@ class DBProvider {
 
   Future<Map<String, dynamic>> getElement(String table, String id) async {
     final db = await _databaseGet;
-    var res = await db.query(table, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? res.first : Map();
+    var res = await db.query(table, where: 'id = ?', whereArgs: [id]);
+    return res.isNotEmpty ? res.first : {};
   }
 
   Future<List<Map<String, dynamic>>> getAllElements(String table) async {
@@ -61,7 +61,7 @@ class DBProvider {
 
   Future resetGame(context) async {
     final dbPath = await sql.getDatabasesPath();
-    String path = join(dbPath, "database.db");
+    var path = join(dbPath, 'database.db');
     final db = await _databaseGet;
 
     await db.close();

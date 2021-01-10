@@ -18,7 +18,7 @@ class Achievements extends ChangeNotifier {
       .length;
 
   Future<void> fetchAchievements() async {
-    print("fetching achievements");
+    print('fetching achievements');
 
     List<dynamic> content;
 
@@ -34,7 +34,7 @@ class Achievements extends ChangeNotifier {
       ),
     );
 
-    final dbItems = await DBProvider.db.getAllElements("Achievements");
+    final dbItems = await DBProvider.db.getAllElements('Achievements');
 
     _achievements.forEach(
       (a) => a.fetchFromDB(
@@ -45,10 +45,10 @@ class Achievements extends ChangeNotifier {
 
   void update(DumplingProvider dumpling, Shop shop) {
     if (_achievements != null &&
-        _achievements.length > 0 &&
+        _achievements.isNotEmpty &&
         dumpling != null &&
         shop != null) {
-      bool shouldUpdate = false;
+      var shouldUpdate = false;
       _achievements
         ..where((element) => !element.isDone)
         ..toList()

@@ -9,7 +9,7 @@ class Styles {
 
   static final fontFamily = 'SofiaPro';
 
-  static double _screenWidth = SizeConfig.screenWidth;
+  static final double _screenWidth = SizeConfig.screenWidth;
 
   static final ThemeData mainTheme = ThemeData(
     fontFamily: 'SofiaPro',

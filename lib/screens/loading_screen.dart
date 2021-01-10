@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 import 'package:quoty_dumpling_app/providers/achievements.dart';
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
@@ -18,14 +19,9 @@ class LoadingScreen extends StatefulWidget {
   _LoadingScreenState createState() => _LoadingScreenState();
 }
 
-var pixel3 = [393, 737];
-var lgg6 = [360, 720];
-var currentSize = lgg6;
-
 class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
   Future _setData(context) async {
-    ScreenUtil.init(context, width: currentSize[0], height: currentSize[1]);
     SizeConfig.init(context);
     await Provider.of<Achievements>(context, listen: false).fetchAchievements();
     await Provider.of<Shop>(context, listen: false).initShop();
@@ -81,7 +77,11 @@ class _LoadingScreenState extends State<LoadingScreen>
             gradient: Styles.backgroundGradient,
           ),
           child: Center(
-            child: CircularProgressIndicator(),
+            child: Icon(
+              CustomIcons.dumpling,
+              color: Colors.white,
+              size: 70,
+            ),
           ),
         ),
       ),

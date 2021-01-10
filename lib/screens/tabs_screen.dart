@@ -7,6 +7,7 @@ import 'package:gradient_nav_bar/model/tab_info.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TabsScreen extends StatefulWidget {
   @override
@@ -19,9 +20,10 @@ class _TabsScreenState extends State<TabsScreen> {
   Tabs _tabsProvider;
 
   void _selectPage(int index) {
-    if (index != 1)
+    if (index != 1) {
       Provider.of<DumplingProvider>(context, listen: false)
           .isFullStateChanged();
+    }
     _tabsProvider.navigateToPage(index);
   }
 
@@ -40,6 +42,10 @@ class _TabsScreenState extends State<TabsScreen> {
       child: Scaffold(
         body: _tabsProvider.pages[_tabsProvider.selectedPageIndex],
         bottomNavigationBar: GradientNavigationBar(
+          containerHeight: 70.h,
+          itemContainerHeight: 70.h,
+          selectedFontSize: 14.sp,
+          unselectedFontSize: 12.sp,
           onTap: _selectPage,
           gradient: LinearGradient(
             colors: [

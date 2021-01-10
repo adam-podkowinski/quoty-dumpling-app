@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/providers/achievements.dart';
@@ -11,6 +12,10 @@ import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
 import 'package:quoty_dumpling_app/screens/loading_screen.dart';
+
+const pixel3 = Size(393, 737);
+const lgg6 = Size(360, 720);
+const currentSize = lgg6;
 
 void main() => runApp(
       Phoenix(
@@ -50,10 +55,13 @@ class MyApp extends StatelessWidget {
               achievements..update(dumpling, shop),
         ),
       ],
-      child: MaterialApp(
-        theme: Styles.mainTheme,
-        home: SafeArea(
-          child: LoadingScreen(),
+      child: ScreenUtilInit(
+        designSize: currentSize,
+        child: MaterialApp(
+          theme: Styles.mainTheme,
+          home: SafeArea(
+            child: LoadingScreen(),
+          ),
         ),
       ),
     );
