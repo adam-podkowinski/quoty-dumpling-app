@@ -20,7 +20,7 @@ class RoundedButton extends StatelessWidget {
     this.width,
     this.height,
     this.textStyle,
-    this.borderRadius = const BorderRadius.all(const Radius.circular(100)),
+    this.borderRadius = const BorderRadius.all(Radius.circular(100)),
   });
 
   @override

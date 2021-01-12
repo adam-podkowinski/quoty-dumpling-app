@@ -107,9 +107,9 @@ class CardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DumplingProvider _dumplingProvider =
+    var _dumplingProvider =
         Provider.of<DumplingProvider>(context, listen: false);
-    Shop shopProvider = Provider.of<Shop>(context, listen: false);
+    var shopProvider = Provider.of<Shop>(context, listen: false);
 
     return Column(
       children: <Widget>[

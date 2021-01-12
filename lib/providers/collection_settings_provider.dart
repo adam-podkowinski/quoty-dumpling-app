@@ -20,10 +20,11 @@ class CollectionSettings extends ChangeNotifier {
 
   ScrollController _scrollController;
   ScrollController get scrollController {
-    if (_scrollController != null)
+    if (_scrollController != null) {
       return _scrollController;
-    else
+    } else {
       initScrollControlller();
+    }
     return _scrollController;
   }
 
@@ -57,7 +58,7 @@ class CollectionSettings extends ChangeNotifier {
       duration: Duration(milliseconds: 400), curve: Curves.easeIn);
 
   Future<void> initOptions() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     _savedOptions['sortOption'] =
         SortEnum.values[prefs.getInt('sortOption') ?? 1];
     _savedOptions['favoritesOnTop'] = prefs.getBool('favoritesOnTop') ?? false;
@@ -78,7 +79,7 @@ class CollectionSettings extends ChangeNotifier {
     );
     Provider.of<Quotes>(context, listen: false).sortCollection(true);
 
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(
       'sortOption',
       _savedOptions['sortOption'].index,
@@ -99,7 +100,7 @@ class CollectionSettings extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<List<String>> _titlesWithSubtitlesOfOptions = [
+  final List<List<String>> _titlesWithSubtitlesOfOptions = [
     [
       'By Rarity',
       'Sort from the rarest to the commonest',

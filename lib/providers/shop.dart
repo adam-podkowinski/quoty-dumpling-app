@@ -59,13 +59,17 @@ class Shop extends ChangeNotifier {
 
   bool checkIsActiveItem(ShopItem item, context) {
     if (item is PowerupItem) {
-      if (Provider.of<ShopItems>(context, listen: false).currentPowerup != null)
+      if (Provider.of<ShopItems>(context, listen: false).currentPowerup !=
+          null) {
         return false;
+      }
     }
-    if (item.actualPriceBills > _bills || item.actualPriceDiamonds > _diamonds)
+    if (item.actualPriceBills > _bills ||
+        item.actualPriceDiamonds > _diamonds) {
       return false;
-    else
+    } else {
       return true;
+    }
   }
 
   void clickOnDumpling() {
@@ -92,21 +96,22 @@ class Shop extends ChangeNotifier {
   }
 
   String numberAbbreviation(int number) {
-    int nLen = number.toString().length;
-    String text = '';
+    var nLen = number.toString().length;
+    var text = '';
 
     bool changeText(String abbreviation, int x) {
       //! Really messy algorithm, just makes text shorter
       if (nLen > x && nLen < x + 4) {
-        for (int i = 0; i < nLen - x; i++) {
+        for (var i = 0; i < nLen - x; i++) {
           text += number.toString()[i];
         }
         if (!(number.toString()[nLen - x] == '0' &&
             number.toString()[nLen - (x - 1)] == '0')) {
           text += '.';
           text += number.toString()[nLen - x];
-          if (!(number.toString()[nLen - (x - 1)] == '0'))
+          if (!(number.toString()[nLen - (x - 1)] == '0')) {
             text += number.toString()[nLen - (x - 1)];
+          }
         }
         text += abbreviation;
         return true;
@@ -114,8 +119,13 @@ class Shop extends ChangeNotifier {
       return false;
     }
 
-    if (!changeText('K', 3)) if (!changeText('M', 6)) if (!changeText(
-        'B', 9)) if (!changeText('q', 12)) text = number.toString();
+    if (!changeText('K', 3) &&
+        !changeText('M', 6) &&
+        !changeText('B', 9) &&
+        !changeText('q', 12)) {
+      text = number.toString();
+    }
+
     return text;
   }
 

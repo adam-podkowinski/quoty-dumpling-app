@@ -36,7 +36,7 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
   bool _isInit = true;
   bool _isPowerupBillsOnClick = false;
   bool _isPowerupClicks = false;
-  ValueNotifier<bool> _isTextOnRight = ValueNotifier(false);
+  final ValueNotifier<bool> _isTextOnRight = ValueNotifier(false);
 
   DumplingProvider _dumplingProvider;
   ShopItems _itemsProvider;
@@ -94,19 +94,21 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
                 () => _isPressed = true,
               ),
               onVerticalDragCancel: () {
-                if (_isPressed)
+                if (_isPressed) {
                   setState(
                     () => _isPressed = false,
                   );
+                }
               },
               onHorizontalDragCancel: () {
-                if (_isPressed)
+                if (_isPressed) {
                   setState(
                     () => _isPressed = false,
                   );
+                }
               },
               onTap: () {
-                if (_dumplingProvider.progressBarStatus < 1)
+                if (_dumplingProvider.progressBarStatus < 1) {
                   Provider.of<AudioProvider>(context, listen: false)
                       .playDumplingEating()
                       .then(
@@ -119,6 +121,7 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
                       _moneyAnimController.forward();
                     },
                   );
+                }
               },
               child: AnimatedBuilder(
                 animation: _clicksPowerupController,
@@ -147,6 +150,7 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
     );
   }
 
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
@@ -171,8 +175,9 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
           Future.delayed(Duration(milliseconds: 250), () {
             if (_moneyAnimController != null) _moneyAnimController.reverse();
           });
-        } else if (status == AnimationStatus.dismissed)
+        } else if (status == AnimationStatus.dismissed) {
           _isTextOnRight.value = !_isTextOnRight.value;
+        }
       });
 
       _moneyAnimation =

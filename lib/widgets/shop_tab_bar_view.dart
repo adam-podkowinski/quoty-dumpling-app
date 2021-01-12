@@ -176,11 +176,11 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                         widget.item.name,
                         style: Styles.kShopItemTitleStyle,
                       ),
-                      if (widget.item.description.length > 0)
+                      if (widget.item.description.isNotEmpty)
                         SizedBox(
                           height: SizeConfig.screenHeight * 0.005,
                         ),
-                      if (widget.item.description.length > 0)
+                      if (widget.item.description.isNotEmpty)
                         Text(
                           widget.item.description,
                           style: Styles.kShopItemDescriptionStyle,
@@ -279,12 +279,13 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                                 color: _iconColorAnim.value,
                                 onPressed: () async {
                                   if (_isActive) {
-                                    _scaleController.forward().then(
-                                          (_) => _scaleController.reverse(),
-                                        );
-                                    await Provider.of<AudioProvider>(context)
+                                    await Provider.of<AudioProvider>(context,
+                                            listen: false)
                                         .playBuyItem();
                                     _shopProvider.buyItem(widget.item, context);
+                                    await _scaleController.forward().then(
+                                          (_) => _scaleController.reverse(),
+                                        );
                                   }
                                 },
                               ),
@@ -383,17 +384,20 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
 
   void _itemListener() {
     _isActive = _shopProvider.checkIsActiveItem(widget.item, context);
-    if (widget.item is PowerupItem)
+    if (widget.item is PowerupItem) {
       _isRunningPowerup = (widget.item as PowerupItem).isRunning;
+    }
 
-    if (!_isActive)
+    if (!_isActive) {
       _iconColorcontroller?.forward();
-    else
+    } else {
       _iconColorcontroller?.reverse();
+    }
 
-    if (_isRunningPowerup)
+    if (_isRunningPowerup) {
       _runningPowerupColorController.repeat();
-    else
+    } else {
       _runningPowerupColorController.reset();
+    }
   }
 }

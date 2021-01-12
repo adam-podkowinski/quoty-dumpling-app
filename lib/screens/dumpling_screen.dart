@@ -6,12 +6,14 @@ import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
+import 'package:quoty_dumpling_app/providers/achievements.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/widgets/achievements_dialog.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
 import 'package:quoty_dumpling_app/widgets/dumpling.dart';
 import 'package:quoty_dumpling_app/widgets/global_settings_dialog.dart';
+import 'package:quoty_dumpling_app/widgets/notification_chip.dart';
 import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
 import 'package:quoty_dumpling_app/widgets/unlocked_new_quote.dart';
 
@@ -105,18 +107,7 @@ class _DumplingScreenState extends State<DumplingScreen>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RoundedButton(
-                    text: 'Achievements',
-                    borderRadius: BorderRadius.circular(10.h),
-                    width: 100.w,
-                    height: 45.w,
-                    textColor: Theme.of(context).backgroundColor,
-                    color: Theme.of(context).accentColor,
-                    onPressed: () => showDialog(
-                      context: context,
-                      builder: (ctx) => AchievementsDialog(),
-                    ),
-                  ),
+                  AchievementsButton(),
                   IconButton(
                     onPressed: () => showDialog(
                       context: context,
@@ -153,6 +144,41 @@ class _DumplingScreenState extends State<DumplingScreen>
           ],
         ),
       ),
+    );
+  }
+}
+
+class AchievementsButton extends StatelessWidget {
+  const AchievementsButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      overflow: Overflow.visible,
+      children: [
+        RoundedButton(
+          text: 'Achievements',
+          borderRadius: BorderRadius.circular(10.h),
+          width: 100.w,
+          height: 45.w,
+          textColor: Theme.of(context).backgroundColor,
+          color: Theme.of(context).accentColor,
+          onPressed: () => showDialog(
+            context: context,
+            builder: (ctx) => AchievementsDialog(),
+          ),
+        ),
+        if (context.watch<Achievements>().achievements.isNotEmpty)
+          Positioned(
+            top: -10.w,
+            left: -10.w,
+            child: NotificationChip(
+              color: Theme.of(context).secondaryHeaderColor,
+            ),
+          ),
+      ],
     );
   }
 }

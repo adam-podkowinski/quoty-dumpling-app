@@ -91,9 +91,10 @@ class AudioProvider extends ChangeNotifier {
   void changeMute() {
     _isMuted = !_isMuted;
 
-    if (_isMuted)
+    if (_isMuted) {
       changeVolume(0);
-    else
+    } else {
       changeVolume(1);
+    }
   }
 }

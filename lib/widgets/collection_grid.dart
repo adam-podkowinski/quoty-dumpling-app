@@ -120,8 +120,8 @@ class _CollectionGridState extends State<CollectionGrid>
           SizeConfig.screenWidth * 0.0234,
           0,
         ),
-        child: _quotesProvider.visibleQuotes.length > 0 ||
-                _quotesProvider.newQuotes.length > 0
+        child: _quotesProvider.visibleQuotes.isNotEmpty ||
+                _quotesProvider.newQuotes.isNotEmpty
             ? StaggeredGridView.countBuilder(
                 crossAxisCount: 2,
                 mainAxisSpacing: SizeConfig.screenWidth * 0.0268,
@@ -132,9 +132,9 @@ class _CollectionGridState extends State<CollectionGrid>
                 //*if new quotes list is empty there are no new quotes so building additional
                 //* dividers and new quotes tiles is unnecessary
                 //*else we have to add 2 to an item count because there are two dividers which
-                //*divides new quotes with old ones and we need to add new quotes length because
+                //*divide new quotes with old ones and we need to add new quotes length because
                 //*they will be displayed
-                itemCount: _quotesProvider.newQuotes.length > 0
+                itemCount: _quotesProvider.newQuotes.isNotEmpty
                     ? _quotesProvider.newQuotes.length +
                         _quotesProvider.visibleQuotes.length +
                         2
@@ -144,22 +144,25 @@ class _CollectionGridState extends State<CollectionGrid>
                 //*new quotes are displayed with old quotes because implementations of them in
                 //*staggered tiles is equal. Divider seperates them so another staggeredTile.fit(2)
                 //*is necessary
-                staggeredTileBuilder: _quotesProvider.newQuotes.length > 0
+                staggeredTileBuilder: _quotesProvider.newQuotes.isNotEmpty
                     ? (index) {
-                        if (index == 0)
+                        if (index == 0) {
                           return StaggeredTile.fit(2);
-                        else if (index == _quotesProvider.newQuotes.length + 1)
+                        } else if (index ==
+                            _quotesProvider.newQuotes.length + 1) {
                           return StaggeredTile.fit(2);
-                        else
+                        } else {
                           return StaggeredTile.count(1, 1);
+                        }
                       }
                     : (index) => StaggeredTile.count(1, 1),
                 //?
-                itemBuilder: _quotesProvider.newQuotes.length > 0
+                itemBuilder: _quotesProvider.newQuotes.isNotEmpty
                     ? (ctx, index) {
-                        if (index == 0)
+                        if (index == 0) {
                           return _buildNewQuotesTopDivider();
-                        else if (index == _quotesProvider.newQuotes.length + 1)
+                        } else if (index ==
+                            _quotesProvider.newQuotes.length + 1) {
                           return ScaleTransition(
                             scale: _newQuotesAnimation,
                             child: Divider(
@@ -167,7 +170,8 @@ class _CollectionGridState extends State<CollectionGrid>
                               color: Theme.of(context).accentColor,
                             ),
                           );
-                        else if (index < _quotesProvider.newQuotes.length + 1)
+                        } else if (index <
+                            _quotesProvider.newQuotes.length + 1) {
                           return ScaleTransition(
                             scale: Tween<double>(begin: 0, end: 1)
                                 .animate(_controller),
@@ -175,6 +179,7 @@ class _CollectionGridState extends State<CollectionGrid>
                               _quotesProvider.newQuotes[index - 1],
                             ),
                           );
+                        }
                         return GridCell(
                           _quotesProvider.visibleQuotes[
                               index - _quotesProvider.newQuotes.length - 2],
@@ -326,8 +331,9 @@ class _GridCellState extends State<GridCell>
                           onTap: () => setState(() {
                             widget.quote.changeFavorite();
 
-                            if (_quotesProvider.favoritesOnTop)
+                            if (_quotesProvider.favoritesOnTop) {
                               _quotesProvider.sortCollection(true);
+                            }
                           }),
                           child: Icon(
                             widget.quote.isFavorite

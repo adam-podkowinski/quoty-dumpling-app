@@ -12,21 +12,21 @@ import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart'
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Quotes extends ChangeNotifier {
-  List<Quote> _quotes = [];
+  final List<Quote> _quotes = [];
   List<Quote> _visibleQuotes = [];
-  List<Quote> _unlockedQuotes = [];
-  List<Quote> _quotesToUnlock = [];
-  List<Quote> _newQuotes = [];
-  // This list is sorted first and after playing half of the animation visibleQuotes are set to this. This affects to the animation
+  final List<Quote> _unlockedQuotes = [];
+  final List<Quote> _quotesToUnlock = [];
+  final List<Quote> _newQuotes = [];
+  // This list is sorted first and after playing half of the animation visibleQuotes are set to this. This affects the animation
   List<Quote> _visibleQuotesCopy = [];
 
-  List<int> _collectionTilesToAnimate = [];
+  final List<int> _collectionTilesToAnimate = [];
   SortEnum _sortOption;
   var _favoritesOnTop = false;
   var _animateCollectionTiles = false;
   var _previousQuotes = [];
   String _searchValue = '';
-  static const Duration animationDuration = const Duration(milliseconds: 300);
+  static const Duration animationDuration = Duration(milliseconds: 300);
 
   bool get animateCollectionTiles {
     return _animateCollectionTiles;
@@ -61,9 +61,9 @@ class Quotes extends ChangeNotifier {
   }
 
   Future<void> fetchQuotes() async {
-    print("fetching quotes");
+    print('fetching quotes');
     List<dynamic> contents;
-    ByteData contentsB = await rootBundle.load('assets/quotes/quotes.json');
+    var contentsB = await rootBundle.load('assets/quotes/quotes.json');
 
     //because json file is huge
     contents = await jsonDecode(
@@ -95,30 +95,31 @@ class Quotes extends ChangeNotifier {
       // _quotes
     );
 
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     _favoritesOnTop = prefs.getBool('favoritesOnTop') ?? false;
     _sortOption = SortEnum.values[prefs.getInt('sortOption') ?? 1];
   }
 
   Quote unlockRandomQuote() {
-    if (_quotesToUnlock.length > 0) {
-      int index = Random().nextInt(_quotesToUnlock.length - 1);
+    if (_quotesToUnlock.isNotEmpty) {
+      var index = Random().nextInt(_quotesToUnlock.length - 1);
       _quotesToUnlock[index].unlockThisQuote();
-      Quote unlockedQuote = _quotesToUnlock[index];
+      var unlockedQuote = _quotesToUnlock[index];
       _newQuotes.insert(0, _quotesToUnlock[index]);
       _quotesToUnlock.remove(_quotesToUnlock[index]);
       return unlockedQuote;
-    } else
+    } else {
       return Quote(
         author: 'No quotes loaded',
         quote: 'No quotes loaded',
         rarity: Rarities.legendary,
         id: 'No quotes loaded',
       );
+    }
   }
 
   void addToUnlockedFromNew() {
-    if (!(_newQuotes.length > 0)) return;
+    if (!(_newQuotes.isNotEmpty)) return;
     _unlockedQuotes.addAll(_newQuotes);
     _visibleQuotes = [...unlockedQuotes];
     _newQuotes.clear();
@@ -150,7 +151,7 @@ class Quotes extends ChangeNotifier {
 
   void _sortByFavorite() {
     if (_favoritesOnTop) {
-      List<Quote> favoritedQuotes =
+      var favoritedQuotes =
           _visibleQuotesCopy.where((e) => e.isFavorite).toList();
       _visibleQuotesCopy =
           _visibleQuotesCopy.where((e) => !e.isFavorite).toList();
@@ -188,7 +189,7 @@ class Quotes extends ChangeNotifier {
     _sortByRarity();
     _visibleQuotesCopy.sort(
       (a, b) {
-        for (int i = 0; i < a.author.length; i++) {
+        for (var i = 0; i < a.author.length; i++) {
           try {
             if (a.author[i].compareTo(b.author[i]) != 0) {
               return a.author[i].compareTo(b.author[i]);

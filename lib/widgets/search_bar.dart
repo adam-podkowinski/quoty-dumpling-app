@@ -41,17 +41,18 @@ class _SearchBarState extends State<SearchBar> {
           TextField(
             onChanged: (value) {
               _quotesProvider.searchCollection(_controller.text);
-              if (_quotesProvider.visibleQuotes.length <= 0 &&
-                  _quotesProvider.newQuotes.length <= 0)
+              if (_quotesProvider.visibleQuotes.isEmpty &&
+                  _quotesProvider.newQuotes.isEmpty) {
                 Provider.of<CollectionSettings>(context, listen: false)
                     .refreshScrollFab();
+              }
             },
             style: Styles.kSearchBarTextStyle,
             controller: _controller,
             decoration: InputDecoration(
               suffix: Icon(null),
-              labelText: "Search",
-              hintText: "Author or quote...",
+              labelText: 'Search',
+              hintText: 'Author or quote...',
               prefixIcon: Icon(
                 Icons.search,
                 color: Theme.of(context).backgroundColor,
@@ -82,11 +83,12 @@ class _SearchBarState extends State<SearchBar> {
                         _controller.clear();
                         _quotesProvider.searchCollection(_controller.text);
 
-                        if (_quotesProvider.visibleQuotes.length <= 0 &&
-                            _quotesProvider.newQuotes.length <= 0)
+                        if (_quotesProvider.visibleQuotes.isEmpty &&
+                            _quotesProvider.newQuotes.isEmpty) {
                           Provider.of<CollectionSettings>(context,
                                   listen: false)
                               .refreshScrollFab();
+                        }
                       });
                     });
                   }

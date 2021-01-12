@@ -18,17 +18,18 @@ class UpgradeItem extends LabeledItem {
     refreshActualPrices();
 
     DBProvider.db.getElement('Items', id).then((i) {
-      if (i.isEmpty)
+      if (i.isEmpty) {
         DBProvider.db.insert(
           'Items',
           {'id': id, 'level': _level},
         );
-      else
+      } else {
         DBProvider.db.updateElementById(
           'Items',
           id,
           {'level': _level},
         );
+      }
     });
   }
 

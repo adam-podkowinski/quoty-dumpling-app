@@ -31,15 +31,15 @@ class Achievement {
     _billsReward = map['billsReward'];
     _diamondsReward = map['diamondsReward'];
     _maxToDoVal = map['maxToDoVal'];
-    _id = map["id"];
+    _id = map['id'];
 
     doneVal = 0;
   }
 
   void fetchFromDB(Map<String, dynamic> map) {
-    doneVal = map["doneVal"] ?? 0;
-    print("\nHere is a done value: $doneVal \n \n");
-    print("Here is a boolean: $isDone \n \n");
+    doneVal = map['doneVal'] ?? 0;
+    print('\nHere is a done value: $doneVal \n \n');
+    print('Here is a boolean: $isDone \n \n');
   }
 
   void updateState() {}

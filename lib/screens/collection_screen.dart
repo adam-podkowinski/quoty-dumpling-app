@@ -58,8 +58,8 @@ class _CollectionScreenState extends State<CollectionScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
-          children: _quotesProvider.unlockedQuotes.length <= 0 &&
-                  _quotesProvider.newQuotes.length <= 0
+          children: _quotesProvider.unlockedQuotes.isEmpty &&
+                  _quotesProvider.newQuotes.isEmpty
               ? <Widget>[
                   CustomAppBar(
                     'Collection',

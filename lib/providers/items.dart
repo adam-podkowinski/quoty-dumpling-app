@@ -9,11 +9,11 @@ import 'package:quoty_dumpling_app/models/items/powerup_item.dart';
 import 'package:quoty_dumpling_app/models/items/upgrade_item.dart';
 
 class ShopItems extends ChangeNotifier {
-  List<ShopItem> _items = [];
-  List<UpgradeItem> _upgrades = [];
+  final List<ShopItem> _items = [];
+  final List<UpgradeItem> _upgrades = [];
 
-  List<PowerupItem> _powerups = [];
-  List<MoneyItem> _money = [];
+  final List<PowerupItem> _powerups = [];
+  final List<MoneyItem> _money = [];
 
   List<ShopItem> get items => [..._items];
   List<MoneyItem> get money => [..._money];
@@ -60,7 +60,7 @@ class ShopItems extends ChangeNotifier {
 
     _items.forEach((u) {
       u.fetchFromDB(
-        dbItems.firstWhere((e) => e['id'] == u.id, orElse: () => Map()),
+        dbItems.firstWhere((e) => e['id'] == u.id, orElse: () => {}),
       );
       switch (u.runtimeType) {
         case UpgradeItem:

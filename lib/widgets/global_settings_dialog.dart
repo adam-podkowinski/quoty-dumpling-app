@@ -24,21 +24,21 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
 
   static const List<Tuple2<String, String>> _assetsCreators = [
     Tuple2<String, String>(
-      "Icons: Free Pik",
+      'Icons: Free Pik',
       _iconsURL,
     ),
     Tuple2<String, String>(
-      "Dumpling: macrovector / Freepik",
+      'Dumpling: macrovector / Freepik',
       _dumplingImageURL,
     ),
     Tuple2<String, String>(
-      "Music: zapsplat.com",
+      'Music: zapsplat.com',
       _backgroundMusicURL,
     ),
   ];
 
   AudioProvider _audioProvider;
-  var _isInit = true;
+  final _isInit = true;
   final _padding = SizeConfig.screenWidth * .035;
 
   @override
@@ -179,7 +179,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                       ),
                                       linkCreator(
                                         'Adam Podkowinski',
-                                        "https://github.com/adam-podkowinski",
+                                        'https://github.com/adam-podkowinski',
                                       ),
                                     ],
                                   ),
@@ -211,8 +211,8 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                       context: context,
                                       applicationIcon:
                                           Icon(CustomIcons.dumpling),
-                                      applicationName: "Quoty Dumpling",
-                                      applicationVersion: "1.0.0",
+                                      applicationName: 'Quoty Dumpling',
+                                      applicationVersion: '1.0.0',
                                     ),
                                     color: Theme.of(context).accentColor,
                                     textColor:
@@ -319,7 +319,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
     );
   }
 
-  linkCreator(String text, String url) {
+  RichText linkCreator(String text, String url) {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
