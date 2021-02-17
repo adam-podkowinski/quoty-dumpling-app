@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Achievement {
   String _title;
   String _description;
@@ -25,6 +27,14 @@ class Achievement {
   bool isRewardReceived = false;
   bool get isDone => doneVal >= _maxToDoVal;
 
+  bool ile_tego_jest_XDDDDDDDDDDDDDDDDDDDDDDDdddd = false;
+
+  Future<void> receiveReward() async {
+    isRewardReceived = true;
+    var dbInstance = await SharedPreferences.getInstance();
+    await dbInstance.setBool('isRewardReceived' + _id, isRewardReceived);
+  }
+
   Achievement(Map<String, dynamic> map) {
     _title = map['title'];
     _description = map['description'];
@@ -34,13 +44,8 @@ class Achievement {
     _id = map['id'];
 
     doneVal = 0;
+    SharedPreferences.getInstance().then(
+      (db) => isRewardReceived = db.getBool('isRewardReceived' + _id) ?? false,
+    );
   }
-
-  void fetchFromDB(Map<String, dynamic> map) {
-    doneVal = map['doneVal'] ?? 0;
-    print('\nHere is a done value: $doneVal \n \n');
-    print('Here is a boolean: $isDone \n \n');
-  }
-
-  void updateState() {}
 }

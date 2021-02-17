@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -104,28 +106,30 @@ class _DumplingScreenState extends State<DumplingScreen>
                 SizeConfig.screenWidth * 0.05,
                 0,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AchievementsButton(),
-                  IconButton(
-                    onPressed: () => showDialog(
-                      context: context,
-                      builder: (ctx) => GlobalSettingsDialog(),
+              child: SlideAnimation(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AchievementsButton(),
+                    IconButton(
+                      onPressed: () => showDialog(
+                        context: context,
+                        builder: (ctx) => GlobalSettingsDialog(),
+                      ),
+                      icon: Icon(Icons.settings),
+                      color: Styles.appBarTextColor,
                     ),
-                    icon: Icon(Icons.settings),
-                    color: Styles.appBarTextColor,
-                  ),
-                  RoundedButton(
-                    text: 'Quests',
-                    borderRadius: BorderRadius.circular(10.h),
-                    width: 100.w,
-                    height: 45.w,
-                    textColor: Theme.of(context).backgroundColor,
-                    color: Theme.of(context).secondaryHeaderColor,
-                    onPressed: () {},
-                  ),
-                ],
+                    RoundedButton(
+                      text: 'Quests',
+                      borderRadius: BorderRadius.circular(10.h),
+                      width: 100.w,
+                      height: 45.w,
+                      textColor: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).secondaryHeaderColor,
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
               ),
             ),
             Spacer(),
@@ -170,12 +174,19 @@ class AchievementsButton extends StatelessWidget {
             builder: (ctx) => AchievementsDialog(),
           ),
         ),
-        if (context.watch<Achievements>().achievements.isNotEmpty)
+        if (context.watch<Achievements>().achievementsToReceive.isNotEmpty)
           Positioned(
             top: -10.w,
             left: -10.w,
-            child: NotificationChip(
-              color: Theme.of(context).secondaryHeaderColor,
+            child: ScaleAnimation(
+              child: NotificationChip(
+                color: Theme.of(context).secondaryHeaderColor,
+                text: context
+                    .watch<Achievements>()
+                    .achievementsToReceive
+                    .length
+                    .toString(),
+              ),
             ),
           ),
       ],

@@ -6,8 +6,8 @@ import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum SortEnum {
-  RARITY,
   RARITY_DESCENDING,
+  RARITY,
   AUTHOR,
   NEWEST,
   OLDEST,
@@ -102,11 +102,11 @@ class CollectionSettings extends ChangeNotifier {
 
   final List<List<String>> _titlesWithSubtitlesOfOptions = [
     [
-      'By Rarity',
+      'By Rarity Descending',
       'Sort from the rarest to the commonest',
     ],
     [
-      'By Rarity Descending',
+      'By Rarity',
       'Sort from the commonest to the rarest',
     ],
     [

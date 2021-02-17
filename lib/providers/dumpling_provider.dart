@@ -23,6 +23,8 @@ class DumplingProvider extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     _progressBarStatus = prefs.getDouble('clickingProgress') ?? 0.0;
     _clickMultiplier = prefs.getDouble('clickMultiplier') ?? 20;
+    _numberOfClicks = prefs.getInt('numberOfClicks') ?? 0;
+    _numberOfDumplingsOpened = prefs.getInt('numberOfDumplingsOpened') ?? 0;
   }
 
   void clearClickingProgressWhenFull() {
@@ -35,16 +37,19 @@ class DumplingProvider extends ChangeNotifier {
     );
   }
 
-  void clickedOnDumpling() {
+  Future<void> clickedOnDumpling() async {
     _progressBarStatus += _clickMultiplier / 100;
     _numberOfClicks++;
+    var dbInstance = await SharedPreferences.getInstance();
     if (_progressBarStatus >= 1) {
       _isFull = true;
       _numberOfDumplingsOpened++;
+      await dbInstance.setInt(
+        'numberOfDumplingsOpened',
+        _numberOfDumplingsOpened,
+      );
     }
-    SharedPreferences.getInstance().then(
-      (prefs) => prefs.setDouble('clickingProgress', _progressBarStatus),
-    );
+    await dbInstance.setInt('numberOfClicks', _numberOfClicks);
     notifyListeners();
   }
 

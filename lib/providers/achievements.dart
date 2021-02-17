@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/helpers/achievement_functions.dart';
 import 'package:quoty_dumpling_app/models/achievement.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
@@ -12,6 +11,9 @@ class Achievements extends ChangeNotifier {
   final List<Achievement> _achievements = [];
 
   List<Achievement> get achievements => [..._achievements];
+
+  List<Achievement> get achievementsToReceive =>
+      achievements.where((a) => a.isDone && !a.isRewardReceived).toList();
 
   int get numberOfRewardsToReceive => _achievements
       .where((element) => element.isDone && !element.isRewardReceived)
@@ -31,14 +33,6 @@ class Achievements extends ChangeNotifier {
     _achievements.addAll(
       content.map(
         (e) => Achievement(e),
-      ),
-    );
-
-    final dbItems = await DBProvider.db.getAllElements('Achievements');
-
-    _achievements.forEach(
-      (a) => a.fetchFromDB(
-        dbItems.firstWhere((e) => e['id'] == a.id, orElse: () => {}),
       ),
     );
   }

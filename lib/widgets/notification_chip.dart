@@ -3,11 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NotificationChip extends StatelessWidget {
   final color;
+  final text;
+  final fontColor;
 
-  const NotificationChip({
-    Key key,
-    this.color,
-  }) : super(key: key);
+  const NotificationChip(
+      {Key key, this.color, @required this.text, this.fontColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,10 @@ class NotificationChip extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(2.w),
           child: Text(
-            '99',
+            text ?? '1',
             style: TextStyle(
               fontWeight: FontWeight.bold,
+              color: fontColor,
             ),
           ),
         ),
