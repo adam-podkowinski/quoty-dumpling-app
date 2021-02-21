@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 import 'package:quoty_dumpling_app/models/achievement.dart';
 import 'package:quoty_dumpling_app/providers/achievements.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
@@ -96,18 +97,19 @@ class _ListElementState extends State<ListElement> {
 
   @override
   Widget build(BuildContext context) {
-    print(achievement.isDone);
-    print(achievement.isRewardReceived);
     return Padding(
       padding: widget.value != 3
-          ? EdgeInsets.only(bottom: SizeConfig.screenWidth * .006)
+          ? EdgeInsets.only(
+              bottom: SizeConfig.screenWidth * .006, left: 10.w, right: 10.w)
           : EdgeInsets.all(0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
             children: [
               Expanded(
                 child: ListTile(
+                  contentPadding: EdgeInsets.zero,
                   title: Text(title ?? 'Error'),
                   subtitle: Text(description ?? 'Error'),
                 ),
@@ -132,9 +134,51 @@ class _ListElementState extends State<ListElement> {
             ],
           ),
           ProgressBar(
-            barWidth: 230.w,
+            barWidth: 240.w,
             barHeight: 10.h,
             currentPercent: achievement.doneVal / achievement.maxToDoVal,
+          ),
+          SizedBox(
+            height: 5.h,
+          ),
+          Row(
+            children: <Widget>[
+              Text(
+                'Reward: ',
+              ),
+              if (achievement.billsReward != 0)
+                Text(
+                  achievement.billsReward.toString(),
+                ),
+              if (achievement.billsReward != 0)
+                Icon(
+                  Icons.attach_money,
+                  size: 15.w,
+                  color: Theme.of(context).secondaryHeaderColor,
+                ),
+              if (achievement.billsReward != 0)
+                SizedBox(
+                  width: 10.w,
+                ),
+              if (achievement.diamondsReward != 0)
+                Text(
+                  achievement.diamondsReward.toString(),
+                ),
+              if (achievement.diamondsReward != 0)
+                SizedBox(
+                  width: 2.w,
+                ),
+              if (achievement.diamondsReward != 0)
+                Icon(
+                  CustomIcons.diamond,
+                  size: 13.w,
+                  color: Colors.blue,
+                ),
+            ],
+          ),
+          Divider(
+            color: Theme.of(context).accentColor,
+            thickness: 1,
           ),
         ],
       ),
