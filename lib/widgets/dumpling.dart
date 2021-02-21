@@ -25,7 +25,12 @@ class DumplingScreenWhileClicking extends StatelessWidget {
       children: <Widget>[
         Dumpling(),
         SizedBox(height: SizeConfig.screenHeight * 0.03),
-        ProgressBar(),
+        ProgressBar(
+          barWidth: SizeConfig.screenWidth * .7,
+          barHeight: SizeConfig.screenHeight * .02,
+          currentPercent:
+              Provider.of<DumplingProvider>(context).progressBarStatus,
+        ),
       ],
     );
   }

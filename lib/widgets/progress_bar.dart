@@ -1,11 +1,19 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:quoty_dumpling_app/helpers/size_config.dart';
-import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 
 class ProgressBar extends StatelessWidget {
+  final double barWidth;
+  final double barHeight;
+  final double currentPercent;
+
+  const ProgressBar({
+    Key key,
+    @required this.barWidth,
+    @required this.barHeight,
+    @required this.currentPercent,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,19 +39,16 @@ class ProgressBar extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-              width: SizeConfig.screenWidth * .7,
-              height: SizeConfig.screenHeight * 0.02,
+              width: barWidth,
+              height: barHeight,
             ),
             AnimatedContainer(
               duration: Duration(milliseconds: 100),
               width: min(
-                SizeConfig.screenWidth *
-                    .7 *
-                    Provider.of<DumplingProvider>(context)
-                        .progressBarStatus, // if not all space is taken
-                SizeConfig.screenWidth * .7, // it is taken
+                barWidth * currentPercent, // if not all space is taken
+                barWidth, // it is taken
               ),
-              height: SizeConfig.screenHeight * 0.02,
+              height: barHeight,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [

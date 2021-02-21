@@ -27,8 +27,6 @@ class Achievement {
   bool isRewardReceived = false;
   bool get isDone => doneVal >= _maxToDoVal;
 
-  bool ile_tego_jest_XDDDDDDDDDDDDDDDDDDDDDDDdddd = false;
-
   Future<void> receiveReward() async {
     isRewardReceived = true;
     var dbInstance = await SharedPreferences.getInstance();
