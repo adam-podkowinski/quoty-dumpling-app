@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/models/achievement.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
 import 'package:quoty_dumpling_app/models/items/powerup_item.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
@@ -17,6 +18,12 @@ class Shop extends ChangeNotifier {
   int get billsOnOpening => _billsOnOpening;
   int get billsPerClick => _billsPerClick;
   int get diamonds => _diamonds;
+
+  void receiveAchievement(Achievement a) {
+    _bills += a.billsReward;
+    _diamonds += a.diamondsReward;
+    notifyListeners();
+  }
 
   void buyItem(ShopItem item, context) {
     if (item.actualPriceBills <= _bills &&
@@ -92,7 +99,7 @@ class Shop extends ChangeNotifier {
 
     //* init
     _bills = 9999999;
-    _diamonds = 999;
+    _diamonds = 0;
   }
 
   String numberAbbreviation(int number) {

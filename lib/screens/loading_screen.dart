@@ -22,12 +22,15 @@ class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
   Future _setData(context) async {
     SizeConfig.init(context);
-    await Provider.of<Achievements>(context, listen: false).fetchAchievements();
     await Provider.of<Shop>(context, listen: false).initShop();
     await Provider.of<ShopItems>(context, listen: false).fetchItems();
     await Provider.of<DumplingProvider>(context, listen: false).initDumpling();
     await Provider.of<AudioProvider>(context, listen: false).initAudio();
     await Provider.of<Quotes>(context, listen: false).fetchQuotes();
+    await Provider.of<Achievements>(context, listen: false).fetchAchievements(
+      Provider.of<DumplingProvider>(context, listen: false),
+      Provider.of<Shop>(context, listen: false),
+    );
     await Provider.of<CollectionSettings>(context, listen: false).initOptions();
   }
 

@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Achievement {
@@ -27,8 +30,9 @@ class Achievement {
   bool isRewardReceived = false;
   bool get isDone => doneVal >= _maxToDoVal;
 
-  Future<void> receiveReward() async {
+  Future<void> receiveReward(BuildContext context) async {
     isRewardReceived = true;
+    Provider.of<Shop>(context, listen: false).receiveAchievement(this);
     var dbInstance = await SharedPreferences.getInstance();
     await dbInstance.setBool('isRewardReceived' + _id, isRewardReceived);
   }

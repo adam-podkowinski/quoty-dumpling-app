@@ -96,7 +96,8 @@ class _ListElementState extends State<ListElement> {
 
   @override
   Widget build(BuildContext context) {
-    print(achievement.doneVal);
+    print(achievement.isDone);
+    print(achievement.isRewardReceived);
     return Padding(
       padding: widget.value != 3
           ? EdgeInsets.only(bottom: SizeConfig.screenWidth * .006)
@@ -114,7 +115,10 @@ class _ListElementState extends State<ListElement> {
               FlatButton(
                 shape: CircleBorder(),
                 onPressed: achievement.isDone && !achievement.isRewardReceived
-                    ? () => achievementsProvider.receiveReward(achievement.id)
+                    ? () => achievementsProvider.receiveReward(
+                          achievement.id,
+                          context,
+                        )
                     : null,
                 color: achievement.isDone && !achievement.isRewardReceived
                     ? Theme.of(context).secondaryHeaderColor

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:quoty_dumpling_app/helpers/achievement_functions.dart';
 import 'package:quoty_dumpling_app/models/achievement.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
@@ -19,7 +20,7 @@ class Achievements extends ChangeNotifier {
       .where((element) => element.isDone && !element.isRewardReceived)
       .length;
 
-  Future<void> fetchAchievements() async {
+  Future<void> fetchAchievements(DumplingProvider dumpling, Shop shop) async {
     print('fetching achievements');
 
     List<dynamic> content;
@@ -35,6 +36,8 @@ class Achievements extends ChangeNotifier {
         (e) => Achievement(e),
       ),
     );
+
+    update(dumpling, shop);
   }
 
   void update(DumplingProvider dumpling, Shop shop) {
@@ -57,8 +60,8 @@ class Achievements extends ChangeNotifier {
     }
   }
 
-  void receiveReward(String id) {
-    _achievements.firstWhere((a) => a.id == id).receiveReward();
+  void receiveReward(String id, BuildContext context) {
+    _achievements.firstWhere((a) => a.id == id).receiveReward(context);
     notifyListeners();
   }
 }
