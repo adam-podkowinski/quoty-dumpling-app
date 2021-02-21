@@ -44,9 +44,9 @@ print("\nID: ", nextId)
 if choice == "1":
     title = input("\nTitle: ")
     description = input("\nDescription: ")
-    maxToDoVal = input("\nMax to do value: ")
-    billsReward = input("\nBills reward: ")
-    diamondsReward = input("\nDiamonds reward: ")
+    maxToDoVal = int(input("\nMax to do value: "))
+    billsReward = int(input("\nBills reward: "))
+    diamondsReward = int(input("\nDiamonds reward: "))
 
     data.append(
         {"id": nextId, "title": title, "description": description, "maxToDoVal": int(maxToDoVal),

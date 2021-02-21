@@ -26,7 +26,7 @@ class ListElement extends StatefulWidget {
 }
 
 class _AchievementsDialog extends State<AchievementsDialog> {
-  final _padding = 11.h;
+  final _padding = 11.w;
 
   @override
   Widget build(BuildContext context) {

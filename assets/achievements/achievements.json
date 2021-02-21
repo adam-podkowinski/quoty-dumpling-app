@@ -6,5 +6,13 @@
     "maxToDoVal": 1,
     "billsReward": 1000,
     "diamondsReward": 25
+  },
+  {
+    "id": "001",
+    "title": "Dumpling enthusiast",
+    "description": "Open 3 or more dumpling",
+    "maxToDoVal": 3,
+    "billsReward": 1000,
+    "diamondsReward": 30
   }
 ]
