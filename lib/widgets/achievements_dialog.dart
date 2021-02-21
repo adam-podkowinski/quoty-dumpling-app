@@ -6,10 +6,23 @@ import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/achievement.dart';
 import 'package:quoty_dumpling_app/providers/achievements.dart';
+import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
+import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
 
 class AchievementsDialog extends StatefulWidget {
   @override
   _AchievementsDialog createState() => _AchievementsDialog();
+}
+
+class ListElement extends StatefulWidget {
+  final value;
+
+  ListElement({
+    @required this.value,
+  });
+
+  @override
+  _ListElementState createState() => _ListElementState();
 }
 
 class _AchievementsDialog extends State<AchievementsDialog> {
@@ -74,23 +87,55 @@ class _AchievementsDialog extends State<AchievementsDialog> {
   }
 }
 
-class ListElement extends StatefulWidget {
-  final value;
-
-  ListElement({
-    @required this.value,
-  });
-
-  @override
-  _ListElementState createState() => _ListElementState();
-}
-
 class _ListElementState extends State<ListElement> {
   bool _isInit = true;
   Achievements achievementsProvider;
   Achievement achievement;
   String title;
   String description;
+
+  @override
+  Widget build(BuildContext context) {
+    print(achievement.doneVal);
+    return Padding(
+      padding: widget.value != 3
+          ? EdgeInsets.only(bottom: SizeConfig.screenWidth * .006)
+          : EdgeInsets.all(0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: ListTile(
+                  title: Text(title ?? 'Error'),
+                  subtitle: Text(description ?? 'Error'),
+                ),
+              ),
+              FlatButton(
+                shape: CircleBorder(),
+                onPressed: achievement.isDone && !achievement.isRewardReceived
+                    ? () => achievementsProvider.receiveReward(achievement.id)
+                    : null,
+                color: achievement.isDone && !achievement.isRewardReceived
+                    ? Theme.of(context).secondaryHeaderColor
+                    : Colors.grey.withOpacity(.20),
+                height: 35.w,
+                child: Icon(
+                  achievement.isDone ? Icons.done_outlined : Icons.clear,
+                  size: 20.w,
+                ),
+              ),
+            ],
+          ),
+          ProgressBar(
+            barWidth: 230.w,
+            barHeight: 10.h,
+            currentPercent: achievement.doneVal / achievement.maxToDoVal,
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   void didChangeDependencies() {
@@ -102,18 +147,5 @@ class _ListElementState extends State<ListElement> {
       description = achievement.description;
       _isInit = false;
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: widget.value != 3
-          ? EdgeInsets.only(bottom: SizeConfig.screenWidth * .006)
-          : EdgeInsets.all(0),
-      child: ListTile(
-        title: Text(title ?? 'Error'),
-        subtitle: Text(description ?? 'Error'),
-      ),
-    );
   }
 }

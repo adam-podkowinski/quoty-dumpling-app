@@ -56,4 +56,9 @@ class Achievements extends ChangeNotifier {
       if (shouldUpdate) notifyListeners();
     }
   }
+
+  void receiveReward(String id) {
+    _achievements.firstWhere((a) => a.id == id).receiveReward();
+    notifyListeners();
+  }
 }
