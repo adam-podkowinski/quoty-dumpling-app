@@ -124,11 +124,20 @@ class _ListElementState extends State<ListElement> {
                     : null,
                 color: achievement.isDone && !achievement.isRewardReceived
                     ? Theme.of(context).secondaryHeaderColor
-                    : Colors.grey.withOpacity(.20),
+                    : Colors.transparent,
+                splashColor:
+                    achievement.isRewardReceived ? Colors.transparent : null,
+                highlightColor:
+                    achievement.isRewardReceived ? Colors.transparent : null,
                 height: 35.w,
                 child: Icon(
                   achievement.isDone ? Icons.done_outlined : Icons.clear,
                   size: 20.w,
+                  color: achievement.isDone
+                      ? achievement.isRewardReceived
+                          ? Theme.of(context).secondaryHeaderColor
+                          : Styles.kSettingsTitleStyle.color
+                      : null,
                 ),
               ),
             ],

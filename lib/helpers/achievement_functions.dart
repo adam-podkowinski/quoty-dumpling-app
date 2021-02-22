@@ -19,4 +19,12 @@ Map<String, Function> achievementFunctions = {
     }
     return false;
   },
+  '002': (Achievement achievement, DumplingProvider dumpling, Shop shop) {
+    achievement.doneVal = dumpling.numberOfClicks;
+    if (achievement.doneVal >= 1000) {
+      achievement.doneVal = achievement.maxToDoVal;
+      return true;
+    }
+    return false;
+  },
 };

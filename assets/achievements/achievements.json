@@ -14,5 +14,13 @@
     "maxToDoVal": 3,
     "billsReward": 1000,
     "diamondsReward": 30
+  },
+  {
+    "id": "002",
+    "title": "Adept Clicker",
+    "description": "Click on dumplings 1000 times",
+    "maxToDoVal": 1000,
+    "billsReward": 3000,
+    "diamondsReward": 20
   }
 ]
