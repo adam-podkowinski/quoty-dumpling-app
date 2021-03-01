@@ -8,7 +8,6 @@ import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 import 'package:quoty_dumpling_app/models/achievement.dart';
 import 'package:quoty_dumpling_app/providers/achievements.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
-import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
 
 class AchievementsDialog extends StatefulWidget {
   @override

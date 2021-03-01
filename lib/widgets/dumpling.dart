@@ -11,6 +11,7 @@ import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
+import 'package:quoty_dumpling_app/widgets/powerup_state.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
 
 class Dumpling extends StatefulWidget {
@@ -23,7 +24,7 @@ class DumplingScreenWhileClicking extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        PowerupWidgets(),
+        PowerupState(),
         Dumpling(),
         SizedBox(height: SizeConfig.screenHeight * 0.03),
         ProgressBar(
@@ -34,18 +35,6 @@ class DumplingScreenWhileClicking extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-class PowerupWidgets extends StatefulWidget {
-  @override
-  _PowerupWidgetsState createState() => _PowerupWidgetsState();
-}
-
-class _PowerupWidgetsState extends State<PowerupWidgets> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
 
