@@ -26,6 +26,18 @@ class PowerupItem extends LabeledItem {
   //E.g player went to the other screen which is a likely behaviour
   dynamic buyProvider;
 
+  double get fractionToLast {
+    return _current / _useTime;
+  }
+
+  int get current {
+    return _current;
+  }
+
+  int get useTime {
+    return _useTime;
+  }
+
   @override
   String getLabel() {
     return 'Last: ${_current.toString()}';

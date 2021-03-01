@@ -24,7 +24,9 @@ class DumplingScreenWhileClicking extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        PowerupState(),
+        Provider.of<ShopItems>(context).currentPowerup != null
+            ? PowerupState()
+            : SizedBox(),
         Dumpling(),
         SizedBox(height: SizeConfig.screenHeight * 0.03),
         ProgressBar(
