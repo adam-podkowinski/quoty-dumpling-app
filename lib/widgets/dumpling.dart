@@ -23,6 +23,7 @@ class DumplingScreenWhileClicking extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        PowerupWidgets(),
         Dumpling(),
         SizedBox(height: SizeConfig.screenHeight * 0.03),
         ProgressBar(
@@ -33,6 +34,18 @@ class DumplingScreenWhileClicking extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class PowerupWidgets extends StatefulWidget {
+  @override
+  _PowerupWidgetsState createState() => _PowerupWidgetsState();
+}
+
+class _PowerupWidgetsState extends State<PowerupWidgets> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
 
