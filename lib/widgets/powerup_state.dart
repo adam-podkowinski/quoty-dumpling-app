@@ -24,8 +24,9 @@ class _PowerupStateState extends State<PowerupState>
       controller = AnimationController(
         vsync: this,
         duration: Duration(
-          seconds: 5,
+          seconds: 1,
         ),
+        value: 1,
       );
 
       itemsProvider = Provider.of<ShopItems>(context);
@@ -35,7 +36,7 @@ class _PowerupStateState extends State<PowerupState>
 
   @override
   Widget build(BuildContext context) {
-    controller.value = itemsProvider.currentPowerup?.fractionToLast ?? 1;
+    controller.animateBack(itemsProvider.currentPowerup?.fractionToLast ?? 0);
     var outerCircleRadius = 20.w;
     return Stack(
       alignment: Alignment.center,
