@@ -97,9 +97,9 @@ class Shop extends ChangeNotifier {
         prefs.getDouble('cashMultiplierOnOpening') ?? 1.5;
     _updateBillsOnOpening();
 
-    //* init
-    _bills = 9999999;
-    _diamonds = 0;
+    //* init (debug)
+    //_bills = 0;
+    //_diamonds = 0;
   }
 
   String numberAbbreviation(int number) {

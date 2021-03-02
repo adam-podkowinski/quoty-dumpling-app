@@ -26,12 +26,20 @@ class _PowerupStateState extends State<PowerupState>
         duration: Duration(
           seconds: 1,
         ),
-        value: 1,
+        value: Provider.of<ShopItems>(context, listen: false)
+            .currentPowerup
+            .fractionToLast,
       );
 
       itemsProvider = Provider.of<ShopItems>(context);
       isInit = false;
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
   }
 
   @override
