@@ -4,22 +4,21 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AudioProvider extends ChangeNotifier {
-  double _volume = 1.0;
+  static double _volume = 1.0;
   double get volume => _volume;
 
-  double backgroundVolDivider = 2.5;
+  static double backgroundVolDivider = 2.5;
 
   bool _isMuted = false;
   bool get isMuted => _isMuted;
 
-  static AudioPlayer _loopPlayer = AudioPlayer(playerId: 'loopId');
+  static final AudioCache _audioCache = AudioCache(prefix: 'assets/sounds/');
 
-  final AudioCache _audioCacheLoop = AudioCache(
-    prefix: 'sounds/',
+  static final AudioPlayer _loopPlayer = AudioPlayer(playerId: 'loopPlayer');
+  static final AudioCache _loopCache = AudioCache(
+    prefix: 'assets/sounds/',
     fixedPlayer: _loopPlayer,
   );
-
-  final AudioCache _audioCache = AudioCache(prefix: 'sounds/');
 
   Future playDumplingEating() async {
     if (_isMuted || _volume <= 0) return;
@@ -48,8 +47,8 @@ class AudioProvider extends ChangeNotifier {
     );
   }
 
-  Future playLoopAudio() async {
-    _loopPlayer = await _audioCacheLoop.loop(
+  static Future playLoopAudio() async {
+    await _loopCache.loop(
       'background_music.mp3',
       volume: _volume / backgroundVolDivider,
     );
@@ -59,15 +58,15 @@ class AudioProvider extends ChangeNotifier {
     _loopPlayer.setVolume(_volume / backgroundVolDivider);
   }
 
-  Future stopAudio() async {
-    await _loopPlayer.stop();
+  static void stopLoopAudio() {
+    _loopPlayer.stop();
   }
 
   Future initAudio() async {
     final prefs = await SharedPreferences.getInstance();
     _volume = prefs.getDouble('volume') ?? .5;
     _isMuted = _volume <= 0 ? true : false;
-    await stopAudio();
+    await stopLoopAudio();
     await playLoopAudio();
   }
 

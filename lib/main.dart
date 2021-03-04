@@ -17,11 +17,15 @@ const pixel3 = Size(393, 737);
 const lgg6 = Size(360, 720);
 const currentSize = lgg6;
 
-void main() => runApp(
-      Phoenix(
-        child: MyApp(),
-      ),
-    );
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    Phoenix(
+      child: MyApp(),
+    ),
+  );
+  WidgetsBinding.instance.addObserver(_Handler());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -65,5 +69,17 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _Handler extends WidgetsBindingObserver {
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      AudioProvider
+          .playLoopAudio(); // Audio player is a custom class with resume and pause static methods
+    } else {
+      AudioProvider.stopLoopAudio();
+    }
   }
 }
