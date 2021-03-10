@@ -26,11 +26,11 @@ with open(filepath) as f:
 for n in range(len(data)):
     if n <= (len(data) * commonPercentage):
         data[n]['rarity'] = 'common'
-    elif n <= (len(data) * rarePercentage):
+    elif n <= (len(data) * (rarePercentage + commonPercentage)):
         data[n]['rarity'] = 'rare'
-    elif n <= (len(data) * epicPercentage):
+    elif n <= (len(data) * (epicPercentage + rarePercentage + commonPercentage)):
         data[n]['rarity'] = 'epic'
-    elif n <= (len(data) * legendaryPercentage):
+    elif n <= (len(data) * (legendaryPercentage + epicPercentage + rarePercentage + commonPercentage)):
         data[n]['rarity'] = 'legendary'
 
 with open(filepath, 'w') as f:
