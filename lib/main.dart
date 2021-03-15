@@ -21,13 +21,13 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     Phoenix(
-      child: MyApp(),
+      child: QuotyDumplingApp(),
     ),
   );
   WidgetsBinding.instance.addObserver(_Handler());
 }
 
-class MyApp extends StatelessWidget {
+class QuotyDumplingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
