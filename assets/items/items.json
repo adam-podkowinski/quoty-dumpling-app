@@ -71,5 +71,15 @@
     "defaultPriceBills": 0,
     "defaultPriceDiamonds": 0,
     "priceUSD": 15
+  },
+  {
+    "id": "007",
+    "name": "Hungry Friend",
+    "description": "They will help you eat faster!",
+    "type": "upgrade",
+    "useCase": "clickMultiplier",
+    "defaultPriceBills": 100,
+    "defaultPriceDiamonds": 0,
+    "priceUSD": 0
   }
 ]

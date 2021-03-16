@@ -4,7 +4,7 @@ from os import path
 basepath = path.dirname(__file__)
 
 choice = input(
-    "What do you wanna add?\n1. Achievement\n2.Item(not implemented yet)\n")
+    "What do you wanna add?\n1. Achievement\n2. Item\nYour choice: \n")
 
 filename = ""
 if choice == "1":
@@ -72,21 +72,29 @@ What's the use case for your item (input a number):
 1) billsOnClick
 2) clickMultiplier
 3) billsOpening
-4) bills""")
+4) bills
+Your choice: """)
     switcher = {
         "1": "billsOnClick",
         "2": "clickMultiplier",
         "3": "billsOpening",
         "4": "bills"
     }
-    useCase = switcher.get(use_case_inp, "Invalid use case!")
+    use_case = switcher.get(use_case_inp, "Invalid use case!")
     default_price_bills = input("Default bills price: ")
     default_price_diamonds = input("Default diamonds price: ")
     price_usd = input("Default USD price: ")
-    use_tim = input("Use time: ")
+    if item_type == "powerup":
+        use_time = input("Use time: ")
 
-    exit(0)
-
+    if item_type == "powerup":
+        data.append(
+            {"id": nextId, "name": name, "description": description, "type": item_type,
+                "useCase": use_case, "defaultPriceBills": int(default_price_bills), "defaultPriceDiamonds": int(default_price_diamonds), "priceUSD": int(price_usd), "useTime": int(use_time)})
+    else:
+        data.append(
+            {"id": nextId, "name": name, "description": description, "type": item_type,
+                "useCase": use_case, "defaultPriceBills": int(default_price_bills), "defaultPriceDiamonds": int(default_price_diamonds), "priceUSD": int(price_usd)})
 
 with open(filepath, 'w') as f:
     json.dump(data, f, indent=2)
