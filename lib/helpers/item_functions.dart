@@ -11,6 +11,9 @@ Map<String, Function> itemFunctions = {
           .changeClickMultiplier(.1),
   'onBuyFunction002': (context) => Provider.of<Shop>(context, listen: false)
       .changeCashMultiplierOnOpening(1),
+  'onBuyFunction007': (context) =>
+      Provider.of<DumplingProvider>(context, listen: false)
+          .changeClickMultiplier(0.8),
 
   // Powerup on buy functions
   // Double dot is necessary

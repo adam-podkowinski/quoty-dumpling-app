@@ -22,7 +22,7 @@ class DumplingProvider extends ChangeNotifier {
   Future initDumpling() async {
     final prefs = await SharedPreferences.getInstance();
     _progressBarStatus = prefs.getDouble('clickingProgress') ?? 0.0;
-    _clickMultiplier = prefs.getDouble('clickMultiplier') ?? 20;
+    _clickMultiplier = prefs.getDouble('clickMultiplier') ?? 1;
     _numberOfClicks = prefs.getInt('numberOfClicks') ?? 0;
     _numberOfDumplingsOpened = prefs.getInt('numberOfDumplingsOpened') ?? 0;
   }

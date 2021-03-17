@@ -46,7 +46,12 @@ class UpgradeItem extends LabeledItem {
   }
 
   void refreshActualPrices() {
-    actualPriceBills = (defaultPriceBills * (pow(1.3, _level))).round();
-    actualPriceDiamonds = (defaultPriceDiamonds * (pow(1.3, _level))).round();
+    if (_level == 1) {
+      actualPriceBills = defaultPriceBills;
+      actualPriceDiamonds = defaultPriceDiamonds;
+    } else {
+      actualPriceBills = (defaultPriceBills * pow(1.3, _level)).round();
+      actualPriceDiamonds = (defaultPriceDiamonds * pow(1.3, _level)).round();
+    }
   }
 }

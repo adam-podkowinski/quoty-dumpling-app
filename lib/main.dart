@@ -76,8 +76,7 @@ class _Handler extends WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      AudioProvider
-          .playLoopAudio(); // Audio player is a custom class with resume and pause static methods
+      AudioProvider.playLoopAudio();
     } else {
       AudioProvider.stopLoopAudio();
     }
