@@ -3,9 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
+import 'package:quoty_dumpling_app/models/achievement.dart';
+import 'package:quoty_dumpling_app/models/items/item.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
+import 'package:quoty_dumpling_app/providers/achievements.dart';
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
+import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
@@ -111,6 +115,13 @@ class CardContent extends StatelessWidget {
         Provider.of<DumplingProvider>(context, listen: false);
     var shopProvider = Provider.of<Shop>(context, listen: false);
 
+    var currentPowerup =
+        Provider.of<ShopItems>(context, listen: false).currentPowerup;
+    var _isPowerupActive = false;
+    if (currentPowerup != null) {
+      _isPowerupActive = currentPowerup.useCase == UseCase.CASH_ON_OPENING;
+    }
+
     return Column(
       children: <Widget>[
         //title
@@ -185,8 +196,13 @@ class CardContent extends StatelessWidget {
             children: <TextSpan>[
               TextSpan(
                 text: '\$${shopProvider.billsOnOpening}',
-                style: Styles.kAuthorStyle
-                    .copyWith(color: Theme.of(context).secondaryHeaderColor),
+                style: _isPowerupActive
+                    ? Styles.kAuthorStyle.copyWith(
+                        color: Theme.of(context).errorColor,
+                        fontSize: 22.sp,
+                      )
+                    : Styles.kAuthorStyle.copyWith(
+                        color: Theme.of(context).secondaryHeaderColor),
               ),
             ],
           ),

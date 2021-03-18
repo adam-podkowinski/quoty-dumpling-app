@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DumplingProvider extends ChangeNotifier {
-  static const defaultClickMultiplier = 0.025;
+  //static const defaultClickMultiplier = 0.025;
+  //debug
+  static const defaultClickMultiplier = 10.0;
   //shows progress of status bar
   double _progressBarStatus = 0.0;
   //multiplier which shows how much we can add to progressBarStatus each click

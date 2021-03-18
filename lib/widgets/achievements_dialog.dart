@@ -7,6 +7,7 @@ import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 import 'package:quoty_dumpling_app/models/achievement.dart';
 import 'package:quoty_dumpling_app/providers/achievements.dart';
+import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
 
 class AchievementsDialog extends StatefulWidget {
@@ -116,10 +117,14 @@ class _ListElementState extends State<ListElement> {
               FlatButton(
                 shape: CircleBorder(),
                 onPressed: achievement.isDone && !achievement.isRewardReceived
-                    ? () => achievementsProvider.receiveReward(
+                    ? () {
+                        Provider.of<AudioProvider>(context, listen: false)
+                            .playBuyItem();
+                        achievementsProvider.receiveReward(
                           achievement.id,
                           context,
-                        )
+                        );
+                      }
                     : null,
                 color: achievement.isDone && !achievement.isRewardReceived
                     ? Theme.of(context).secondaryHeaderColor
