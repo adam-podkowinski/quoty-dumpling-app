@@ -5,7 +5,7 @@
     "description": "Get additional money on clicking on dumpling",
     "type": "upgrade",
     "useCase": "billsOnClick",
-    "defaultPriceBills": 10,
+    "defaultPriceBills": 20,
     "defaultPriceDiamonds": 0,
     "priceUSD": 0
   },
@@ -15,7 +15,7 @@
     "description": "Unlock quotes faster",
     "type": "upgrade",
     "useCase": "clickMultiplier",
-    "defaultPriceBills": 15,
+    "defaultPriceBills": 30,
     "defaultPriceDiamonds": 0,
     "priceUSD": 0
   },
@@ -25,7 +25,7 @@
     "description": "Get additional money on dumpling opening",
     "type": "upgrade",
     "useCase": "billsOnOpening",
-    "defaultPriceBills": 20,
+    "defaultPriceBills": 40,
     "defaultPriceDiamonds": 0,
     "priceUSD": 0
   },
@@ -78,8 +78,28 @@
     "description": "They will help you eat faster!",
     "type": "upgrade",
     "useCase": "clickMultiplier",
-    "defaultPriceBills": 100,
+    "defaultPriceBills": 200,
     "defaultPriceDiamonds": 0,
+    "priceUSD": 0
+  },
+  {
+    "id": "008",
+    "name": "Tax Evasion",
+    "description": "Use gaps in the law to earn more from eating",
+    "type": "upgrade",
+    "useCase": "billsOnClick",
+    "defaultPriceBills": 300,
+    "defaultPriceDiamonds": 0,
+    "priceUSD": 0
+  },
+  {
+    "id": "009",
+    "name": "Surprise",
+    "description": "Get a birthday surprise while opening a dumpling",
+    "type": "upgrade",
+    "useCase": "billsOpening",
+    "defaultPriceBills": 400,
+    "defaultPriceDiamonds": 1,
     "priceUSD": 0
   }
 ]
