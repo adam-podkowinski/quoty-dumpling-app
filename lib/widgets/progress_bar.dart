@@ -9,8 +9,8 @@ class ProgressBar extends StatelessWidget {
 
   const ProgressBar({
     Key key,
-    @required this.barWidth,
-    @required this.barHeight,
+    this.barWidth,
+    this.barHeight,
     @required this.currentPercent,
   }) : super(key: key);
 

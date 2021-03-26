@@ -8,6 +8,7 @@ import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
+import 'package:quoty_dumpling_app/providers/level.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
@@ -52,6 +53,9 @@ class QuotyDumplingApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => Shop(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Level(),
         ),
         ChangeNotifierProxyProvider2<DumplingProvider, Shop, Achievements>(
           create: (_) => Achievements(),

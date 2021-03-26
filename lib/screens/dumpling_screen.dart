@@ -13,6 +13,7 @@ import 'package:quoty_dumpling_app/widgets/achievements_dialog.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
 import 'package:quoty_dumpling_app/widgets/dumpling.dart';
 import 'package:quoty_dumpling_app/widgets/global_settings_dialog.dart';
+import 'package:quoty_dumpling_app/widgets/level_widget.dart';
 import 'package:quoty_dumpling_app/widgets/notification_chip.dart';
 import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
 import 'package:quoty_dumpling_app/widgets/unlocked_new_quote.dart';
@@ -106,25 +107,26 @@ class _DumplingScreenState extends State<DumplingScreen>
               ),
               child: SlideAnimation(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    AchievementsButton(),
-                    IconButton(
-                      onPressed: () => showDialog(
-                        context: context,
-                        builder: (ctx) => GlobalSettingsDialog(),
-                      ),
-                      icon: Icon(Icons.settings),
-                      color: Styles.appBarTextColor,
+                    Flexible(
+                      flex: 1,
+                      child: LevelWidget(),
                     ),
-                    RoundedButton(
-                      text: 'Quests',
-                      borderRadius: BorderRadius.circular(10.h),
-                      width: 100.w,
-                      height: 45.w,
-                      textColor: Theme.of(context).backgroundColor,
-                      color: Theme.of(context).secondaryHeaderColor,
-                      onPressed: () {},
+                    Flexible(
+                      flex: 1,
+                      child: IconButton(
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (ctx) => GlobalSettingsDialog(),
+                        ),
+                        icon: Icon(Icons.settings),
+                        color: Styles.appBarTextColor,
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: AchievementsButton(),
                     ),
                   ],
                 ),
@@ -158,13 +160,13 @@ class AchievementsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      overflow: Overflow.visible,
+      clipBehavior: Clip.none,
       children: [
         RoundedButton(
           text: 'Achievements',
           borderRadius: BorderRadius.circular(10.h),
           width: 100.w,
-          height: 45.w,
+          height: 50.h,
           textColor: Theme.of(context).backgroundColor,
           color: Theme.of(context).accentColor,
           onPressed: () => showDialog(

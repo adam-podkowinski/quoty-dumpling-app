@@ -104,8 +104,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                       ),
                       Expanded(
                         child: Stack(
-                          overflow: Overflow.visible,
-                          children: <Widget>[
+                          clipBehavior: Clip.none, children: <Widget>[
                             IconButton(
                               icon: Icon(
                                 _audioProvider.isMuted
