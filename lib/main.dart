@@ -57,10 +57,17 @@ class QuotyDumplingApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => Level(),
         ),
-        ChangeNotifierProxyProvider2<DumplingProvider, Shop, Achievements>(
+        ChangeNotifierProxyProvider3<DumplingProvider, Shop, Level,
+            Achievements>(
           create: (_) => Achievements(),
-          update: (_, dumpling, shop, achievements) =>
-              achievements..update(dumpling, shop),
+          update: (
+            _,
+            dumpling,
+            shop,
+            level,
+            achievements,
+          ) =>
+              achievements..update(dumpling, shop, level),
         ),
       ],
       child: ScreenUtilInit(

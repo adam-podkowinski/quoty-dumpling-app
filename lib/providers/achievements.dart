@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:quoty_dumpling_app/helpers/achievement_functions.dart';
 import 'package:quoty_dumpling_app/models/achievement.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
+import 'package:quoty_dumpling_app/providers/level.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 
 class Achievements extends ChangeNotifier {
@@ -20,7 +21,11 @@ class Achievements extends ChangeNotifier {
       .where((element) => element.isDone && !element.isRewardReceived)
       .length;
 
-  Future<void> fetchAchievements(DumplingProvider dumpling, Shop shop) async {
+  Future<void> fetchAchievements(
+    DumplingProvider dumpling,
+    Shop shop,
+    Level level,
+  ) async {
     print('fetching achievements');
 
     List<dynamic> content;
@@ -37,10 +42,10 @@ class Achievements extends ChangeNotifier {
       ),
     );
 
-    update(dumpling, shop);
+    update(dumpling, shop, level);
   }
 
-  void update(DumplingProvider dumpling, Shop shop) {
+  void update(DumplingProvider dumpling, Shop shop, level) {
     if (_achievements != null &&
         _achievements.isNotEmpty &&
         dumpling != null &&
@@ -50,8 +55,8 @@ class Achievements extends ChangeNotifier {
         ..where((element) => !element.isDone)
         ..toList()
         ..forEach((achievement) {
-          bool finished =
-              achievementFunctions[achievement.id](achievement, dumpling, shop);
+          bool finished = achievementFunctions[achievement.id](
+              achievement, dumpling, shop, level);
 
           if (!shouldUpdate) shouldUpdate = finished;
         });

@@ -1,4 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/providers/level.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DumplingProvider extends ChangeNotifier {
@@ -41,13 +44,15 @@ class DumplingProvider extends ChangeNotifier {
     );
   }
 
-  Future<void> clickedOnDumpling() async {
+  Future<void> clickedOnDumpling(BuildContext context) async {
     _progressBarStatus += _clickMultiplier / 100;
     _numberOfClicks++;
     var dbInstance = await SharedPreferences.getInstance();
+    Provider.of<Level>(context).click();
     if (_progressBarStatus >= 1) {
       _isFull = true;
       _numberOfDumplingsOpened++;
+      Provider.of<Level>(context).openDumpling();
       await dbInstance.setInt(
         'numberOfDumplingsOpened',
         _numberOfDumplingsOpened,

@@ -122,7 +122,7 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
                       .playDumplingEating()
                       .then(
                     (_) {
-                      _dumplingProvider.clickedOnDumpling();
+                      _dumplingProvider.clickedOnDumpling(context);
                       Provider.of<Shop>(context, listen: false)
                           .clickOnDumpling();
                       if (_moneyAnimController.status ==

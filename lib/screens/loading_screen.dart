@@ -9,6 +9,7 @@ import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
+import 'package:quoty_dumpling_app/providers/level.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/screens/tabs_screen.dart';
@@ -27,9 +28,11 @@ class _LoadingScreenState extends State<LoadingScreen>
     await Provider.of<DumplingProvider>(context, listen: false).initDumpling();
     await Provider.of<AudioProvider>(context, listen: false).initAudio();
     await Provider.of<Quotes>(context, listen: false).fetchQuotes();
+    await Provider.of<Level>(context, listen: false).fetchLevel();
     await Provider.of<Achievements>(context, listen: false).fetchAchievements(
       Provider.of<DumplingProvider>(context, listen: false),
       Provider.of<Shop>(context, listen: false),
+      Provider.of<Level>(context, listen: false),
     );
     await Provider.of<CollectionSettings>(context, listen: false).initOptions();
   }
