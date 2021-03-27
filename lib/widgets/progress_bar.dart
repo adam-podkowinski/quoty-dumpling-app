@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProgressBar extends StatelessWidget {
   final double barWidth;
@@ -36,32 +37,34 @@ class ProgressBar extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              width: barWidth,
-              height: barHeight,
-            ),
-            AnimatedContainer(
-              duration: Duration(milliseconds: 100),
-              width: min(
-                barWidth * currentPercent, // if not all space is taken
-                barWidth, // it is taken
+        child: LayoutBuilder(builder: (context, constraints) {
+          return Stack(
+            children: <Widget>[
+              Container(
+                width: barWidth ?? constraints.biggest.width,
+                height: barHeight ?? 10.h,
               ),
-              height: barHeight,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).secondaryHeaderColor,
-                    Theme.of(context).buttonColor.withRed(150).withGreen(240),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+              AnimatedContainer(
+                duration: Duration(milliseconds: 100),
+                width: min(
+                  (barWidth ?? constraints.biggest.width),
+                  (barWidth ?? constraints.biggest.width) * currentPercent,
+                ),
+                height: barHeight ?? 10.h,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).secondaryHeaderColor,
+                      Theme.of(context).buttonColor.withRed(150).withGreen(240),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          );
+        }),
       ),
     );
   }

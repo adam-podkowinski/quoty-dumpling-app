@@ -20,9 +20,7 @@ class LevelWidget extends StatelessWidget {
               ),
         ),
         ProgressBar(
-          barWidth: 100.w,
-          barHeight: 10.h,
-          currentPercent: 9.5 / 10,
+          currentPercent: 4.5 / 10,
         ),
       ],
     );

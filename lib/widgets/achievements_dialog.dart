@@ -147,8 +147,6 @@ class _ListElementState extends State<ListElement> {
             ],
           ),
           ProgressBar(
-            barWidth: 240.w,
-            barHeight: 10.h,
             currentPercent: achievement.doneVal / achievement.maxToDoVal,
           ),
           SizedBox(
