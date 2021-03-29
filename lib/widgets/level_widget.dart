@@ -5,7 +5,12 @@ import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/providers/level.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
 
-class LevelWidget extends StatelessWidget {
+class LevelWidget extends StatefulWidget {
+  @override
+  _LevelWidgetState createState() => _LevelWidgetState();
+}
+
+class _LevelWidgetState extends State<LevelWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,7 +25,8 @@ class LevelWidget extends StatelessWidget {
               ),
         ),
         ProgressBar(
-          currentPercent: 4.5 / 10,
+          currentPercent: Provider.of<Level>(context).currentXP /
+              Provider.of<Level>(context).maxXP,
         ),
       ],
     );

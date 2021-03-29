@@ -5,7 +5,7 @@ class Level extends ChangeNotifier {
   int level = 1;
   int currentXP = 0;
   int clickXP = 1;
-  int dumplingXP = 6;
+  int dumplingXP = 500;
   static const defaultMaxXP = 500;
   int maxXP = defaultMaxXP;
   double xpMultiplier = 1;
@@ -19,18 +19,20 @@ class Level extends ChangeNotifier {
   void click() {
     currentXP += (clickXP * xpMultiplier).toInt();
     checkLevelup();
-    notifyListeners();
+    //notifyListeners();
   }
 
   void openDumpling() {
     currentXP += (dumplingXP * xpMultiplier).toInt();
     checkLevelup();
+    print('current XP: $currentXP \n maxXP: $maxXP');
   }
 
   void checkLevelup() {
     if (currentXP >= maxXP) {
       level++;
-      currentXP = currentXP - maxXP;
+      //currentXP = currentXP - maxXP;
+      currentXP = 1;
       calculateMaxXP();
     }
   }

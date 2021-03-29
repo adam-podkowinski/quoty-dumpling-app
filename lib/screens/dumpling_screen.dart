@@ -101,7 +101,7 @@ class _DumplingScreenState extends State<DumplingScreen>
             Padding(
               padding: EdgeInsets.fromLTRB(
                 SizeConfig.screenWidth * 0.05,
-                SizeConfig.screenWidth * 0.075,
+                SizeConfig.screenWidth * 0.05,
                 SizeConfig.screenWidth * 0.05,
                 0,
               ),
@@ -142,9 +142,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                     : DumplingScreenWhileClicking(),
               ),
             ),
-            Spacer(
-              flex: 2,
-            ),
+            Spacer(),
           ],
         ),
       ),
