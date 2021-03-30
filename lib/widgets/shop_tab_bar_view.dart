@@ -207,8 +207,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                     if (widget.item.actualPriceBills != 0)
                       buildPriceChip(
                         Text(
-                          _shopProvider
-                              .numberAbbreviation(widget.item.actualPriceBills),
+                          Shop.numberAbbreviation(widget.item.actualPriceBills),
                           textAlign: TextAlign.center,
                           style: Styles.kMoneyInShopItemTextStyle,
                         ),
@@ -220,7 +219,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                     if (widget.item.actualPriceDiamonds != 0)
                       buildPriceChip(
                         Text(
-                          _shopProvider.numberAbbreviation(
+                          Shop.numberAbbreviation(
                               widget.item.actualPriceDiamonds),
                           textAlign: TextAlign.center,
                           style: Styles.kMoneyInShopItemTextStyle,
@@ -246,8 +245,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                               ),
                             ),
                             Text(
-                              _shopProvider
-                                  .numberAbbreviation(widget.item.priceUSD),
+                              Shop.numberAbbreviation(widget.item.priceUSD),
                               style: Styles.kMoneyInShopItemTextStyle,
                             ),
                           ],

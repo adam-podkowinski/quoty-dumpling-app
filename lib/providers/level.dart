@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -5,39 +7,46 @@ class Level extends ChangeNotifier {
   int level = 1;
   int currentXP = 0;
   int clickXP = 1;
-  int dumplingXP = 500;
-  static const defaultMaxXP = 500;
+  int dumplingXP = 100;
+  static const int defaultMaxXP = 500;
   int maxXP = defaultMaxXP;
   double xpMultiplier = 1;
 
   Future fetchLevel() async {
     final prefs = await SharedPreferences.getInstance();
     level = prefs.getInt('level') ?? 1;
+    currentXP = prefs.getInt('currentXP') ?? 0;
+    clickXP = prefs.getInt('clickXP') ?? 1;
+    dumplingXP = prefs.getInt('dumplingXP') ?? 200;
+    xpMultiplier = prefs.getDouble('xpMultiplier') ?? 1.0;
     calculateMaxXP();
   }
 
-  void click() {
+  Future<void> click() async {
     currentXP += (clickXP * xpMultiplier).toInt();
-    checkLevelup();
-    //notifyListeners();
+    await checkLevelup();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('currentXP', currentXP);
   }
 
-  void openDumpling() {
+  Future<void> openDumpling() async {
     currentXP += (dumplingXP * xpMultiplier).toInt();
-    checkLevelup();
-    print('current XP: $currentXP \n maxXP: $maxXP');
+    await checkLevelup();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('currentXP', currentXP);
   }
 
-  void checkLevelup() {
+  Future<void> checkLevelup() async {
     if (currentXP >= maxXP) {
       level++;
-      //currentXP = currentXP - maxXP;
-      currentXP = 1;
+      currentXP = currentXP - maxXP;
       calculateMaxXP();
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('level', level);
     }
   }
 
   void calculateMaxXP() {
-    maxXP = defaultMaxXP * (level ^ 2);
+    maxXP = (defaultMaxXP * pow(level, 1.5)).toInt();
   }
 }

@@ -66,7 +66,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                   ),
                   Flexible(
                     child: AutoSizeText(
-                      _shopProvider.numberAbbreviation(_shopProvider.bills),
+                      Shop.numberAbbreviation(_shopProvider.bills),
                       maxLines: 1,
                       style: Styles.kMoneyTextStyle,
                     ),
@@ -80,8 +80,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                   children: <Widget>[
                     Flexible(
                       child: AutoSizeText(
-                        _shopProvider
-                            .numberAbbreviation(_shopProvider.diamonds),
+                        Shop.numberAbbreviation(_shopProvider.diamonds),
                         style: Styles.kMoneyTextStyle,
                         maxLines: 1,
                       ),

@@ -97,7 +97,7 @@ class Quotes extends ChangeNotifier {
 
     final prefs = await SharedPreferences.getInstance();
     _favoritesOnTop = prefs.getBool('favoritesOnTop') ?? false;
-    _sortOption = SortEnum.values[prefs.getInt('sortOption') ?? 1];
+    _sortOption = SortEnum.values[prefs.getInt('sortOption') ?? 0];
   }
 
   Quote unlockRandomQuote() {

@@ -102,7 +102,7 @@ class Shop extends ChangeNotifier {
     //_diamonds = 0;
   }
 
-  String numberAbbreviation(int number) {
+  static String numberAbbreviation(int number) {
     var nLen = number.toString().length;
     var text = '';
 

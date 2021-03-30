@@ -28,8 +28,7 @@ class ShopScreen extends StatelessWidget {
                   ),
                   Flexible(
                     child: AutoSizeText(
-                      Provider.of<Shop>(context)
-                          .numberAbbreviation(Provider.of<Shop>(context).bills),
+                      Shop.numberAbbreviation(Provider.of<Shop>(context).bills),
                       maxLines: 1,
                       style: Styles.kMoneyTextStyle,
                     ),
@@ -43,7 +42,7 @@ class ShopScreen extends StatelessWidget {
                   children: <Widget>[
                     Flexible(
                       child: AutoSizeText(
-                        Provider.of<Shop>(context).numberAbbreviation(
+                        Shop.numberAbbreviation(
                             Provider.of<Shop>(context).diamonds),
                         style: Styles.kMoneyTextStyle,
                         maxLines: 1,

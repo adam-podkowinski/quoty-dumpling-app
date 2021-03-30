@@ -1,22 +1,20 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/providers/level.dart';
+import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
 
-class LevelWidget extends StatefulWidget {
-  @override
-  _LevelWidgetState createState() => _LevelWidgetState();
-}
-
-class _LevelWidgetState extends State<LevelWidget> {
+class LevelWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final _levelProvider = Provider.of<Level>(context);
     return Column(
       children: [
         Text(
-          'Level ' + Provider.of<Level>(context).level.toString(),
+          'Level ' + _levelProvider.level.toString(),
           style: DefaultTextStyle.of(context).style.copyWith(
                 fontFamily: Styles.fontFamily,
                 fontWeight: FontWeight.bold,
@@ -24,9 +22,22 @@ class _LevelWidgetState extends State<LevelWidget> {
                 color: Styles.kTitleStyle.color,
               ),
         ),
-        ProgressBar(
-          currentPercent: Provider.of<Level>(context).currentXP /
-              Provider.of<Level>(context).maxXP,
+        Stack(
+          alignment: Alignment.center,
+          clipBehavior: Clip.none,
+          children: [
+            ProgressBar(
+              currentPercent: _levelProvider.currentXP / _levelProvider.maxXP,
+              barHeight: 20.h,
+            ),
+            Padding(
+              padding: EdgeInsets.all(10.w),
+              child: AutoSizeText(
+                '${Shop.numberAbbreviation(_levelProvider.currentXP)} / ${Shop.numberAbbreviation(_levelProvider.maxXP)}',
+                maxLines: 1,
+              ),
+            ),
+          ],
         ),
       ],
     );
