@@ -88,8 +88,8 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
           ),
         ),
         Container(
-          width: SizeConfig.screenWidth * .85,
-          height: SizeConfig.screenWidth * .85,
+          width: SizeConfig.screenWidth * .8,
+          height: SizeConfig.screenWidth * .8,
           child: AnimatedContainer(
             duration: Duration(milliseconds: 100),
             padding: _isPressed
