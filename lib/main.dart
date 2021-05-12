@@ -72,7 +72,7 @@ class QuotyDumplingApp extends StatelessWidget {
       ],
       child: ScreenUtilInit(
         designSize: currentSize,
-        child: MaterialApp(
+        builder: () => MaterialApp(
           theme: Styles.mainTheme,
           home: SafeArea(
             child: LoadingScreen(),
