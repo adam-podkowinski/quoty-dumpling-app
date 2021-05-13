@@ -14,9 +14,9 @@ class LevelWidget extends StatelessWidget {
     final _levelProvider = Provider.of<Level>(context);
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 500),
-      child: _levelProvider.level == 2
+      child: _levelProvider.levelRewards.isNotEmpty
           ? RoundedButton(
-              text: 'Achievements',
+              text: 'LEVEL UP',
               borderRadius: BorderRadius.circular(10.h),
               width: 100.w,
               height: 50.h,

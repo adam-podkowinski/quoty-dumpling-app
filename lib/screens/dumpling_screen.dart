@@ -161,7 +161,9 @@ class _DumplingScreenState extends State<DumplingScreen>
                 ),
               ),
             ),
-            Spacer(),
+            Spacer(
+              flex: 2,
+            ),
             FadeInAnimation(
               duration: Duration(milliseconds: 300),
               child: AnimatedSwitcher(
@@ -171,7 +173,9 @@ class _DumplingScreenState extends State<DumplingScreen>
                     : DumplingScreenWhileClicking(),
               ),
             ),
-            Spacer(),
+            Spacer(
+              flex: 3,
+            ),
           ],
         ),
       ),

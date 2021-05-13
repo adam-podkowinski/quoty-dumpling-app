@@ -24,6 +24,7 @@ class Level extends ChangeNotifier {
     clickXP = prefs.getInt('clickXP') ?? 1;
     dumplingXP = prefs.getInt('dumplingXP') ?? 200;
     xpMultiplier = prefs.getDouble('xpMultiplier') ?? 1.0;
+    _levelRewards = prefs.getStringList('levelRewards') ?? [];
     calculateMaxXP();
   }
 
@@ -46,8 +47,10 @@ class Level extends ChangeNotifier {
       level++;
       currentXP = currentXP - maxXP;
       calculateMaxXP();
+      _levelRewards.add('RARE');
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt('level', level);
+      await prefs.setStringList('levelRewards', _levelRewards);
     }
   }
 
