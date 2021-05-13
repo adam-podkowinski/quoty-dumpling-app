@@ -12,6 +12,11 @@ class Level extends ChangeNotifier {
   int maxXP = defaultMaxXP;
   double xpMultiplier = 1;
 
+  List<String> _levelRewards = [];
+  List<String> get levelRewards {
+    return [..._levelRewards];
+  }
+
   Future fetchLevel() async {
     final prefs = await SharedPreferences.getInstance();
     level = prefs.getInt('level') ?? 1;
