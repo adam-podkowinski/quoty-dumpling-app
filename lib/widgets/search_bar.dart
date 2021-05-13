@@ -70,10 +70,6 @@ class _SearchBarState extends State<SearchBar> {
               duration: Duration(milliseconds: 200),
               opacity: _controller.text != '' ? 1 : 0,
               child: GestureDetector(
-                child: Icon(
-                  Icons.cancel,
-                  color: Theme.of(context).backgroundColor,
-                ),
                 onTap: () {
                   if (_controller.text != '') {
                     setState(() {
@@ -93,6 +89,10 @@ class _SearchBarState extends State<SearchBar> {
                     });
                   }
                 },
+                child: Icon(
+                  Icons.cancel,
+                  color: Theme.of(context).backgroundColor,
+                ),
               ),
             ),
           ),

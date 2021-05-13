@@ -46,9 +46,9 @@ class _CollectionScreenState extends State<CollectionScreen> {
       floatingActionButton: _collectionSettings.showScrollFab
           ? FloatingActionButton(
               onPressed: () => _collectionSettings.scrollUp(),
-              child: Icon(Icons.arrow_upward),
               backgroundColor: Theme.of(context).buttonColor,
               splashColor: Theme.of(context).accentColor,
+              child: Icon(Icons.arrow_upward),
             )
           : null,
       body: DecoratedBox(

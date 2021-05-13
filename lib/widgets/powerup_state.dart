@@ -18,7 +18,6 @@ class _PowerupStateState extends State<PowerupState>
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     if (isInit == true) {
       controller = AnimationController(
@@ -38,8 +37,8 @@ class _PowerupStateState extends State<PowerupState>
 
   @override
   void dispose() {
-    super.dispose();
     controller!.dispose();
+    super.dispose();
   }
 
   @override

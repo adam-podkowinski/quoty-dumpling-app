@@ -46,10 +46,7 @@ class Achievements extends ChangeNotifier {
   }
 
   void update(DumplingProvider dumpling, Shop shop, level) {
-    if (_achievements != null &&
-        _achievements.isNotEmpty &&
-        dumpling != null &&
-        shop != null) {
+    if (_achievements.isNotEmpty) {
       bool? shouldUpdate = false;
       _achievements
         ..where((element) => !element.isDone)

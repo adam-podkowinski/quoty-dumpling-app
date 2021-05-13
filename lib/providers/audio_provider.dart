@@ -41,7 +41,7 @@ class AudioProvider extends ChangeNotifier {
   Future playBuyItem() async {
     if (_isMuted || _volume <= 0) return;
     await _audioCache.play(
-      'item_purchase.wav',
+      'item_purchase.mp3',
       mode: PlayerMode.LOW_LATENCY,
       volume: _volume,
     );

@@ -18,6 +18,48 @@ import 'package:quoty_dumpling_app/widgets/notification_chip.dart';
 import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
 import 'package:quoty_dumpling_app/widgets/unlocked_new_quote.dart';
 
+class AchievementsButton extends StatelessWidget {
+  const AchievementsButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        RoundedButton(
+          text: 'Achievements',
+          borderRadius: BorderRadius.circular(10.h),
+          width: 100.w,
+          height: 50.h,
+          textColor: Theme.of(context).backgroundColor,
+          color: Theme.of(context).accentColor,
+          onPressed: () => showDialog(
+            context: context,
+            builder: (ctx) => AchievementsDialog(),
+          ),
+        ),
+        if (context.watch<Achievements>().achievementsToReceive.isNotEmpty)
+          Positioned(
+            top: -10.w,
+            left: -10.w,
+            child: ScaleAnimation(
+              child: NotificationChip(
+                color: Theme.of(context).secondaryHeaderColor,
+                text: context
+                    .watch<Achievements>()
+                    .achievementsToReceive
+                    .length
+                    .toString(),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
 class DumplingScreen extends StatefulWidget {
   @override
   _DumplingScreenState createState() => _DumplingScreenState();
@@ -28,21 +70,6 @@ class _DumplingScreenState extends State<DumplingScreen>
   late var _dumplingProvider;
   late var _shopProvider;
   var _isInit = true;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      _dumplingProvider = Provider.of<DumplingProvider>(context)
-        ..addListener(() {
-          if (_dumplingProvider.isFull) {
-            _dumplingProvider.clearClickingProgressWhenFull();
-          }
-        });
-      _shopProvider = Provider.of<Shop>(context);
-      _isInit = false;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,10 +137,12 @@ class _DumplingScreenState extends State<DumplingScreen>
                   children: [
                     Flexible(
                       flex: 1,
+                      fit: FlexFit.tight,
                       child: LevelWidget(),
                     ),
                     Flexible(
                       flex: 1,
+                      fit: FlexFit.tight,
                       child: IconButton(
                         onPressed: () => showDialog(
                           context: context,
@@ -125,6 +154,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                     ),
                     Flexible(
                       flex: 1,
+                      fit: FlexFit.tight,
                       child: AchievementsButton(),
                     ),
                   ],
@@ -147,46 +177,19 @@ class _DumplingScreenState extends State<DumplingScreen>
       ),
     );
   }
-}
-
-class AchievementsButton extends StatelessWidget {
-  const AchievementsButton({
-    Key? key,
-  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        RoundedButton(
-          text: 'Achievements',
-          borderRadius: BorderRadius.circular(10.h),
-          width: 100.w,
-          height: 50.h,
-          textColor: Theme.of(context).backgroundColor,
-          color: Theme.of(context).accentColor,
-          onPressed: () => showDialog(
-            context: context,
-            builder: (ctx) => AchievementsDialog(),
-          ),
-        ),
-        if (context.watch<Achievements>().achievementsToReceive.isNotEmpty)
-          Positioned(
-            top: -10.w,
-            left: -10.w,
-            child: ScaleAnimation(
-              child: NotificationChip(
-                color: Theme.of(context).secondaryHeaderColor,
-                text: context
-                    .watch<Achievements>()
-                    .achievementsToReceive
-                    .length
-                    .toString(),
-              ),
-            ),
-          ),
-      ],
-    );
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      _dumplingProvider = Provider.of<DumplingProvider>(context)
+        ..addListener(() {
+          if (_dumplingProvider.isFull) {
+            _dumplingProvider.clearClickingProgressWhenFull();
+          }
+        });
+      _shopProvider = Provider.of<Shop>(context);
+      _isInit = false;
+    }
   }
 }

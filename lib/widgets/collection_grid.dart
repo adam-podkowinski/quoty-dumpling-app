@@ -92,11 +92,11 @@ class _CollectionGridState extends State<CollectionGrid>
                       (e) => _quotesProvider.addToUnlockedFromNew(),
                     );
               },
+              color: Theme.of(context).accentColor.withOpacity(.8),
               child: Text(
                 'OK',
                 style: Styles.kSettingsTextStyle,
               ),
-              color: Theme.of(context).accentColor.withOpacity(.8),
             ),
             SizedBox(width: 5),
             Flexible(

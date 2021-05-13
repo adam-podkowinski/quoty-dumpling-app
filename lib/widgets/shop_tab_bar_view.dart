@@ -271,7 +271,6 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                             ),
                             child: AnimatedBuilder(
                               animation: _iconColorAnim,
-                              child: Icon(Icons.add),
                               builder: (_, ch) => IconButton(
                                 icon: ch!,
                                 color: _iconColorAnim.value,
@@ -287,6 +286,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                                   }
                                 },
                               ),
+                              child: Icon(Icons.add),
                             ),
                           ),
                         );

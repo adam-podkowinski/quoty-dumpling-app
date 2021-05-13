@@ -35,8 +35,8 @@ class CustomAppBar extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Align(
-              child: prefix,
               alignment: Alignment.centerLeft,
+              child: prefix,
             ),
           ),
           Center(
@@ -47,8 +47,8 @@ class CustomAppBar extends StatelessWidget {
           ),
           Expanded(
             child: Align(
-              child: suffix,
               alignment: Alignment.centerRight,
+              child: suffix,
             ),
           ),
         ],

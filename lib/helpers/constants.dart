@@ -11,10 +11,21 @@ class Styles {
 
   static final double? _screenWidth = SizeConfig.screenWidth;
 
+  //@TODO: use ColorScheme
   static final ThemeData mainTheme = ThemeData(
     fontFamily: 'SofiaPro',
     primaryColor: Color(0xffFFA259),
     accentColor: Color(0xffFF7860),
+    colorScheme: ColorScheme.light(
+      primary: Color(0xffFFA259),
+      secondary: Color(0xffFF7860),
+      background: Color(0xffFFEBCC),
+      surface: Color(0xff91bd3a),
+      onBackground: Color(0xff3A2E39),
+      onSurface: Color(0xff3A2E39),
+      onSecondary: appBarTextColor,
+      onPrimary: appBarTextColor,
+    ),
     buttonColor: Color(0xffFED766),
     secondaryHeaderColor: Color(0xff91bd3a),
     backgroundColor: Color(0xffFFEBCC),

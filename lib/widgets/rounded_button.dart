@@ -25,13 +25,19 @@ class RoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return ElevatedButton(
       onPressed: onPressed as void Function()?,
-      shape: RoundedRectangleBorder(
-        borderRadius: borderRadius,
+      style: ButtonStyle(
+        backgroundColor:
+            MaterialStateProperty.all(color ?? Theme.of(context).buttonColor),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: borderRadius,
+          ),
+        ),
+        padding: MaterialStateProperty.all(
+            EdgeInsets.symmetric(vertical: 2.h, horizontal: 10.w)),
       ),
-      color: color ?? Theme.of(context).buttonColor,
-      padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 10.w),
       child: SizedBox(
         width: width,
         height: height,

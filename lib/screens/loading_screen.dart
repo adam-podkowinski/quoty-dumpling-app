@@ -42,6 +42,12 @@ class _LoadingScreenState extends State<LoadingScreen>
   var _isInit = true;
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     _controller = AnimationController(
