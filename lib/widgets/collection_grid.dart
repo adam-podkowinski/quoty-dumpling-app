@@ -17,12 +17,12 @@ class CollectionGrid extends StatefulWidget {
 
 class _CollectionGridState extends State<CollectionGrid>
     with SingleTickerProviderStateMixin {
-  Quotes _quotesProvider;
-  Function _disposeController;
+  late Quotes _quotesProvider;
+  late Function _disposeController;
   var _isInit = true;
 
-  AnimationController _controller;
-  Animation _newQuotesAnimation;
+  late AnimationController _controller;
+  late Animation _newQuotesAnimation;
 
   @override
   void initState() {
@@ -58,7 +58,7 @@ class _CollectionGridState extends State<CollectionGrid>
   }
 
   Widget _buildNewQuotesTopDivider() => ScaleTransition(
-        scale: _newQuotesAnimation,
+        scale: _newQuotesAnimation as Animation<double>,
         child: Row(
           children: <Widget>[
             Flexible(
@@ -115,17 +115,17 @@ class _CollectionGridState extends State<CollectionGrid>
     return Expanded(
       child: Padding(
         padding: EdgeInsets.fromLTRB(
-          SizeConfig.screenWidth * 0.0234,
-          SizeConfig.screenWidth * 0.0234,
-          SizeConfig.screenWidth * 0.0234,
+          SizeConfig.screenWidth! * 0.0234,
+          SizeConfig.screenWidth! * 0.0234,
+          SizeConfig.screenWidth! * 0.0234,
           0,
         ),
         child: _quotesProvider.visibleQuotes.isNotEmpty ||
                 _quotesProvider.newQuotes.isNotEmpty
             ? StaggeredGridView.countBuilder(
                 crossAxisCount: 2,
-                mainAxisSpacing: SizeConfig.screenWidth * 0.0268,
-                crossAxisSpacing: SizeConfig.screenWidth * 0.0268,
+                mainAxisSpacing: SizeConfig.screenWidth! * 0.0268,
+                crossAxisSpacing: SizeConfig.screenWidth! * 0.0268,
                 controller:
                     Provider.of<CollectionSettings>(context).scrollController,
 
@@ -164,7 +164,7 @@ class _CollectionGridState extends State<CollectionGrid>
                         } else if (index ==
                             _quotesProvider.newQuotes.length + 1) {
                           return ScaleTransition(
-                            scale: _newQuotesAnimation,
+                            scale: _newQuotesAnimation as Animation<double>,
                             child: Divider(
                               thickness: 3,
                               color: Theme.of(context).accentColor,
@@ -215,10 +215,10 @@ class GridCell extends StatefulWidget {
 
 class _GridCellState extends State<GridCell>
     with SingleTickerProviderStateMixin {
-  Quotes _quotesProvider;
+  late Quotes _quotesProvider;
   var _isInit = true;
-  Animation<double> _inOutAnimation;
-  AnimationController _controller;
+  late Animation<double> _inOutAnimation;
+  AnimationController? _controller;
 
   final heartColor = Color(0xfffa4252);
 
@@ -234,7 +234,7 @@ class _GridCellState extends State<GridCell>
       end: .1,
     ).animate(
       CurvedAnimation(
-        parent: _controller,
+        parent: _controller!,
         curve: Curves.easeIn,
       ),
     );
@@ -242,7 +242,7 @@ class _GridCellState extends State<GridCell>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     _controller = null;
     super.dispose();
   }
@@ -254,8 +254,8 @@ class _GridCellState extends State<GridCell>
           _quotesProvider.visibleQuotes.indexOf(widget.quote),
         ) &&
         _controller != null) {
-      _controller.forward().then(
-            (_) => _controller.reverse(),
+      _controller!.forward().then(
+            (_) => _controller!.reverse(),
           );
     }
   }
@@ -288,7 +288,7 @@ class _GridCellState extends State<GridCell>
               elevation: 5,
               shape: RoundedRectangleBorder(
                 borderRadius:
-                    BorderRadius.circular(SizeConfig.screenWidth * 0.0381),
+                    BorderRadius.circular(SizeConfig.screenWidth! * 0.0381),
               ),
               clipBehavior: Clip.antiAlias,
               child: Column(
@@ -298,7 +298,7 @@ class _GridCellState extends State<GridCell>
                     flex: 3,
                     child: Container(
                       padding: EdgeInsets.all(
-                        SizeConfig.screenWidth * .022,
+                        SizeConfig.screenWidth! * .022,
                       ),
                       color: Theme.of(context).backgroundColor,
                       child: Center(
@@ -307,7 +307,7 @@ class _GridCellState extends State<GridCell>
                           minFontSize: 1,
                           textAlign: TextAlign.justify,
                           style: Styles.kQuoteStyle.copyWith(
-                              fontSize: SizeConfig.screenWidth * .045),
+                              fontSize: SizeConfig.screenWidth! * .045),
                         ),
                       ),
                     ),
@@ -331,7 +331,7 @@ class _GridCellState extends State<GridCell>
                           onTap: () => setState(() {
                             widget.quote.changeFavorite();
 
-                            if (_quotesProvider.favoritesOnTop) {
+                            if (_quotesProvider.favoritesOnTop!) {
                               _quotesProvider.sortCollection(true);
                             }
                           }),
@@ -347,8 +347,8 @@ class _GridCellState extends State<GridCell>
                           style: TextStyle(
                             fontFamily: Styles.fontFamily,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).textTheme.headline6.color,
-                            fontSize: SizeConfig.screenWidth * .035,
+                            color: Theme.of(context).textTheme.headline6!.color,
+                            fontSize: SizeConfig.screenWidth! * .035,
                           ),
                         ),
                         subtitle: Text(
@@ -356,8 +356,8 @@ class _GridCellState extends State<GridCell>
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontFamily: Styles.fontFamily,
-                            color: Theme.of(context).textTheme.headline6.color,
-                            fontSize: SizeConfig.screenWidth * .035,
+                            color: Theme.of(context).textTheme.headline6!.color,
+                            fontSize: SizeConfig.screenWidth! * .035,
                           ),
                         ),
                         backgroundColor: widget.quote.rarityColor(context),

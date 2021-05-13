@@ -25,8 +25,8 @@ class DumplingScreen extends StatefulWidget {
 
 class _DumplingScreenState extends State<DumplingScreen>
     with TickerProviderStateMixin {
-  var _dumplingProvider;
-  var _shopProvider;
+  late var _dumplingProvider;
+  late var _shopProvider;
   var _isInit = true;
 
   @override
@@ -62,7 +62,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                   Icon(
                     Icons.attach_money,
                     color: Theme.of(context).secondaryHeaderColor,
-                    size: SizeConfig.screenWidth * 0.063,
+                    size: SizeConfig.screenWidth! * 0.063,
                   ),
                   Flexible(
                     child: AutoSizeText(
@@ -91,7 +91,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                     Icon(
                       CustomIcons.diamond,
                       color: Colors.blue,
-                      size: SizeConfig.screenWidth * 0.05,
+                      size: SizeConfig.screenWidth! * 0.05,
                     ),
                   ],
                 ),
@@ -99,9 +99,9 @@ class _DumplingScreenState extends State<DumplingScreen>
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(
-                SizeConfig.screenWidth * 0.05,
-                SizeConfig.screenWidth * 0.05,
-                SizeConfig.screenWidth * 0.05,
+                SizeConfig.screenWidth! * 0.05,
+                SizeConfig.screenWidth! * 0.05,
+                SizeConfig.screenWidth! * 0.05,
                 0,
               ),
               child: SlideAnimation(
@@ -151,7 +151,7 @@ class _DumplingScreenState extends State<DumplingScreen>
 
 class AchievementsButton extends StatelessWidget {
   const AchievementsButton({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

@@ -13,23 +13,23 @@ class Shop extends ChangeNotifier {
   int _billsPerClick = 1;
   double _cashMultiplierOnOpening = 1.5;
 
-  int _billsOnOpening;
+  int? _billsOnOpening;
   int get bills => _bills;
-  int get billsOnOpening => _billsOnOpening;
+  int? get billsOnOpening => _billsOnOpening;
   int get billsPerClick => _billsPerClick;
   int get diamonds => _diamonds;
 
   void receiveAchievement(Achievement a) {
-    _bills += a.billsReward;
-    _diamonds += a.diamondsReward;
+    _bills += a.billsReward!;
+    _diamonds += a.diamondsReward!;
     notifyListeners();
   }
 
   void buyItem(ShopItem item, context) {
-    if (item.actualPriceBills <= _bills &&
-        item.actualPriceDiamonds <= _diamonds) {
-      _bills -= item.actualPriceBills;
-      _diamonds -= item.actualPriceDiamonds;
+    if (item.actualPriceBills! <= _bills &&
+        item.actualPriceDiamonds! <= _diamonds) {
+      _bills -= item.actualPriceBills!;
+      _diamonds -= item.actualPriceDiamonds!;
 
       item.buyItem(context);
 
@@ -71,8 +71,8 @@ class Shop extends ChangeNotifier {
         return false;
       }
     }
-    if (item.actualPriceBills > _bills ||
-        item.actualPriceDiamonds > _diamonds) {
+    if (item.actualPriceBills! > _bills ||
+        item.actualPriceDiamonds! > _diamonds) {
       return false;
     } else {
       return true;
@@ -102,7 +102,7 @@ class Shop extends ChangeNotifier {
     //_diamonds = 0;
   }
 
-  static String numberAbbreviation(int number) {
+  static String numberAbbreviation(int? number) {
     var nLen = number.toString().length;
     var text = '';
 
@@ -137,9 +137,9 @@ class Shop extends ChangeNotifier {
   }
 
   void openDumpling() {
-    _bills += _billsOnOpening;
+    _bills += _billsOnOpening!;
     _diamonds += 20;
-    WidgetsBinding.instance.addPostFrameCallback(
+    WidgetsBinding.instance!.addPostFrameCallback(
       (_) => notifyListeners(),
     );
 

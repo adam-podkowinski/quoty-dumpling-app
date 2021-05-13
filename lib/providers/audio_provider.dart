@@ -58,8 +58,8 @@ class AudioProvider extends ChangeNotifier {
     _loopPlayer.setVolume(_volume / backgroundVolDivider);
   }
 
-  static void stopLoopAudio() {
-    _loopPlayer.stop();
+  static Future stopLoopAudio() async {
+    await _loopPlayer.stop();
   }
 
   Future initAudio() async {

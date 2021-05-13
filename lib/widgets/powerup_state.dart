@@ -12,8 +12,8 @@ class PowerupState extends StatefulWidget {
 
 class _PowerupStateState extends State<PowerupState>
     with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  ShopItems itemsProvider;
+  AnimationController? controller;
+  late ShopItems itemsProvider;
   bool isInit = true;
 
   @override
@@ -27,7 +27,7 @@ class _PowerupStateState extends State<PowerupState>
           seconds: 1,
         ),
         value: Provider.of<ShopItems>(context, listen: false)
-            .currentPowerup
+            .currentPowerup!
             .fractionToLast,
       );
 
@@ -39,12 +39,12 @@ class _PowerupStateState extends State<PowerupState>
   @override
   void dispose() {
     super.dispose();
-    controller.dispose();
+    controller!.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    controller.animateBack(itemsProvider.currentPowerup?.fractionToLast ?? 0);
+    controller!.animateBack(itemsProvider.currentPowerup?.fractionToLast ?? 0);
     var outerCircleRadius = 20.w;
     return Stack(
       alignment: Alignment.center,
@@ -53,8 +53,8 @@ class _PowerupStateState extends State<PowerupState>
           width: outerCircleRadius,
           height: outerCircleRadius,
           child: AnimatedBuilder(
-            animation: controller,
-            builder: (BuildContext context, Widget child) {
+            animation: controller!,
+            builder: (BuildContext context, Widget? child) {
               return CustomPaint(
                 painter: PowerupStatePainter(
                   animation: controller,
@@ -90,27 +90,27 @@ class PowerupStatePainter extends CustomPainter {
     this.color,
   }) : super(repaint: animation);
 
-  final Animation<double> animation;
-  final Color backgroundColor, color;
+  final Animation<double>? animation;
+  final Color? backgroundColor, color;
 
   @override
   void paint(Canvas canvas, Size size) {
     var outerCircleRadius = 20.w;
     var paint = Paint()
-      ..color = backgroundColor
+      ..color = backgroundColor!
       ..strokeWidth = outerCircleRadius
       ..strokeCap = StrokeCap.butt
       ..style = PaintingStyle.stroke;
 
     canvas.drawCircle(size.center(Offset.zero), size.width / 2.0, paint);
-    paint.color = color;
-    var progress = (1.0 - animation.value) * 2 * math.pi;
+    paint.color = color!;
+    var progress = (1.0 - animation!.value) * 2 * math.pi;
     canvas.drawArc(Offset.zero & size, math.pi * 1.5, -progress, false, paint);
   }
 
   @override
   bool shouldRepaint(PowerupStatePainter old) {
-    return animation.value != old.animation.value ||
+    return animation!.value != old.animation!.value ||
         color != old.color ||
         backgroundColor != old.backgroundColor;
   }

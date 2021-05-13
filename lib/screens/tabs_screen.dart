@@ -17,7 +17,7 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   var _isInit = true;
 
-  Tabs _tabsProvider;
+  late Tabs _tabsProvider;
 
   void _selectPage(int index) {
     if (index != 1) {
@@ -58,9 +58,9 @@ class _TabsScreenState extends State<TabsScreen> {
           iconColor: Theme.of(context).primaryColor,
           labelColor: Theme.of(context).primaryColor,
           selectedIconColor:
-              Theme.of(context).appBarTheme.textTheme.headline6.color,
+              Theme.of(context).appBarTheme.textTheme!.headline6!.color!,
           selectedLabelColor:
-              Theme.of(context).appBarTheme.textTheme.headline6.color,
+              Theme.of(context).appBarTheme.textTheme!.headline6!.color!,
           showLabel: true,
           items: [
             TabInfo(

@@ -19,7 +19,7 @@ class ListElement extends StatefulWidget {
   final value;
 
   ListElement({
-    @required this.value,
+    required this.value,
   });
 
   @override
@@ -90,17 +90,17 @@ class _AchievementsDialog extends State<AchievementsDialog> {
 
 class _ListElementState extends State<ListElement> {
   bool _isInit = true;
-  Achievements achievementsProvider;
-  Achievement achievement;
-  String title;
-  String description;
+  late Achievements achievementsProvider;
+  late Achievement achievement;
+  String? title;
+  String? description;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: widget.value != 3
           ? EdgeInsets.only(
-              bottom: SizeConfig.screenWidth * .006, left: 10.w, right: 10.w)
+              bottom: SizeConfig.screenWidth! * .006, left: 10.w, right: 10.w)
           : EdgeInsets.all(0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -147,7 +147,7 @@ class _ListElementState extends State<ListElement> {
             ],
           ),
           ProgressBar(
-            currentPercent: achievement.doneVal / achievement.maxToDoVal,
+            currentPercent: achievement.doneVal! / achievement.maxToDoVal!,
           ),
           SizedBox(
             height: 5.h,

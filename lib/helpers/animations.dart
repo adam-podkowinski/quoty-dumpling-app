@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'constants.dart';
 
-Animatable<Color> runningPowerupColor(context) => TweenSequence<Color>(
+Animatable<Color?> runningPowerupColor(context) => TweenSequence<Color?>(
       [
         TweenSequenceItem(
           weight: 1.0,

@@ -28,7 +28,7 @@ class Achievements extends ChangeNotifier {
   ) async {
     print('fetching achievements');
 
-    List<dynamic> content;
+    List<dynamic>? content;
 
     content = jsonDecode(
       await rootBundle.loadString('assets/achievements/achievements.json'),
@@ -37,7 +37,7 @@ class Achievements extends ChangeNotifier {
     _achievements.clear();
 
     _achievements.addAll(
-      content.map(
+      content!.map(
         (e) => Achievement(e),
       ),
     );
@@ -50,22 +50,22 @@ class Achievements extends ChangeNotifier {
         _achievements.isNotEmpty &&
         dumpling != null &&
         shop != null) {
-      var shouldUpdate = false;
+      bool? shouldUpdate = false;
       _achievements
         ..where((element) => !element.isDone)
         ..toList()
         ..forEach((achievement) {
-          bool finished = achievementFunctions[achievement.id](
+          bool? finished = achievementFunctions[achievement.id!]!(
               achievement, dumpling, shop, level);
 
-          if (!shouldUpdate) shouldUpdate = finished;
+          if (!shouldUpdate!) shouldUpdate = finished;
         });
 
-      if (shouldUpdate) notifyListeners();
+      if (shouldUpdate!) notifyListeners();
     }
   }
 
-  void receiveReward(String id, BuildContext context) {
+  void receiveReward(String? id, BuildContext context) {
     _achievements.firstWhere((a) => a.id == id).receiveReward(context);
     notifyListeners();
   }

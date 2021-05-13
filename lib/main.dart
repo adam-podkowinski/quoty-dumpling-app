@@ -25,7 +25,7 @@ void main() {
       child: QuotyDumplingApp(),
     ),
   );
-  WidgetsBinding.instance.addObserver(_Handler());
+  WidgetsBinding.instance!.addObserver(_Handler());
 }
 
 class QuotyDumplingApp extends StatelessWidget {
@@ -58,7 +58,7 @@ class QuotyDumplingApp extends StatelessWidget {
           create: (_) => Level(),
         ),
         ChangeNotifierProxyProvider3<DumplingProvider, Shop, Level,
-            Achievements>(
+            Achievements?>(
           create: (_) => Achievements(),
           update: (
             _,
@@ -66,8 +66,10 @@ class QuotyDumplingApp extends StatelessWidget {
             shop,
             level,
             achievements,
-          ) =>
-              achievements..update(dumpling, shop, level),
+          ) {
+            achievements?.update(dumpling, shop, level);
+            return achievements;
+          },
         ),
       ],
       child: ScreenUtilInit(

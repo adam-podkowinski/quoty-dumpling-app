@@ -18,8 +18,8 @@ class CollectionScreen extends StatefulWidget {
 }
 
 class _CollectionScreenState extends State<CollectionScreen> {
-  Quotes _quotesProvider;
-  CollectionSettings _collectionSettings;
+  late Quotes _quotesProvider;
+  late CollectionSettings _collectionSettings;
   var _isInit = true;
 
   @override
@@ -83,8 +83,8 @@ class _CollectionScreenState extends State<CollectionScreen> {
                     child: FadeInAnimation(
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(
-                          SizeConfig.screenWidth * 0.03,
-                          SizeConfig.screenWidth * 0.05,
+                          SizeConfig.screenWidth! * 0.03,
+                          SizeConfig.screenWidth! * 0.05,
                           0,
                           0,
                         ),
@@ -115,7 +115,7 @@ class NothingInCollectionWidget extends StatelessWidget {
       child: SlideAnimation(
         verticalOffset: 50.0,
         child: Padding(
-          padding: EdgeInsets.all(SizeConfig.screenWidth * 0.08),
+          padding: EdgeInsets.all(SizeConfig.screenWidth! * 0.08),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -125,21 +125,21 @@ class NothingInCollectionWidget extends StatelessWidget {
                 'You haven\'t unlocked any quotes yet!',
                 textAlign: TextAlign.center,
                 style: Styles.kTitleStyle
-                    .copyWith(fontSize: SizeConfig.screenWidth * 0.07),
+                    .copyWith(fontSize: SizeConfig.screenWidth! * 0.07),
               ),
-              SizedBox(height: SizeConfig.screenWidth * 0.03),
+              SizedBox(height: SizeConfig.screenWidth! * 0.03),
               Text(
                 'Go and eat your dumplings!',
                 textAlign: TextAlign.center,
                 style: Styles.kAuthorStyle,
               ),
-              SizedBox(height: SizeConfig.screenWidth * 0.03),
+              SizedBox(height: SizeConfig.screenWidth! * 0.03),
               RoundedButton(
                 onPressed: () =>
                     Provider.of<Tabs>(context, listen: false).navigateToPage(1),
                 text: 'Open Dumplings!',
-                textColor: Theme.of(context).textTheme.headline6.color,
-                width: SizeConfig.screenWidth * 0.5,
+                textColor: Theme.of(context).textTheme.headline6!.color,
+                width: SizeConfig.screenWidth! * 0.5,
               ),
             ],
           ),

@@ -24,18 +24,18 @@ abstract class LabeledItem extends ShopItem {
 }
 
 abstract class ShopItem {
-  String name;
-  String description;
-  int defaultPriceBills;
-  int defaultPriceDiamonds;
-  int priceUSD;
-  String id;
-  IconType iconType;
-  Function onBuyFunction;
-  UseCase useCase;
+  String? name;
+  String? description;
+  int? defaultPriceBills;
+  int? defaultPriceDiamonds;
+  int? priceUSD;
+  String? id;
+  IconType? iconType;
+  late Function onBuyFunction;
+  UseCase? useCase;
 
-  int actualPriceBills;
-  int actualPriceDiamonds;
+  int? actualPriceBills;
+  int? actualPriceDiamonds;
 
   factory ShopItem.fromItemType(Map<String, dynamic> map) {
     switch (map['type']) {
@@ -80,7 +80,7 @@ abstract class ShopItem {
     }
   }
 
-  static UseCase useCaseFromString(String uType) {
+  static UseCase useCaseFromString(String? uType) {
     switch (uType) {
       case 'clickMultiplier':
         return UseCase.CLICK_MULTIPLIER;
@@ -91,7 +91,7 @@ abstract class ShopItem {
     }
   }
 
-  static IconType iconTypeFromString(String iType) {
+  static IconType iconTypeFromString(String? iType) {
     switch (iType) {
       case 'clickMultiplier':
         return IconType.CLICKS;

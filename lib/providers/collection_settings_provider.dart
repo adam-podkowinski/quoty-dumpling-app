@@ -18,8 +18,8 @@ class CollectionSettings extends ChangeNotifier {
   Map<String, dynamic> get selectedOptions => _selectedOptions;
   Map<String, dynamic> _savedOptions = {};
 
-  ScrollController _scrollController;
-  ScrollController get scrollController {
+  ScrollController? _scrollController;
+  ScrollController? get scrollController {
     if (_scrollController != null) {
       return _scrollController;
     } else {
@@ -35,10 +35,10 @@ class CollectionSettings extends ChangeNotifier {
     _showScrollFab = false;
     _scrollController = ScrollController()
       ..addListener(() {
-        if (_scrollController.offset > 300 && !_showScrollFab) {
+        if (_scrollController!.offset > 300 && !_showScrollFab) {
           _showScrollFab = true;
           notifyListeners();
-        } else if (_scrollController.offset < 300 && _showScrollFab) {
+        } else if (_scrollController!.offset < 300 && _showScrollFab) {
           _showScrollFab = false;
           notifyListeners();
         }
@@ -52,9 +52,9 @@ class CollectionSettings extends ChangeNotifier {
     }
   }
 
-  void disposeScrollController() => _scrollController.dispose();
+  void disposeScrollController() => _scrollController!.dispose();
 
-  void scrollUp() => _scrollController.animateTo(0,
+  void scrollUp() => _scrollController!.animateTo(0,
       duration: Duration(milliseconds: 400), curve: Curves.easeIn);
 
   Future<void> initOptions() async {
@@ -90,7 +90,7 @@ class CollectionSettings extends ChangeNotifier {
     );
   }
 
-  void changeSelectedFavoritesOnTop(bool val) {
+  void changeSelectedFavoritesOnTop(bool? val) {
     _selectedOptions['favoritesOnTop'] = val;
     notifyListeners();
   }

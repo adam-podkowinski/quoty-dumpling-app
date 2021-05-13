@@ -13,7 +13,7 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   final TextEditingController _controller = TextEditingController();
 
-  Quotes _quotesProvider;
+  late Quotes _quotesProvider;
 
   var _isInit = true;
 
@@ -56,7 +56,7 @@ class _SearchBarState extends State<SearchBar> {
               prefixIcon: Icon(
                 Icons.search,
                 color: Theme.of(context).backgroundColor,
-                size: SizeConfig.screenWidth * 0.07,
+                size: SizeConfig.screenWidth! * 0.07,
               ),
               hintStyle: Styles.kSearchBarTextStyle,
               labelStyle: Styles.kSearchBarTextStyle,
@@ -65,7 +65,7 @@ class _SearchBarState extends State<SearchBar> {
             ),
           ),
           Positioned(
-            right: SizeConfig.screenWidth * .02546296,
+            right: SizeConfig.screenWidth! * .02546296,
             child: AnimatedOpacity(
               duration: Duration(milliseconds: 200),
               opacity: _controller.text != '' ? 1 : 0,
@@ -79,7 +79,7 @@ class _SearchBarState extends State<SearchBar> {
                     setState(() {
                       FocusScope.of(context).unfocus();
                       //error which is a flutter's fault.. .have to use this kind of workaround
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                      WidgetsBinding.instance!.addPostFrameCallback((_) {
                         _controller.clear();
                         _quotesProvider.searchCollection(_controller.text);
 

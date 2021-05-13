@@ -16,7 +16,7 @@ class QuoteDetails extends StatefulWidget {
 }
 
 class _QuoteDetailsState extends State<QuoteDetails> {
-  Quotes _quotesProvider;
+  late Quotes _quotesProvider;
   final _heartColor = Color(0xfffa4252);
   var _isInit = true;
 
@@ -53,7 +53,7 @@ class _QuoteDetailsState extends State<QuoteDetails> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.all(SizeConfig.screenWidth * 0.06),
+                padding: EdgeInsets.all(SizeConfig.screenWidth! * 0.06),
                 child: Center(
                   child: Text(
                     widget.quote.quote,
@@ -74,7 +74,7 @@ class _QuoteDetailsState extends State<QuoteDetails> {
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(SizeConfig.screenWidth * 0.03),
+                  padding: EdgeInsets.all(SizeConfig.screenWidth! * 0.03),
                   child: Row(
                     children: <Widget>[
                       Align(
@@ -119,7 +119,7 @@ class _QuoteDetailsState extends State<QuoteDetails> {
                               height: 5,
                             ),
                             Text(
-                              'Unlocking day: ${DateFormat('d | M | y').format(widget.quote.unlockingTime)}',
+                              'Unlocking day: ${DateFormat('d | M | y').format(widget.quote.unlockingTime!)}',
                               style: Styles.kSettingsTextStyle,
                             ),
                           ],

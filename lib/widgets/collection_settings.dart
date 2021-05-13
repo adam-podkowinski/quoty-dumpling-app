@@ -12,7 +12,7 @@ class SettingsIcon extends StatelessWidget {
     return IconButton(
       icon: Icon(
         Icons.settings,
-        color: Theme.of(context).appBarTheme.textTheme.headline6.color,
+        color: Theme.of(context).appBarTheme.textTheme!.headline6!.color,
       ),
       onPressed: () => showDialog(
         context: context,
@@ -28,8 +28,8 @@ class SettingsDialog extends StatefulWidget {
 }
 
 class _SettingsDialogState extends State<SettingsDialog> {
-  final _padding = SizeConfig.screenWidth * .035;
-  CollectionSettings _collectionSettingsProvider;
+  final _padding = SizeConfig.screenWidth! * .035;
+  late CollectionSettings _collectionSettingsProvider;
   var _isInit = true;
 
   @override
@@ -76,8 +76,8 @@ class _SettingsDialogState extends State<SettingsDialog> {
                 Divider(
                   color: Theme.of(context).accentColor,
                   thickness: 2,
-                  endIndent: SizeConfig.screenWidth * .05092,
-                  indent: SizeConfig.screenWidth * .05092,
+                  endIndent: SizeConfig.screenWidth! * .05092,
+                  indent: SizeConfig.screenWidth! * .05092,
                 ),
                 SizedBox(
                   height: SizeConfig.screenHeight * .01,
@@ -127,7 +127,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
                       },
                       color: Theme.of(context).secondaryHeaderColor,
                       textColor: Theme.of(context).backgroundColor,
-                      width: SizeConfig.screenWidth * .2546,
+                      width: SizeConfig.screenWidth! * .2546,
                     ),
                     Spacer(),
                     RoundedButton(
@@ -135,7 +135,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      width: SizeConfig.screenWidth * .2546,
+                      width: SizeConfig.screenWidth! * .2546,
                       color: Theme.of(context).errorColor,
                       textColor: Theme.of(context).backgroundColor,
                     ),
@@ -155,7 +155,7 @@ class ListElement extends StatefulWidget {
   final value;
 
   ListElement({
-    @required this.value,
+    required this.value,
   });
 
   @override
@@ -164,9 +164,9 @@ class ListElement extends StatefulWidget {
 
 class _ListElementState extends State<ListElement> {
   bool _isInit = true;
-  CollectionSettings collectionSettingsProvider;
-  var title;
-  var subtitle;
+  late CollectionSettings collectionSettingsProvider;
+  late var title;
+  late var subtitle;
 
   @override
   void didChangeDependencies() {
@@ -185,14 +185,14 @@ class _ListElementState extends State<ListElement> {
   Widget build(BuildContext context) {
     return Padding(
       padding: widget.value != 3
-          ? EdgeInsets.only(bottom: SizeConfig.screenWidth * .006)
+          ? EdgeInsets.only(bottom: SizeConfig.screenWidth! * .006)
           : EdgeInsets.all(0),
       child: RadioListTile(
         value: widget.value,
         activeColor: Theme.of(context).accentColor,
         groupValue:
             collectionSettingsProvider.selectedOptions['sortOption'].index,
-        onChanged: (val) =>
+        onChanged: (dynamic val) =>
             collectionSettingsProvider.changeSelectedSortOption(val),
         title: Text(
           title,

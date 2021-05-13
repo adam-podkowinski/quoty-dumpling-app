@@ -4,17 +4,17 @@ import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
 
 class UpgradeItem extends LabeledItem {
-  int _level = 0;
+  int? _level = 0;
 
   UpgradeItem(map) : super.fromMap(map);
 
-  int get level => _level;
+  int? get level => _level;
 
   @override
   void buyItem(context) {
     super.buyItem(context);
 
-    _level++;
+    _level = _level! + 1;
     refreshActualPrices();
 
     DBProvider.db.getElement('Items', id).then((i) {
@@ -50,8 +50,8 @@ class UpgradeItem extends LabeledItem {
       actualPriceBills = defaultPriceBills;
       actualPriceDiamonds = defaultPriceDiamonds;
     } else {
-      actualPriceBills = (defaultPriceBills * pow(1.3, _level)).round();
-      actualPriceDiamonds = (defaultPriceDiamonds * pow(1.3, _level)).round();
+      actualPriceBills = (defaultPriceBills! * pow(1.3, _level!)).round();
+      actualPriceDiamonds = (defaultPriceDiamonds! * pow(1.3, _level!)).round();
     }
   }
 }

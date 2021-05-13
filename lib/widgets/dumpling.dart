@@ -29,7 +29,7 @@ class DumplingScreenWhileClicking extends StatelessWidget {
         Dumpling(),
         //SizedBox(height: SizeConfig.screenHeight * 0.03),
         ProgressBar(
-          barWidth: SizeConfig.screenWidth * .7,
+          barWidth: SizeConfig.screenWidth! * .7,
           barHeight: SizeConfig.screenHeight * .02,
           currentPercent:
               Provider.of<DumplingProvider>(context).progressBarStatus,
@@ -46,14 +46,14 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
   bool _isPowerupClicks = false;
   final ValueNotifier<bool> _isTextOnRight = ValueNotifier(false);
 
-  DumplingProvider _dumplingProvider;
-  ShopItems _itemsProvider;
+  late DumplingProvider _dumplingProvider;
+  late ShopItems _itemsProvider;
 
-  AnimationController _moneyAnimController;
-  Animation _moneyAnimation;
+  AnimationController? _moneyAnimController;
+  late Animation _moneyAnimation;
 
-  Animatable<Color> _clicksPowerupColor;
-  AnimationController _clicksPowerupController;
+  late Animatable<Color?> _clicksPowerupColor;
+  late AnimationController _clicksPowerupController;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
           right: _isTextOnRight.value ? 16.w : null,
           left: _isTextOnRight.value ? null : 16.w,
           child: FadeTransition(
-            opacity: _moneyAnimation,
+            opacity: _moneyAnimation as Animation<double>,
             child: Transform(
               transform: _isTextOnRight.value
                   ? Matrix4.rotationZ(pi / 5)
@@ -88,13 +88,13 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
           ),
         ),
         Container(
-          width: SizeConfig.screenWidth * .8,
-          height: SizeConfig.screenWidth * .8,
+          width: SizeConfig.screenWidth! * .8,
+          height: SizeConfig.screenWidth! * .8,
           child: AnimatedContainer(
             duration: Duration(milliseconds: 100),
             padding: _isPressed
                 ? EdgeInsets.all(
-                    SizeConfig.screenWidth * .03,
+                    SizeConfig.screenWidth! * .03,
                   )
                 : EdgeInsets.zero,
             child: GestureDetector(
@@ -124,9 +124,9 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
                       _dumplingProvider.clickedOnDumpling(context);
                       Provider.of<Shop>(context, listen: false)
                           .clickOnDumpling();
-                      if (_moneyAnimController.status ==
-                          AnimationStatus.reverse) _moneyAnimController.stop();
-                      _moneyAnimController.forward();
+                      if (_moneyAnimController!.status ==
+                          AnimationStatus.reverse) _moneyAnimController!.stop();
+                      _moneyAnimController!.forward();
                     },
                   );
                 }
@@ -141,7 +141,7 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
                               AlwaysStoppedAnimation(
                                 _clicksPowerupController.value,
                               ),
-                            )
+                            )!
                           : Theme.of(context).backgroundColor.withRed(255),
                       BlendMode.modulate,
                     ),
@@ -178,10 +178,10 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
         duration: Duration(milliseconds: 150),
         vsync: this,
       );
-      _moneyAnimController.addStatusListener((status) {
+      _moneyAnimController!.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           Future.delayed(Duration(milliseconds: 250), () {
-            if (_moneyAnimController != null) _moneyAnimController.reverse();
+            if (_moneyAnimController != null) _moneyAnimController!.reverse();
           });
         } else if (status == AnimationStatus.dismissed) {
           _isTextOnRight.value = !_isTextOnRight.value;
@@ -189,14 +189,14 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
       });
 
       _moneyAnimation =
-          Tween<double>(begin: 0, end: 1).animate(_moneyAnimController);
+          Tween<double>(begin: 0, end: 1).animate(_moneyAnimController!);
       _isInit = false;
     }
   }
 
   @override
   void dispose() {
-    _moneyAnimController.dispose();
+    _moneyAnimController!.dispose();
     _moneyAnimController = null;
     _clicksPowerupController.dispose();
     _itemsProvider.removeListener(_powerupListener);

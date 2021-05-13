@@ -21,18 +21,18 @@ class ShopItems extends ChangeNotifier {
   List<PowerupItem> get powerups => [..._powerups];
   List<UpgradeItem> get upgrades => [..._upgrades];
 
-  PowerupItem currentPowerup;
+  PowerupItem? currentPowerup;
 
   void addPowerup(powerup) {
     if (currentPowerup == null) {
       currentPowerup = powerup;
-      var sub = currentPowerup.timer.listen(null);
+      var sub = currentPowerup!.timer.listen(null);
       sub.onData((duration) {
-        currentPowerup.updateTimer(duration.elapsed.inSeconds);
+        currentPowerup!.updateTimer(duration.elapsed.inSeconds);
         notifyListeners();
       });
       sub.onDone(() {
-        currentPowerup.deactivatePowerup();
+        currentPowerup!.deactivatePowerup();
         currentPowerup = null;
         sub.cancel();
         notifyListeners();
@@ -42,7 +42,7 @@ class ShopItems extends ChangeNotifier {
 
   Future fetchItems() async {
     print('fetching items');
-    List<dynamic> content;
+    List<dynamic>? content;
 
     content = jsonDecode(
       await rootBundle.loadString('assets/items/items.json'),
@@ -51,7 +51,7 @@ class ShopItems extends ChangeNotifier {
     _items.clear();
 
     _items.addAll(
-      content.map(
+      content!.map(
         (e) => ShopItem.fromItemType(e),
       ),
     );
@@ -64,13 +64,13 @@ class ShopItems extends ChangeNotifier {
       );
       switch (u.runtimeType) {
         case UpgradeItem:
-          _upgrades.add(u);
+          _upgrades.add(u as UpgradeItem);
           break;
         case PowerupItem:
-          _powerups.add(u);
+          _powerups.add(u as PowerupItem);
           break;
         default:
-          _money.add(u);
+          _money.add(u as MoneyItem);
       }
     });
   }

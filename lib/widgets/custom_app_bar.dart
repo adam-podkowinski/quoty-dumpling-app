@@ -3,8 +3,8 @@ import 'package:quoty_dumpling_app/helpers/size_config.dart';
 
 class CustomAppBar extends StatelessWidget {
   final title;
-  final Widget prefix;
-  final Widget suffix;
+  final Widget? prefix;
+  final Widget? suffix;
 
   CustomAppBar(this.title, {this.prefix, this.suffix});
 
@@ -14,7 +14,7 @@ class CustomAppBar extends StatelessWidget {
       width: double.infinity,
       height: SizeConfig.screenHeight * 0.094,
       padding: EdgeInsets.symmetric(
-        horizontal: SizeConfig.screenWidth * 0.05,
+        horizontal: SizeConfig.screenWidth! * 0.05,
       ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -42,7 +42,7 @@ class CustomAppBar extends StatelessWidget {
           Center(
             child: FittedBox(
               child: Text(title,
-                  style: Theme.of(context).appBarTheme.textTheme.headline6),
+                  style: Theme.of(context).appBarTheme.textTheme!.headline6),
             ),
           ),
           Expanded(

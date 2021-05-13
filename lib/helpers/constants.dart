@@ -9,7 +9,7 @@ class Styles {
 
   static final fontFamily = 'SofiaPro';
 
-  static final double _screenWidth = SizeConfig.screenWidth;
+  static final double? _screenWidth = SizeConfig.screenWidth;
 
   static final ThemeData mainTheme = ThemeData(
     fontFamily: 'SofiaPro',
@@ -34,18 +34,18 @@ class Styles {
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
     color: Color(0xff3A2E39),
-    fontSize: _screenWidth * 0.08,
+    fontSize: _screenWidth! * 0.08,
   );
 
   static TextStyle kMoneyInShopItemTextStyle = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
     color: Color(0xff3A2E39),
-    fontSize: _screenWidth * 0.04,
+    fontSize: _screenWidth! * 0.04,
   );
 
   static TextStyle kSettingsTitleStyle = kTitleStyle.copyWith(
-    fontSize: _screenWidth * 0.065,
+    fontSize: _screenWidth! * 0.065,
   );
 
   static TextStyle kQuoteStyle = TextStyle(
@@ -53,14 +53,14 @@ class Styles {
     fontStyle: FontStyle.italic,
     color: kTitleStyle.color,
     decorationStyle: TextDecorationStyle.dashed,
-    fontSize: _screenWidth * 0.05,
+    fontSize: _screenWidth! * 0.05,
   );
 
   static TextStyle kAuthorStyle = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
     color: kTitleStyle.color,
-    fontSize: _screenWidth * 0.05,
+    fontSize: _screenWidth! * 0.05,
     wordSpacing: 2,
   );
 
@@ -68,20 +68,20 @@ class Styles {
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
     color: kTitleStyle.color,
-    fontSize: _screenWidth * 0.045,
+    fontSize: _screenWidth! * 0.045,
   );
 
   static TextStyle kCommonTextStyle = TextStyle(
     fontFamily: fontFamily,
     color: kTitleStyle.color,
-    fontSize: _screenWidth * 0.04328,
+    fontSize: _screenWidth! * 0.04328,
   );
 
   static TextStyle kSettingsTextStyle = TextStyle(
     fontFamily: fontFamily,
     color: kTitleStyle.color,
     fontWeight: FontWeight.bold,
-    fontSize: _screenWidth * 0.04,
+    fontSize: _screenWidth! * 0.04,
   );
 
   static OutlineInputBorder kSearchBarBorder = OutlineInputBorder(
@@ -97,38 +97,38 @@ class Styles {
   static TextStyle kSearchBarTextStyle = TextStyle(
     color: mainTheme.backgroundColor,
     fontFamily: fontFamily,
-    fontSize: _screenWidth * 0.05,
+    fontSize: _screenWidth! * 0.05,
   );
 
   static TextStyle kTabBarTextStyle = TextStyle(
     color: appBarTextColor,
     fontFamily: fontFamily,
-    fontSize: _screenWidth * 0.04,
+    fontSize: _screenWidth! * 0.04,
   );
 
   static TextStyle kMoneyTextStyle = TextStyle(
     color: appBarTextColor,
     fontFamily: fontFamily,
-    fontSize: _screenWidth * 0.05,
+    fontSize: _screenWidth! * 0.05,
   );
 
   static TextStyle kShopItemTitleStyle = TextStyle(
     color: appBarTextColor,
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
-    fontSize: _screenWidth * 0.055,
+    fontSize: _screenWidth! * 0.055,
   );
 
   static TextStyle kShopItemDescriptionStyle = TextStyle(
     color: appBarTextColor,
     fontFamily: fontFamily,
-    fontSize: _screenWidth * 0.04,
+    fontSize: _screenWidth! * 0.04,
   );
 
   static TextStyle kItemLevelTextStyle = TextStyle(
     color: appBarTextColor,
     fontFamily: fontFamily,
-    fontSize: _screenWidth * .045,
+    fontSize: _screenWidth! * .045,
   );
 
   static LinearGradient backgroundGradient = LinearGradient(

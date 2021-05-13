@@ -21,8 +21,8 @@ class Quotes extends ChangeNotifier {
   List<Quote> _visibleQuotesCopy = [];
 
   final List<int> _collectionTilesToAnimate = [];
-  SortEnum _sortOption;
-  var _favoritesOnTop = false;
+  SortEnum? _sortOption;
+  bool? _favoritesOnTop = false;
   var _animateCollectionTiles = false;
   var _previousQuotes = [];
   String _searchValue = '';
@@ -32,7 +32,7 @@ class Quotes extends ChangeNotifier {
     return _animateCollectionTiles;
   }
 
-  bool get favoritesOnTop {
+  bool? get favoritesOnTop {
     return _favoritesOnTop;
   }
 
@@ -62,7 +62,7 @@ class Quotes extends ChangeNotifier {
 
   Future<void> fetchQuotes() async {
     print('fetching quotes');
-    List<dynamic> contents;
+    List<dynamic>? contents;
     var contentsB = await rootBundle.load('assets/quotes/quotes.json');
 
     //because json file is huge
@@ -72,7 +72,7 @@ class Quotes extends ChangeNotifier {
     _quotes.clear();
 
     _quotes.addAll(
-      contents.map((e) => Quote.fromMap(e)),
+      contents!.map((e) => Quote.fromMap(e)),
     );
 
     final _unlockedQuotesFromDB =
@@ -150,7 +150,7 @@ class Quotes extends ChangeNotifier {
   }
 
   void _sortByFavorite() {
-    if (_favoritesOnTop) {
+    if (_favoritesOnTop!) {
       var favoritedQuotes =
           _visibleQuotesCopy.where((e) => e.isFavorite).toList();
       _visibleQuotesCopy =
@@ -161,13 +161,13 @@ class Quotes extends ChangeNotifier {
 
   void _sortByNewest() {
     _visibleQuotesCopy.sort(
-      (a, b) => b.unlockingTime.compareTo(a.unlockingTime),
+      (a, b) => b.unlockingTime!.compareTo(a.unlockingTime!),
     );
   }
 
   void _sortByOldest() {
     _visibleQuotesCopy.sort(
-      (a, b) => a.unlockingTime.compareTo(b.unlockingTime),
+      (a, b) => a.unlockingTime!.compareTo(b.unlockingTime!),
     );
   }
 
@@ -209,7 +209,7 @@ class Quotes extends ChangeNotifier {
   }
 
   void sortCollection(bool shouldAnimate) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => notifyListeners());
     _previousQuotes = [..._visibleQuotes];
     _visibleQuotesCopy = [..._visibleQuotes];
     switch (_sortOption) {
@@ -233,7 +233,7 @@ class Quotes extends ChangeNotifier {
       initCollectionTilesToAnimate();
     } else {
       _visibleQuotes = _visibleQuotesCopy;
-      WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
+      WidgetsBinding.instance!.addPostFrameCallback((_) => notifyListeners());
     }
   }
 

@@ -13,7 +13,7 @@ class RoundedButton extends StatelessWidget {
   final borderRadius;
 
   RoundedButton({
-    @required this.onPressed,
+    required this.onPressed,
     this.color,
     this.text,
     this.textColor,
@@ -26,7 +26,7 @@ class RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
-      onPressed: onPressed,
+      onPressed: onPressed as void Function()?,
       shape: RoundedRectangleBorder(
         borderRadius: borderRadius,
       ),

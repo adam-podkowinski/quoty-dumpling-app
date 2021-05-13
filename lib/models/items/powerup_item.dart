@@ -18,23 +18,23 @@ class PowerupItem extends LabeledItem {
   bool _isRunning = false;
   bool get isRunning => _isRunning;
 
-  CountdownTimer timer;
-  int _useTime;
-  int _current;
-  Function _undoBuyFunction;
+  late CountdownTimer timer;
+  int? _useTime;
+  int? _current;
+  late Function _undoBuyFunction;
   // Allow deactivating powerup when state of the context was destroyed.
   //E.g player went to the other screen which is a likely behaviour
   dynamic buyProvider;
 
   double get fractionToLast {
-    return _current / _useTime;
+    return _current! / _useTime!;
   }
 
-  int get current {
+  int? get current {
     return _current;
   }
 
-  int get useTime {
+  int? get useTime {
     return _useTime;
   }
 
@@ -48,12 +48,12 @@ class PowerupItem extends LabeledItem {
     buyProvider = onBuyFunction(context);
     hasLabel = true;
     _isRunning = true;
-    timer = CountdownTimer(Duration(seconds: _useTime), Duration(seconds: 1));
+    timer = CountdownTimer(Duration(seconds: _useTime!), Duration(seconds: 1));
     Provider.of<ShopItems>(context, listen: false).addPowerup(this);
   }
 
   void updateTimer(durationTillEnd) {
-    _current = _useTime - durationTillEnd;
+    _current = _useTime! - durationTillEnd as int?;
   }
 
   void deactivatePowerup() {

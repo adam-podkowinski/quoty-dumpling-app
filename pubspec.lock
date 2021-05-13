@@ -147,7 +147,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "8103f1d2b307da0ce9257ddc0f697f7b3326c512"
+      resolved-ref: "86ce3373dc8412b00c32208634ba86c3f53c999c"
       url: "https://github.com/adam-podkowinski/gradient-nav-bar"
     source: git
     version: "1.0.0"

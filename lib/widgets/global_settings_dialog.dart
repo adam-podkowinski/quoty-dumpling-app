@@ -37,9 +37,9 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
     ),
   ];
 
-  AudioProvider _audioProvider;
+  late AudioProvider _audioProvider;
   final _isInit = true;
-  final _padding = SizeConfig.screenWidth * .035;
+  final _padding = SizeConfig.screenWidth! * .035;
 
   @override
   void didChangeDependencies() {
@@ -93,8 +93,8 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                   Divider(
                     color: Theme.of(context).accentColor,
                     thickness: 2,
-                    endIndent: Styles.kSettingsTitleStyle.fontSize * 3.6,
-                    indent: Styles.kSettingsTitleStyle.fontSize * 3.6,
+                    endIndent: Styles.kSettingsTitleStyle.fontSize! * 3.6,
+                    indent: Styles.kSettingsTitleStyle.fontSize! * 3.6,
                   ),
                   Row(
                     children: <Widget>[
@@ -115,7 +115,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                               onPressed: () => _audioProvider.changeMute(),
                             ),
                             Positioned.fill(
-                              left: SizeConfig.screenWidth * 0.08,
+                              left: SizeConfig.screenWidth! * 0.08,
                               child: Slider(
                                 value: _audioProvider.volume,
                                 onChanged: (n) =>
@@ -137,7 +137,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                   ),
                   RoundedButton(
                     color: Theme.of(context).secondaryHeaderColor,
-                    width: SizeConfig.screenWidth * .5,
+                    width: SizeConfig.screenWidth! * .5,
                     textColor: Theme.of(context).backgroundColor,
                     text: 'Credits',
                     onPressed: () {
@@ -163,10 +163,10 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                     color: Theme.of(context).accentColor,
                                     thickness: 2,
                                     endIndent:
-                                        Styles.kSettingsTitleStyle.fontSize *
+                                        Styles.kSettingsTitleStyle.fontSize! *
                                             3.8,
                                     indent:
-                                        Styles.kSettingsTitleStyle.fontSize *
+                                        Styles.kSettingsTitleStyle.fontSize! *
                                             3.8,
                                   ),
                                   Row(
@@ -243,7 +243,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                   ),
                   RoundedButton(
                     color: Theme.of(context).errorColor,
-                    width: SizeConfig.screenWidth * .5,
+                    width: SizeConfig.screenWidth! * .5,
                     textColor: Theme.of(context).backgroundColor,
                     text: 'Reset Game',
                     onPressed: () {
@@ -269,10 +269,10 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                     color: Theme.of(context).accentColor,
                                     thickness: 2,
                                     endIndent:
-                                        Styles.kSettingsTitleStyle.fontSize *
+                                        Styles.kSettingsTitleStyle.fontSize! *
                                             2.3,
                                     indent:
-                                        Styles.kSettingsTitleStyle.fontSize *
+                                        Styles.kSettingsTitleStyle.fontSize! *
                                             2.3,
                                   ),
                                   Text(

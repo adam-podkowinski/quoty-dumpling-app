@@ -15,14 +15,14 @@ class Quote {
   final id;
   var isUnlocked;
   var isFavorite;
-  DateTime unlockingTime;
+  DateTime? unlockingTime;
   final Rarities rarity;
 
   Quote({
-    @required this.quote,
-    @required this.author,
-    @required this.rarity,
-    @required this.id,
+    required this.quote,
+    required this.author,
+    required this.rarity,
+    required this.id,
     this.isUnlocked = false,
     this.isFavorite = false,
     this.unlockingTime,
@@ -78,7 +78,7 @@ class Quote {
     }
   }
 
-  static Rarities getRarityByText(String rarityText) {
+  static Rarities getRarityByText(String? rarityText) {
     switch (rarityText) {
       case 'common':
         return Rarities.common;
@@ -103,7 +103,7 @@ class Quote {
       {
         'id': id,
         'isFavorite': 0,
-        'unlockingTime': unlockingTime.toIso8601String(),
+        'unlockingTime': unlockingTime!.toIso8601String(),
       },
     );
   }

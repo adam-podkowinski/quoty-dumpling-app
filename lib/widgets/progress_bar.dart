@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProgressBar extends StatelessWidget {
-  final double barWidth;
-  final double barHeight;
+  final double? barWidth;
+  final double? barHeight;
   final double currentPercent;
 
   const ProgressBar({
-    Key key,
+    Key? key,
     this.barWidth,
     this.barHeight,
-    @required this.currentPercent,
+    required this.currentPercent,
   }) : super(key: key);
 
   @override

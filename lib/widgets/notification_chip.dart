@@ -7,7 +7,7 @@ class NotificationChip extends StatelessWidget {
   final fontColor;
 
   const NotificationChip(
-      {Key key, this.color, @required this.text, this.fontColor})
+      {Key? key, this.color, required this.text, this.fontColor})
       : super(key: key);
 
   @override

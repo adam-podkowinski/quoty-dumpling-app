@@ -21,8 +21,8 @@ class UnlockedNewQuote extends StatefulWidget {
 
 class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
     with SingleTickerProviderStateMixin {
-  Animation _newQuoteSlideAnimation;
-  AnimationController _controller;
+  late Animation _newQuoteSlideAnimation;
+  AnimationController? _controller;
   var _newQuote;
 
   @override
@@ -38,36 +38,36 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
     ).animate(
       CurvedAnimation(
         curve: Curves.fastLinearToSlowEaseIn,
-        parent: _controller,
+        parent: _controller!,
       ),
     )..addListener(
         () => setState(() {}),
       );
 
     _newQuote = Provider.of<Quotes>(context, listen: false).unlockRandomQuote();
-    _controller.forward();
+    _controller!.forward();
     Provider.of<AudioProvider>(context, listen: false).playUnlockQuote();
     Provider.of<Shop>(context, listen: false).openDumpling();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return SlideTransition(
-      position: _newQuoteSlideAnimation,
+      position: _newQuoteSlideAnimation as Animation<Offset>,
       child: AnimatedContainer(
         constraints: BoxConstraints(
-          maxHeight: _controller.isAnimating
-              ? SizeConfig.screenWidth * .2
-              : SizeConfig.screenWidth,
+          maxHeight: _controller!.isAnimating
+              ? SizeConfig.screenWidth! * .2
+              : SizeConfig.screenWidth!,
         ),
         duration: Duration(milliseconds: 300),
-        width: SizeConfig.screenWidth * .9,
+        width: SizeConfig.screenWidth! * .9,
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
           borderRadius: BorderRadius.circular(10),
@@ -88,7 +88,7 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
             physics: NeverScrollableScrollPhysics(),
             padding: EdgeInsets.symmetric(
               vertical: SizeConfig.screenHeight * 0.01,
-              horizontal: SizeConfig.screenWidth * 0.04,
+              horizontal: SizeConfig.screenWidth! * 0.04,
             ),
             child: CardContent(
               newQuote: _newQuote,
@@ -102,11 +102,11 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
 }
 
 class CardContent extends StatelessWidget {
-  final Quote newQuote;
-  final AnimationController controller;
+  final Quote? newQuote;
+  final AnimationController? controller;
   CardContent({
-    @required this.newQuote,
-    @required this.controller,
+    required this.newQuote,
+    required this.controller,
   });
 
   @override
@@ -137,22 +137,22 @@ class CardContent extends StatelessWidget {
               Stack(
                 children: <Widget>[
                   Text(
-                    '${newQuote.rarityText()} ',
+                    '${newQuote!.rarityText()} ',
                     style: Styles.kTitleStyle.copyWith(
                       fontFamily: 'Pacifico',
                       fontStyle: FontStyle.italic,
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
                         ..strokeWidth = 5
-                        ..color = Styles.kTitleStyle.color,
+                        ..color = Styles.kTitleStyle.color!,
                     ),
                   ),
                   Text(
-                    '${newQuote.rarityText()} ',
+                    '${newQuote!.rarityText()} ',
                     style: Styles.kTitleStyle.copyWith(
                       fontFamily: 'Pacifico',
                       fontStyle: FontStyle.italic,
-                      color: newQuote.rarityColor(context),
+                      color: newQuote!.rarityColor(context),
                     ),
                   ),
                 ],
@@ -166,21 +166,21 @@ class CardContent extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: SizeConfig.screenWidth * .04,
+          height: SizeConfig.screenWidth! * .04,
         ),
 
         //Quote content and author
         Text(
-          newQuote.quote,
+          newQuote!.quote,
           style: Styles.kQuoteStyle,
           textAlign: TextAlign.justify,
         ),
         SizedBox(
-          height: SizeConfig.screenWidth * .04,
+          height: SizeConfig.screenWidth! * .04,
         ),
         FittedBox(
           child: Text(
-            'Author: ${newQuote.author == '' ? 'Unknown' : newQuote.author}',
+            'Author: ${newQuote!.author == '' ? 'Unknown' : newQuote!.author}',
             style: Styles.kAuthorStyle,
           ),
         ),
@@ -218,18 +218,18 @@ class CardContent extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             NewQuoteButton(
-              rarityColor: newQuote.rarityColor(context),
+              rarityColor: newQuote!.rarityColor(context),
               textContent: 'Eat more!',
               onTap: () {
                 _dumplingProvider.isFullStateChanged();
-                controller.reverse();
+                controller!.reverse();
               },
             ),
             NewQuoteButton(
-              rarityColor: newQuote.rarityColor(context),
+              rarityColor: newQuote!.rarityColor(context),
               textContent: 'Go to collection!',
               onTap: () {
-                controller.reverse().then((_) {
+                controller!.reverse().then((_) {
                   _dumplingProvider.isFullStateChanged();
                   Provider.of<Tabs>(context, listen: false).navigateToPage(2);
                 });
@@ -238,7 +238,7 @@ class CardContent extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: SizeConfig.screenWidth * .01,
+          height: SizeConfig.screenWidth! * .01,
         ),
       ],
     );
@@ -251,9 +251,9 @@ class NewQuoteButton extends StatelessWidget {
   final Function onTap;
 
   NewQuoteButton({
-    @required this.rarityColor,
-    @required this.textContent,
-    @required this.onTap,
+    required this.rarityColor,
+    required this.textContent,
+    required this.onTap,
   });
 
   @override
@@ -264,15 +264,15 @@ class NewQuoteButton extends StatelessWidget {
       ),
       elevation: 3,
       child: InkWell(
-        onTap: onTap,
+        onTap: onTap as void Function()?,
         borderRadius: BorderRadius.circular(50),
         child: Container(
           height: SizeConfig.screenHeight * .05,
-          width: SizeConfig.screenWidth * .4,
+          width: SizeConfig.screenWidth! * .4,
           padding: EdgeInsets.all(6),
           decoration: BoxDecoration(
             border: Border.all(
-              color: Styles.kTitleStyle.color,
+              color: Styles.kTitleStyle.color!,
               width: 2,
             ),
             borderRadius: BorderRadius.circular(50),

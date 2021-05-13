@@ -58,33 +58,33 @@ class Item extends StatefulWidget {
 }
 
 class _ItemState extends State<Item> with TickerProviderStateMixin {
-  Shop _shopProvider;
-  ShopItems _shopItemsProvider;
+  late Shop _shopProvider;
+  late ShopItems _shopItemsProvider;
   bool _isFree = false;
   bool _isActive = true;
   var _isInit = true;
 
-  AnimationController _iconColorcontroller;
-  Animation _iconColorAnim;
+  AnimationController? _iconColorcontroller;
+  late Animation _iconColorAnim;
 
-  AnimationController _scaleController;
-  Animation _scaleAnim;
+  late AnimationController _scaleController;
+  late Animation _scaleAnim;
 
-  TextSpan _textSpanSmall;
-  TextPainter _textPainterSmall;
+  TextSpan? _textSpanSmall;
+  late TextPainter _textPainterSmall;
 
-  TextSpan _textSpanBig;
-  TextPainter _textPainterBig;
+  TextSpan? _textSpanBig;
+  late TextPainter _textPainterBig;
 
   //Powerup stuff
   bool _isRunningPowerup = false;
-  Animatable<Color> _runningPowerupColor;
-  AnimationController _runningPowerupColorController;
+  late Animatable<Color?> _runningPowerupColor;
+  late AnimationController _runningPowerupColorController;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(SizeConfig.screenWidth * 0.03),
+      padding: EdgeInsets.all(SizeConfig.screenWidth! * 0.03),
       child: AnimatedBuilder(
         animation: _runningPowerupColorController,
         builder: (context, ch) {
@@ -97,13 +97,13 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                     ? _runningPowerupColor.evaluate(
                         AlwaysStoppedAnimation(
                             _runningPowerupColorController.value),
-                      )
+                      )!
                     : _isActive
                         ? widget.activeColor
                         : Colors.grey,
               ),
             ),
-            padding: EdgeInsets.all(SizeConfig.screenWidth * 0.02),
+            padding: EdgeInsets.all(SizeConfig.screenWidth! * 0.02),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -112,19 +112,19 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                   builder: (context, _) {
                     return AnimatedContainer(
                       duration: Duration(milliseconds: 300),
-                      width: SizeConfig.screenWidth * 0.24,
-                      height: SizeConfig.screenWidth * 0.24,
+                      width: SizeConfig.screenWidth! * 0.24,
+                      height: SizeConfig.screenWidth! * 0.24,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          SizeConfig.screenWidth * 0.05,
+                          SizeConfig.screenWidth! * 0.05,
                         ),
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 25,
                             color: Theme.of(context)
                                 .textTheme
-                                .headline6
-                                .color
+                                .headline6!
+                                .color!
                                 .withOpacity(.3),
                             spreadRadius: 1,
                           ),
@@ -139,7 +139,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                                 : Colors.grey,
                       ),
                       child: Padding(
-                        padding: EdgeInsets.all(SizeConfig.screenWidth * .02),
+                        padding: EdgeInsets.all(SizeConfig.screenWidth! * .02),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -166,30 +166,30 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                   },
                 ),
                 SizedBox(
-                  width: SizeConfig.screenWidth * 0.03,
+                  width: SizeConfig.screenWidth! * 0.03,
                 ),
                 Flexible(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        widget.item.name,
+                        widget.item.name!,
                         style: Styles.kShopItemTitleStyle,
                       ),
-                      if (widget.item.description.isNotEmpty)
+                      if (widget.item.description!.isNotEmpty)
                         SizedBox(
                           height: SizeConfig.screenHeight * 0.005,
                         ),
-                      if (widget.item.description.isNotEmpty)
+                      if (widget.item.description!.isNotEmpty)
                         Text(
-                          widget.item.description,
+                          widget.item.description!,
                           style: Styles.kShopItemDescriptionStyle,
                         ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  width: SizeConfig.screenWidth * 0.03,
+                  width: SizeConfig.screenWidth! * 0.03,
                 ),
                 Column(
                   children: <Widget>[
@@ -226,10 +226,10 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                         ),
                         avatar: Padding(
                           padding:
-                              EdgeInsets.all(SizeConfig.screenWidth * 0.01),
+                              EdgeInsets.all(SizeConfig.screenWidth! * 0.01),
                           child: Icon(
                             CustomIcons.diamond,
-                            size: SizeConfig.screenWidth * 0.05,
+                            size: SizeConfig.screenWidth! * 0.05,
                             color: Colors.blue,
                           ),
                         ),
@@ -255,7 +255,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                       animation: _runningPowerupColorController,
                       builder: (context, _) {
                         return ScaleTransition(
-                          scale: _scaleAnim,
+                          scale: _scaleAnim as Animation<double>,
                           child: AnimatedContainer(
                             duration: Duration(milliseconds: 300),
                             decoration: BoxDecoration(
@@ -273,7 +273,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                               animation: _iconColorAnim,
                               child: Icon(Icons.add),
                               builder: (_, ch) => IconButton(
-                                icon: ch,
+                                icon: ch!,
                                 color: _iconColorAnim.value,
                                 onPressed: () async {
                                   if (_isActive) {
@@ -302,13 +302,13 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
     );
   }
 
-  Widget buildPriceChip(Widget label, {Widget avatar}) {
+  Widget buildPriceChip(Widget label, {Widget? avatar}) {
     return Chip(
       label: AnimatedContainer(
         duration: Duration(milliseconds: 200),
         constraints: BoxConstraints(
-          minWidth: max(widget.item.actualPriceBills,
-                      widget.item.actualPriceDiamonds) >
+          minWidth: max(widget.item.actualPriceBills!,
+                      widget.item.actualPriceDiamonds!) >
                   999
               ? _textPainterBig.width
               : _textPainterSmall.width,
@@ -331,11 +331,11 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
       _iconColorAnim = ColorTween(
         begin: Styles.appBarTextColor,
         end: Theme.of(context).disabledColor,
-      ).animate(_iconColorcontroller);
+      ).animate(_iconColorcontroller!);
 
-      _isFree = widget.item.actualPriceBills <= 0 &&
-          widget.item.actualPriceDiamonds <= 0 &&
-          widget.item.priceUSD <= 0;
+      _isFree = widget.item.actualPriceBills! <= 0 &&
+          widget.item.actualPriceDiamonds! <= 0 &&
+          widget.item.priceUSD! <= 0;
 
       _runningPowerupColor = runningPowerupColor(context);
       _runningPowerupColorController = AnimationController(
@@ -372,7 +372,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _iconColorcontroller.dispose();
+    _iconColorcontroller!.dispose();
     _scaleController.dispose();
     _runningPowerupColorController.dispose();
     _shopProvider.removeListener(_itemListener);

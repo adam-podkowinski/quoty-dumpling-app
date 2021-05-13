@@ -4,37 +4,37 @@ import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Achievement {
-  String _title;
-  String _description;
+  String? _title;
+  String? _description;
 
-  String _id;
+  String? _id;
 
-  int _billsReward;
-  int _diamondsReward;
+  int? _billsReward;
+  int? _diamondsReward;
 
-  int doneVal; // How much user accomplished
-  int _maxToDoVal; // When achievement is done
+  int? doneVal; // How much user accomplished
+  int? _maxToDoVal; // When achievement is done
 
-  String get title => _title;
+  String? get title => _title;
 
-  String get description => _description;
+  String? get description => _description;
 
-  String get id => _id;
+  String? get id => _id;
 
-  int get billsReward => _billsReward;
+  int? get billsReward => _billsReward;
 
-  int get diamondsReward => _diamondsReward;
+  int? get diamondsReward => _diamondsReward;
 
-  int get maxToDoVal => _maxToDoVal;
+  int? get maxToDoVal => _maxToDoVal;
 
   bool isRewardReceived = false;
-  bool get isDone => doneVal >= _maxToDoVal;
+  bool get isDone => doneVal! >= _maxToDoVal!;
 
   Future<void> receiveReward(BuildContext context) async {
     isRewardReceived = true;
     Provider.of<Shop>(context, listen: false).receiveAchievement(this);
     var dbInstance = await SharedPreferences.getInstance();
-    await dbInstance.setBool('isRewardReceived' + _id, isRewardReceived);
+    await dbInstance.setBool('isRewardReceived' + _id!, isRewardReceived);
   }
 
   Achievement(Map<String, dynamic> map) {
@@ -47,7 +47,7 @@ class Achievement {
 
     doneVal = 0;
     SharedPreferences.getInstance().then(
-      (db) => isRewardReceived = db.getBool('isRewardReceived' + _id) ?? false,
+      (db) => isRewardReceived = db.getBool('isRewardReceived' + _id!) ?? false,
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,10 +9,10 @@ class DBProvider {
   DBProvider._();
   static final DBProvider db = DBProvider._();
 
-  sql.Database _database;
+  sql.Database? _database;
 
-  Future<sql.Database> get _databaseGet async {
-    if (_database != null && _database.isOpen) {
+  Future<sql.Database?> get _databaseGet async {
+    if (_database != null && _database!.isOpen) {
       return _database;
     }
 
@@ -39,7 +41,7 @@ class DBProvider {
 
   Future insert(String table, Map<String, dynamic> data) async {
     final db = await _databaseGet;
-    var res = await db.insert(
+    var res = await db!.insert(
       table,
       data,
       conflictAlgorithm: sql.ConflictAlgorithm.replace,
@@ -47,15 +49,15 @@ class DBProvider {
     return res;
   }
 
-  Future<Map<String, dynamic>> getElement(String table, String id) async {
+  Future<Map<String, dynamic>> getElement(String table, String? id) async {
     final db = await _databaseGet;
-    var res = await db.query(table, where: 'id = ?', whereArgs: [id]);
+    var res = await db!.query(table, where: 'id = ?', whereArgs: [id]);
     return res.isNotEmpty ? res.first : {};
   }
 
   Future<List<Map<String, dynamic>>> getAllElements(String table) async {
     final db = await _databaseGet;
-    var res = await db.query(table);
+    var res = await db!.query(table);
     return res.isNotEmpty ? res : [];
   }
 
@@ -64,7 +66,7 @@ class DBProvider {
     var path = join(dbPath, 'database.db');
     final db = await _databaseGet;
 
-    await db.close();
+    await db!.close();
     await sql.deleteDatabase(path);
 
     final prefs = await SharedPreferences.getInstance();
@@ -75,10 +77,10 @@ class DBProvider {
 
   Future updateElementById(
     String table,
-    String id,
+    String? id,
     Map<String, dynamic> values,
   ) async {
     final db = await _databaseGet;
-    await db.update(table, values, where: 'id=?', whereArgs: [id]);
+    await db!.update(table, values, where: 'id=?', whereArgs: [id]);
   }
 }

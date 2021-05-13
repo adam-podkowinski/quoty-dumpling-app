@@ -24,7 +24,7 @@ class ShopScreen extends StatelessWidget {
                   Icon(
                     Icons.attach_money,
                     color: Theme.of(context).secondaryHeaderColor,
-                    size: SizeConfig.screenWidth * 0.063,
+                    size: SizeConfig.screenWidth! * 0.063,
                   ),
                   Flexible(
                     child: AutoSizeText(
@@ -54,7 +54,7 @@ class ShopScreen extends StatelessWidget {
                     Icon(
                       CustomIcons.diamond,
                       color: Colors.blue,
-                      size: SizeConfig.screenWidth * 0.05,
+                      size: SizeConfig.screenWidth! * 0.05,
                     ),
                   ],
                 ),

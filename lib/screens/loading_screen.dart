@@ -37,7 +37,7 @@ class _LoadingScreenState extends State<LoadingScreen>
     await Provider.of<CollectionSettings>(context, listen: false).initOptions();
   }
 
-  AnimationController _controller;
+  late AnimationController _controller;
 
   var _isInit = true;
 

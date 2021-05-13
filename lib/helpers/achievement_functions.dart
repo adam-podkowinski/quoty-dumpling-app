@@ -7,7 +7,7 @@ Map<String, Function> achievementFunctions = {
   '000': (Achievement achievement, DumplingProvider dumpling, Shop shop,
       Level level) {
     achievement.doneVal = dumpling.numberOfDumplingsOpened;
-    if (achievement.doneVal >= 1) {
+    if (achievement.doneVal! >= 1) {
       achievement.doneVal = achievement.maxToDoVal;
       return true;
     }
@@ -16,7 +16,7 @@ Map<String, Function> achievementFunctions = {
   '001': (Achievement achievement, DumplingProvider dumpling, Shop shop,
       Level level) {
     achievement.doneVal = dumpling.numberOfDumplingsOpened;
-    if (achievement.doneVal >= 3) {
+    if (achievement.doneVal! >= 3) {
       achievement.doneVal = achievement.maxToDoVal;
       return true;
     }
@@ -25,7 +25,7 @@ Map<String, Function> achievementFunctions = {
   '002': (Achievement achievement, DumplingProvider dumpling, Shop shop,
       Level level) {
     achievement.doneVal = dumpling.numberOfClicks;
-    if (achievement.doneVal >= 1000) {
+    if (achievement.doneVal! >= 1000) {
       achievement.doneVal = achievement.maxToDoVal;
       return true;
     }
