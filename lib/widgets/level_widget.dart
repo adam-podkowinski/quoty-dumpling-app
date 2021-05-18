@@ -16,7 +16,7 @@ class LevelWidget extends StatelessWidget {
       duration: Duration(milliseconds: 500),
       child: _levelProvider.levelRewards.isNotEmpty
           ? RoundedButton(
-              text: 'LEVEL UP',
+              text: 'LEVEL UP!',
               borderRadius: BorderRadius.circular(10.h),
               width: 100.w,
               height: 50.h,
