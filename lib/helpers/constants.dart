@@ -1,10 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 
+//Using my own theme colors because they won't change (the difference between a game (has static game-related colors) and an application (user can change them))
+class ThemeColors {
+  static const rare = Colors.amber;
+  static const epic = Colors.purpleAccent;
+  static const legendary = Colors.yellow;
+
+  static const appBarText = Color(0xffFFFFEA);
+
+  static const main = Color(0xffFFA259);
+  static const secondary = Color(0xffFF7860);
+  static const secondaryLight = Color(0xffFED766);
+  static const background = Color(0xffFFEBCC);
+  static const surface = Color(0xff91bd3a);
+  static const onBackground = Color(0xff3a2e39);
+  static const onSurface = Color(0xff3a2e39);
+  static const onSecondary = Color(0xffFFFFEA);
+  static const onPrimary = Color(0xffFFFFEA);
+}
+
 class Styles {
   static const rareColor = Colors.amber;
   static const epicColor = Colors.purpleAccent;
   static const legendaryColor = Colors.yellow;
+
   static const appBarTextColor = Color(0xffFFFFEA);
 
   static final fontFamily = 'SofiaPro';

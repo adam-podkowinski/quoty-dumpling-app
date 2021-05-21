@@ -8,7 +8,9 @@ class Level extends ChangeNotifier {
   int currentXP = 0;
   int clickXP = 1;
   int dumplingXP = 100;
-  static const int defaultMaxXP = 500;
+  //static const int defaultMaxXP = 500;
+  //DEBUG
+  static const int defaultMaxXP = 50;
   int maxXP = defaultMaxXP;
   double xpMultiplier = 1;
 
