@@ -65,7 +65,7 @@ class _CollectionGridState extends State<CollectionGrid>
               flex: 1,
               child: Divider(
                 thickness: 3,
-                color: Theme.of(context).accentColor,
+                color: ThemeColors.secondary,
               ),
             ),
             SizedBox(
@@ -82,7 +82,7 @@ class _CollectionGridState extends State<CollectionGrid>
               flex: 4,
               child: Divider(
                 thickness: 3,
-                color: Theme.of(context).accentColor,
+                color: ThemeColors.secondary,
               ),
             ),
             SizedBox(width: 5),
@@ -92,7 +92,7 @@ class _CollectionGridState extends State<CollectionGrid>
                       (e) => _quotesProvider.addToUnlockedFromNew(),
                     );
               },
-              color: Theme.of(context).accentColor.withOpacity(.8),
+              color: ThemeColors.secondary.withOpacity(.8),
               child: Text(
                 'OK',
                 style: Styles.kSettingsTextStyle,
@@ -103,7 +103,7 @@ class _CollectionGridState extends State<CollectionGrid>
               flex: 1,
               child: Divider(
                 thickness: 3,
-                color: Theme.of(context).accentColor,
+                color: ThemeColors.secondary,
               ),
             ),
           ],
@@ -167,7 +167,7 @@ class _CollectionGridState extends State<CollectionGrid>
                             scale: _newQuotesAnimation as Animation<double>,
                             child: Divider(
                               thickness: 3,
-                              color: Theme.of(context).accentColor,
+                              color: ThemeColors.secondary,
                             ),
                           );
                         } else if (index <
@@ -300,7 +300,7 @@ class _GridCellState extends State<GridCell>
                       padding: EdgeInsets.all(
                         SizeConfig.screenWidth! * .022,
                       ),
-                      color: Theme.of(context).backgroundColor,
+                      color: ThemeColors.background,
                       child: Center(
                         child: AutoSizeText(
                           widget.quote.quote,

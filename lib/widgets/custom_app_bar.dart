@@ -19,8 +19,8 @@ class CustomAppBar extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Theme.of(context).primaryColor,
-            Theme.of(context).accentColor,
+            ThemeColors.primary,
+            ThemeColors.secondary,
           ],
         ),
         boxShadow: <BoxShadow>[

@@ -54,7 +54,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(_padding),
-          color: Theme.of(context).backgroundColor,
+          color: ThemeColors.background,
         ),
         child: Padding(
           padding: EdgeInsets.all(_padding),
@@ -74,7 +74,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
                   ),
                 ),
                 Divider(
-                  color: Theme.of(context).accentColor,
+                  color: ThemeColors.secondary,
                   thickness: 2,
                   endIndent: SizeConfig.screenWidth! * .05092,
                   indent: SizeConfig.screenWidth! * .05092,
@@ -97,11 +97,11 @@ class _SettingsDialogState extends State<SettingsDialog> {
                   ),
                 ),
                 Divider(
-                  color: Theme.of(context).accentColor,
+                  color: ThemeColors.secondary,
                   thickness: .75,
                 ),
                 CheckboxListTile(
-                  activeColor: Theme.of(context).accentColor,
+                  activeColor: ThemeColors.secondary,
                   value: _collectionSettingsProvider
                       .selectedOptions['favoritesOnTop'],
                   onChanged: (val) => _collectionSettingsProvider
@@ -113,7 +113,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
                   ),
                 ),
                 Divider(
-                  color: Theme.of(context).accentColor,
+                  color: ThemeColors.secondary,
                   thickness: .75,
                 ),
                 Row(
@@ -125,8 +125,8 @@ class _SettingsDialogState extends State<SettingsDialog> {
                         await _collectionSettingsProvider.saveOptions(context);
                         Navigator.of(context).pop();
                       },
-                      color: Theme.of(context).secondaryHeaderColor,
-                      textColor: Theme.of(context).backgroundColor,
+                      color: ThemeColors.surface,
+                      textColor: ThemeColors.background,
                       width: SizeConfig.screenWidth! * .2546,
                     ),
                     Spacer(),
@@ -137,7 +137,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
                       },
                       width: SizeConfig.screenWidth! * .2546,
                       color: Theme.of(context).errorColor,
-                      textColor: Theme.of(context).backgroundColor,
+                      textColor: ThemeColors.background,
                     ),
                     Spacer(),
                   ],
@@ -189,7 +189,7 @@ class _ListElementState extends State<ListElement> {
           : EdgeInsets.all(0),
       child: RadioListTile(
         value: widget.value,
-        activeColor: Theme.of(context).accentColor,
+        activeColor: ThemeColors.secondary,
         groupValue:
             collectionSettingsProvider.selectedOptions['sortOption'].index,
         onChanged: (dynamic val) =>

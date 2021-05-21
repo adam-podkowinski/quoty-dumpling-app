@@ -21,7 +21,7 @@ class LevelWidget extends StatelessWidget {
               width: 100.w,
               height: 50.h,
               textColor: Styles.kTitleStyle.color,
-              color: Theme.of(context).secondaryHeaderColor,
+              color: ThemeColors.surface,
               onPressed: () => print('Clicked'),
             )
           : Column(

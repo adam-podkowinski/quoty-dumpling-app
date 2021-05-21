@@ -69,7 +69,7 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
         duration: Duration(milliseconds: 300),
         width: SizeConfig.screenWidth! * .9,
         decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
+          color: ThemeColors.background,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Container(
@@ -201,8 +201,7 @@ class CardContent extends StatelessWidget {
                         color: Theme.of(context).errorColor,
                         fontSize: 22.sp,
                       )
-                    : Styles.kAuthorStyle.copyWith(
-                        color: Theme.of(context).secondaryHeaderColor),
+                    : Styles.kAuthorStyle.copyWith(color: ThemeColors.surface),
               ),
             ],
           ),

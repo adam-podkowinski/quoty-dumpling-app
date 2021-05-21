@@ -7,9 +7,7 @@ class ThemeColors {
   static const epic = Colors.purpleAccent;
   static const legendary = Colors.yellow;
 
-  static const appBarText = Color(0xffFFFFEA);
-
-  static const main = Color(0xffFFA259);
+  static const primary = Color(0xffFFA259);
   static const secondary = Color(0xffFF7860);
   static const secondaryLight = Color(0xffFED766);
   static const background = Color(0xffFFEBCC);
@@ -25,36 +23,34 @@ class Styles {
   static const epicColor = Colors.purpleAccent;
   static const legendaryColor = Colors.yellow;
 
-  static const appBarTextColor = Color(0xffFFFFEA);
-
   static final fontFamily = 'SofiaPro';
 
   static final double? _screenWidth = SizeConfig.screenWidth;
 
   //@TODO: use ColorScheme
   static final ThemeData mainTheme = ThemeData(
-    fontFamily: 'SofiaPro',
-    primaryColor: Color(0xffFFA259),
-    accentColor: Color(0xffFF7860),
-    colorScheme: ColorScheme.light(
-      primary: Color(0xffFFA259),
-      secondary: Color(0xffFF7860),
-      background: Color(0xffFFEBCC),
-      surface: Color(0xff91bd3a),
-      onBackground: Color(0xff3A2E39),
-      onSurface: Color(0xff3A2E39),
-      onSecondary: appBarTextColor,
-      onPrimary: appBarTextColor,
-    ),
-    buttonColor: Color(0xffFED766),
-    secondaryHeaderColor: Color(0xff91bd3a),
-    backgroundColor: Color(0xffFFEBCC),
+    fontFamily: fontFamily,
+    //primaryColor: Color(0xffFFA259),
+    //accentColor: Color(0xffFF7860),
+    //colorScheme: ColorScheme.light(
+    //  primary: Color(0xffFFA259),
+    //  secondary: Color(0xffFF7860),
+    //  background: Color(0xffFFEBCC),
+    //  surface: Color(0xff91bd3a),
+    //  onBackground: Color(0xff3A2E39),
+    //  onSurface: Color(0xff3A2E39),
+    //  onSecondary: ThemeColors.onSecondary,
+    //  onPrimary: ThemeColors.onSecondary,
+    //),
+    //buttonColor: Color(0xffFED766),
+    //secondaryHeaderColor: Color(0xff91bd3a),
+    //backgroundColor: Color(0xffFFEBCC),
     appBarTheme: AppBarTheme(
       textTheme: TextTheme(
         headline6: TextStyle(
           fontFamily: fontFamily,
           fontWeight: FontWeight.bold,
-          color: appBarTextColor,
+          color: ThemeColors.onSecondary,
           fontSize: 26,
         ),
       ),
@@ -64,14 +60,14 @@ class Styles {
   static TextStyle kTitleStyle = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
-    color: Color(0xff3A2E39),
+    color: ThemeColors.onBackground,
     fontSize: _screenWidth! * 0.08,
   );
 
   static TextStyle kMoneyInShopItemTextStyle = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
-    color: Color(0xff3A2E39),
+    color: ThemeColors.onBackground,
     fontSize: _screenWidth! * 0.04,
   );
 
@@ -117,7 +113,7 @@ class Styles {
 
   static OutlineInputBorder kSearchBarBorder = OutlineInputBorder(
     borderSide: BorderSide(
-      color: mainTheme.buttonColor,
+      color: ThemeColors.secondaryLight,
       width: 4,
     ),
     borderRadius: BorderRadius.all(
@@ -132,40 +128,40 @@ class Styles {
   );
 
   static TextStyle kTabBarTextStyle = TextStyle(
-    color: appBarTextColor,
+    color: ThemeColors.onSecondary,
     fontFamily: fontFamily,
     fontSize: _screenWidth! * 0.04,
   );
 
   static TextStyle kMoneyTextStyle = TextStyle(
-    color: appBarTextColor,
+    color: ThemeColors.onSecondary,
     fontFamily: fontFamily,
     fontSize: _screenWidth! * 0.05,
   );
 
   static TextStyle kShopItemTitleStyle = TextStyle(
-    color: appBarTextColor,
+    color: ThemeColors.onSecondary,
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
     fontSize: _screenWidth! * 0.055,
   );
 
   static TextStyle kShopItemDescriptionStyle = TextStyle(
-    color: appBarTextColor,
+    color: ThemeColors.onSecondary,
     fontFamily: fontFamily,
     fontSize: _screenWidth! * 0.04,
   );
 
   static TextStyle kItemLevelTextStyle = TextStyle(
-    color: appBarTextColor,
+    color: ThemeColors.onSecondary,
     fontFamily: fontFamily,
     fontSize: _screenWidth! * .045,
   );
 
   static LinearGradient backgroundGradient = LinearGradient(
     colors: [
-      mainTheme.primaryColor,
-      mainTheme.accentColor.withOpacity(.8),
+      ThemeColors.primary,
+      ThemeColors.secondary.withOpacity(.8),
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

@@ -61,7 +61,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Theme.of(context).backgroundColor,
+          color: ThemeColors.background,
         ),
         child: Stack(
           children: <Widget>[
@@ -91,7 +91,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                     style: Styles.kSettingsTitleStyle,
                   ),
                   Divider(
-                    color: Theme.of(context).accentColor,
+                    color: ThemeColors.secondary,
                     thickness: 2,
                     endIndent: Styles.kSettingsTitleStyle.fontSize! * 3.6,
                     indent: Styles.kSettingsTitleStyle.fontSize! * 3.6,
@@ -112,7 +112,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                     ? Icons.volume_off
                                     : Icons.volume_up,
                               ),
-                              color: Theme.of(context).accentColor,
+                              color: ThemeColors.secondary,
                               onPressed: () => _audioProvider.changeMute(),
                             ),
                             Positioned.fill(
@@ -121,7 +121,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                 value: _audioProvider.volume,
                                 onChanged: (n) =>
                                     _audioProvider.changeVolume(n),
-                                activeColor: Theme.of(context).accentColor,
+                                activeColor: ThemeColors.secondary,
                               ),
                             ),
                           ],
@@ -130,16 +130,16 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                     ],
                   ),
                   Divider(
-                    color: Theme.of(context).accentColor,
+                    color: ThemeColors.secondary,
                     thickness: .75,
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   RoundedButton(
-                    color: Theme.of(context).secondaryHeaderColor,
+                    color: ThemeColors.surface,
                     width: SizeConfig.screenWidth! * .5,
-                    textColor: Theme.of(context).backgroundColor,
+                    textColor: ThemeColors.background,
                     text: 'Credits',
                     onPressed: () {
                       showDialog(
@@ -148,7 +148,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                           backgroundColor: Colors.transparent,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Theme.of(context).backgroundColor,
+                              color: ThemeColors.background,
                               borderRadius: BorderRadius.circular(_padding),
                             ),
                             child: Padding(
@@ -161,7 +161,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                     style: Styles.kSettingsTitleStyle,
                                   ),
                                   Divider(
-                                    color: Theme.of(context).accentColor,
+                                    color: ThemeColors.secondary,
                                     thickness: 2,
                                     endIndent:
                                         Styles.kSettingsTitleStyle.fontSize! *
@@ -184,7 +184,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                     ],
                                   ),
                                   Divider(
-                                    color: Theme.of(context).accentColor,
+                                    color: ThemeColors.secondary,
                                     thickness: .75,
                                   ),
                                   Text(
@@ -202,7 +202,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                     ),
                                   ),
                                   Divider(
-                                    color: Theme.of(context).accentColor,
+                                    color: ThemeColors.secondary,
                                     thickness: .75,
                                   ),
                                   RoundedButton(
@@ -214,18 +214,15 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                       applicationName: 'Quoty Dumpling',
                                       applicationVersion: '1.0.0',
                                     ),
-                                    color: Theme.of(context).accentColor,
-                                    textColor:
-                                        Theme.of(context).backgroundColor,
+                                    color: ThemeColors.secondary,
+                                    textColor: ThemeColors.background,
                                   ),
                                   RoundedButton(
                                     text: 'OK',
                                     onPressed: () =>
                                         Navigator.of(context).pop(),
-                                    color:
-                                        Theme.of(context).secondaryHeaderColor,
-                                    textColor:
-                                        Theme.of(context).backgroundColor,
+                                    color: ThemeColors.surface,
+                                    textColor: ThemeColors.background,
                                   ),
                                 ],
                               ),
@@ -239,13 +236,13 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                     height: 5,
                   ),
                   Divider(
-                    color: Theme.of(context).accentColor,
+                    color: ThemeColors.secondary,
                     thickness: .75,
                   ),
                   RoundedButton(
                     color: Theme.of(context).errorColor,
                     width: SizeConfig.screenWidth! * .5,
-                    textColor: Theme.of(context).backgroundColor,
+                    textColor: ThemeColors.background,
                     text: 'Reset Game',
                     onPressed: () {
                       showDialog(
@@ -254,7 +251,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                           backgroundColor: Colors.transparent,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Theme.of(context).backgroundColor,
+                              color: ThemeColors.background,
                               borderRadius: BorderRadius.circular(_padding),
                             ),
                             child: Padding(
@@ -267,7 +264,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                     style: Styles.kSettingsTitleStyle,
                                   ),
                                   Divider(
-                                    color: Theme.of(context).accentColor,
+                                    color: ThemeColors.secondary,
                                     thickness: 2,
                                     endIndent:
                                         Styles.kSettingsTitleStyle.fontSize! *
@@ -282,25 +279,22 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                     style: Styles.kSettingsTextStyle,
                                   ),
                                   Divider(
-                                    color: Theme.of(context).accentColor,
+                                    color: ThemeColors.secondary,
                                     thickness: .75,
                                   ),
                                   RoundedButton(
                                     text: 'Go back',
                                     onPressed: () =>
                                         Navigator.of(context).pop(),
-                                    color:
-                                        Theme.of(context).secondaryHeaderColor,
-                                    textColor:
-                                        Theme.of(context).backgroundColor,
+                                    color: ThemeColors.surface,
+                                    textColor: ThemeColors.background,
                                   ),
                                   RoundedButton(
                                     text: 'Reset Game!',
                                     onPressed: () =>
                                         DBProvider.db.resetGame(context),
                                     color: Theme.of(context).errorColor,
-                                    textColor:
-                                        Theme.of(context).backgroundColor,
+                                    textColor: ThemeColors.background,
                                   ),
                                 ],
                               ),

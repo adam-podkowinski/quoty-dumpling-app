@@ -29,7 +29,7 @@ class RoundedButton extends StatelessWidget {
       onPressed: onPressed as void Function()?,
       style: ButtonStyle(
         backgroundColor:
-            MaterialStateProperty.all(color ?? Theme.of(context).buttonColor),
+            MaterialStateProperty.all(color ?? ThemeColors.secondaryLight),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: borderRadius,

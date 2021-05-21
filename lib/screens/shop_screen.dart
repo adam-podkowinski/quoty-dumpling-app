@@ -23,7 +23,7 @@ class ShopScreen extends StatelessWidget {
                 children: <Widget>[
                   Icon(
                     Icons.attach_money,
-                    color: Theme.of(context).secondaryHeaderColor,
+                    color: ThemeColors.surface,
                     size: SizeConfig.screenWidth! * 0.063,
                   ),
                   Flexible(
@@ -72,8 +72,8 @@ class ShopScreen extends StatelessWidget {
                           height: SizeConfig.screenHeight * 0.08,
                           child: TabBar(
                             labelStyle: Styles.kTabBarTextStyle,
-                            labelColor: Styles.appBarTextColor,
-                            indicatorColor: Theme.of(context).buttonColor,
+                            labelColor: ThemeColors.onSecondary,
+                            indicatorColor: ThemeColors.secondaryLight,
                             labelPadding: EdgeInsets.only(top: 5),
                             indicatorWeight: 5,
                             tabs: [

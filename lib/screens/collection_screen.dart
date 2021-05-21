@@ -46,8 +46,8 @@ class _CollectionScreenState extends State<CollectionScreen> {
       floatingActionButton: _collectionSettings.showScrollFab
           ? FloatingActionButton(
               onPressed: () => _collectionSettings.scrollUp(),
-              backgroundColor: Theme.of(context).buttonColor,
-              splashColor: Theme.of(context).accentColor,
+              backgroundColor: ThemeColors.secondaryLight,
+              splashColor: ThemeColors.secondary,
               child: Icon(Icons.arrow_upward),
             )
           : null,
@@ -73,7 +73,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
                       child: Text(
                         'Quotes: ${_quotesProvider.unlockedQuotes.length + _quotesProvider.newQuotes.length}',
                         style: Styles.kSearchBarTextStyle.copyWith(
-                          color: Styles.appBarTextColor,
+                          color: ThemeColors.onSecondary,
                         ),
                       ),
                     ),

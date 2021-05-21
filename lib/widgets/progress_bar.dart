@@ -32,7 +32,7 @@ class ProgressBar extends StatelessWidget {
         ],
       ),
       child: Card(
-        color: Theme.of(context).backgroundColor,
+        color: ThemeColors.background,
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -54,8 +54,8 @@ class ProgressBar extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Theme.of(context).secondaryHeaderColor,
-                      Theme.of(context).buttonColor.withRed(150).withGreen(240),
+                      ThemeColors.surface,
+                      ThemeColors.secondaryLight.withRed(150).withGreen(240),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,

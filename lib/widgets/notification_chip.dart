@@ -18,7 +18,7 @@ class NotificationChip extends StatelessWidget {
         minHeight: 24.w,
       ),
       decoration: BoxDecoration(
-        color: color ?? Theme.of(context).accentColor,
+        color: color ?? ThemeColors.secondary,
         shape: BoxShape.circle,
       ),
       child: Center(

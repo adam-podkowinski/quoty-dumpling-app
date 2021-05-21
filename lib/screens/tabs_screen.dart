@@ -49,14 +49,14 @@ class _TabsScreenState extends State<TabsScreen> {
           onTap: _selectPage,
           gradient: LinearGradient(
             colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).accentColor,
+              ThemeColors.primary,
+              ThemeColors.secondary,
             ],
           ),
           currentIndex: _tabsProvider.selectedPageIndex,
-          backgroundColor: Theme.of(context).buttonColor,
-          iconColor: Theme.of(context).primaryColor,
-          labelColor: Theme.of(context).primaryColor,
+          backgroundColor: ThemeColors.secondaryLight,
+          iconColor: ThemeColors.primary,
+          labelColor: ThemeColors.primary,
           selectedIconColor:
               Theme.of(context).appBarTheme.textTheme!.headline6!.color!,
           selectedLabelColor:

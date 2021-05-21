@@ -40,7 +40,7 @@ class _AchievementsDialog extends State<AchievementsDialog> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(_padding),
-          color: Theme.of(context).backgroundColor,
+          color: ThemeColors.background,
         ),
         child: Padding(
           padding: EdgeInsets.all(_padding),
@@ -60,7 +60,7 @@ class _AchievementsDialog extends State<AchievementsDialog> {
                   ),
                 ),
                 Divider(
-                  color: Theme.of(context).accentColor,
+                  color: ThemeColors.secondary,
                   indent: 11.sp * 5,
                   endIndent: 11.sp * 5,
                   thickness: 2,
@@ -127,7 +127,7 @@ class _ListElementState extends State<ListElement> {
                       }
                     : null,
                 color: achievement.isDone && !achievement.isRewardReceived
-                    ? Theme.of(context).secondaryHeaderColor
+                    ? ThemeColors.surface
                     : Colors.transparent,
                 splashColor:
                     achievement.isRewardReceived ? Colors.transparent : null,
@@ -139,7 +139,7 @@ class _ListElementState extends State<ListElement> {
                   size: 20.w,
                   color: achievement.isDone
                       ? achievement.isRewardReceived
-                          ? Theme.of(context).secondaryHeaderColor
+                          ? ThemeColors.surface
                           : Styles.kSettingsTitleStyle.color
                       : null,
                 ),
@@ -165,7 +165,7 @@ class _ListElementState extends State<ListElement> {
                 Icon(
                   Icons.attach_money,
                   size: 15.w,
-                  color: Theme.of(context).secondaryHeaderColor,
+                  color: ThemeColors.surface,
                 ),
               if (achievement.billsReward != 0)
                 SizedBox(
@@ -188,7 +188,7 @@ class _ListElementState extends State<ListElement> {
             ],
           ),
           Divider(
-            color: Theme.of(context).accentColor,
+            color: ThemeColors.secondary,
             thickness: 1,
           ),
         ],

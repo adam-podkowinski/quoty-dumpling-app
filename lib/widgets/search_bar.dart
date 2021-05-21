@@ -55,7 +55,7 @@ class _SearchBarState extends State<SearchBar> {
               hintText: 'Author or quote...',
               prefixIcon: Icon(
                 Icons.search,
-                color: Theme.of(context).backgroundColor,
+                color: ThemeColors.background,
                 size: SizeConfig.screenWidth! * 0.07,
               ),
               hintStyle: Styles.kSearchBarTextStyle,
@@ -91,7 +91,7 @@ class _SearchBarState extends State<SearchBar> {
                 },
                 child: Icon(
                   Icons.cancel,
-                  color: Theme.of(context).backgroundColor,
+                  color: ThemeColors.background,
                 ),
               ),
             ),

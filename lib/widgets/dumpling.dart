@@ -142,7 +142,7 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
                                 _clicksPowerupController.value,
                               ),
                             )!
-                          : Theme.of(context).backgroundColor.withRed(255),
+                          : ThemeColors.background.withRed(255),
                       BlendMode.modulate,
                     ),
                     child: Image.asset(

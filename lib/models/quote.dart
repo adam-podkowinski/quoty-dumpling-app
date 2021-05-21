@@ -49,16 +49,16 @@ class Quote {
   Color rarityColor(BuildContext context) {
     switch (rarity) {
       case Rarities.common:
-        return Theme.of(context).primaryColor;
+        return ThemeColors.primary;
         break;
       case Rarities.rare:
-        return Styles.rareColor;
+        return ThemeColors.rare;
         break;
       case Rarities.epic:
-        return Styles.epicColor;
+        return ThemeColors.epic;
         break;
       default:
-        return Styles.legendaryColor;
+        return ThemeColors.legendary;
     }
   }
 

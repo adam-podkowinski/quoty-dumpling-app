@@ -8,22 +8,22 @@ Animatable<Color?> runningPowerupColor(context) => TweenSequence<Color?>(
         TweenSequenceItem(
           weight: 1.0,
           tween: ColorTween(
-            begin: Styles.legendaryColor,
-            end: Styles.epicColor,
+            begin: ThemeColors.legendary,
+            end: ThemeColors.epic,
           ),
         ),
         TweenSequenceItem(
           weight: 1.0,
           tween: ColorTween(
-            begin: Styles.epicColor,
-            end: Theme.of(context).secondaryHeaderColor,
+            begin: ThemeColors.epic,
+            end: ThemeColors.surface,
           ),
         ),
         TweenSequenceItem(
           weight: 1.0,
           tween: ColorTween(
-            begin: Theme.of(context).secondaryHeaderColor,
-            end: Styles.legendaryColor,
+            begin: ThemeColors.surface,
+            end: ThemeColors.legendary,
           ),
         ),
       ],

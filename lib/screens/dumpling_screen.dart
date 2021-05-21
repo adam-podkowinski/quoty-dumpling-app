@@ -33,8 +33,8 @@ class AchievementsButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.h),
           width: 100.w,
           height: 50.h,
-          textColor: Theme.of(context).backgroundColor,
-          color: Theme.of(context).accentColor,
+          textColor: ThemeColors.background,
+          color: ThemeColors.secondary,
           onPressed: () => showDialog(
             context: context,
             builder: (ctx) => AchievementsDialog(),
@@ -46,7 +46,7 @@ class AchievementsButton extends StatelessWidget {
             left: -10.w,
             child: ScaleAnimation(
               child: NotificationChip(
-                color: Theme.of(context).secondaryHeaderColor,
+                color: ThemeColors.surface,
                 text: context
                     .watch<Achievements>()
                     .achievementsToReceive
@@ -88,7 +88,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                 children: <Widget>[
                   Icon(
                     Icons.attach_money,
-                    color: Theme.of(context).secondaryHeaderColor,
+                    color: ThemeColors.surface,
                     size: SizeConfig.screenWidth! * 0.063,
                   ),
                   Flexible(
@@ -149,7 +149,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                           builder: (ctx) => GlobalSettingsDialog(),
                         ),
                         icon: Icon(Icons.settings),
-                        color: Styles.appBarTextColor,
+                        color: ThemeColors.onSecondary,
                       ),
                     ),
                     Flexible(

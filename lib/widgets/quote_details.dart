@@ -44,7 +44,7 @@ class _QuoteDetailsState extends State<QuoteDetails> {
       backgroundColor: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
+          color: ThemeColors.background,
           borderRadius: BorderRadius.circular(10),
         ),
         child: ClipRRect(

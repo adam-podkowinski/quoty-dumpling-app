@@ -57,8 +57,8 @@ class _PowerupStateState extends State<PowerupState>
               return CustomPaint(
                 painter: PowerupStatePainter(
                   animation: controller,
-                  color: Styles.appBarTextColor,
-                  backgroundColor: Theme.of(context).accentColor,
+                  color: ThemeColors.onSecondary,
+                  backgroundColor: ThemeColors.secondary,
                 ),
               );
             },
@@ -68,7 +68,7 @@ class _PowerupStateState extends State<PowerupState>
           width: 30.w,
           height: 30.w,
           decoration: BoxDecoration(
-            color: Styles.appBarTextColor,
+            color: ThemeColors.onSecondary,
             shape: BoxShape.circle,
           ),
           child: Icon(

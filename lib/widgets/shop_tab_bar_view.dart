@@ -27,19 +27,19 @@ class _ShopTabBarViewState extends State<ShopTabBarView> {
         ListView(
           children: Provider.of<ShopItems>(context)
               .upgrades
-              .map((u) => Item(u, Theme.of(context).accentColor))
+              .map((u) => Item(u, ThemeColors.secondary))
               .toList(),
         ),
         ListView(
           children: Provider.of<ShopItems>(context)
               .powerups
-              .map((u) => Item(u, Theme.of(context).buttonColor))
+              .map((u) => Item(u, ThemeColors.secondaryLight))
               .toList(),
         ),
         ListView(
           children: Provider.of<ShopItems>(context)
               .money
-              .map((u) => Item(u, Theme.of(context).secondaryHeaderColor))
+              .map((u) => Item(u, ThemeColors.surface))
               .toList(),
         ),
       ],
@@ -145,7 +145,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                           children: <Widget>[
                             Icon(
                               widget.item.itemTypeIcon(),
-                              color: Styles.appBarTextColor,
+                              color: ThemeColors.onSecondary,
                             ),
                             if (widget.item is LabeledItem)
                               if ((widget.item as LabeledItem).hasLabel) ...[
@@ -201,7 +201,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                         ),
                         avatar: Icon(
                           Icons.attach_money,
-                          color: Theme.of(context).secondaryHeaderColor,
+                          color: ThemeColors.surface,
                         ),
                       ),
                     if (widget.item.actualPriceBills != 0)
@@ -213,7 +213,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                         ),
                         avatar: Icon(
                           Icons.attach_money,
-                          color: Theme.of(context).secondaryHeaderColor,
+                          color: ThemeColors.surface,
                         ),
                       ),
                     if (widget.item.actualPriceDiamonds != 0)
@@ -241,7 +241,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                             Text(
                               'USD ',
                               style: Styles.kMoneyInShopItemTextStyle.copyWith(
-                                color: Theme.of(context).secondaryHeaderColor,
+                                color: ThemeColors.surface,
                               ),
                             ),
                             Text(
@@ -316,7 +316,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
         child: label,
       ),
       avatar: avatar,
-      backgroundColor: Styles.appBarTextColor,
+      backgroundColor: ThemeColors.onSecondary,
     );
   }
 
@@ -329,7 +329,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
         duration: Duration(milliseconds: 300),
       );
       _iconColorAnim = ColorTween(
-        begin: Styles.appBarTextColor,
+        begin: ThemeColors.onSecondary,
         end: Theme.of(context).disabledColor,
       ).animate(_iconColorcontroller!);
 
