@@ -12,7 +12,7 @@ class SettingsIcon extends StatelessWidget {
     return IconButton(
       icon: Icon(
         Icons.settings,
-        color: Theme.of(context).appBarTheme.textTheme!.headline6!.color,
+        color: ThemeColors.onSecondary,
       ),
       onPressed: () => showDialog(
         context: context,

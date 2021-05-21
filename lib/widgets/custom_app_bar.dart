@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -41,8 +42,10 @@ class CustomAppBar extends StatelessWidget {
           ),
           Center(
             child: FittedBox(
-              child: Text(title,
-                  style: Theme.of(context).appBarTheme.textTheme!.headline6),
+              child: Text(
+                title,
+                style: Theme.of(context).appBarTheme.textTheme!.headline6,
+              ),
             ),
           ),
           Expanded(

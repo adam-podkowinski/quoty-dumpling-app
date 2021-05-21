@@ -50,13 +50,10 @@ class Quote {
     switch (rarity) {
       case Rarities.common:
         return ThemeColors.primary;
-        break;
       case Rarities.rare:
         return ThemeColors.rare;
-        break;
       case Rarities.epic:
         return ThemeColors.epic;
-        break;
       default:
         return ThemeColors.legendary;
     }
@@ -66,13 +63,10 @@ class Quote {
     switch (rarity) {
       case Rarities.common:
         return 'Common';
-        break;
       case Rarities.rare:
         return 'Rare';
-        break;
       case Rarities.epic:
         return 'Epic';
-        break;
       default:
         return 'Legendary';
     }
@@ -82,13 +76,10 @@ class Quote {
     switch (rarityText) {
       case 'common':
         return Rarities.common;
-        break;
       case 'rare':
         return Rarities.rare;
-        break;
       case 'epic':
         return Rarities.epic;
-        break;
       default:
         return Rarities.legendary;
     }

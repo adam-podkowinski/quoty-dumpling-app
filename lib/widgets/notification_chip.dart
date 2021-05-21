@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quoty_dumpling_app/helpers/constants.dart';
 
 class NotificationChip extends StatelessWidget {
   final color;

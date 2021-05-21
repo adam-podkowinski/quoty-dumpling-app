@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:gradient_nav_bar/gradient_nav_bar.dart';
 import 'package:gradient_nav_bar/model/tab_info.dart';
+import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
@@ -57,10 +58,8 @@ class _TabsScreenState extends State<TabsScreen> {
           backgroundColor: ThemeColors.secondaryLight,
           iconColor: ThemeColors.primary,
           labelColor: ThemeColors.primary,
-          selectedIconColor:
-              Theme.of(context).appBarTheme.textTheme!.headline6!.color!,
-          selectedLabelColor:
-              Theme.of(context).appBarTheme.textTheme!.headline6!.color!,
+          selectedIconColor: ThemeColors.onSecondary,
+          selectedLabelColor: ThemeColors.onSecondary,
           showLabel: true,
           items: [
             TabInfo(

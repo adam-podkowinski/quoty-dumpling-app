@@ -19,9 +19,9 @@ class ThemeColors {
 }
 
 class Styles {
-  static const rareColor = Colors.amber;
-  static const epicColor = Colors.purpleAccent;
-  static const legendaryColor = Colors.yellow;
+//  static const rareColor = Colors.amber;
+//  static const epicColor = Colors.purpleAccent;
+//  static const legendaryColor = Colors.yellow;
 
   static final fontFamily = 'SofiaPro';
 
@@ -122,7 +122,7 @@ class Styles {
   );
 
   static TextStyle kSearchBarTextStyle = TextStyle(
-    color: mainTheme.backgroundColor,
+    color: ThemeColors.background,
     fontFamily: fontFamily,
     fontSize: _screenWidth! * 0.05,
   );

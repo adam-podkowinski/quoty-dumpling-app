@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quoty_dumpling_app/helpers/constants.dart';
 
 class ProgressBar extends StatelessWidget {
   final double? barWidth;
@@ -22,8 +23,7 @@ class ProgressBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: Theme.of(context)
-                .buttonColor
+            color: ThemeColors.secondaryLight
                 .withRed(150)
                 .withGreen(240)
                 .withOpacity(.4),
