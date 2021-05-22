@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/providers/level.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
+import 'package:quoty_dumpling_app/widgets/level_up_dialog.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
 import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
 
@@ -22,7 +23,10 @@ class LevelWidget extends StatelessWidget {
               height: 50.h,
               textColor: Styles.kTitleStyle.color,
               color: ThemeColors.surface,
-              onPressed: () => print('Clicked'),
+              onPressed: () {
+                _levelProvider.removeRewards();
+                return LevelUpDialog.showLevelUpDialog(context);
+              },
             )
           : Column(
               children: [

@@ -59,4 +59,10 @@ class Level extends ChangeNotifier {
   void calculateMaxXP() {
     maxXP = (defaultMaxXP * pow(level, 1.5)).toInt();
   }
+
+  //@TODO: remove only one reward (currently debug)
+  void removeRewards() {
+    _levelRewards.removeAt(0);
+    notifyListeners();
+  }
 }
