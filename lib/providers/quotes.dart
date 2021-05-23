@@ -112,7 +112,7 @@ class Quotes extends ChangeNotifier {
       return Quote(
         author: 'No quotes loaded',
         quote: 'No quotes loaded',
-        rarity: Rarities.legendary,
+        rarity: Rarity.legendary,
         id: 'No quotes loaded',
       );
     }

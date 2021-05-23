@@ -24,7 +24,7 @@ class LevelWidget extends StatelessWidget {
               textColor: Styles.kTitleStyle.color,
               color: ThemeColors.surface,
               onPressed: () {
-                _levelProvider.removeRewards();
+                _levelProvider.claimReward();
                 return LevelUpDialog.showLevelUpDialog(context);
               },
             )

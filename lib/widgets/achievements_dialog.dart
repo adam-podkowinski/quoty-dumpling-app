@@ -27,61 +27,81 @@ class ListElement extends StatefulWidget {
 }
 
 class _AchievementsDialog extends State<AchievementsDialog> {
-  final _padding = 11.w;
+  final _spacing = 11.w;
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(_padding),
+        borderRadius: BorderRadius.circular(_spacing),
       ),
       elevation: 5,
       backgroundColor: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(_padding),
+          borderRadius: BorderRadius.circular(_spacing),
           color: ThemeColors.background,
         ),
-        child: Padding(
-          padding: EdgeInsets.all(_padding),
-          child: SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.center,
-                  child: AutoSizeText(
-                    'Achievements',
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    style: Styles.kSettingsTitleStyle,
-                  ),
+        child: Stack(
+          children: [
+            Align(
+              heightFactor: 1,
+              alignment: Alignment.topRight,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(_spacing),
+                clipBehavior: Clip.hardEdge,
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () => Navigator.of(context).pop(),
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  color: ThemeColors.onBackground,
                 ),
-                Divider(
-                  color: ThemeColors.secondary,
-                  indent: 11.sp * 5,
-                  endIndent: 11.sp * 5,
-                  thickness: 2,
-                ),
-                SizedBox(height: 5.h),
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxHeight: SizeConfig.screenHeight * .6,
-                  ),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount:
-                        Provider.of<Achievements>(context).achievements.length,
-                    itemBuilder: (_, i) => ListElement(
-                      value: i,
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+            Padding(
+              padding: EdgeInsets.all(_spacing),
+              child: SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.center,
+                      child: AutoSizeText(
+                        'Achievements',
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        style: Styles.kSettingsTitleStyle,
+                      ),
+                    ),
+                    Divider(
+                      color: ThemeColors.secondary,
+                      indent: 11.sp * 5,
+                      endIndent: 11.sp * 5,
+                      thickness: 2,
+                    ),
+                    SizedBox(height: 5.h),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight: SizeConfig.screenHeight * .6,
+                      ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: Provider.of<Achievements>(context)
+                            .achievements
+                            .length,
+                        itemBuilder: (_, i) => ListElement(
+                          value: i,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

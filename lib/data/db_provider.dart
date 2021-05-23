@@ -30,10 +30,14 @@ class DBProvider {
         await db.execute(
           'CREATE TABLE UnlockedQuotes(id TEXT PRIMARY KEY, isFavorite INTEGER, unlockingTime TEXT)',
         );
-        await db
-            .execute('CREATE TABLE Items(id TEXT PRIMARY KEY, level INTEGER)');
+        await db.execute(
+          'CREATE TABLE Items(id TEXT PRIMARY KEY, level INTEGER)',
+        );
         await db.execute(
           'CREATE TABLE Achievements(id TEXT PRIMARY KEY, doneVal INTEGER)',
+        );
+        await db.execute(
+          'CREATE TABLE LevelRewards(id INTEGER PRIMARY KEY, levelAchieved INTEGER, billsReward INTEGER, diamondsReward INTEGER, rarityUp TEXT)',
         );
       },
     );
@@ -82,5 +86,10 @@ class DBProvider {
   ) async {
     final db = await _databaseGet;
     await db!.update(table, values, where: 'id=?', whereArgs: [id]);
+  }
+
+  Future removeElementById(String table, dynamic id) async {
+    final db = await _databaseGet;
+    await db!.delete(table, where: 'id=?', whereArgs: [id]);
   }
 }

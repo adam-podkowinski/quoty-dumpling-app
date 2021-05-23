@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 
-enum Rarities {
+enum Rarity {
   common,
   rare,
   epic,
@@ -16,7 +16,7 @@ class Quote {
   var isUnlocked;
   var isFavorite;
   DateTime? unlockingTime;
-  final Rarities rarity;
+  final Rarity rarity;
 
   Quote({
     required this.quote,
@@ -48,11 +48,11 @@ class Quote {
 
   Color rarityColor(BuildContext context) {
     switch (rarity) {
-      case Rarities.common:
+      case Rarity.common:
         return ThemeColors.primary;
-      case Rarities.rare:
+      case Rarity.rare:
         return ThemeColors.rare;
-      case Rarities.epic:
+      case Rarity.epic:
         return ThemeColors.epic;
       default:
         return ThemeColors.legendary;
@@ -61,27 +61,40 @@ class Quote {
 
   String rarityText() {
     switch (rarity) {
-      case Rarities.common:
+      case Rarity.common:
         return 'Common';
-      case Rarities.rare:
+      case Rarity.rare:
         return 'Rare';
-      case Rarities.epic:
+      case Rarity.epic:
         return 'Epic';
       default:
         return 'Legendary';
     }
   }
 
-  static Rarities getRarityByText(String? rarityText) {
+  static Rarity getRarityByText(String? rarityText) {
     switch (rarityText) {
       case 'common':
-        return Rarities.common;
+        return Rarity.common;
       case 'rare':
-        return Rarities.rare;
+        return Rarity.rare;
       case 'epic':
-        return Rarities.epic;
+        return Rarity.epic;
       default:
-        return Rarities.legendary;
+        return Rarity.legendary;
+    }
+  }
+
+  static String getTextByRarity(Rarity rarityEnum) {
+    switch (rarityEnum) {
+      case Rarity.common:
+        return 'Common';
+      case Rarity.rare:
+        return 'Rare';
+      case Rarity.epic:
+        return 'Epic';
+      default:
+        return 'Legendary';
     }
   }
 

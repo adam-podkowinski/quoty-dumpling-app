@@ -25,6 +25,11 @@ class Styles {
 
   static final ThemeData mainTheme = ThemeData(
     fontFamily: fontFamily,
+    primaryColor: ThemeColors.primary,
+    colorScheme: ColorScheme.light().copyWith(
+      primary: ThemeColors.primary,
+      secondary: ThemeColors.secondary,
+    ),
     appBarTheme: AppBarTheme(
       textTheme: TextTheme(
         headline6: TextStyle(

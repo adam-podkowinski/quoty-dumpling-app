@@ -39,7 +39,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
 
   late AudioProvider _audioProvider;
   final _isInit = true;
-  final _padding = SizeConfig.screenWidth! * .035;
+  final _spacing = SizeConfig.screenWidth! * .035;
 
   @override
   void didChangeDependencies() {
@@ -58,7 +58,6 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
       elevation: 5,
       backgroundColor: Colors.transparent,
       child: Container(
-        width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: ThemeColors.background,
@@ -69,19 +68,19 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
               heightFactor: 1,
               alignment: Alignment.topRight,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(_padding),
+                borderRadius: BorderRadius.circular(_spacing),
                 clipBehavior: Clip.hardEdge,
                 child: IconButton(
                   icon: Icon(Icons.close),
                   onPressed: () => Navigator.of(context).pop(),
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
-                  color: Styles.kSettingsTitleStyle.color,
+                  color: ThemeColors.onBackground,
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(_padding),
+              padding: EdgeInsets.all(_spacing),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -149,10 +148,10 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                           child: Container(
                             decoration: BoxDecoration(
                               color: ThemeColors.background,
-                              borderRadius: BorderRadius.circular(_padding),
+                              borderRadius: BorderRadius.circular(_spacing),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(_padding),
+                              padding: EdgeInsets.all(_spacing),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
@@ -252,10 +251,10 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                           child: Container(
                             decoration: BoxDecoration(
                               color: ThemeColors.background,
-                              borderRadius: BorderRadius.circular(_padding),
+                              borderRadius: BorderRadius.circular(_spacing),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(_padding),
+                              padding: EdgeInsets.all(_spacing),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
