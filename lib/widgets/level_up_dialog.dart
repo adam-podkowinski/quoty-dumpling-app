@@ -1,16 +1,19 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
+import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/level.dart';
+import 'package:quoty_dumpling_app/widgets/collection_grid.dart';
 
 class LevelUpDialog extends StatefulWidget {
   final reward;
+  final unlockedQuote;
 
-  const LevelUpDialog(this.reward);
+  const LevelUpDialog(this.reward, this.unlockedQuote);
 
-  static Future showLevelUpDialog(BuildContext context, LevelReward reward) {
+  static Future showLevelUpDialog(
+      BuildContext context, LevelReward reward, Quote unlockedQuote) {
     return showGeneralDialog(
       context: context,
       pageBuilder: (context, anim1, anim2) {
@@ -25,7 +28,7 @@ class LevelUpDialog extends StatefulWidget {
 
         return SlideTransition(
           position: anim1.drive(tween),
-          child: LevelUpDialog(reward),
+          child: LevelUpDialog(reward, unlockedQuote),
         );
       },
       transitionDuration: Duration(milliseconds: 200),
@@ -111,6 +114,7 @@ class _LevelUpDialogState extends State<LevelUpDialog> {
                   ),
                   Divider(color: ThemeColors.secondary),
                   //TODO: show quote reward
+                  //GridCell(widget.unlockedQuote),
                 ],
               ),
             ),

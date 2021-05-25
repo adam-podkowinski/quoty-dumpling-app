@@ -7,6 +7,7 @@ import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tuple/tuple.dart';
 
 class LevelReward {
   late final int id;
@@ -116,23 +117,31 @@ class Level extends ChangeNotifier {
     maxXP = (defaultMaxXP * pow(level, 1.5)).toInt();
   }
 
-  LevelReward claimReward(BuildContext context) {
+  Tuple2<LevelReward, Quote> claimReward(BuildContext context) {
     if (_levelRewards.isNotEmpty) {
       var reward = _levelRewards[0];
       Provider.of<Shop>(context, listen: false).receiveLevelReward(reward);
-      Provider.of<Quotes>(context, listen: false)
+      var unlockedQuote = Provider.of<Quotes>(context, listen: false)
           .unlockRandomQuoteFromRarity(reward.rarityUp);
       DBProvider.db.removeElementById('LevelRewards', _levelRewards[0].id);
       _levelRewards.removeAt(0);
       notifyListeners();
-      return reward;
+      return Tuple2(reward, unlockedQuote);
     }
-    return LevelReward(
-      id: 0,
-      levelAchieved: 0,
-      billsReward: 0,
-      diamondsReward: 0,
-      rarityUp: Rarity.common,
+    return Tuple2(
+      LevelReward(
+        id: 0,
+        levelAchieved: 0,
+        billsReward: 0,
+        diamondsReward: 0,
+        rarityUp: Rarity.common,
+      ),
+      Quote(
+        author: 'No quotes loaded',
+        quote: 'No quotes loaded',
+        rarity: Rarity.legendary,
+        id: 'No quotes loaded',
+      ),
     );
   }
 }

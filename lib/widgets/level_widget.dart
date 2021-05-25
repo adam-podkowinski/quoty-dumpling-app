@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
+import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/level.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/widgets/level_up_dialog.dart';
@@ -24,8 +25,12 @@ class LevelWidget extends StatelessWidget {
               textColor: Styles.kTitleStyle.color,
               color: ThemeColors.surface,
               onPressed: () async {
-                var reward = _levelProvider.claimReward(context);
-                return await LevelUpDialog.showLevelUpDialog(context, reward);
+                var tupleReward = _levelProvider.claimReward(context);
+                return await LevelUpDialog.showLevelUpDialog(
+                  context,
+                  tupleReward.item1,
+                  tupleReward.item2,
+                );
               },
             )
           : Column(
