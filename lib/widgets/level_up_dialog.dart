@@ -37,12 +37,14 @@ class _LevelUpDialogState extends State<LevelUpDialog> {
   final _isInit = true;
 
   late Level _levelProvider;
+  late LevelReward _levelReward;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
       _levelProvider = Provider.of<Level>(context);
+      _levelReward = _levelProvider.levelRewards[0];
     }
   }
 
@@ -102,16 +104,21 @@ class _LevelUpDialogState extends State<LevelUpDialog> {
                     height: 10.h,
                   ),
                   Text(
-                    'Level achieved: ${_levelProvider.level.toString()}',
+                    'Level achieved: ${_levelReward.levelAchieved.toString()}',
                     style: Styles.kSettingsTextStyle,
                   ),
                   Divider(
                     color: ThemeColors.secondary,
                   ),
                   Text(
-                    'Reward: ',
+                    'Bills Reward: ${_levelReward.billsReward.toString()}',
                     style: Styles.kSettingsTextStyle,
                   ),
+                  Text(
+                    'Diamonds Reward: ${_levelReward.diamondsReward.toString()}',
+                    style: Styles.kSettingsTextStyle,
+                  ),
+                  Divider(color: ThemeColors.secondary),
                 ],
               ),
             ),

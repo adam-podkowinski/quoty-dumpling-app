@@ -111,8 +111,10 @@ class Level extends ChangeNotifier {
 
   //@TODO: apply rewards through shop provider
   void claimReward() {
-    DBProvider.db.removeElementById('LevelRewards', _levelRewards[0].id);
-    _levelRewards.removeAt(0);
-    notifyListeners();
+    if (_levelRewards.isNotEmpty) {
+      DBProvider.db.removeElementById('LevelRewards', _levelRewards[0].id);
+      _levelRewards.removeAt(0);
+      notifyListeners();
+    }
   }
 }
