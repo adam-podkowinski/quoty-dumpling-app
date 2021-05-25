@@ -6,7 +6,11 @@ import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/providers/level.dart';
 
 class LevelUpDialog extends StatefulWidget {
-  static Future showLevelUpDialog(BuildContext context) {
+  final reward;
+
+  const LevelUpDialog(this.reward);
+
+  static Future showLevelUpDialog(BuildContext context, LevelReward reward) {
     return showGeneralDialog(
       context: context,
       pageBuilder: (context, anim1, anim2) {
@@ -21,7 +25,7 @@ class LevelUpDialog extends StatefulWidget {
 
         return SlideTransition(
           position: anim1.drive(tween),
-          child: LevelUpDialog(),
+          child: LevelUpDialog(reward),
         );
       },
       transitionDuration: Duration(milliseconds: 200),
@@ -34,19 +38,19 @@ class LevelUpDialog extends StatefulWidget {
 
 class _LevelUpDialogState extends State<LevelUpDialog> {
   final _spacing = 11.w;
-  final _isInit = true;
-
-  late Level _levelProvider;
-  late LevelReward _levelReward;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      _levelProvider = Provider.of<Level>(context);
-      _levelReward = _levelProvider.levelRewards[0];
-    }
-  }
+//  final _isInit = true;
+//
+//  late Level _levelProvider;
+//  late LevelReward _levelReward;
+//
+//  @override
+//  void didChangeDependencies() {
+//    super.didChangeDependencies();
+//    if (_isInit) {
+//      _levelProvider = Provider.of<Level>(context);
+//      _levelReward = _levelProvider.levelRewards[0];
+//    }
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,21 +108,22 @@ class _LevelUpDialogState extends State<LevelUpDialog> {
                     height: 10.h,
                   ),
                   Text(
-                    'Level achieved: ${_levelReward.levelAchieved.toString()}',
+                    'Level achieved: ${widget.reward.levelAchieved.toString()}',
                     style: Styles.kSettingsTextStyle,
                   ),
                   Divider(
                     color: ThemeColors.secondary,
                   ),
                   Text(
-                    'Bills Reward: ${_levelReward.billsReward.toString()}',
+                    'Bills Reward: ${widget.reward.billsReward.toString()}',
                     style: Styles.kSettingsTextStyle,
                   ),
                   Text(
-                    'Diamonds Reward: ${_levelReward.diamondsReward.toString()}',
+                    'Diamonds Reward: ${widget.reward.diamondsReward.toString()}',
                     style: Styles.kSettingsTextStyle,
                   ),
                   Divider(color: ThemeColors.secondary),
+                  //TODO: show quote reward
                 ],
               ),
             ),

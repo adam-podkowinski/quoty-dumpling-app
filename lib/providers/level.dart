@@ -44,7 +44,7 @@ class Level extends ChangeNotifier {
   int currentXP = 0;
   int clickXP = 1;
   int dumplingXP = 100;
-  static const int defaultMaxXP = 500;
+  static const int defaultMaxXP = 30;
   int maxXP = defaultMaxXP;
   double xpMultiplier = 1;
 
@@ -83,16 +83,12 @@ class Level extends ChangeNotifier {
     await prefs.setInt('currentXP', currentXP);
   }
 
-  //@TODO: apply recurrential functionality (in case someone levelups 2 levels during one event - clicking or opening a dumpling)
   Future<void> checkLevelup() async {
     if (currentXP >= maxXP) {
       //LEVEL UP
       level++;
       currentXP = currentXP - maxXP;
       calculateMaxXP();
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('level', level);
-
       var levelupReward = LevelReward(
           id: _levelRewards.length,
           levelAchieved: level,
@@ -102,6 +98,13 @@ class Level extends ChangeNotifier {
 
       _levelRewards.add(levelupReward);
       await DBProvider.db.insert('LevelRewards', levelupReward.toMap());
+
+      if (currentXP >= maxXP) {
+        await checkLevelup();
+      } else {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setInt('level', level);
+      }
     }
   }
 
@@ -109,12 +112,21 @@ class Level extends ChangeNotifier {
     maxXP = (defaultMaxXP * pow(level, 1.5)).toInt();
   }
 
-  //@TODO: apply rewards through shop provider
-  void claimReward() {
+  //TODO: apply rewards through shop provider
+  LevelReward claimReward() {
     if (_levelRewards.isNotEmpty) {
+      var reward = _levelRewards[0];
       DBProvider.db.removeElementById('LevelRewards', _levelRewards[0].id);
       _levelRewards.removeAt(0);
       notifyListeners();
+      return reward;
     }
+    return LevelReward(
+      id: 0,
+      levelAchieved: 0,
+      billsReward: 0,
+      diamondsReward: 0,
+      rarityUp: Rarity.common,
+    );
   }
 }
