@@ -118,6 +118,30 @@ class Quotes extends ChangeNotifier {
     }
   }
 
+  Quote unlockRandomQuoteFromRarity(Rarity rarity) {
+    if (_quotesToUnlock.isNotEmpty) {
+      //var index = Random().nextInt(_quotesToUnlock
+      //        .where((element) =>
+      //            element.rarity.isHigherOrEqualInHierarchy(rarity))
+      //        .length -
+      //    1);
+      var index = Random().nextInt(_quotesToUnlock.length - 1);
+
+      _quotesToUnlock[index].unlockThisQuote();
+      var unlockedQuote = _quotesToUnlock[index];
+      _newQuotes.insert(0, _quotesToUnlock[index]);
+      _quotesToUnlock.remove(_quotesToUnlock[index]);
+      return unlockedQuote;
+    } else {
+      return Quote(
+        author: 'No quotes loaded',
+        quote: 'No quotes loaded',
+        rarity: Rarity.legendary,
+        id: 'No quotes loaded',
+      );
+    }
+  }
+
   void addToUnlockedFromNew() {
     if (!(_newQuotes.isNotEmpty)) return;
     _unlockedQuotes.addAll(_newQuotes);

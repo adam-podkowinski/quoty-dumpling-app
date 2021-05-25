@@ -1,8 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
+import 'package:quoty_dumpling_app/providers/quotes.dart';
+import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LevelReward {
@@ -113,9 +116,12 @@ class Level extends ChangeNotifier {
   }
 
   //TODO: apply rewards through shop provider
-  LevelReward claimReward() {
+  LevelReward claimReward(BuildContext context) {
     if (_levelRewards.isNotEmpty) {
       var reward = _levelRewards[0];
+      Provider.of<Shop>(context, listen: false).receiveLevelReward(reward);
+      Provider.of<Quotes>(context, listen: false)
+          .unlockRandomQuoteFromRarity(reward.rarityUp);
       DBProvider.db.removeElementById('LevelRewards', _levelRewards[0].id);
       _levelRewards.removeAt(0);
       notifyListeners();

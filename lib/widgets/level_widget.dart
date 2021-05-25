@@ -24,7 +24,7 @@ class LevelWidget extends StatelessWidget {
               textColor: Styles.kTitleStyle.color,
               color: ThemeColors.surface,
               onPressed: () async {
-                var reward = _levelProvider.claimReward();
+                var reward = _levelProvider.claimReward(context);
                 return await LevelUpDialog.showLevelUpDialog(context, reward);
               },
             )

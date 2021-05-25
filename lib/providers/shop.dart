@@ -5,6 +5,7 @@ import 'package:quoty_dumpling_app/models/achievement.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
 import 'package:quoty_dumpling_app/models/items/powerup_item.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
+import 'package:quoty_dumpling_app/providers/level.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Shop extends ChangeNotifier {
@@ -22,6 +23,12 @@ class Shop extends ChangeNotifier {
   void receiveAchievement(Achievement a) {
     _bills += a.billsReward!;
     _diamonds += a.diamondsReward!;
+    notifyListeners();
+  }
+
+  void receiveLevelReward(LevelReward l) {
+    _bills += l.billsReward;
+    _diamonds += l.diamondsReward;
     notifyListeners();
   }
 

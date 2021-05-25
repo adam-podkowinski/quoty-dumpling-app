@@ -9,6 +9,41 @@ enum Rarity {
   legendary,
 }
 
+extension RarityFunctions on Rarity {
+  bool isHigherOrEqualInHierarchy(Rarity r) {
+    switch (this) {
+
+      //ITS COMMON
+      case Rarity.common:
+        return true;
+
+      //ITS RARE
+      case Rarity.rare:
+        switch (r) {
+          case Rarity.common:
+            return false;
+          default:
+            return true;
+        }
+
+      //ITS EPIC
+      case Rarity.epic:
+        switch (r) {
+          case Rarity.common:
+            return false;
+          case Rarity.rare:
+            return false;
+          default:
+            return true;
+        }
+
+      //ITS LEGENDARY
+      default:
+        return r == Rarity.legendary;
+    }
+  }
+}
+
 class Quote {
   final quote;
   final author;
