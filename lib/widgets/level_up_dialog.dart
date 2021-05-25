@@ -38,19 +38,6 @@ class LevelUpDialog extends StatefulWidget {
 
 class _LevelUpDialogState extends State<LevelUpDialog> {
   final _spacing = 11.w;
-//  final _isInit = true;
-//
-//  late Level _levelProvider;
-//  late LevelReward _levelReward;
-//
-//  @override
-//  void didChangeDependencies() {
-//    super.didChangeDependencies();
-//    if (_isInit) {
-//      _levelProvider = Provider.of<Level>(context);
-//      _levelReward = _levelProvider.levelRewards[0];
-//    }
-//  }
 
   @override
   Widget build(BuildContext context) {

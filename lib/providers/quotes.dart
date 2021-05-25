@@ -120,12 +120,14 @@ class Quotes extends ChangeNotifier {
 
   Quote unlockRandomQuoteFromRarity(Rarity rarity) {
     if (_quotesToUnlock.isNotEmpty) {
-      //var index = Random().nextInt(_quotesToUnlock
-      //        .where((element) =>
-      //            element.rarity.isHigherOrEqualInHierarchy(rarity))
-      //        .length -
-      //    1);
-      var index = Random().nextInt(_quotesToUnlock.length - 1);
+      var q = _quotesToUnlock
+          .where((element) => rarity.isHigherOrEqualInHierarchy(element.rarity))
+          .toList();
+
+      var randomQuoteIndex = Random().nextInt(q.length - 1);
+
+      var index = _quotesToUnlock
+          .indexWhere((element) => element.id == q[randomQuoteIndex].id);
 
       _quotesToUnlock[index].unlockThisQuote();
       var unlockedQuote = _quotesToUnlock[index];

@@ -93,11 +93,12 @@ class Level extends ChangeNotifier {
       currentXP = currentXP - maxXP;
       calculateMaxXP();
       var levelupReward = LevelReward(
-          id: _levelRewards.length,
-          levelAchieved: level,
-          billsReward: level * 500,
-          diamondsReward: level,
-          rarityUp: Rarity.rare);
+        id: _levelRewards.length,
+        levelAchieved: level,
+        billsReward: level * 500,
+        diamondsReward: level,
+        rarityUp: Rarity.rare,
+      );
 
       _levelRewards.add(levelupReward);
       await DBProvider.db.insert('LevelRewards', levelupReward.toMap());
@@ -115,7 +116,6 @@ class Level extends ChangeNotifier {
     maxXP = (defaultMaxXP * pow(level, 1.5)).toInt();
   }
 
-  //TODO: apply rewards through shop provider
   LevelReward claimReward(BuildContext context) {
     if (_levelRewards.isNotEmpty) {
       var reward = _levelRewards[0];
