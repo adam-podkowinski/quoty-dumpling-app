@@ -9,6 +9,7 @@ import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
 import 'package:tuple/tuple.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/foundation.dart';
 
 class GlobalSettingsDialog extends StatefulWidget {
   @override
@@ -238,71 +239,72 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                     color: ThemeColors.secondary,
                     thickness: .75,
                   ),
-                  RoundedButton(
-                    color: Theme.of(context).errorColor,
-                    width: SizeConfig.screenWidth! * .5,
-                    textColor: ThemeColors.background,
-                    text: 'Reset Game',
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (ctx) => Dialog(
-                          backgroundColor: Colors.transparent,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: ThemeColors.background,
-                              borderRadius: BorderRadius.circular(_spacing),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(_spacing),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Text(
-                                    'Are you sure?',
-                                    style: Styles.kSettingsTitleStyle,
-                                  ),
-                                  Divider(
-                                    color: ThemeColors.secondary,
-                                    thickness: 2,
-                                    endIndent:
-                                        Styles.kSettingsTitleStyle.fontSize! *
-                                            2.3,
-                                    indent:
-                                        Styles.kSettingsTitleStyle.fontSize! *
-                                            2.3,
-                                  ),
-                                  Text(
-                                    'Your game data will be lost. All of your items and quotes will be deleted and you won\'t be able to restore them!',
-                                    textAlign: TextAlign.justify,
-                                    style: Styles.kSettingsTextStyle,
-                                  ),
-                                  Divider(
-                                    color: ThemeColors.secondary,
-                                    thickness: .75,
-                                  ),
-                                  RoundedButton(
-                                    text: 'Go back',
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                    color: ThemeColors.surface,
-                                    textColor: ThemeColors.background,
-                                  ),
-                                  RoundedButton(
-                                    text: 'Reset Game!',
-                                    onPressed: () =>
-                                        DBProvider.db.resetGame(context),
-                                    color: Theme.of(context).errorColor,
-                                    textColor: ThemeColors.background,
-                                  ),
-                                ],
+                  if (!kReleaseMode)
+                    RoundedButton(
+                      color: Theme.of(context).errorColor,
+                      width: SizeConfig.screenWidth! * .5,
+                      textColor: ThemeColors.background,
+                      text: 'Reset Game',
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => Dialog(
+                            backgroundColor: Colors.transparent,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: ThemeColors.background,
+                                borderRadius: BorderRadius.circular(_spacing),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(_spacing),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text(
+                                      'Are you sure?',
+                                      style: Styles.kSettingsTitleStyle,
+                                    ),
+                                    Divider(
+                                      color: ThemeColors.secondary,
+                                      thickness: 2,
+                                      endIndent:
+                                          Styles.kSettingsTitleStyle.fontSize! *
+                                              2.3,
+                                      indent:
+                                          Styles.kSettingsTitleStyle.fontSize! *
+                                              2.3,
+                                    ),
+                                    Text(
+                                      'Your game data will be lost. All of your items and quotes will be deleted and you won\'t be able to restore them!',
+                                      textAlign: TextAlign.justify,
+                                      style: Styles.kSettingsTextStyle,
+                                    ),
+                                    Divider(
+                                      color: ThemeColors.secondary,
+                                      thickness: .75,
+                                    ),
+                                    RoundedButton(
+                                      text: 'Go back',
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      color: ThemeColors.surface,
+                                      textColor: ThemeColors.background,
+                                    ),
+                                    RoundedButton(
+                                      text: 'Reset Game!',
+                                      onPressed: () =>
+                                          DBProvider.db.resetGame(context),
+                                      color: Theme.of(context).errorColor,
+                                      textColor: ThemeColors.background,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
+                        );
+                      },
+                    ),
                 ],
               ),
             ),

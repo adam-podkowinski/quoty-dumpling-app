@@ -48,4 +48,6 @@ Map<String, Function> achievementFunctions = {
     }
     return false;
   },
+
+  //TODO: create achievemnets for level
 };

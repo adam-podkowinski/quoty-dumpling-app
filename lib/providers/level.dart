@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/data/db_provider.dart';
@@ -48,7 +49,7 @@ class Level extends ChangeNotifier {
   int currentXP = 0;
   int clickXP = 1;
   int dumplingXP = 100;
-  static const int defaultMaxXP = 30;
+  static const int defaultMaxXP = kReleaseMode ? 500 : 30;
   int maxXP = defaultMaxXP;
   double xpMultiplier = 1;
 

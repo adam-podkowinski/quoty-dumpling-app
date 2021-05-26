@@ -47,4 +47,6 @@ Map<String, Function> itemFunctions = {
       provider.changeClickMultiplier(-onBuyFunction004),
   'undoBuyFunction005': (Shop provider) =>
       provider.changeCashMultiplierOnOpening(-onBuyFunction005),
+
+  //TODO: create level upgrades and boosts
 };
