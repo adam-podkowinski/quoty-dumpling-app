@@ -1,6 +1,7 @@
 name: quoty_dumpling_app
 version: 1.0.0+1
-description: A new Flutter project.
+description: EZZZZZZZZZZ
+publish_to: none
 environment:
   sdk: '>=2.12.0 <3.0.0'
 dependencies:

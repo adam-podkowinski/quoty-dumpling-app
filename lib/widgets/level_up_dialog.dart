@@ -1,13 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/level.dart';
-import 'package:quoty_dumpling_app/providers/quotes.dart';
-import 'package:quoty_dumpling_app/widgets/collection_grid.dart';
 import 'package:quoty_dumpling_app/widgets/quote_details.dart';
 import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
 
@@ -81,7 +78,6 @@ class _LevelUpDialogState extends State<LevelUpDialog> {
             Padding(
               padding: EdgeInsets.all(_spacing),
               child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Align(
