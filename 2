@@ -277,7 +277,7 @@ class _GridCellState extends State<GridCell>
       child: SlideAnimation(
         verticalOffset: 50.0,
         child: FadeInAnimation(
-          child: QuoteCard(widget.quote),
+          child: QuoteCard(),
         ),
       ),
     );
@@ -287,7 +287,7 @@ class _GridCellState extends State<GridCell>
 class QuoteCard extends StatefulWidget {
   final quote;
 
-  const QuoteCard(this.quote);
+  const QuoteCard({Key? key, this.quote}) : super(key: key);
 
   @override
   State<QuoteCard> createState() => _QuoteCardState();
