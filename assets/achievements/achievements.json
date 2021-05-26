@@ -1,7 +1,7 @@
 [
   {
     "id": "000",
-    "title": "First dumpling",
+    "title": "First Dumpling",
     "description": "Open your first dumpling",
     "maxToDoVal": 1,
     "billsReward": 1000,
@@ -9,7 +9,7 @@
   },
   {
     "id": "001",
-    "title": "Dumpling enthusiast",
+    "title": "Dumpling Enthusiast",
     "description": "Open 3 or more dumpling",
     "maxToDoVal": 3,
     "billsReward": 1000,
@@ -17,10 +17,42 @@
   },
   {
     "id": "002",
-    "title": "Adept Clicker",
+    "title": "Eating Proficiency",
     "description": "Click on dumplings 1000 times",
     "maxToDoVal": 1000,
     "billsReward": 3000,
     "diamondsReward": 20
+  },
+  {
+    "id": "003",
+    "title": "Clicking Adept",
+    "description": "Achieve level 5",
+    "maxToDoVal": 5,
+    "billsReward": 2000,
+    "diamondsReward": 10
+  },
+  {
+    "id": "004",
+    "title": "Clicking Master",
+    "description": "Achieve level 10",
+    "maxToDoVal": 10,
+    "billsReward": 5000,
+    "diamondsReward": 30
+  },
+  {
+    "id": "005",
+    "title": "Clicking Champion",
+    "description": "Achieve level 100",
+    "maxToDoVal": 100,
+    "billsReward": 2000000,
+    "diamondsReward": 100
+  },
+  {
+    "id": "006",
+    "title": "Dumpling Addict",
+    "description": "Click on dumplings 10000 times",
+    "maxToDoVal": 10000,
+    "billsReward": 1000000,
+    "diamondsReward": 50
   }
 ]
