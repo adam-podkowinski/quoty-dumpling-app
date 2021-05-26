@@ -5,7 +5,7 @@ import 'package:quoty_dumpling_app/providers/level.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DumplingProvider extends ChangeNotifier {
-  static const defaultClickMultiplier = !kReleaseMode ? 0.025 : 10.0;
+  static const defaultClickMultiplier = kReleaseMode ? 0.025 : 10.0;
   //shows progress of status bar
   double _progressBarStatus = 0.0;
   //multiplier which shows how much we can add to progressBarStatus each click

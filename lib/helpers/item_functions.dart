@@ -9,9 +9,9 @@ const onBuyFunction002 = 0.05;
 const onBuyFunction007 = 0.04;
 const onBuyFunction008 = 20;
 const onBuyFunction009 = 0.1;
-const onBuyFunction010 = 0.1;
-const onBuyFunction011 = 0.6;
-const onBuyFunction012 = 0.6;
+const onBuyFunction010 = 0.5;
+const onBuyFunction011 = 1.0;
+const onBuyFunction012 = 0.7;
 
 const onBuyFunction003 = 10;
 const onBuyFunction004 = 0.6;
