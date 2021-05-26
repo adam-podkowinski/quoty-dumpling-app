@@ -101,5 +101,35 @@
     "defaultPriceBills": 400,
     "defaultPriceDiamonds": 1,
     "priceUSD": 0
+  },
+  {
+    "id": "010",
+    "name": "Level Upgrade",
+    "description": "Level up quicker",
+    "type": "upgrade",
+    "useCase": "xpMultiplier",
+    "defaultPriceBills": 1000,
+    "defaultPriceDiamonds": 1,
+    "priceUSD": 0
+  },
+  {
+    "id": "011",
+    "name": "Eating Course",
+    "description": "Get more experience from clicking on dumplings",
+    "type": "upgrade",
+    "useCase": "xpMultiplier",
+    "defaultPriceBills": 5000,
+    "defaultPriceDiamonds": 0,
+    "priceUSD": 0
+  },
+  {
+    "id": "012",
+    "name": "Wasteless Dumplings",
+    "description": "Get more experience from opening dumplings",
+    "type": "upgrade",
+    "useCase": "xpMultiplier",
+    "defaultPriceBills": 1200,
+    "defaultPriceDiamonds": 1,
+    "priceUSD": 0
   }
 ]

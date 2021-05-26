@@ -8,12 +8,15 @@ import 'package:quoty_dumpling_app/models/items/upgrade_item.dart';
 enum IconType {
   BILLS,
   CLICKS,
+  OPENING,
+  LEVEL,
 }
 
 enum UseCase {
   BILLS_ON_CLICK,
   CASH_ON_OPENING,
   CLICK_MULTIPLIER,
+  LEVEL_XP_MULTIPLIER,
 }
 
 abstract class LabeledItem extends ShopItem {
@@ -73,6 +76,15 @@ abstract class ShopItem {
         {
           return CustomIcons.dollar;
         }
+      case IconType.OPENING:
+        {
+          return CustomIcons.opening;
+        }
+
+      case IconType.LEVEL:
+        {
+          return CustomIcons.levelup;
+        }
       default:
         {
           return CustomIcons.click;
@@ -86,6 +98,8 @@ abstract class ShopItem {
         return UseCase.CLICK_MULTIPLIER;
       case 'billsOnClick':
         return UseCase.BILLS_ON_CLICK;
+      case 'xpMultiplier':
+        return UseCase.LEVEL_XP_MULTIPLIER;
       default:
         return UseCase.CASH_ON_OPENING;
     }
@@ -95,8 +109,12 @@ abstract class ShopItem {
     switch (iType) {
       case 'clickMultiplier':
         return IconType.CLICKS;
-      default:
+      case 'billsOnClick':
         return IconType.BILLS;
+      case 'xpMultiplier':
+        return IconType.LEVEL;
+      default:
+        return IconType.OPENING;
     }
   }
 }

@@ -73,12 +73,14 @@ What's the use case for your item (input a number):
 2) clickMultiplier
 3) billsOpening
 4) bills
+5) xpMultiplier
 Your choice: """)
     switcher = {
         "1": "billsOnClick",
         "2": "clickMultiplier",
         "3": "billsOpening",
-        "4": "bills"
+        "4": "bills",
+        "5": "xpMultiplier",
     }
     use_case = switcher.get(use_case_inp, "Invalid use case!")
     default_price_bills = input("Default bills price: ")

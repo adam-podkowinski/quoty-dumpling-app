@@ -13,8 +13,9 @@ class Shop extends ChangeNotifier {
   int _bills = 0;
   int _billsPerClick = 1;
   double _cashMultiplierOnOpening = 1.5;
-
   int? _billsOnOpening;
+  final int _diamondsOnOpening = 5;
+
   int get bills => _bills;
   int? get billsOnOpening => _billsOnOpening;
   int get billsPerClick => _billsPerClick;
@@ -145,7 +146,7 @@ class Shop extends ChangeNotifier {
 
   void openDumpling() {
     _bills += _billsOnOpening!;
-    _diamonds += 20;
+    _diamonds += _diamondsOnOpening;
     WidgetsBinding.instance!.addPostFrameCallback(
       (_) => notifyListeners(),
     );

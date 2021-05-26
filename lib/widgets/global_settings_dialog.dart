@@ -25,7 +25,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
 
   static const List<Tuple2<String, String>> _assetsCreators = [
     Tuple2<String, String>(
-      'Icons: Free Pik',
+      'Icons: Free Pik, bqlqn',
       _iconsURL,
     ),
     Tuple2<String, String>(

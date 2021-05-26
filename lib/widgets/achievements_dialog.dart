@@ -118,10 +118,11 @@ class _ListElementState extends State<ListElement> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: widget.value != 3
-          ? EdgeInsets.only(
-              bottom: SizeConfig.screenWidth! * .006, left: 10.w, right: 10.w)
-          : EdgeInsets.all(0),
+      padding: EdgeInsets.only(
+        bottom: SizeConfig.screenWidth! * .006,
+        left: 10.w,
+        right: 10.w,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

@@ -51,7 +51,8 @@ class Level extends ChangeNotifier {
   int dumplingXP = 100;
   static const int defaultMaxXP = kReleaseMode ? 500 : 30;
   int maxXP = defaultMaxXP;
-  double xpMultiplier = 1;
+  double clickXPMultiplier = 1;
+  double openXPMultiplier = 1;
 
   List<LevelReward> _levelRewards = [];
   List<LevelReward> get levelRewards {
@@ -64,7 +65,8 @@ class Level extends ChangeNotifier {
     currentXP = prefs.getInt('currentXP') ?? 0;
     clickXP = prefs.getInt('clickXP') ?? 1;
     dumplingXP = prefs.getInt('dumplingXP') ?? 200;
-    xpMultiplier = prefs.getDouble('xpMultiplier') ?? 1.0;
+    clickXPMultiplier = prefs.getDouble('clickXPMultiplier') ?? 1.0;
+    openXPMultiplier = prefs.getDouble('openXPMultiplier') ?? 1.0;
     var levelRewardsMap = await DBProvider.db.getAllElements('LevelRewards');
 
     _levelRewards = levelRewardsMap.map((rewardMap) {
@@ -75,14 +77,14 @@ class Level extends ChangeNotifier {
   }
 
   Future<void> click() async {
-    currentXP += (clickXP * xpMultiplier).toInt();
+    currentXP += (clickXP * clickXPMultiplier).round();
     await checkLevelup();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('currentXP', currentXP);
   }
 
   Future<void> openDumpling() async {
-    currentXP += (dumplingXP * xpMultiplier).toInt();
+    currentXP += (dumplingXP * openXPMultiplier).toInt();
     await checkLevelup();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('currentXP', currentXP);
@@ -116,6 +118,35 @@ class Level extends ChangeNotifier {
 
   void calculateMaxXP() {
     maxXP = (defaultMaxXP * pow(level, 1.5)).toInt();
+  }
+
+  void changeXPMultiplier(double howMuch) {
+    openXPMultiplier += howMuch;
+    clickXPMultiplier += howMuch;
+    SharedPreferences.getInstance().then(
+      (prefs) => {
+        prefs.setDouble('openXPMultiplier', openXPMultiplier),
+        prefs.setDouble('clickXPMultiplier', clickXPMultiplier),
+      },
+    );
+  }
+
+  void changeClickXPMultiplier(double howMuch) {
+    clickXPMultiplier += howMuch;
+    SharedPreferences.getInstance().then(
+      (prefs) => {
+        prefs.setDouble('clickXPMultiplier', clickXPMultiplier),
+      },
+    );
+  }
+
+  void changeOpenXPMultiplier(double howMuch) {
+    openXPMultiplier += howMuch;
+    SharedPreferences.getInstance().then(
+      (prefs) => {
+        prefs.setDouble('openXPMultiplier', openXPMultiplier),
+      },
+    );
   }
 
   Tuple2<LevelReward, Quote> claimReward(BuildContext context) {

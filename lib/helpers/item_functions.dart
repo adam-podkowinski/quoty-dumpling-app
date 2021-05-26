@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
+import 'package:quoty_dumpling_app/providers/level.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 
 const onBuyFunction000 = 1;
@@ -8,6 +9,9 @@ const onBuyFunction002 = 0.05;
 const onBuyFunction007 = 0.04;
 const onBuyFunction008 = 20;
 const onBuyFunction009 = 0.1;
+const onBuyFunction010 = 0.1;
+const onBuyFunction011 = 0.6;
+const onBuyFunction012 = 0.6;
 
 const onBuyFunction003 = 10;
 const onBuyFunction004 = 0.6;
@@ -29,6 +33,12 @@ Map<String, Function> itemFunctions = {
       .changeBillsOnClick(onBuyFunction008),
   'onBuyFunction009': (context) => Provider.of<Shop>(context, listen: false)
       .changeCashMultiplierOnOpening(onBuyFunction009),
+  'onBuyFunction010': (context) => Provider.of<Level>(context, listen: false)
+      .changeXPMultiplier(onBuyFunction010),
+  'onBuyFunction011': (context) => Provider.of<Level>(context, listen: false)
+      .changeClickXPMultiplier(onBuyFunction011),
+  'onBuyFunction012': (context) => Provider.of<Level>(context, listen: false)
+      .changeOpenXPMultiplier(onBuyFunction012),
 
   // Powerup on buy functions
   // Double dot is necessary
@@ -47,6 +57,4 @@ Map<String, Function> itemFunctions = {
       provider.changeClickMultiplier(-onBuyFunction004),
   'undoBuyFunction005': (Shop provider) =>
       provider.changeCashMultiplierOnOpening(-onBuyFunction005),
-
-  //TODO: create level upgrades and boosts
 };
