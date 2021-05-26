@@ -38,6 +38,15 @@ class AudioProvider extends ChangeNotifier {
     );
   }
 
+  Future playLevelup() async {
+    if (_isMuted || _volume <= 0) return;
+    await _audioCache.play(
+      'levelup_sound.mp3',
+      mode: PlayerMode.LOW_LATENCY,
+      volume: _volume,
+    );
+  }
+
   Future playBuyItem() async {
     if (_isMuted || _volume <= 0) return;
     await _audioCache.play(

@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
+import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/level.dart';
 import 'package:quoty_dumpling_app/widgets/quote_details.dart';
 import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
@@ -16,6 +18,7 @@ class LevelUpDialog extends StatefulWidget {
 
   static Future showLevelUpDialog(
       BuildContext context, LevelReward reward, Quote unlockedQuote) {
+    Provider.of<AudioProvider>(context, listen: false).playLevelup();
     return showGeneralDialog(
       context: context,
       pageBuilder: (context, anim1, anim2) {
