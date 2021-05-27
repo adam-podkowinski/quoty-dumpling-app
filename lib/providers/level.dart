@@ -80,9 +80,6 @@ class Level extends ChangeNotifier {
     currentXP += (clickXP * clickXPMultiplier).round();
     await checkLevelup();
 
-    print(
-        'CLICK XP: $clickXP ; CLICKXPMULTIPLIER: $clickXPMultiplier ; lol ${(clickXP * clickXPMultiplier).round()}');
-
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('currentXP', currentXP);
   }

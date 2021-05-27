@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_phoenix/generated/i18n.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart' as sql;
@@ -34,9 +36,6 @@ class DBProvider {
           'CREATE TABLE Items(id TEXT PRIMARY KEY, level INTEGER)',
         );
         await db.execute(
-          'CREATE TABLE Achievements(id TEXT PRIMARY KEY, doneVal INTEGER)',
-        );
-        await db.execute(
           'CREATE TABLE LevelRewards(id INTEGER PRIMARY KEY, levelAchieved INTEGER, billsReward INTEGER, diamondsReward INTEGER, rarityUp TEXT)',
         );
       },
@@ -63,6 +62,62 @@ class DBProvider {
     final db = await _databaseGet;
     var res = await db!.query(table);
     return res.isNotEmpty ? res : [];
+  }
+
+  Future<Map<String, dynamic>> databaseToJSON() async {
+    final db = await _databaseGet;
+
+    var tableNamesMap = await db!.rawQuery('''
+SELECT
+    name
+FROM
+    sqlite_master
+WHERE
+    type ='table' AND
+    name NOT LIKE 'sqlite_%' AND
+    name NOT LIKE 'android_metadata';
+''');
+
+    var tableNames = tableNamesMap.map((e) => e['name']).toList();
+
+    var endMap = {'sqlite': {}};
+
+    for (var e in tableNames) {
+      endMap['sqlite']![e] = await getAllElements(e.toString());
+    }
+
+    return endMap;
+  }
+
+  Future fillDatabaseFromJSON(Map<String, dynamic> json) async {
+    final db = await _databaseGet;
+
+    var tableNamesMap = await db!.rawQuery('''
+SELECT
+    name
+FROM
+    sqlite_master
+WHERE
+    type ='table' AND
+    name NOT LIKE 'sqlite_%' AND
+    name NOT LIKE 'android_metadata';
+''');
+
+    var tableNames = tableNamesMap.map((e) => e['name']).toList();
+
+    tableNames.forEach((e) async {
+      await db.delete(e.toString());
+    });
+
+    json['sqlite']!.forEach((key, value) async {
+      if (value.isNotEmpty) {
+        value.forEach(
+          (element) async {
+            await insert(key, element);
+          },
+        );
+      }
+    });
   }
 
   Future resetGame(context) async {
