@@ -14,6 +14,29 @@ import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/screens/tabs_screen.dart';
 
+typedef FutureVoidCallback = Future<void> Function();
+
+class LifecycleEventHandler extends WidgetsBindingObserver {
+  LifecycleEventHandler({this.resumeCallBack, this.detachedCallBack});
+
+  final FutureVoidCallback? resumeCallBack;
+  final FutureVoidCallback? detachedCallBack;
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+        detachedCallBack == null ? print('') : await detachedCallBack!();
+        break;
+      case AppLifecycleState.resumed:
+        resumeCallBack == null ? print('') : await resumeCallBack!();
+        break;
+    }
+  }
+}
+
 class LoadingScreen extends StatefulWidget {
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
@@ -23,6 +46,9 @@ class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
   Future _setData(context) async {
     SizeConfig.init(context);
+    //await DBProvider.db.fillDatabaseFromJSON(
+    //  await DBProvider.db.databaseToJSON(),
+    //);
     await Provider.of<Shop>(context, listen: false).initShop();
     await Provider.of<ShopItems>(context, listen: false).fetchItems();
     await Provider.of<DumplingProvider>(context, listen: false).initDumpling();
@@ -35,6 +61,12 @@ class _LoadingScreenState extends State<LoadingScreen>
       Provider.of<Level>(context, listen: false),
     );
     await Provider.of<CollectionSettings>(context, listen: false).initOptions();
+
+    WidgetsBinding.instance!.addObserver(
+      LifecycleEventHandler(
+        detachedCallBack: () async => print('DETACHING'),
+      ),
+    );
   }
 
   late AnimationController _controller;
