@@ -29,6 +29,7 @@
 .pub-cache/
 .pub/
 /build/
+/android/java_pid*
 
 # Web related
 lib/generated_plugin_registrant.dart
