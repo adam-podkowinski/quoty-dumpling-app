@@ -13,6 +13,7 @@ import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
 import 'package:quoty_dumpling_app/screens/loading_screen.dart';
+import 'package:flutter/services.dart';
 
 const pixel3 = Size(393, 737);
 const lgg6 = Size(360, 720);
@@ -31,6 +32,10 @@ void main() {
 class QuotyDumplingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(

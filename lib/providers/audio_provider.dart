@@ -74,6 +74,8 @@ class AudioProvider extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     _volume = prefs.getDouble('volume') ?? .5;
     _isMuted = _volume <= 0 ? true : false;
+    await _loopCache.clearAll();
+    await _audioCache.clearAll();
     await stopLoopAudio();
     await playLoopAudio();
   }

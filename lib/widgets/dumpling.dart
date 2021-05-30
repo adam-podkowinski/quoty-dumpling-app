@@ -31,7 +31,7 @@ class DumplingScreenWhileClicking extends StatelessWidget {
           barWidth: SizeConfig.screenWidth! * .7,
           barHeight: SizeConfig.screenHeight * .02,
           currentPercent:
-              Provider.of<DumplingProvider>(context).progressBarStatus,
+              Provider.of<DumplingProvider>(context).clickingProgress,
         ),
       ],
     );
@@ -115,7 +115,7 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
                 }
               },
               onTap: () {
-                if (_dumplingProvider.progressBarStatus < 1) {
+                if (_dumplingProvider.clickingProgress < 1) {
                   Provider.of<AudioProvider>(context, listen: false)
                       .playDumplingEating()
                       .then(

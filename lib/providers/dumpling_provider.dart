@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DumplingProvider extends ChangeNotifier {
   static const defaultClickMultiplier = kReleaseMode ? 0.025 : 10.0;
   //shows progress of status bar
-  double _progressBarStatus = 0.0;
+  double _clickingProgress = 0.0;
   //multiplier which shows how much we can add to progressBarStatus each click
   double _clickMultiplier = defaultClickMultiplier;
   //if progress bar status is equal to 1 (full)
@@ -18,14 +18,14 @@ class DumplingProvider extends ChangeNotifier {
 
   bool get isFull => _isFull;
 
-  double get progressBarStatus => _progressBarStatus;
+  double get clickingProgress => _clickingProgress;
 
   int get numberOfClicks => _numberOfClicks;
   int get numberOfDumplingsOpened => _numberOfDumplingsOpened;
 
   Future initDumpling() async {
     final prefs = await SharedPreferences.getInstance();
-    _progressBarStatus = prefs.getDouble('clickingProgress') ?? 0.0;
+    _clickingProgress = prefs.getDouble('clickingProgress') ?? 0.0;
     _clickMultiplier =
         prefs.getDouble('clickMultiplier') ?? defaultClickMultiplier;
     _numberOfClicks = prefs.getInt('numberOfClicks') ?? 0;
@@ -38,16 +38,16 @@ class DumplingProvider extends ChangeNotifier {
     );
     Future.delayed(
       Duration(milliseconds: 300),
-      () => _progressBarStatus = 0,
+      () => _clickingProgress = 0,
     );
   }
 
   Future<void> clickedOnDumpling(BuildContext context) async {
-    _progressBarStatus += _clickMultiplier / 100;
+    _clickingProgress += _clickMultiplier / 100;
     _numberOfClicks++;
     var dbInstance = await SharedPreferences.getInstance();
     await Provider.of<Level>(context, listen: false).click();
-    if (_progressBarStatus >= 1) {
+    if (_clickingProgress >= 1) {
       _isFull = true;
       _numberOfDumplingsOpened++;
       await Provider.of<Level>(context, listen: false).openDumpling();
@@ -57,6 +57,7 @@ class DumplingProvider extends ChangeNotifier {
       );
     }
     await dbInstance.setInt('numberOfClicks', _numberOfClicks);
+    await dbInstance.setDouble('clickingProgress', _clickingProgress);
     notifyListeners();
   }
 

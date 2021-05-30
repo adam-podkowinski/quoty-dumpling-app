@@ -109,7 +109,7 @@
     "type": "upgrade",
     "useCase": "xpMultiplier",
     "defaultPriceBills": 1000,
-    "defaultPriceDiamonds": 1,
+    "defaultPriceDiamonds": 0,
     "priceUSD": 0
   },
   {
@@ -129,7 +129,7 @@
     "type": "upgrade",
     "useCase": "xpMultiplier",
     "defaultPriceBills": 1200,
-    "defaultPriceDiamonds": 1,
+    "defaultPriceDiamonds": 0,
     "priceUSD": 0
   }
 ]
