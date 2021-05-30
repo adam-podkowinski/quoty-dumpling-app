@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
@@ -46,9 +47,9 @@ class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
   Future _setData(context) async {
     SizeConfig.init(context);
-    //await DBProvider.db.fillDatabaseFromJSON(
-    //  await DBProvider.db.databaseToJSON(),
-    //);
+    await DBProvider.db.fillDatabaseFromJSON(
+      await DBProvider.db.databaseToJSON(),
+    );
     await Provider.of<Shop>(context, listen: false).initShop();
     await Provider.of<ShopItems>(context, listen: false).fetchItems();
     await Provider.of<DumplingProvider>(context, listen: false).initDumpling();

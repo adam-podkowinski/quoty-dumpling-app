@@ -78,12 +78,20 @@ WHERE
 
     var tableNames = tableNamesMap.map((e) => e['name']).toList();
 
-    var endMap = {'sqlite': {}};
+    var endMap = {'sqlite': {}, 'shared_preferences': {}};
 
     for (var e in tableNames) {
       endMap['sqlite']![e] = await getAllElements(e.toString());
     }
 
+    var prefs = await SharedPreferences.getInstance();
+    var prefsKeys = prefs.getKeys();
+
+    for (var e in prefsKeys) {
+      endMap['shared_preferences']![e] = prefs.get(e);
+    }
+
+    print(endMap);
     return endMap;
   }
 
@@ -114,6 +122,27 @@ WHERE
             await insert(key, element);
           },
         );
+      }
+    });
+
+    var prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    json['shared_preferences']!.forEach((key, value) async {
+      switch (value.runtimeType) {
+        case int:
+          await prefs.setInt(key, value);
+          break;
+        case String:
+          await prefs.setString(key, value);
+          break;
+        case bool:
+          await prefs.setBool(key, value);
+          break;
+        case double:
+          await prefs.setDouble(key, value);
+          break;
+        default:
+          break;
       }
     });
   }
