@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
@@ -71,7 +72,31 @@ class _DumplingScreenState extends State<DumplingScreen>
 
   late var _shopProvider;
 
-  var _isInit = true;
+  late var _isInit = true;
+
+  final BannerAd myBanner = BannerAd(
+    adUnitId: 'ca-app-pub-4457173945348292/7486886749',
+    size: AdSize.banner,
+    request: AdRequest(),
+    listener: BannerAdListener(),
+  );
+
+  late final AdWidget adWidget;
+
+  late final Container adContainer;
+
+  @override
+  void initState() {
+    super.initState();
+    myBanner.load();
+    adWidget = AdWidget(ad: myBanner);
+    adContainer = Container(
+      alignment: Alignment.center,
+      width: myBanner.size.width.toDouble(),
+      height: myBanner.size.height.toDouble(),
+      child: adWidget,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +109,7 @@ class _DumplingScreenState extends State<DumplingScreen>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
+            adContainer,
             CustomAppBar(
               'Dumpling',
               prefix: Row(

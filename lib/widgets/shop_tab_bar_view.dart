@@ -37,13 +37,12 @@ class _ShopTabBarViewState extends State<ShopTabBarView> {
               .map((u) => Item(u, ThemeColors.secondaryLight))
               .toList(),
         ),
-        if (kReleaseMode)
-          ListView(
-            children: Provider.of<ShopItems>(context)
-                .money
-                .map((u) => Item(u, ThemeColors.surface))
-                .toList(),
-          ),
+        ListView(
+          children: Provider.of<ShopItems>(context)
+              .money
+              .map((u) => Item(u, ThemeColors.surface))
+              .toList(),
+        ),
       ],
     );
   }

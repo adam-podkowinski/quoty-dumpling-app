@@ -13,6 +13,7 @@ import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
 import 'package:quoty_dumpling_app/screens/loading_screen.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/services.dart';
 
 const pixel3 = Size(393, 737);
@@ -21,6 +22,8 @@ const currentSize = lgg6;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
+
   runApp(
     Phoenix(
       child: QuotyDumplingApp(),
