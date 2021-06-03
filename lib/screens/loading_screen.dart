@@ -50,6 +50,7 @@ class _LoadingScreenState extends State<LoadingScreen>
     //  await DBProvider.db.fillDatabaseFromJSON(
     //    await DBProvider.db.databaseToJSON(),
     //  );
+    //await DBProvider.db.resetGame(context);
     await Provider.of<Shop>(context, listen: false).initShop();
     await Provider.of<ShopItems>(context, listen: false).fetchItems();
     await Provider.of<DumplingProvider>(context, listen: false).initDumpling();
