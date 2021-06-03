@@ -68,7 +68,9 @@ class DumplingScreen extends StatefulWidget {
 class _DumplingScreenState extends State<DumplingScreen>
     with TickerProviderStateMixin {
   late var _dumplingProvider;
+
   late var _shopProvider;
+
   var _isInit = true;
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/animations.dart';
@@ -36,12 +37,13 @@ class _ShopTabBarViewState extends State<ShopTabBarView> {
               .map((u) => Item(u, ThemeColors.secondaryLight))
               .toList(),
         ),
-        ListView(
-          children: Provider.of<ShopItems>(context)
-              .money
-              .map((u) => Item(u, ThemeColors.surface))
-              .toList(),
-        ),
+        if (kReleaseMode)
+          ListView(
+            children: Provider.of<ShopItems>(context)
+                .money
+                .map((u) => Item(u, ThemeColors.surface))
+                .toList(),
+          ),
       ],
     );
   }
