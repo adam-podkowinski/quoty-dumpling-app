@@ -81,6 +81,7 @@ class QuotyDumplingApp extends StatelessWidget {
         designSize: currentSize,
         builder: () => MaterialApp(
           theme: Styles.mainTheme,
+          title: 'Quoty Dumpling',
           home: SafeArea(
             child: LoadingScreen(),
           ),
