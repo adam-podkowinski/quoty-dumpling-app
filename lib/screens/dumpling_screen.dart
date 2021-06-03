@@ -75,7 +75,7 @@ class _DumplingScreenState extends State<DumplingScreen>
   late var _isInit = true;
 
   final BannerAd myBanner = BannerAd(
-    adUnitId: 'ca-app-pub-4457173945348292/7486886749',
+    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
     size: AdSize.banner,
     request: AdRequest(),
     listener: BannerAdListener(),
@@ -99,6 +99,12 @@ class _DumplingScreenState extends State<DumplingScreen>
   }
 
   @override
+  void dispose() {
+    myBanner.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: DecoratedBox(
@@ -109,7 +115,6 @@ class _DumplingScreenState extends State<DumplingScreen>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            adContainer,
             CustomAppBar(
               'Dumpling',
               prefix: Row(
@@ -204,6 +209,7 @@ class _DumplingScreenState extends State<DumplingScreen>
             Spacer(
               flex: 3,
             ),
+            adContainer,
           ],
         ),
       ),
