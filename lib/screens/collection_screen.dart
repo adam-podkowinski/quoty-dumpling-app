@@ -26,7 +26,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
   late CollectionSettings _collectionSettings;
   var _isInit = true;
   InterstitialAd? _interstitialAd;
-  static const int _adChance = 4;
+  static const int _adChance = 3; // lower = more money ?????
 
   @override
   void initState() {

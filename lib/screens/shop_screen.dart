@@ -85,7 +85,7 @@ class ShopScreen extends StatelessWidget {
                                 'Powerups',
                               ),
                               Text(
-                                'Currency',
+                                'Other',
                               ),
                             ],
                           ),

@@ -64,13 +64,13 @@
   },
   {
     "id": "006",
-    "name": "1k Bills",
-    "description": "",
+    "name": "Remove ads",
+    "description": "Help me buy food and don't let me starve :)",
     "type": "money",
-    "useCase": "bills",
+    "useCase": "removeAds",
     "defaultPriceBills": 0,
     "defaultPriceDiamonds": 0,
-    "priceUSD": 15
+    "priceUSD": 4
   },
   {
     "id": "007",

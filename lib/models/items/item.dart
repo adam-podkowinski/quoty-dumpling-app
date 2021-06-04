@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:quoty_dumpling_app/helpers/item_functions.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
@@ -10,6 +11,7 @@ enum IconType {
   CLICKS,
   OPENING,
   LEVEL,
+  ADS,
 }
 
 enum UseCase {
@@ -17,6 +19,7 @@ enum UseCase {
   CASH_ON_OPENING,
   CLICK_MULTIPLIER,
   LEVEL_XP_MULTIPLIER,
+  REMOVE_ADS,
 }
 
 abstract class LabeledItem extends ShopItem {
@@ -73,18 +76,13 @@ abstract class ShopItem {
   IconData itemTypeIcon() {
     switch (iconType) {
       case IconType.BILLS:
-        {
-          return CustomIcons.dollar;
-        }
+        return CustomIcons.dollar;
       case IconType.OPENING:
-        {
-          return CustomIcons.opening;
-        }
-
+        return CustomIcons.opening;
       case IconType.LEVEL:
-        {
-          return CustomIcons.levelup;
-        }
+        return CustomIcons.levelup;
+      case IconType.ADS:
+        return Icons.favorite;
       default:
         {
           return CustomIcons.click;
@@ -100,6 +98,8 @@ abstract class ShopItem {
         return UseCase.BILLS_ON_CLICK;
       case 'xpMultiplier':
         return UseCase.LEVEL_XP_MULTIPLIER;
+      case 'removeAds':
+        return UseCase.REMOVE_ADS;
       default:
         return UseCase.CASH_ON_OPENING;
     }
@@ -113,6 +113,8 @@ abstract class ShopItem {
         return IconType.BILLS;
       case 'xpMultiplier':
         return IconType.LEVEL;
+      case 'removeAds':
+        return IconType.ADS;
       default:
         return IconType.OPENING;
     }
