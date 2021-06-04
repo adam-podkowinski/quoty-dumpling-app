@@ -1,5 +1,9 @@
+import 'dart:math';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
@@ -21,6 +25,8 @@ class _CollectionScreenState extends State<CollectionScreen> {
   late Quotes _quotesProvider;
   late CollectionSettings _collectionSettings;
   var _isInit = true;
+  InterstitialAd? _interstitialAd;
+  static const int _adChance = 4;
 
   @override
   void initState() {
@@ -36,6 +42,24 @@ class _CollectionScreenState extends State<CollectionScreen> {
     if (_isInit) {
       _collectionSettings = Provider.of<CollectionSettings>(context)
         ..initScrollControlller();
+      var rng = Random();
+      if (rng.nextInt(_adChance) == 3) {
+        InterstitialAd.load(
+          adUnitId: kReleaseMode
+              ? 'ca-app-pub-4457173945348292/8129158227'
+              : 'ca-app-pub-3940256099942544/1033173712',
+          request: AdRequest(),
+          adLoadCallback: InterstitialAdLoadCallback(
+            onAdLoaded: (InterstitialAd ad) {
+              _interstitialAd = ad;
+              _interstitialAd!.show();
+            },
+            onAdFailedToLoad: (LoadAdError error) {
+              print('InterstitialAd failed to load: $error');
+            },
+          ),
+        );
+      }
       _isInit = false;
     }
   }
