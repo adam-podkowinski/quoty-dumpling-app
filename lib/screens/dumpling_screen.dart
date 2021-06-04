@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -74,21 +75,38 @@ class _DumplingScreenState extends State<DumplingScreen>
 
   late var _isInit = true;
 
-  final BannerAd myBanner = BannerAd(
-    adUnitId: 'ca-app-pub-3940256099942544/6300978111',
-    size: AdSize.banner,
-    request: AdRequest(),
-    listener: BannerAdListener(),
-  );
-
+  late final BannerAd myBanner;
+  late final BannerAdListener listener;
   late final AdWidget adWidget;
-
   late final Container adContainer;
+  var _showAd = false;
 
   @override
   void initState() {
     super.initState();
+    listener = BannerAdListener(
+      onAdLoaded: (Ad ad) {
+        print('Ad loaded.');
+        setState(() {
+          _showAd = true;
+        });
+      },
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        _showAd = false;
+        ad.dispose();
+        print('Ad failed to load: Error( $error )');
+      },
+    );
+    myBanner = BannerAd(
+      adUnitId: kReleaseMode
+          ? 'ca-app-pub-4457173945348292/7486886749'
+          : 'ca-app-pub-3940256099942544/6300978111',
+      size: AdSize.banner,
+      request: AdRequest(),
+      listener: listener,
+    );
     myBanner.load();
+
     adWidget = AdWidget(ad: myBanner);
     adContainer = Container(
       alignment: Alignment.center,
@@ -96,6 +114,21 @@ class _DumplingScreenState extends State<DumplingScreen>
       height: myBanner.size.height.toDouble(),
       child: adWidget,
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      _dumplingProvider = Provider.of<DumplingProvider>(context)
+        ..addListener(() {
+          if (_dumplingProvider.isFull) {
+            _dumplingProvider.clearClickingProgressWhenFull();
+          }
+        });
+      _shopProvider = Provider.of<Shop>(context);
+      _isInit = false;
+    }
   }
 
   @override
@@ -209,25 +242,10 @@ class _DumplingScreenState extends State<DumplingScreen>
             Spacer(
               flex: 3,
             ),
-            adContainer,
+            if (_showAd) adContainer
           ],
         ),
       ),
     );
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      _dumplingProvider = Provider.of<DumplingProvider>(context)
-        ..addListener(() {
-          if (_dumplingProvider.isFull) {
-            _dumplingProvider.clearClickingProgressWhenFull();
-          }
-        });
-      _shopProvider = Provider.of<Shop>(context);
-      _isInit = false;
-    }
   }
 }
