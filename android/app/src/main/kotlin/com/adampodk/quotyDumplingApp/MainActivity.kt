@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.annotation.NonNull
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInResult
@@ -15,10 +16,18 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "quotyDumplingChannel"
-    var isSignedIn: Boolean = false
+    private var isSignedIn: Boolean = false
+
+    private lateinit var signInOption: GoogleSignInOptions
+
+    private lateinit var signInClient: GoogleSignInClient
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        signInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+                .requestScopes(SCOPE_APPFOLDER)
+                .build()
+        signInClient = GoogleSignIn.getClient(this, signInOption)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             if (call.method == "signIn") {
                 signIn()
@@ -36,12 +45,7 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun signInSilently() {
-        val signInOption: GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
-                .requestEmail()
-                .requestScopes(SCOPE_APPFOLDER)
-                .build()
-        val signInClient = GoogleSignIn.getClient(this, signInOption)
-        signInClient.silentSignIn().addOnCompleteListener(this
+        signInClient.silentSignIn()?.addOnCompleteListener(this
         ) { task ->
             if (task.isSuccessful) {
                 isSignedIn = true
@@ -57,12 +61,7 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun signIn() {
-        val signInOption: GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
-                .requestEmail()
-                .requestScopes(SCOPE_APPFOLDER)
-                .build()
-        val signInClient = GoogleSignIn.getClient(this, signInOption)
-        signInClient.silentSignIn().addOnCompleteListener(this
+        signInClient.silentSignIn()?.addOnCompleteListener(this
         ) { task ->
             if (task.isSuccessful) {
                 isSignedIn = true
@@ -72,7 +71,7 @@ class MainActivity : FlutterActivity() {
                     Log.d("SIGNING", "Signed client object (email==null): " + task.result.toString())
                 }
             } else {
-                isSignedIn = false
+                isSignedIn = true
                 val intent = signInClient.signInIntent
                 Log.d("SIGNING", "Failed to sign silently, trying explicit signing")
                 Log.d("SIGNING", "OPENING ACTIVITY")
@@ -82,13 +81,9 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun signOut() {
-      val signOutTask = GoogleSignInClient.signOut()
-        if (signOutTask.isSuccessful) {
-            Log.d("SIGNING", "Signed out successfully")
-            isSignedIn = false;
-        } else {
-            Log.d("SIGNING", "ERROR: ouldn't sign out!")
-        }
+        val signOutTask = signInClient.signOut()
+        Log.d("SIGNING", signOutTask.exception.toString())
+        isSignedIn = false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: android.content.Intent?) {
@@ -102,7 +97,7 @@ class MainActivity : FlutterActivity() {
                 Log.d("SIGNING", "Success LOLL!!!")
                 if (signedInAccount != null) {
                     if (signedInAccount.email != null) {
-                        Log.d("SIGNING", signedInAccount.email!!.toString())
+                        Log.d("SIGNING", "Signed in account email: " + signedInAccount.email!!.toString())
                     } else {
                         Log.d("SIGNING", "Signed in account email==null: $signedInAccount")
                     }
