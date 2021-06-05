@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +11,6 @@ import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/widgets/rounded_button.dart';
 import 'package:tuple/tuple.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/foundation.dart';
 
 class GlobalSettingsDialog extends StatefulWidget {
   @override
@@ -236,10 +236,17 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                   SizedBox(
                     height: 5,
                   ),
-                  RoundedButton(onPressed: () async {
-                    const platform = MethodChannel('quotyDumplingChannel');
-                    await platform.invokeMethod('signIn');
-                  }),
+                  Divider(
+                    color: ThemeColors.secondary,
+                    thickness: .75,
+                  ),
+                  RoundedButton(
+                    onPressed: () async {
+                      const platform = MethodChannel('quotyDumplingChannel');
+                      await platform.invokeMethod('signIn');
+                    },
+                    color: ThemeColors.surface,
+                  ),
                   Divider(
                     color: ThemeColors.secondary,
                     thickness: .75,

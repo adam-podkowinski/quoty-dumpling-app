@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,9 +8,12 @@ import 'package:sqflite/sqflite.dart' as sql;
 
 class DBProvider {
   DBProvider._();
+
   static final DBProvider db = DBProvider._();
 
   sql.Database? _database;
+
+  bool isSignedIn = false;
 
   Future<sql.Database?> get _databaseGet async {
     if (_database != null && _database!.isOpen) {
@@ -18,6 +22,12 @@ class DBProvider {
 
     _database = await initDB();
     return _database;
+  }
+
+  Future<void> signIn() async {
+    const platform = MethodChannel('quotyDumplingChannel');
+    isSignedIn = await platform.invokeMethod('signInSilently');
+    print('Is signed in? : $isSignedIn');
   }
 
   Future<sql.Database> initDB() async {

@@ -33,6 +33,7 @@
 /android/key.properties
 deployment_cert.der
 upload-keystore.jks
+/android/app/src/main/res/values/ids.xml
 
 # Web related
 lib/generated_plugin_registrant.dart
