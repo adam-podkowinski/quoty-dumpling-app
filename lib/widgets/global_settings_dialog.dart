@@ -238,7 +238,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                   ),
                   RoundedButton(onPressed: () async {
                     const platform = MethodChannel('quotyDumplingChannel');
-                    await platform.invokeMethod('initGoogleClientAndSignIn');
+                    await platform.invokeMethod('signIn');
                   }),
                   Divider(
                     color: ThemeColors.secondary,
