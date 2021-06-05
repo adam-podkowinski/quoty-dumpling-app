@@ -28,6 +28,10 @@ class MainActivity : FlutterActivity() {
                 signInSilently()
                 result.success(isSignedIn)
             }
+            if (call.method == "signOut") {
+                signOut()
+                result.success(isSignedIn)
+            }
         }
     }
 
@@ -74,6 +78,16 @@ class MainActivity : FlutterActivity() {
                 Log.d("SIGNING", "OPENING ACTIVITY")
                 startActivityForResult(intent, 0)
             }
+        }
+    }
+
+    private fun signOut() {
+      val signOutTask = GoogleSignInClient.signOut()
+        if (signOutTask.isSuccessful) {
+            Log.d("SIGNING", "Signed out successfully")
+            isSignedIn = false;
+        } else {
+            Log.d("SIGNING", "ERROR: ouldn't sign out!")
         }
     }
 

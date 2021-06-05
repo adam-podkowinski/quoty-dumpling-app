@@ -24,10 +24,28 @@ class DBProvider {
     return _database;
   }
 
+  Future<void> signInSilently() async {
+    if (!isSignedIn) {
+      const platform = MethodChannel('quotyDumplingChannel');
+      isSignedIn = await platform.invokeMethod('signInSilently');
+      print('Is signed in? : $isSignedIn');
+    }
+  }
+
   Future<void> signIn() async {
-    const platform = MethodChannel('quotyDumplingChannel');
-    isSignedIn = await platform.invokeMethod('signInSilently');
-    print('Is signed in? : $isSignedIn');
+    if (!isSignedIn) {
+      const platform = MethodChannel('quotyDumplingChannel');
+      isSignedIn = await platform.invokeMethod('signIn');
+      print('Is signed in? : $isSignedIn');
+    }
+  }
+
+  Future<void> signOut() async {
+    if (isSignedIn) {
+      const platform = MethodChannel('quotyDumplingChannel');
+      isSignedIn = await platform.invokeMethod('signOut');
+      print('Is signed in? : $isSignedIn');
+    }
   }
 
   Future<sql.Database> initDB() async {

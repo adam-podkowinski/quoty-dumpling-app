@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
@@ -241,11 +240,12 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                     thickness: .75,
                   ),
                   RoundedButton(
-                    onPressed: () async {
-                      const platform = MethodChannel('quotyDumplingChannel');
-                      await platform.invokeMethod('signIn');
-                    },
-                    color: ThemeColors.surface,
+                    onPressed: DBProvider.db.isSignedIn
+                        ? () => setState(() => DBProvider.db.signOut())
+                        : () => setState(() => DBProvider.db.signIn()),
+                    color: DBProvider.db.isSignedIn
+                        ? Theme.of(context).errorColor
+                        : ThemeColors.surface,
                   ),
                   Divider(
                     color: ThemeColors.secondary,

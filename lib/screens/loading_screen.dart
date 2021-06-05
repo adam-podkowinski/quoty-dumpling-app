@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
@@ -52,7 +51,7 @@ class _LoadingScreenState extends State<LoadingScreen>
     //    await DBProvider.db.databaseToJSON(),
     //  );
     //  await DBProvider.db.resetGame(context);
-    await DBProvider.db.signIn();
+    await DBProvider.db.signInSilently();
     await Provider.of<Shop>(context, listen: false).initShop();
     await Provider.of<ShopItems>(context, listen: false).fetchItems();
     await Provider.of<DumplingProvider>(context, listen: false).initDumpling();
