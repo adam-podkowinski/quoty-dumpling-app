@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
@@ -234,6 +235,12 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                   ),
                   SizedBox(
                     height: 5,
+                  ),
+                  RoundedButton(
+                    onPressed: () async {
+                      const platform = MethodChannel('quotyDumplingChannel');
+                      await platform.invokeMethod('initGoogleClientAndSignIn');
+                    }
                   ),
                   Divider(
                     color: ThemeColors.secondary,
