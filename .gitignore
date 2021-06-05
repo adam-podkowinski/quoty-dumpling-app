@@ -32,6 +32,7 @@
 /android/java_pid*
 /android/key.properties
 deployment_cert.der
+upload-keystore.jks
 
 # Web related
 lib/generated_plugin_registrant.dart

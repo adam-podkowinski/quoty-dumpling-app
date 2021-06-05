@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.adampodk.quoty_dumpling_app">
+    package="com.adampodk.quotyDumplingApp">
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
@@ -31,7 +31,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4457173945348292~4955064505"/>
         <meta-data android:name="com.google.android.gms.games.APP_ID"
-            android:value="@string/app_id" />
+            android:value="13047614495" />
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
     </application>
