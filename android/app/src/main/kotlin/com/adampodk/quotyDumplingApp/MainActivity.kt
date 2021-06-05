@@ -40,16 +40,11 @@ class MainActivity : FlutterActivity() {
             if (result.isSuccess()) {
                 // The signed in account is stored in the result.
                 val signedInAccount: GoogleSignInAccount = result.getSignInAccount()!!
-                print("\n\nSuccess!!!\n\n\n")
+                print("\n\nSuccess LOLL!!!\n\n\n")
             } else {
                 print("\n\nERROR!\n\n")
                 print(result.status)
-//                    var message: kotlin.String = result.getStatus().getStatusMessage()
-//                    if (message == null || message.isEmpty()) {
-//                        print(message)
-//                    }
             }
         }
-
     }
 }
