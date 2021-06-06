@@ -25,13 +25,8 @@ class DBProvider extends ChangeNotifier {
     if (!isSignedIn) {
       const platform = MethodChannel('quotyDumplingChannel');
       isSignedIn = await platform.invokeMethod('signIn');
-      // result.success only invokes when we sign in silently (can't invoke from another activity),
-      // so we inovoke 'signIn' again to sign in silently
-      // i dunno if it works but who cares
-      if (isSignedIn == false) {
-        isSignedIn = await platform.invokeMethod('signIn');
-      }
       print('Is signed in? : $isSignedIn');
+      notifyListeners();
     }
   }
 
@@ -40,7 +35,16 @@ class DBProvider extends ChangeNotifier {
       const platform = MethodChannel('quotyDumplingChannel');
       isSignedIn = await platform.invokeMethod('signOut');
       print('Is signed in? : $isSignedIn');
+      notifyListeners();
     }
+  }
+
+  Future<void> isUserSignedIn() async {
+    var isSignedInCopy = isSignedIn;
+    const platform = MethodChannel('quotyDumplingChannel');
+    isSignedIn = await platform.invokeMethod('isUserSignedIn');
+    print('Is signed in? : $isSignedIn');
+    if (isSignedIn != isSignedInCopy) notifyListeners();
   }
 
   Future<sql.Database> initDB() async {

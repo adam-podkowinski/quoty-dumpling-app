@@ -40,6 +40,9 @@ class MainActivity : FlutterActivity() {
             if (call.method == "signOut") {
                 signOut(result)
             }
+            if (call.method == "isUserSignedIn") {
+                isUserSignedIn(result)
+            }
         }
     }
 
@@ -83,16 +86,18 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private fun isUserSignedIn(): Boolean {
+    private fun isUserSignedIn(result: MethodChannel.Result): Boolean {
         val user = GoogleSignIn.getLastSignedInAccount(this)
 
         return if (user != null) {
             isSignedIn = true
             Log.d("SIGNING", "User is signed in")
+            result.success(true)
             true
         } else {
             isSignedIn = false
             Log.d("SIGNING", "User is NOT signed in")
+            result.success(false)
             false
         }
     }

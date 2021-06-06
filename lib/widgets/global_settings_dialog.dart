@@ -48,7 +48,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
     super.didChangeDependencies();
     if (_isInit) {
       _audioProvider = Provider.of<AudioProvider>(context);
-      _dbProvider = Provider.of<DBProvider>(context);
+      _dbProvider = Provider.of<DBProvider>(context)..isUserSignedIn();
     }
   }
 
@@ -243,8 +243,8 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                   ),
                   RoundedButton(
                     onPressed: _dbProvider.isSignedIn
-                        ? () => setState(() => _dbProvider.signOut())
-                        : () => setState(() => _dbProvider.signIn()),
+                        ? () => _dbProvider.signOut()
+                        : () => _dbProvider.signIn(),
                     color: _dbProvider.isSignedIn
                         ? Theme.of(context).errorColor
                         : ThemeColors.surface,
