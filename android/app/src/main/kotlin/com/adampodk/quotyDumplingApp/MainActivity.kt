@@ -1,6 +1,7 @@
 package com.adampodk.quotyDumplingApp
 
 import android.util.Log
+import android.view.Gravity
 import androidx.annotation.NonNull
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -10,6 +11,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.Scope
+import com.google.android.gms.games.Game
+import com.google.android.gms.games.Games
+import com.google.android.gms.games.GamesClient
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -44,6 +48,12 @@ class MainActivity : FlutterActivity() {
         ) { task ->
             if (task.isSuccessful) {
                 isSignedIn = true
+
+                Games.getGamesClient(this, task.result)
+                        .setGravityForPopups(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
+                val gamesClient = Games.getGamesClient(this@MainActivity, task.result)
+                gamesClient.setViewForPopups(window.decorView.findViewById(android.R.id.content))
+
                 result.success(true)
                 if (task.result.email != null) {
                     Log.d("SIGNING", "Signed client object email: " + task.result.email!!.toString())
@@ -81,8 +91,14 @@ class MainActivity : FlutterActivity() {
                 // The signed in account is stored in the result.
                 val signedInAccount: GoogleSignInAccount? = result.signInAccount
                 isSignedIn = true
-                Log.d("SIGNING", "Success LOLL!!!")
+
                 if (signedInAccount != null) {
+
+                    Games.getGamesClient(this, signedInAccount)
+                            .setGravityForPopups(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
+                    val gamesClient = Games.getGamesClient(this@MainActivity, signedInAccount)
+                    gamesClient.setViewForPopups(window.decorView.findViewById(android.R.id.content))
+
                     if (signedInAccount.email != null) {
                         Log.d("SIGNING", "Signed in account email: " + signedInAccount.email!!.toString())
                     } else {

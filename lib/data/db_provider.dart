@@ -24,18 +24,16 @@ class DBProvider {
     return _database;
   }
 
-  Future<void> signInSilently() async {
-    if (!isSignedIn) {
-      const platform = MethodChannel('quotyDumplingChannel');
-      isSignedIn = await platform.invokeMethod('signInSilently');
-      print('Is signed in? : $isSignedIn');
-    }
-  }
-
   Future<void> signIn() async {
     if (!isSignedIn) {
       const platform = MethodChannel('quotyDumplingChannel');
       isSignedIn = await platform.invokeMethod('signIn');
+      // result.success only invokes when we sign in silently (can't invoke from another activity),
+      // so we inovoke 'signIn' again to sign in silently
+      // i dunno if it works but who cares
+      if (isSignedIn == false) {
+        isSignedIn = await platform.invokeMethod('signIn');
+      }
       print('Is signed in? : $isSignedIn');
     }
   }
