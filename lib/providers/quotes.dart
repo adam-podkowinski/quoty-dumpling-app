@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/models/quote.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart'
@@ -60,7 +61,7 @@ class Quotes extends ChangeNotifier {
     return [..._collectionTilesToAnimate];
   }
 
-  Future<void> fetchQuotes() async {
+  Future<void> fetchQuotes(BuildContext context) async {
     print('fetching quotes');
     List<dynamic>? contents;
     var contentsB = await rootBundle.load('assets/quotes/quotes.json');
@@ -76,7 +77,8 @@ class Quotes extends ChangeNotifier {
     );
 
     final _unlockedQuotesFromDB =
-        await DBProvider.db.getAllElements('UnlockedQuotes');
+        await Provider.of<DBProvider>(context, listen: false)
+            .getAllElements('UnlockedQuotes');
 
     //debug
     // _unlockedQuotes.addAll(
@@ -100,10 +102,10 @@ class Quotes extends ChangeNotifier {
     _sortOption = SortEnum.values[prefs.getInt('sortOption') ?? 0];
   }
 
-  Quote unlockRandomQuote() {
+  Quote unlockRandomQuote(BuildContext context) {
     if (_quotesToUnlock.isNotEmpty) {
       var index = Random().nextInt(_quotesToUnlock.length - 1);
-      _quotesToUnlock[index].unlockThisQuote();
+      _quotesToUnlock[index].unlockThisQuote(context);
       var unlockedQuote = _quotesToUnlock[index];
       _newQuotes.insert(0, _quotesToUnlock[index]);
       _quotesToUnlock.remove(_quotesToUnlock[index]);
@@ -118,7 +120,7 @@ class Quotes extends ChangeNotifier {
     }
   }
 
-  Quote unlockRandomQuoteFromRarity(Rarity rarity) {
+  Quote unlockRandomQuoteFromRarity(Rarity rarity, BuildContext context) {
     if (_quotesToUnlock.isNotEmpty) {
       var q = _quotesToUnlock
           .where((element) => rarity.isHigherOrEqualInHierarchy(element.rarity))
@@ -129,7 +131,7 @@ class Quotes extends ChangeNotifier {
       var index = _quotesToUnlock
           .indexWhere((element) => element.id == q[randomQuoteIndex].id);
 
-      _quotesToUnlock[index].unlockThisQuote();
+      _quotesToUnlock[index].unlockThisQuote(context);
       var unlockedQuote = _quotesToUnlock[index];
       _newQuotes.insert(0, _quotesToUnlock[index]);
       _quotesToUnlock.remove(_quotesToUnlock[index]);

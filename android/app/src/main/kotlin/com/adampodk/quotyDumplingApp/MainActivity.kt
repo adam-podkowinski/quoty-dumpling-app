@@ -83,6 +83,21 @@ class MainActivity : FlutterActivity() {
         }
     }
 
+    private fun isUserSignedIn(): Boolean {
+        val user = GoogleSignIn.getLastSignedInAccount(this)
+
+        return if (user != null) {
+            isSignedIn = true
+            Log.d("SIGNING", "User is signed in")
+            true
+        } else {
+            isSignedIn = false
+            Log.d("SIGNING", "User is NOT signed in")
+            false
+        }
+    }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: android.content.Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val result: GoogleSignInResult? = Auth.GoogleSignInApi.getSignInResultFromIntent(data)

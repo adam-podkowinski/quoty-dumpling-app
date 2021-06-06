@@ -357,7 +357,7 @@ class _QuoteCardState extends State<QuoteCard> {
                 child: GridTileBar(
                   leading: InkWell(
                     onTap: () => setState(() {
-                      widget.quote.changeFavorite();
+                      widget.quote.changeFavorite(context);
 
                       if (_quotesProvider.favoritesOnTop!) {
                         _quotesProvider.sortCollection(true);

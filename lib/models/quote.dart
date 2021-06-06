@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 
@@ -133,11 +134,11 @@ class Quote {
     }
   }
 
-  Future<void> unlockThisQuote() async {
+  Future<void> unlockThisQuote(BuildContext context) async {
     isUnlocked = true;
     unlockingTime = DateTime.now();
 
-    await DBProvider.db.insert(
+    await Provider.of<DBProvider>(context, listen: false).insert(
       'UnlockedQuotes',
       {
         'id': id,
@@ -147,10 +148,10 @@ class Quote {
     );
   }
 
-  void changeFavorite() {
+  void changeFavorite(BuildContext context) {
     isFavorite = !isFavorite;
 
-    DBProvider.db.updateElementById(
+    Provider.of<DBProvider>(context, listen: false).updateElementById(
       'UnlockedQuotes',
       id,
       {'isFavorite': isFavorite ? 1 : 0},

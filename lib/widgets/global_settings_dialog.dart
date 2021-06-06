@@ -39,6 +39,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
   ];
 
   late AudioProvider _audioProvider;
+  late DBProvider _dbProvider;
   final _isInit = true;
   final _spacing = SizeConfig.screenWidth! * .035;
 
@@ -47,6 +48,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
     super.didChangeDependencies();
     if (_isInit) {
       _audioProvider = Provider.of<AudioProvider>(context);
+      _dbProvider = Provider.of<DBProvider>(context);
     }
   }
 
@@ -240,10 +242,10 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                     thickness: .75,
                   ),
                   RoundedButton(
-                    onPressed: DBProvider.db.isSignedIn
-                        ? () => setState(() => DBProvider.db.signOut())
-                        : () => setState(() => DBProvider.db.signIn()),
-                    color: DBProvider.db.isSignedIn
+                    onPressed: _dbProvider.isSignedIn
+                        ? () => setState(() => _dbProvider.signOut())
+                        : () => setState(() => _dbProvider.signIn()),
+                    color: _dbProvider.isSignedIn
                         ? Theme.of(context).errorColor
                         : ThemeColors.surface,
                   ),
@@ -305,7 +307,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                     RoundedButton(
                                       text: 'Reset Game!',
                                       onPressed: () =>
-                                          DBProvider.db.resetGame(context),
+                                          _dbProvider.resetGame(context),
                                       color: Theme.of(context).errorColor,
                                       textColor: ThemeColors.background,
                                     ),

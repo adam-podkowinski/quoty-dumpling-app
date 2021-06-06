@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
 
@@ -17,14 +18,16 @@ class UpgradeItem extends LabeledItem {
     _level = _level! + 1;
     refreshActualPrices();
 
-    DBProvider.db.getElement('Items', id).then((i) {
+    Provider.of<DBProvider>(context, listen: false)
+        .getElement('Items', id)
+        .then((i) {
       if (i.isEmpty) {
-        DBProvider.db.insert(
+        Provider.of<DBProvider>(context, listen: false).insert(
           'Items',
           {'id': id, 'level': _level},
         );
       } else {
-        DBProvider.db.updateElementById(
+        Provider.of<DBProvider>(context, listen: false).updateElementById(
           'Items',
           id,
           {'level': _level},

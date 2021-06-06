@@ -59,7 +59,7 @@ class Level extends ChangeNotifier {
     return [..._levelRewards];
   }
 
-  Future fetchLevel() async {
+  Future fetchLevel(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     level = prefs.getInt('level') ?? 1;
     currentXP = prefs.getInt('currentXP') ?? 0;
@@ -67,7 +67,8 @@ class Level extends ChangeNotifier {
     dumplingXP = prefs.getInt('dumplingXP') ?? 200;
     clickXPMultiplier = prefs.getDouble('clickXPMultiplier') ?? 1.0;
     openXPMultiplier = prefs.getDouble('openXPMultiplier') ?? 1.0;
-    var levelRewardsMap = await DBProvider.db.getAllElements('LevelRewards');
+    var levelRewardsMap = await Provider.of<DBProvider>(context, listen: false)
+        .getAllElements('LevelRewards');
 
     _levelRewards = levelRewardsMap.map((rewardMap) {
       return LevelReward.fromMap(rewardMap);
@@ -76,22 +77,22 @@ class Level extends ChangeNotifier {
     calculateMaxXP();
   }
 
-  Future<void> click() async {
+  Future<void> click(BuildContext context) async {
     currentXP += (clickXP * clickXPMultiplier).round();
-    await checkLevelup();
+    await checkLevelup(context);
 
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('currentXP', currentXP);
   }
 
-  Future<void> openDumpling() async {
+  Future<void> openDumpling(BuildContext context) async {
     currentXP += (dumplingXP * openXPMultiplier).toInt();
-    await checkLevelup();
+    await checkLevelup(context);
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('currentXP', currentXP);
   }
 
-  Future<void> checkLevelup() async {
+  Future<void> checkLevelup(BuildContext context) async {
     if (currentXP >= maxXP) {
       //LEVEL UP
       level++;
@@ -106,10 +107,11 @@ class Level extends ChangeNotifier {
       );
 
       _levelRewards.add(levelupReward);
-      await DBProvider.db.insert('LevelRewards', levelupReward.toMap());
+      await Provider.of<DBProvider>(context, listen: false)
+          .insert('LevelRewards', levelupReward.toMap());
 
       if (currentXP >= maxXP) {
-        await checkLevelup();
+        await checkLevelup(context);
       } else {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setInt('level', level);
@@ -155,8 +157,9 @@ class Level extends ChangeNotifier {
       var reward = _levelRewards[0];
       Provider.of<Shop>(context, listen: false).receiveLevelReward(reward);
       var unlockedQuote = Provider.of<Quotes>(context, listen: false)
-          .unlockRandomQuoteFromRarity(reward.rarityUp);
-      DBProvider.db.removeElementById('LevelRewards', _levelRewards[0].id);
+          .unlockRandomQuoteFromRarity(reward.rarityUp, context);
+      Provider.of<DBProvider>(context, listen: false)
+          .removeElementById('LevelRewards', _levelRewards[0].id);
       _levelRewards.removeAt(0);
       notifyListeners();
       return Tuple2(reward, unlockedQuote);

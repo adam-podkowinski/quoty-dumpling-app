@@ -1,16 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
-class DBProvider {
-  DBProvider._();
-
-  static final DBProvider db = DBProvider._();
-
+class DBProvider extends ChangeNotifier {
   sql.Database? _database;
 
   bool isSignedIn = false;

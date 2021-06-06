@@ -47,17 +47,17 @@ class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
   Future _setData(context) async {
     SizeConfig.init(context);
-    //  await DBProvider.db.fillDatabaseFromJSON(
-    //    await DBProvider.db.databaseToJSON(),
+    //  await Provider.of<DBProvider>(context, listen: false).fillDatabaseFromJSON(
+    //   await Provider.of<DBProvider>(context, listen: false).databaseToJSON(),
     //  );
-    //  await DBProvider.db.resetGame(context);
-    await DBProvider.db.signIn();
+    //  await Provider.of<DBProvider>(context, listen: false).resetGame(context);
+    await Provider.of<DBProvider>(context, listen: false).signIn();
     await Provider.of<Shop>(context, listen: false).initShop();
-    await Provider.of<ShopItems>(context, listen: false).fetchItems();
+    await Provider.of<ShopItems>(context, listen: false).fetchItems(context);
     await Provider.of<DumplingProvider>(context, listen: false).initDumpling();
     await Provider.of<AudioProvider>(context, listen: false).initAudio();
-    await Provider.of<Quotes>(context, listen: false).fetchQuotes();
-    await Provider.of<Level>(context, listen: false).fetchLevel();
+    await Provider.of<Quotes>(context, listen: false).fetchQuotes(context);
+    await Provider.of<Level>(context, listen: false).fetchLevel(context);
     await Provider.of<Achievements>(context, listen: false).fetchAchievements(
       Provider.of<DumplingProvider>(context, listen: false),
       Provider.of<Shop>(context, listen: false),

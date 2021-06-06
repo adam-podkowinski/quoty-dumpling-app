@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
 import 'package:quoty_dumpling_app/models/items/money_item.dart';
@@ -40,7 +42,7 @@ class ShopItems extends ChangeNotifier {
     }
   }
 
-  Future fetchItems() async {
+  Future fetchItems(BuildContext context) async {
     print('fetching items');
     List<dynamic>? content;
 
@@ -56,7 +58,8 @@ class ShopItems extends ChangeNotifier {
       ),
     );
 
-    final dbItems = await DBProvider.db.getAllElements('Items');
+    final dbItems = await Provider.of<DBProvider>(context, listen: false)
+        .getAllElements('Items');
 
     _items.forEach((u) {
       u.fetchFromDB(

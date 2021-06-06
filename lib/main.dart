@@ -4,6 +4,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
+import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/providers/achievements.dart';
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
@@ -41,6 +42,9 @@ class QuotyDumplingApp extends StatelessWidget {
     ]);
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => DBProvider(),
+        ),
         ChangeNotifierProvider(
           create: (_) => DumplingProvider(),
         ),

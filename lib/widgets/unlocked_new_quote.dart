@@ -42,7 +42,8 @@ class _UnlockedNewQuoteState extends State<UnlockedNewQuote>
         () => setState(() {}),
       );
 
-    _newQuote = Provider.of<Quotes>(context, listen: false).unlockRandomQuote();
+    _newQuote =
+        Provider.of<Quotes>(context, listen: false).unlockRandomQuote(context);
     _controller!.forward();
     Provider.of<AudioProvider>(context, listen: false).playUnlockQuote();
     Provider.of<Shop>(context, listen: false).openDumpling();

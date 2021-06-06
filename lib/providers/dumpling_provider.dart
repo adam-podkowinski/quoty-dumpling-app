@@ -46,11 +46,11 @@ class DumplingProvider extends ChangeNotifier {
     _clickingProgress += _clickMultiplier / 100;
     _numberOfClicks++;
     var dbInstance = await SharedPreferences.getInstance();
-    await Provider.of<Level>(context, listen: false).click();
+    await Provider.of<Level>(context, listen: false).click(context);
     if (_clickingProgress >= 1) {
       _isFull = true;
       _numberOfDumplingsOpened++;
-      await Provider.of<Level>(context, listen: false).openDumpling();
+      await Provider.of<Level>(context, listen: false).openDumpling(context);
       await dbInstance.setInt(
         'numberOfDumplingsOpened',
         _numberOfDumplingsOpened,

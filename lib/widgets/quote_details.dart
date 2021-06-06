@@ -82,7 +82,7 @@ class _QuoteDetailsState extends State<QuoteDetails> {
                         child: IconButton(
                           onPressed: () => setState(
                             () {
-                              widget.quote.changeFavorite();
+                              widget.quote.changeFavorite(context);
 
                               _quotesProvider.sortCollection(true);
                             },

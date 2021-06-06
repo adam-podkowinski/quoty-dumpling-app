@@ -205,7 +205,7 @@ class _QuoteCardLevelupState extends State<QuoteCardLevelup> {
               child: GridTileBar(
                 leading: InkWell(
                   onTap: () => setState(() {
-                    widget.quote.changeFavorite();
+                    widget.quote.changeFavorite(context);
                   }),
                   child: Icon(
                     widget.quote.isFavorite
