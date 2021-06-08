@@ -4,23 +4,26 @@ import android.util.Log
 import android.view.Gravity
 import androidx.annotation.NonNull
 import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.auth.api.signin.GoogleSignInResult
+import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.Scope
-import com.google.android.gms.games.Game
 import com.google.android.gms.games.Games
-import com.google.android.gms.games.GamesClient
+import com.google.android.gms.games.SnapshotsClient
+import com.google.android.gms.games.SnapshotsClient.DataOrConflict
+import com.google.android.gms.games.snapshot.Snapshot
+import com.google.android.gms.games.snapshot.SnapshotMetadataChange
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import java.io.IOException
 
 
 class MainActivity : FlutterActivity() {
     private val channel: String = "quotyDumplingChannel"
+    private val mainSaveName = "main.quoty"
+
     private var isSignedIn: Boolean = false
 
     private lateinit var signInOption: GoogleSignInOptions
@@ -37,10 +40,10 @@ class MainActivity : FlutterActivity() {
             if (call.method == "signIn") {
                 signIn(result)
             }
-            if (call.method == "signOut") {
+            else if (call.method == "signOut") {
                 signOut(result)
             }
-            if (call.method == "isUserSignedIn") {
+            else if (call.method == "isUserSignedIn") {
                 isUserSignedIn(result)
             }
         }
@@ -102,6 +105,45 @@ class MainActivity : FlutterActivity() {
         }
     }
 
+    private fun saveJSONToGooglePlay(json: String): Boolean {
+        val user = GoogleSignIn.getLastSignedInAccount(this)
+
+        if (user != null) {
+            val snapshotsClient: SnapshotsClient = Games.getSnapshotsClient(this, user)
+            snapshotsClient.open(mainSaveName, true).addOnCompleteListener(this) { task ->
+                if (!task.result.isConflict) {
+                    val snapshot = task.result.data
+                    snapshot.snapshotContents.writeBytes(json.toByteArray())
+
+                    snapshotsClient.commitAndClose(snapshot, SnapshotMetadataChange.EMPTY_CHANGE)
+                }
+            }
+            return true
+        }
+
+        return false
+    }
+
+    private fun loadJSONBytesFromGooglePlay(): Task<ByteArray>? {
+        val user = GoogleSignIn.getLastSignedInAccount(this)
+        if (user != null) {
+            val snapshotsClient = Games.getSnapshotsClient(this, user)
+            val conflictResolutionPolicy = SnapshotsClient.RESOLUTION_POLICY_MOST_RECENTLY_MODIFIED
+
+            return snapshotsClient.open(mainSaveName, true, conflictResolutionPolicy).continueWith(
+                    Continuation { task ->
+                        val snapshot: Snapshot = task.result.data
+                        try {
+                            return@Continuation snapshot.snapshotContents.readFully()
+                        } catch (e: IOException) {
+                            Log.d("PLAY", "Error while reading Snapshot.", e)
+                        }
+                        return@Continuation null
+                    }
+            )
+        }
+        return null
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: android.content.Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
