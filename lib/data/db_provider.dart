@@ -47,6 +47,26 @@ class DBProvider extends ChangeNotifier {
     if (isSignedIn != isSignedInCopy) notifyListeners();
   }
 
+  Future<void> loadDataFromGooglePlay() async {
+    if (isSignedIn) {
+      const platform = MethodChannel('quotyDumplingChannel');
+      String data = await platform.invokeMethod('loadJSONBytesFromGooglePlay');
+      print('\n\nDATA LOADED FROM GOOGLE PLAY: $data\n\n');
+    }
+  }
+
+  Future<void> saveJSONToGooglePlay() async {
+    if (isSignedIn) {
+      const platform = MethodChannel('quotyDumplingChannel');
+      await platform.invokeMethod('saveJSONToGooglePlay');
+    }
+  }
+
+  void changeIsSignedInToTrue() {
+    isSignedIn = true;
+    notifyListeners();
+  }
+
   Future<sql.Database> initDB() async {
     final dbPath = await sql.getDatabasesPath();
     var path = join(dbPath, 'database.db');

@@ -43,7 +43,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
       _collectionSettings = Provider.of<CollectionSettings>(context)
         ..initScrollControlller();
       var rng = Random();
-      if (rng.nextInt(_adChance) == 3) {
+      if (rng.nextInt(_adChance) == _adChance - 1) {
         InterstitialAd.load(
           adUnitId: kReleaseMode
               ? 'ca-app-pub-4457173945348292/8129158227'

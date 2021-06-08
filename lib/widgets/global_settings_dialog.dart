@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
@@ -38,9 +39,11 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
     ),
   ];
 
+  static const platform = MethodChannel('globalSettingsChannel');
+
   late AudioProvider _audioProvider;
   late DBProvider _dbProvider;
-  final _isInit = true;
+  var _isInit = true;
   final _spacing = SizeConfig.screenWidth! * .035;
 
   @override
@@ -49,6 +52,19 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
     if (_isInit) {
       _audioProvider = Provider.of<AudioProvider>(context);
       _dbProvider = Provider.of<DBProvider>(context)..isUserSignedIn();
+      platform.setMethodCallHandler(nativeMethodCallHandler);
+      _isInit = false;
+    }
+  }
+
+  Future<dynamic> nativeMethodCallHandler(MethodCall methodCall) async {
+    switch (methodCall.method) {
+      case 'changeIsSignedInToTrue':
+        _dbProvider.changeIsSignedInToTrue();
+        print('HERE IS CHANGING IS SIGNED IN');
+        return true;
+      default:
+        return false;
     }
   }
 
@@ -141,7 +157,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                   RoundedButton(
                     color: ThemeColors.surface,
                     width: SizeConfig.screenWidth! * .5,
-                    textColor: ThemeColors.background,
+                    textColor: ThemeColors.onSurface,
                     text: 'Credits',
                     onPressed: () {
                       showDialog(
@@ -224,7 +240,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                     onPressed: () =>
                                         Navigator.of(context).pop(),
                                     color: ThemeColors.surface,
-                                    textColor: ThemeColors.background,
+                                    textColor: ThemeColors.onSurface,
                                   ),
                                 ],
                               ),
@@ -248,6 +264,11 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                     color: _dbProvider.isSignedIn
                         ? Theme.of(context).errorColor
                         : ThemeColors.surface,
+                    text: _dbProvider.isSignedIn ? 'Log out' : 'Log in',
+                    width: SizeConfig.screenWidth! * .5,
+                    textColor: _dbProvider.isSignedIn
+                        ? ThemeColors.background
+                        : ThemeColors.onSurface,
                   ),
                   Divider(
                     color: ThemeColors.secondary,
@@ -302,7 +323,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                       onPressed: () =>
                                           Navigator.of(context).pop(),
                                       color: ThemeColors.surface,
-                                      textColor: ThemeColors.background,
+                                      textColor: ThemeColors.onSurface,
                                     ),
                                     RoundedButton(
                                       text: 'Reset Game!',

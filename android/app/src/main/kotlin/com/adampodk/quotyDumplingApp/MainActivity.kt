@@ -9,11 +9,8 @@ import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.games.Games
 import com.google.android.gms.games.SnapshotsClient
-import com.google.android.gms.games.SnapshotsClient.DataOrConflict
 import com.google.android.gms.games.snapshot.Snapshot
 import com.google.android.gms.games.snapshot.SnapshotMetadataChange
-import com.google.android.gms.tasks.Continuation
-import com.google.android.gms.tasks.Task
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -21,8 +18,10 @@ import java.io.IOException
 
 
 class MainActivity : FlutterActivity() {
-    private val channel: String = "quotyDumplingChannel"
+    private val mainChannelName: String = "quotyDumplingChannel"
     private val mainSaveName = "main.quoty"
+    private val globalSettingsChannelName: String = "globalSettingsChannel"
+    private lateinit var globalSettingsChannel: MethodChannel
 
     private var isSignedIn: Boolean = false
 
@@ -36,15 +35,24 @@ class MainActivity : FlutterActivity() {
                 .requestScopes(Scope(Scopes.DRIVE_APPFOLDER))
                 .build()
         signInClient = GoogleSignIn.getClient(this, signInOption)
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel).setMethodCallHandler { call, result ->
-            if (call.method == "signIn") {
-                signIn(result)
-            }
-            else if (call.method == "signOut") {
-                signOut(result)
-            }
-            else if (call.method == "isUserSignedIn") {
-                isUserSignedIn(result)
+        globalSettingsChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, globalSettingsChannelName)
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, mainChannelName).setMethodCallHandler { call, result ->
+            when (call.method) {
+                "signIn" -> {
+                    signIn(result)
+                }
+                "signOut" -> {
+                    signOut(result)
+                }
+                "isUserSignedIn" -> {
+                    isUserSignedIn(result)
+                }
+                "loadJSONBytesFromGooglePlay" -> {
+                    loadJSONBytesFromGooglePlay(result)
+                }
+                "saveJSONToGooglePlay" -> {
+                    saveJSONToGooglePlay(result, "test data")
+                }
             }
         }
     }
@@ -105,7 +113,7 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private fun saveJSONToGooglePlay(json: String): Boolean {
+    private fun saveJSONToGooglePlay(result: MethodChannel.Result, jsonData: String): Boolean {
         val user = GoogleSignIn.getLastSignedInAccount(this)
 
         if (user != null) {
@@ -113,36 +121,35 @@ class MainActivity : FlutterActivity() {
             snapshotsClient.open(mainSaveName, true).addOnCompleteListener(this) { task ->
                 if (!task.result.isConflict) {
                     val snapshot = task.result.data
-                    snapshot.snapshotContents.writeBytes(json.toByteArray())
+                    snapshot.snapshotContents.writeBytes(jsonData.toByteArray())
 
                     snapshotsClient.commitAndClose(snapshot, SnapshotMetadataChange.EMPTY_CHANGE)
+                    result.success(true)
                 }
             }
             return true
         }
 
+        result.error("0", "ERROR (user == null) from saveJSONToGooglePlay", "")
         return false
     }
 
-    private fun loadJSONBytesFromGooglePlay(): Task<ByteArray>? {
+    private fun loadJSONBytesFromGooglePlay(result: MethodChannel.Result) {
         val user = GoogleSignIn.getLastSignedInAccount(this)
         if (user != null) {
             val snapshotsClient = Games.getSnapshotsClient(this, user)
             val conflictResolutionPolicy = SnapshotsClient.RESOLUTION_POLICY_MOST_RECENTLY_MODIFIED
 
-            return snapshotsClient.open(mainSaveName, true, conflictResolutionPolicy).continueWith(
-                    Continuation { task ->
-                        val snapshot: Snapshot = task.result.data
-                        try {
-                            return@Continuation snapshot.snapshotContents.readFully()
-                        } catch (e: IOException) {
-                            Log.d("PLAY", "Error while reading Snapshot.", e)
-                        }
-                        return@Continuation null
-                    }
-            )
+            snapshotsClient.open(mainSaveName, true, conflictResolutionPolicy).continueWith { task ->
+                val snapshot: Snapshot = task.result.data
+                try {
+                    result.success(String(snapshot.snapshotContents.readFully()))
+                } catch (e: IOException) {
+                    Log.d("PLAY", "Error while reading Snapshot.", e)
+                    result.success("ERROR while loading data from google play")
+                }
+            }
         }
-        return null
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: android.content.Intent?) {
@@ -153,6 +160,8 @@ class MainActivity : FlutterActivity() {
                 // The signed in account is stored in the result.
                 val signedInAccount: GoogleSignInAccount? = result.signInAccount
                 isSignedIn = true
+
+                globalSettingsChannel.invokeMethod("changeIsSignedInToTrue", null)
 
                 if (signedInAccount != null) {
 

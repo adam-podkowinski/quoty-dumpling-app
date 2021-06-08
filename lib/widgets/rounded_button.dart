@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
@@ -42,8 +43,9 @@ class RoundedButton extends StatelessWidget {
         width: width,
         height: height,
         child: Center(
-          child: Text(
+          child: AutoSizeText(
             text ?? 'Button',
+            maxLines: 1,
             style: textStyle ??
                 DefaultTextStyle.of(context).style.copyWith(
                       fontFamily: Styles.fontFamily,

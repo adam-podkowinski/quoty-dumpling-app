@@ -52,6 +52,11 @@ class _LoadingScreenState extends State<LoadingScreen>
     //  );
     //  await Provider.of<DBProvider>(context, listen: false).resetGame(context);
     await Provider.of<DBProvider>(context, listen: false).signIn();
+    await Provider.of<DBProvider>(context, listen: false)
+        .saveJSONToGooglePlay();
+    await Provider.of<DBProvider>(context, listen: false)
+        .loadDataFromGooglePlay();
+
     await Provider.of<Shop>(context, listen: false).initShop();
     await Provider.of<ShopItems>(context, listen: false).fetchItems(context);
     await Provider.of<DumplingProvider>(context, listen: false).initDumpling();
