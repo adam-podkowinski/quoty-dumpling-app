@@ -1,5 +1,7 @@
 package com.adampodk.quotyDumplingApp
 
+import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.util.Log
 import android.view.Gravity
 import androidx.annotation.NonNull
@@ -67,6 +69,9 @@ class MainActivity : FlutterActivity() {
                         .setGravityForPopups(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
                 val gamesClient = Games.getGamesClient(this@MainActivity, task.result)
                 gamesClient.setViewForPopups(window.decorView.findViewById(android.R.id.content))
+
+                val prefs: SharedPreferences = getSharedPreferences("FlutterSharedPreferences", MODE_PRIVATE)
+                prefs.edit().putBoolean("flutter.loginOnStartup", true).apply()
 
                 result.success(true)
                 if (task.result.email != null) {
@@ -163,6 +168,9 @@ class MainActivity : FlutterActivity() {
 
                 globalSettingsChannel.invokeMethod("changeIsSignedInToTrue", null)
 
+                val prefs: SharedPreferences = getSharedPreferences("FlutterSharedPreferences", MODE_PRIVATE)
+                prefs.edit().putBoolean("flutter.loginOnStartup", true).apply()
+
                 if (signedInAccount != null) {
 
                     Games.getGamesClient(this, signedInAccount)
@@ -178,10 +186,13 @@ class MainActivity : FlutterActivity() {
                 } else {
                     isSignedIn = false
                     Log.d("SIGNING", "Signed in Account is null")
+                    prefs.edit().putBoolean("flutter.loginOnStartup", false).apply()
                 }
             } else {
                 isSignedIn = false
                 Log.d("SIGNING", "ERROR ${result.status}")
+                val prefs: SharedPreferences = getSharedPreferences("FlutterSharedPreferences", MODE_PRIVATE)
+                prefs.edit().putBoolean("flutter.loginOnStartup", false).apply()
             }
         }
     }

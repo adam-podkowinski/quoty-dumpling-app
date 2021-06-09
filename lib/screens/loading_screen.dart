@@ -14,6 +14,7 @@ import 'package:quoty_dumpling_app/providers/level.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
 import 'package:quoty_dumpling_app/screens/tabs_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 typedef FutureVoidCallback = Future<void> Function();
 
@@ -51,11 +52,11 @@ class _LoadingScreenState extends State<LoadingScreen>
     //   await Provider.of<DBProvider>(context, listen: false).databaseToJSON(),
     //  );
     //  await Provider.of<DBProvider>(context, listen: false).resetGame(context);
-    await Provider.of<DBProvider>(context, listen: false).signIn();
-    await Provider.of<DBProvider>(context, listen: false)
-        .saveJSONToGooglePlay();
-    await Provider.of<DBProvider>(context, listen: false)
-        .loadDataFromGooglePlay();
+    var prefs = await SharedPreferences.getInstance();
+
+    if (prefs.getBool('loginOnStartup') ?? true) {
+      await Provider.of<DBProvider>(context, listen: false).signIn();
+    }
 
     await Provider.of<Shop>(context, listen: false).initShop();
     await Provider.of<ShopItems>(context, listen: false).fetchItems(context);
