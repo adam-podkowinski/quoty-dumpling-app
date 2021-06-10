@@ -154,7 +154,7 @@ class MainActivity : FlutterActivity() {
                 val snapshot: Snapshot = task.result.data
                 try {
                     val contents = String(snapshot.snapshotContents.readFully())
-                    mainDartChannel.invokeMethod("loadDataFromGooglePlay", null)
+                    mainDartChannel.invokeMethod("loadDataFromGooglePlay", {"contents": contents})
                     result?.success(contents)
 //                    exitProcess(0)
                 } catch (e: IOException) {

@@ -98,6 +98,12 @@ class QuotyDumplingApp extends StatelessWidget {
                 switch (methodCall.method) {
                   case 'loadDataFromGooglePlay':
                     print('LOADING DATA FROM GOOGLE PLAY FROM DART');
+                    if (methodCall.arguments['contents'] is String) {
+                      await DBProvider.fillDatabaseFromJSON(
+                          methodCall.arguments['contents'] as String);
+                    } else {
+                      print('Error (argument from native is not string)');
+                    }
                     return true;
                   default:
                     return false;

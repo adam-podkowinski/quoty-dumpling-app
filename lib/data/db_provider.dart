@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -142,10 +143,12 @@ WHERE
     return endMap;
   }
 
-  static Future fillDatabaseFromJSON(Map<String, dynamic> json) async {
-    final db = await _databaseGet;
+  static Future fillDatabaseFromJSON(String json) async {
+    try {
+      var jsonObj = jsonDecode(json);
+      final db = await _databaseGet;
 
-    var tableNamesMap = await db!.rawQuery('''
+      var tableNamesMap = await db!.rawQuery('''
 SELECT
     name
 FROM
@@ -156,42 +159,45 @@ WHERE
     name NOT LIKE 'android_metadata';
 ''');
 
-    var tableNames = tableNamesMap.map((e) => e['name']).toList();
+      var tableNames = tableNamesMap.map((e) => e['name']).toList();
 
-    tableNames.forEach((e) async {
-      await db.delete(e.toString());
-    });
+      tableNames.forEach((e) async {
+        await db.delete(e.toString());
+      });
 
-    json['sqlite']!.forEach((key, value) async {
-      if (value.isNotEmpty) {
-        value.forEach(
-          (element) async {
-            await insert(key, element);
-          },
-        );
-      }
-    });
+      jsonObj['sqlite']!.forEach((key, value) async {
+        if (value.isNotEmpty) {
+          value.forEach(
+            (element) async {
+              await insert(key, element);
+            },
+          );
+        }
+      });
 
-    var prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-    json['shared_preferences']!.forEach((key, value) async {
-      switch (value.runtimeType) {
-        case int:
-          await prefs.setInt(key, value);
-          break;
-        case String:
-          await prefs.setString(key, value);
-          break;
-        case bool:
-          await prefs.setBool(key, value);
-          break;
-        case double:
-          await prefs.setDouble(key, value);
-          break;
-        default:
-          break;
-      }
-    });
+      var prefs = await SharedPreferences.getInstance();
+      await prefs.clear();
+      jsonObj['shared_preferences']!.forEach((key, value) async {
+        switch (value.runtimeType) {
+          case int:
+            await prefs.setInt(key, value);
+            break;
+          case String:
+            await prefs.setString(key, value);
+            break;
+          case bool:
+            await prefs.setBool(key, value);
+            break;
+          case double:
+            await prefs.setDouble(key, value);
+            break;
+          default:
+            break;
+        }
+      });
+    } catch (e) {
+      print('Error while filling database from JSON (dart)');
+    }
   }
 
   Future resetGame(context) async {
