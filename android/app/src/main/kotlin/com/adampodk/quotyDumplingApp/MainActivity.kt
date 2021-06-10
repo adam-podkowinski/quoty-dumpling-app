@@ -1,6 +1,7 @@
 package com.adampodk.quotyDumplingApp
 
-import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
 import android.view.Gravity
@@ -17,13 +18,16 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import java.io.IOException
+import kotlin.system.exitProcess
 
 
 class MainActivity : FlutterActivity() {
     private val mainChannelName: String = "quotyDumplingChannel"
     private val mainSaveName = "main.quoty"
     private val globalSettingsChannelName: String = "globalSettingsChannel"
+    private val mainDartChannelName: String = "mainChannel"
     private lateinit var globalSettingsChannel: MethodChannel
+    private lateinit var mainDartChannel: MethodChannel
 
     private var isSignedIn: Boolean = false
 
@@ -38,6 +42,7 @@ class MainActivity : FlutterActivity() {
                 .build()
         signInClient = GoogleSignIn.getClient(this, signInOption)
         globalSettingsChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, globalSettingsChannelName)
+        mainDartChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, mainDartChannelName)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, mainChannelName).setMethodCallHandler { call, result ->
             when (call.method) {
                 "signIn" -> {
@@ -49,11 +54,11 @@ class MainActivity : FlutterActivity() {
                 "isUserSignedIn" -> {
                     isUserSignedIn(result)
                 }
-                "loadJSONBytesFromGooglePlay" -> {
-                    loadJSONBytesFromGooglePlay(result)
+                "loadSaveFromGooglePlay" -> {
+                    loadSaveFromGooglePlay(result)
                 }
-                "saveJSONToGooglePlay" -> {
-                    saveJSONToGooglePlay(result, "test data")
+                "saveToGooglePlay" -> {
+                    saveToGooglePlay(result, "test data")
                 }
             }
         }
@@ -118,7 +123,7 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private fun saveJSONToGooglePlay(result: MethodChannel.Result, jsonData: String): Boolean {
+    private fun saveToGooglePlay(result: MethodChannel.Result?, jsonData: String): Boolean {
         val user = GoogleSignIn.getLastSignedInAccount(this)
 
         if (user != null) {
@@ -129,17 +134,17 @@ class MainActivity : FlutterActivity() {
                     snapshot.snapshotContents.writeBytes(jsonData.toByteArray())
 
                     snapshotsClient.commitAndClose(snapshot, SnapshotMetadataChange.EMPTY_CHANGE)
-                    result.success(true)
+                    result?.success(true)
                 }
             }
             return true
         }
 
-        result.error("0", "ERROR (user == null) from saveJSONToGooglePlay", "")
+        result?.error("0", "ERROR (user == null) from saveJSONToGooglePlay", "")
         return false
     }
 
-    private fun loadJSONBytesFromGooglePlay(result: MethodChannel.Result) {
+    private fun loadSaveFromGooglePlay(result: MethodChannel.Result?) {
         val user = GoogleSignIn.getLastSignedInAccount(this)
         if (user != null) {
             val snapshotsClient = Games.getSnapshotsClient(this, user)
@@ -148,16 +153,19 @@ class MainActivity : FlutterActivity() {
             snapshotsClient.open(mainSaveName, true, conflictResolutionPolicy).continueWith { task ->
                 val snapshot: Snapshot = task.result.data
                 try {
-                    result.success(String(snapshot.snapshotContents.readFully()))
+                    val contents = String(snapshot.snapshotContents.readFully())
+                    mainDartChannel.invokeMethod("loadDataFromGooglePlay", null)
+                    result?.success(contents)
+//                    exitProcess(0)
                 } catch (e: IOException) {
                     Log.d("PLAY", "Error while reading Snapshot.", e)
-                    result.success("ERROR while loading data from google play")
+                    result?.success("ERROR while loading data from google play")
                 }
             }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: android.content.Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val result: GoogleSignInResult? = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
         if (requestCode == 0 && result != null) {
@@ -172,7 +180,6 @@ class MainActivity : FlutterActivity() {
                 prefs.edit().putBoolean("flutter.loginOnStartup", true).apply()
 
                 if (signedInAccount != null) {
-
                     Games.getGamesClient(this, signedInAccount)
                             .setGravityForPopups(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
                     val gamesClient = Games.getGamesClient(this@MainActivity, signedInAccount)
@@ -188,6 +195,14 @@ class MainActivity : FlutterActivity() {
                     Log.d("SIGNING", "Signed in Account is null")
                     prefs.edit().putBoolean("flutter.loginOnStartup", false).apply()
                 }
+                val dialog = AlertDialog.Builder(this)
+                dialog.setTitle("Found game save")
+                dialog.setMessage("Do you want to load google play save from this account?\nYour current progress will be replaced and game will restart!")
+                dialog.setPositiveButton("Yes") { _, _ ->
+                    this.loadSaveFromGooglePlay(null)
+                }
+                dialog.setNegativeButton("No, start new save", null)
+                dialog.show()
             } else {
                 isSignedIn = false
                 Log.d("SIGNING", "ERROR ${result.status}")

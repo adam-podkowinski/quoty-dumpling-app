@@ -138,7 +138,7 @@ class Quote {
     isUnlocked = true;
     unlockingTime = DateTime.now();
 
-    await Provider.of<DBProvider>(context, listen: false).insert(
+    await DBProvider.insert(
       'UnlockedQuotes',
       {
         'id': id,

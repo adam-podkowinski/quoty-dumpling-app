@@ -8,11 +8,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
 class DBProvider extends ChangeNotifier {
-  sql.Database? _database;
+  static sql.Database? _database;
 
   bool isSignedIn = false;
 
-  Future<sql.Database?> get _databaseGet async {
+  static Future<sql.Database?> get _databaseGet async {
     if (_database != null && _database!.isOpen) {
       return _database;
     }
@@ -58,7 +58,7 @@ class DBProvider extends ChangeNotifier {
   Future<void> saveJSONToGooglePlay() async {
     if (isSignedIn) {
       const platform = MethodChannel('quotyDumplingChannel');
-      await platform.invokeMethod('saveJSONToGooglePlay');
+      await platform.invokeMethod('saveToGooglePlay');
     }
   }
 
@@ -67,7 +67,7 @@ class DBProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<sql.Database> initDB() async {
+  static Future<sql.Database> initDB() async {
     final dbPath = await sql.getDatabasesPath();
     var path = join(dbPath, 'database.db');
     return await sql.openDatabase(
@@ -87,7 +87,7 @@ class DBProvider extends ChangeNotifier {
     );
   }
 
-  Future insert(String table, Map<String, dynamic> data) async {
+  static Future insert(String table, Map<String, dynamic> data) async {
     final db = await _databaseGet;
     var res = await db!.insert(
       table,
@@ -142,7 +142,7 @@ WHERE
     return endMap;
   }
 
-  Future fillDatabaseFromJSON(Map<String, dynamic> json) async {
+  static Future fillDatabaseFromJSON(Map<String, dynamic> json) async {
     final db = await _databaseGet;
 
     var tableNamesMap = await db!.rawQuery('''

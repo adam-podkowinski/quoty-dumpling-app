@@ -107,8 +107,7 @@ class Level extends ChangeNotifier {
       );
 
       _levelRewards.add(levelupReward);
-      await Provider.of<DBProvider>(context, listen: false)
-          .insert('LevelRewards', levelupReward.toMap());
+      await DBProvider.insert('LevelRewards', levelupReward.toMap());
 
       if (currentXP >= maxXP) {
         await checkLevelup(context);

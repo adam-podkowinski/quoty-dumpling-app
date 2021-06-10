@@ -90,7 +90,24 @@ class QuotyDumplingApp extends StatelessWidget {
           theme: Styles.mainTheme,
           title: 'Quoty Dumpling',
           home: SafeArea(
-            child: LoadingScreen(),
+            child: Builder(builder: (context) {
+              const platform = MethodChannel('mainChannel');
+              print('Running builder');
+              Future<dynamic> nativeMethodCallHandler(
+                  MethodCall methodCall) async {
+                switch (methodCall.method) {
+                  case 'loadDataFromGooglePlay':
+                    print('LOADING DATA FROM GOOGLE PLAY FROM DART');
+                    return true;
+                  default:
+                    return false;
+                }
+              }
+
+              platform.setMethodCallHandler(nativeMethodCallHandler);
+
+              return LoadingScreen();
+            }),
           ),
         ),
       ),

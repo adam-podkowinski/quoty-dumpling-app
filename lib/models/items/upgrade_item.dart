@@ -22,7 +22,7 @@ class UpgradeItem extends LabeledItem {
         .getElement('Items', id)
         .then((i) {
       if (i.isEmpty) {
-        Provider.of<DBProvider>(context, listen: false).insert(
+        DBProvider.insert(
           'Items',
           {'id': id, 'level': _level},
         );
