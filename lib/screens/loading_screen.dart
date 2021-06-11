@@ -72,9 +72,7 @@ class _LoadingScreenState extends State<LoadingScreen>
     await Provider.of<CollectionSettings>(context, listen: false).initOptions();
 
     WidgetsBinding.instance!.addObserver(
-      LifecycleEventHandler(
-        detachedCallBack: () async => print('DETACHING'),
-      ),
+      LifecycleEventHandler(detachedCallBack: DBProvider.saveJSONToGooglePlay),
     );
   }
 

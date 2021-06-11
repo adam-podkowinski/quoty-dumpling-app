@@ -258,15 +258,15 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                     thickness: .75,
                   ),
                   RoundedButton(
-                    onPressed: _dbProvider.isSignedIn
+                    onPressed: DBProvider.isSignedIn
                         ? () => _dbProvider.signOut()
                         : () => _dbProvider.signIn(),
-                    color: _dbProvider.isSignedIn
+                    color: DBProvider.isSignedIn
                         ? Theme.of(context).errorColor
                         : ThemeColors.surface,
-                    text: _dbProvider.isSignedIn ? 'Log out' : 'Log in',
+                    text: DBProvider.isSignedIn ? 'Log out' : 'Log in',
                     width: SizeConfig.screenWidth! * .5,
-                    textColor: _dbProvider.isSignedIn
+                    textColor: DBProvider.isSignedIn
                         ? ThemeColors.background
                         : ThemeColors.onSurface,
                   ),

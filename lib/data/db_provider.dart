@@ -11,7 +11,7 @@ import 'package:sqflite/sqflite.dart' as sql;
 class DBProvider extends ChangeNotifier {
   static sql.Database? _database;
 
-  bool isSignedIn = false;
+  static bool isSignedIn = false;
 
   static Future<sql.Database?> get _databaseGet async {
     if (_database != null && _database!.isOpen) {
@@ -48,16 +48,9 @@ class DBProvider extends ChangeNotifier {
     if (isSignedIn != isSignedInCopy) notifyListeners();
   }
 
-  Future<void> loadDataFromGooglePlay() async {
+  static Future<void> saveJSONToGooglePlay() async {
     if (isSignedIn) {
-      const platform = MethodChannel('quotyDumplingChannel');
-      String data = await platform.invokeMethod('loadJSONBytesFromGooglePlay');
-      print('\n\nDATA LOADED FROM GOOGLE PLAY: $data\n\n');
-    }
-  }
-
-  Future<void> saveJSONToGooglePlay() async {
-    if (isSignedIn) {
+      print('SAVING DATA FROM FLUTTER!');
       const platform = MethodChannel('quotyDumplingChannel');
       await platform.invokeMethod('saveToGooglePlay');
     }

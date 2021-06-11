@@ -134,13 +134,18 @@ class MainActivity : FlutterActivity() {
                     snapshot.snapshotContents.writeBytes(jsonData.toByteArray())
 
                     snapshotsClient.commitAndClose(snapshot, SnapshotMetadataChange.EMPTY_CHANGE)
+                    Log.d("SAVES", "Saved game successfully")
                     result?.success(true)
-                }
+                  } else {
+                    Log.d("SAVES", "ERROR task.result.isConflict is true from saveJSONToGooglePlay")
+                    result?.error("0", "ERROR task.result.isConflict is true from saveJSONToGooglePlay", "")
+                  }
             }
             return true
         }
 
         result?.error("0", "ERROR (user == null) from saveJSONToGooglePlay", "")
+        Log.d("SAVES", "ERROR (user == null) from saveJSONToGooglePlay")
         return false
     }
 
@@ -154,11 +159,11 @@ class MainActivity : FlutterActivity() {
                 val snapshot: Snapshot = task.result.data
                 try {
                     val contents = String(snapshot.snapshotContents.readFully())
-                    mainDartChannel.invokeMethod("loadDataFromGooglePlay", {"contents": contents})
+                    mainDartChannel.invokeMethod("loadDataFromGooglePlay", contents)
                     result?.success(contents)
 //                    exitProcess(0)
                 } catch (e: IOException) {
-                    Log.d("PLAY", "Error while reading Snapshot.", e)
+                    Log.d("SAVES", "Error while reading Snapshot.", e)
                     result?.success("ERROR while loading data from google play")
                 }
             }
