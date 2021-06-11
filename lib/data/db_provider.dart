@@ -34,7 +34,15 @@ class DBProvider extends ChangeNotifier {
   Future<void> signOut() async {
     if (isSignedIn) {
       const platform = MethodChannel('quotyDumplingChannel');
-      isSignedIn = await platform.invokeMethod('signOut');
+      var dbJson = await DBProvider.databaseToJSON();
+      var dbString = jsonEncode(dbJson);
+
+      isSignedIn = await platform.invokeMethod(
+        'signOut',
+        {
+          'database': dbString,
+        },
+      );
       print('Is signed in? : $isSignedIn');
       notifyListeners();
     }
@@ -52,7 +60,14 @@ class DBProvider extends ChangeNotifier {
     if (isSignedIn) {
       print('SAVING DATA FROM FLUTTER!');
       const platform = MethodChannel('quotyDumplingChannel');
-      await platform.invokeMethod('saveToGooglePlay');
+      var dbJson = await DBProvider.databaseToJSON();
+      var dbString = jsonEncode(dbJson);
+      await platform.invokeMethod(
+        'saveToGooglePlay',
+        {
+          'database': dbString,
+        },
+      );
     }
   }
 
@@ -97,13 +112,13 @@ class DBProvider extends ChangeNotifier {
     return res.isNotEmpty ? res.first : {};
   }
 
-  Future<List<Map<String, dynamic>>> getAllElements(String table) async {
+  static Future<List<Map<String, dynamic>>> getAllElements(String table) async {
     final db = await _databaseGet;
     var res = await db!.query(table);
     return res.isNotEmpty ? res : [];
   }
 
-  Future<Map<String, dynamic>> databaseToJSON() async {
+  static Future<Map<String, dynamic>> databaseToJSON() async {
     final db = await _databaseGet;
 
     var tableNamesMap = await db!.rawQuery('''
@@ -188,6 +203,7 @@ WHERE
             break;
         }
       });
+      print('Filled database successfully');
     } catch (e) {
       print('Error while filling database from JSON (dart)');
     }

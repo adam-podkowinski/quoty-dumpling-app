@@ -77,8 +77,7 @@ class Quotes extends ChangeNotifier {
     );
 
     final _unlockedQuotesFromDB =
-        await Provider.of<DBProvider>(context, listen: false)
-            .getAllElements('UnlockedQuotes');
+        await DBProvider.getAllElements('UnlockedQuotes');
 
     //debug
     // _unlockedQuotes.addAll(

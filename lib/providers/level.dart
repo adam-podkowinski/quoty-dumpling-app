@@ -67,8 +67,7 @@ class Level extends ChangeNotifier {
     dumplingXP = prefs.getInt('dumplingXP') ?? 200;
     clickXPMultiplier = prefs.getDouble('clickXPMultiplier') ?? 1.0;
     openXPMultiplier = prefs.getDouble('openXPMultiplier') ?? 1.0;
-    var levelRewardsMap = await Provider.of<DBProvider>(context, listen: false)
-        .getAllElements('LevelRewards');
+    var levelRewardsMap = await DBProvider.getAllElements('LevelRewards');
 
     _levelRewards = levelRewardsMap.map((rewardMap) {
       return LevelReward.fromMap(rewardMap);

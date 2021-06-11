@@ -58,8 +58,7 @@ class ShopItems extends ChangeNotifier {
       ),
     );
 
-    final dbItems = await Provider.of<DBProvider>(context, listen: false)
-        .getAllElements('Items');
+    final dbItems = await DBProvider.getAllElements('Items');
 
     _items.forEach((u) {
       u.fetchFromDB(
