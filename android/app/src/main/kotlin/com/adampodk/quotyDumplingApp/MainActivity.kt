@@ -324,14 +324,27 @@ class MainActivity : FlutterActivity() {
                     prefs.edit().putBoolean("flutter.loginOnStartup", false)
                         .apply()
                 }
-                val dialog = AlertDialog.Builder(this)
-                dialog.setTitle("Found game save")
-                dialog.setMessage("Do you want to load google play save from this account?\nYour current progress will be replaced and game will restart!")
-                dialog.setPositiveButton("Yes") { _, _ ->
-                    this.loadSaveFromGooglePlay(null)
+                val user = GoogleSignIn.getLastSignedInAccount(this)
+                if (user != null) {
+
+                    val snapshotsClient: SnapshotsClient =
+                        Games.getSnapshotsClient(
+                            this,
+                            user
+                        )
+                    snapshotsClient.open(mainSaveName, false).addOnFailureListener() {
+                        Log.d("SAVES", "No saved game located.")
+                    }.addOnSuccessListener {
+                        val dialog = AlertDialog.Builder(this)
+                        dialog.setTitle("Found game save")
+                        dialog.setMessage("Do you want to load google play save from this account?\nYour current progress will be replaced and game will restart!")
+                        dialog.setPositiveButton("Yes") { _, _ ->
+                            this.loadSaveFromGooglePlay(null)
+                        }
+                        dialog.setNegativeButton("No, start new save", null)
+                        dialog.show()
+                    }
                 }
-                dialog.setNegativeButton("No, start new save", null)
-                dialog.show()
             } else {
                 isSignedIn = false
                 Log.d("SIGNING", "ERROR ${result.status}")
