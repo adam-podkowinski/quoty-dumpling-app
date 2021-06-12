@@ -33,6 +33,7 @@ class MainActivity : FlutterActivity() {
 
     private var isSignedIn: Boolean = false
     private var isBusy: Boolean = false;
+    private var isLoading: Boolean = false
 
     private lateinit var signInOption: GoogleSignInOptions
 
@@ -80,20 +81,22 @@ class MainActivity : FlutterActivity() {
                     loadSaveFromGooglePlay(result)
                 }
                 "saveToGooglePlay" -> {
-                    if (call.argument<String>("database") != null) {
-                        val saveJSON: String =
-                            call.argument<String>("database").toString()
-                        saveToGooglePlay(result, saveJSON)
-                    } else {
-                        Log.d(
-                            "SAVES",
-                            "ERROR: call.argument<String>('database') is null"
-                        )
-                        result.error(
-                            "0",
-                            "ERROR: call.argument<String>('database') is null",
-                            ""
-                        )
+                    if (!isLoading) {
+                        if (call.argument<String>("database") != null) {
+                            val saveJSON: String =
+                                call.argument<String>("database").toString()
+                            saveToGooglePlay(result, saveJSON)
+                        } else {
+                            Log.d(
+                                "SAVES",
+                                "ERROR: call.argument<String>('database') is null"
+                            )
+                            result.error(
+                                "0",
+                                "ERROR: call.argument<String>('database') is null",
+                                ""
+                            )
+                        }
                     }
                 }
             }
@@ -242,6 +245,7 @@ class MainActivity : FlutterActivity() {
 
     private fun loadSaveFromGooglePlay(result: MethodChannel.Result?) {
         isBusy = true
+        isLoading = true
         val user = GoogleSignIn.getLastSignedInAccount(this)
         if (user != null) {
             val snapshotsClient = Games.getSnapshotsClient(this, user)
@@ -265,10 +269,13 @@ class MainActivity : FlutterActivity() {
                             result?.success("ERROR while loading data from google play")
                         }
                     }
-                }.addOnCompleteListener(this) {
                     isBusy = false
+                    isLoading = false
                 }
-        }
+            } else {
+                isBusy = false
+                isLoading = false
+            }
     }
 
     override fun onActivityResult(
@@ -343,6 +350,7 @@ class MainActivity : FlutterActivity() {
                         }
                         dialog.setNegativeButton("No, start new save", null)
                         dialog.show()
+
                     }
                 }
             } else {

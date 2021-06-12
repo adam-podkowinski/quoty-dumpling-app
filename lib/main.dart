@@ -4,6 +4,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/providers/achievements.dart';
@@ -90,32 +91,36 @@ class QuotyDumplingApp extends StatelessWidget {
           theme: Styles.mainTheme,
           title: 'Quoty Dumpling',
           home: SafeArea(
-            child: Builder(builder: (context) {
-              const platform = MethodChannel('mainChannel');
-              print('Running builder');
-              Future<dynamic> nativeMethodCallHandler(
-                  MethodCall methodCall) async {
-                switch (methodCall.method) {
-                  case 'loadDataFromGooglePlay':
-                    print('LOADING DATA FROM GOOGLE PLAY FROM DART');
-                    print('argument is: ${methodCall.arguments}');
-                    if (methodCall.arguments is String) {
-                      await DBProvider.fillDatabaseFromJSON(
-                        methodCall.arguments as String,
-                      );
-                    } else {
-                      print('ERROR (methodCall.arguments is not String)');
-                    }
-                    return true;
-                  default:
-                    return false;
+            child: Builder(
+              builder: (context) {
+                const platform = MethodChannel('mainChannel');
+                print('Running builder');
+                Future<dynamic> nativeMethodCallHandler(
+                    MethodCall methodCall) async {
+                  switch (methodCall.method) {
+                    case 'loadDataFromGooglePlay':
+                      print('LOADING DATA FROM GOOGLE PLAY FROM DART');
+                      print('argument is: ${methodCall.arguments}');
+
+                      if (methodCall.arguments is String) {
+                        await DBProvider.fillDatabaseFromJSON(
+                          methodCall.arguments as String,
+                        );
+                        await Restart.restartApp();
+                      } else {
+                        print('ERROR (methodCall.arguments is not String)');
+                      }
+                      return true;
+                    default:
+                      return false;
+                  }
                 }
-              }
 
-              platform.setMethodCallHandler(nativeMethodCallHandler);
+                platform.setMethodCallHandler(nativeMethodCallHandler);
 
-              return LoadingScreen();
-            }),
+                return LoadingScreen();
+              },
+            ),
           ),
         ),
       ),
