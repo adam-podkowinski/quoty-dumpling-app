@@ -12,6 +12,7 @@ import 'package:quoty_dumpling_app/models/items/powerup_item.dart';
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
+import 'package:quoty_dumpling_app/widgets/other_products_widget.dart';
 
 class ShopTabBarView extends StatefulWidget {
   @override
@@ -36,12 +37,7 @@ class _ShopTabBarViewState extends State<ShopTabBarView> {
               .map((u) => Item(u, ThemeColors.secondaryLight))
               .toList(),
         ),
-        ListView(
-          children: Provider.of<ShopItems>(context)
-              .money
-              .map((u) => Item(u, ThemeColors.surface))
-              .toList(),
-        ),
+        OtherProductsWidget(),
       ],
     );
   }
@@ -234,18 +230,12 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
-                    if (widget.item.priceUSD != 0)
+                    if (widget.item.priceUSD != '0')
                       buildPriceChip(
                         Row(
                           children: <Widget>[
                             Text(
-                              'USD ',
-                              style: Styles.kMoneyInShopItemTextStyle.copyWith(
-                                color: ThemeColors.surface,
-                              ),
-                            ),
-                            Text(
-                              Shop.numberAbbreviation(widget.item.priceUSD),
+                              widget.item.priceUSD ?? '0\$',
                               style: Styles.kMoneyInShopItemTextStyle,
                             ),
                           ],
@@ -279,7 +269,12 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                                     await Provider.of<AudioProvider>(context,
                                             listen: false)
                                         .playBuyItem();
-                                    _shopProvider.buyItem(widget.item, context);
+                                    if (widget.item.priceUSD == '0') {
+                                      _shopProvider.buyItem(
+                                        widget.item,
+                                        context,
+                                      );
+                                    }
                                     await _scaleController.forward().then(
                                           (_) => _scaleController.reverse(),
                                         );
@@ -335,7 +330,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
 
       _isFree = widget.item.actualPriceBills! <= 0 &&
           widget.item.actualPriceDiamonds! <= 0 &&
-          widget.item.priceUSD! <= 0;
+          widget.item.priceUSD! == '0';
 
       _runningPowerupColor = runningPowerupColor(context);
       _runningPowerupColorController = AnimationController(

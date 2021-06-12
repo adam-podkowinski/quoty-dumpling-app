@@ -34,7 +34,7 @@ abstract class ShopItem {
   String? description;
   int? defaultPriceBills;
   int? defaultPriceDiamonds;
-  int? priceUSD;
+  String? priceUSD;
   String? id;
   IconType? iconType;
   late Function onBuyFunction;
@@ -59,7 +59,7 @@ abstract class ShopItem {
     description = map['description'];
     defaultPriceBills = map['defaultPriceBills'];
     defaultPriceDiamonds = map['defaultPriceDiamonds'];
-    priceUSD = map['priceUSD'];
+    priceUSD = map['priceUSD'].toString();
     id = map['id'];
     useCase = useCaseFromString(map['useCase']);
     iconType = iconTypeFromString(map['useCase']);
@@ -68,6 +68,8 @@ abstract class ShopItem {
     onBuyFunction = itemFunctions['onBuyFunction$id'] ??
         (context) => print('Function for this item is not yet prepared');
   }
+
+  ShopItem();
 
   void buyItem(context) => onBuyFunction(context);
 

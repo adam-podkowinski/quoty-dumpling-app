@@ -15,7 +15,7 @@ dependencies:
   flutter_phoenix: ^1.0.0
   restart_app: ^1.0.3
   url_launcher: ^6.0.3
-  in_app_purchase: ^1.0.4
+  in_app_purchase: ^1.0.5
   quiver: ^3.0.1
   google_mobile_ads: ^0.13.0
   flutter_staggered_grid_view: ^0.4.0
