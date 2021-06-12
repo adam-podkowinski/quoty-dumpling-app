@@ -97,6 +97,7 @@ class _DumplingScreenState extends State<DumplingScreen>
         print('Ad failed to load: Error( $error )');
       },
     );
+    //TODO: no ads showing in release mode
     myBanner = BannerAd(
       adUnitId: kReleaseMode
           ? 'ca-app-pub-4457173945348292/7486886749'
