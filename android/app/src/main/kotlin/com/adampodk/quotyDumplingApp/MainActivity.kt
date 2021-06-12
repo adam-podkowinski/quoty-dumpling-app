@@ -224,6 +224,7 @@ class MainActivity : FlutterActivity() {
                         isBusy = false
                     } else {
                         isBusy = false
+                        //TODO: resolve conflicts (occur very often!)
                         Log.d(
                             "SAVES",
                             "ERROR task.result.isConflict is true from saveJSONToGooglePlay"

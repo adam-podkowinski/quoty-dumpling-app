@@ -43,11 +43,13 @@ class _ShopTabBarViewState extends State<ShopTabBarView> {
   }
 }
 
+// ignore: must_be_immutable
 class Item extends StatefulWidget {
   final ShopItem item;
   final Color activeColor;
+  void Function(String id)? onPressedFunction;
 
-  Item(this.item, this.activeColor);
+  Item(this.item, this.activeColor, [this.onPressedFunction]);
 
   @override
   _ItemState createState() => _ItemState();
@@ -275,6 +277,15 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                                         context,
                                       );
                                     }
+
+                                    print('LOL?');
+                                    if (widget.onPressedFunction != null) {
+                                      print('Going to buy a product!');
+                                      widget.onPressedFunction!(
+                                        widget.item.id ?? '',
+                                      );
+                                    }
+
                                     await _scaleController.forward().then(
                                           (_) => _scaleController.reverse(),
                                         );

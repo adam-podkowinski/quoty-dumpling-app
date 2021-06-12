@@ -57,10 +57,20 @@ class _OtherProductsWidgetState extends State<OtherProductsWidget> {
             (u) => Item(
               MoneyItem.fromProductDetails(u),
               ThemeColors.surface,
+              buyProduct,
             ),
           )
           .toList(),
     );
+  }
+
+  void buyProduct(String id) {
+    print('Buying product!');
+    var productDetails = _products.firstWhere((element) => element.id == id);
+    late var purchaseParam = PurchaseParam(productDetails: productDetails);
+    if (productDetails.id == _kRemoveAdsId) {
+      _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+    }
   }
 
   void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
