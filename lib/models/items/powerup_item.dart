@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:quiver/async.dart';
 import 'package:quoty_dumpling_app/helpers/item_functions.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
-import 'package:quoty_dumpling_app/providers/items.dart';
+import 'package:quoty_dumpling_app/providers/shop_items.dart';
 
 class PowerupItem extends LabeledItem {
   PowerupItem(Map<String, dynamic> map) : super.fromMap(map) {

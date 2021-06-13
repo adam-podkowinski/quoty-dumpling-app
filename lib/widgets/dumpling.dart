@@ -9,8 +9,8 @@ import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart' show UseCase;
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
-import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
+import 'package:quoty_dumpling_app/providers/shop_items.dart';
 import 'package:quoty_dumpling_app/widgets/powerup_state.dart';
 import 'package:quoty_dumpling_app/widgets/progress_bar.dart';
 

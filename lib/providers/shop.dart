@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/models/achievement.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
 import 'package:quoty_dumpling_app/models/items/powerup_item.dart';
-import 'package:quoty_dumpling_app/providers/items.dart';
 import 'package:quoty_dumpling_app/providers/level.dart';
+import 'package:quoty_dumpling_app/providers/shop_items.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Shop extends ChangeNotifier {

@@ -1,9 +1,10 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'dart:math' as math;
-import 'package:quoty_dumpling_app/providers/items.dart';
+import 'package:quoty_dumpling_app/providers/shop_items.dart';
 
 class PowerupState extends StatefulWidget {
   @override

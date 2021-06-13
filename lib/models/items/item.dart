@@ -24,6 +24,7 @@ enum UseCase {
 
 abstract class LabeledItem extends ShopItem {
   bool hasLabel = true;
+
   LabeledItem.fromMap(map) : super.fromMap(map);
 
   String getLabel();
