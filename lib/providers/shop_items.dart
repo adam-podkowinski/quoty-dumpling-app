@@ -49,6 +49,16 @@ class ShopItems extends ChangeNotifier {
 
   List<PurchaseDetails> get purchases => [..._purchases];
 
+  bool isMoneyItemAvailable(MoneyItem item) {
+    if (item.isConsumable) return true;
+    var productId = _products.firstWhere((e) => e.id == item.id).id;
+    //print('Product id: $productId');
+    if (purchases.map((e) => e.productID).contains((e) => e.id == productId)) {
+      return false;
+    }
+    return true;
+  }
+
   @override
   void dispose() {
     _subscription.cancel();
@@ -126,25 +136,33 @@ class ShopItems extends ChangeNotifier {
     );
 
     await initStoreInfo();
+
+    _money.forEach((element) {
+      element.priceUSD = _products.firstWhere((e) => e.id == element.id).price;
+    });
   }
 
   void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
     purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
       if (purchaseDetails.status == PurchaseStatus.pending) {
+        print('PENDING');
         showPendingUI();
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {
+          print('ERROR');
           handleError(purchaseDetails.error!);
-        } else if (purchaseDetails.status == PurchaseStatus.purchased) {
+        } else if (purchaseDetails.status == PurchaseStatus.purchased ||
+            purchaseDetails.status == PurchaseStatus.restored) {
+          print('restored or purchased');
           var valid = await _verifyPurchase(purchaseDetails);
           if (valid) {
             deliverProduct(purchaseDetails);
           } else {
             _handleInvalidPurchase(purchaseDetails);
-            return;
           }
         }
         if (purchaseDetails.pendingCompletePurchase) {
+          print('pendingCompletePurchase');
           await inAppPurchase.completePurchase(purchaseDetails);
         }
       }

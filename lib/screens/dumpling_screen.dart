@@ -162,7 +162,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                     child: AutoSizeText(
                       Shop.numberAbbreviation(_shopProvider.bills),
                       maxLines: 1,
-                      style: Styles.kMoneyTextStyle,
+                      style: Styles.moneyTextStyle,
                     ),
                   ),
                 ],
@@ -175,7 +175,7 @@ class _DumplingScreenState extends State<DumplingScreen>
                     Flexible(
                       child: AutoSizeText(
                         Shop.numberAbbreviation(_shopProvider.diamonds),
-                        style: Styles.kMoneyTextStyle,
+                        style: Styles.moneyTextStyle,
                         maxLines: 1,
                       ),
                     ),

@@ -58,7 +58,7 @@ class _QuoteDetailsState extends State<QuoteDetails> {
                   child: Text(
                     widget.quote.quote,
                     textAlign: TextAlign.justify,
-                    style: Styles.kQuoteStyle,
+                    style: Styles.quoteStyle,
                   ),
                 ),
               ),
@@ -105,7 +105,7 @@ class _QuoteDetailsState extends State<QuoteDetails> {
                             FittedBox(
                               child: Text(
                                 'By: ${widget.quote.author}',
-                                style: Styles.kSettingsTextStyle,
+                                style: Styles.settingsTextStyle,
                               ),
                             ),
                             SizedBox(
@@ -113,14 +113,14 @@ class _QuoteDetailsState extends State<QuoteDetails> {
                             ),
                             Text(
                               'Rarity: ${widget.quote.rarityText()}',
-                              style: Styles.kSettingsTextStyle,
+                              style: Styles.settingsTextStyle,
                             ),
                             SizedBox(
                               height: 5,
                             ),
                             Text(
                               'Unlocking day: ${DateFormat('d | M | y').format(widget.quote.unlockingTime!)}',
-                              style: Styles.kSettingsTextStyle,
+                              style: Styles.settingsTextStyle,
                             ),
                           ],
                         ),

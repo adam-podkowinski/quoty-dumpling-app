@@ -73,7 +73,7 @@ class _AchievementsDialog extends State<AchievementsDialog> {
                         'Achievements',
                         maxLines: 1,
                         textAlign: TextAlign.center,
-                        style: Styles.kSettingsTitleStyle,
+                        style: Styles.settingsTitleStyle,
                       ),
                     ),
                     Divider(
@@ -161,7 +161,7 @@ class _ListElementState extends State<ListElement> {
                   color: achievement.isDone
                       ? achievement.isRewardReceived
                           ? ThemeColors.surface
-                          : Styles.kSettingsTitleStyle.color
+                          : Styles.settingsTitleStyle.color
                       : null,
                 ),
               ),

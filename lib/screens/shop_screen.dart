@@ -30,7 +30,7 @@ class ShopScreen extends StatelessWidget {
                     child: AutoSizeText(
                       Shop.numberAbbreviation(Provider.of<Shop>(context).bills),
                       maxLines: 1,
-                      style: Styles.kMoneyTextStyle,
+                      style: Styles.moneyTextStyle,
                     ),
                   ),
                 ],
@@ -44,7 +44,7 @@ class ShopScreen extends StatelessWidget {
                       child: AutoSizeText(
                         Shop.numberAbbreviation(
                             Provider.of<Shop>(context).diamonds),
-                        style: Styles.kMoneyTextStyle,
+                        style: Styles.moneyTextStyle,
                         maxLines: 1,
                       ),
                     ),
@@ -71,7 +71,7 @@ class ShopScreen extends StatelessWidget {
                         SizedBox(
                           height: SizeConfig.screenHeight * 0.08,
                           child: TabBar(
-                            labelStyle: Styles.kTabBarTextStyle,
+                            labelStyle: Styles.tabBarTextStyle,
                             labelColor: ThemeColors.onSecondary,
                             indicatorColor: ThemeColors.secondaryLight,
                             labelPadding: EdgeInsets.only(top: 5),

@@ -106,19 +106,19 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                   Text(
                     'Settings',
                     textAlign: TextAlign.center,
-                    style: Styles.kSettingsTitleStyle,
+                    style: Styles.settingsTitleStyle,
                   ),
                   Divider(
                     color: ThemeColors.secondary,
                     thickness: 2,
-                    endIndent: Styles.kSettingsTitleStyle.fontSize! * 3.6,
-                    indent: Styles.kSettingsTitleStyle.fontSize! * 3.6,
+                    endIndent: Styles.settingsTitleStyle.fontSize! * 3.6,
+                    indent: Styles.settingsTitleStyle.fontSize! * 3.6,
                   ),
                   Row(
                     children: <Widget>[
                       Text(
                         'Volume:',
-                        style: Styles.kSettingsTextStyle,
+                        style: Styles.settingsTextStyle,
                       ),
                       Expanded(
                         child: Stack(
@@ -176,16 +176,16 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                 children: <Widget>[
                                   Text(
                                     'Credits',
-                                    style: Styles.kSettingsTitleStyle,
+                                    style: Styles.settingsTitleStyle,
                                   ),
                                   Divider(
                                     color: ThemeColors.secondary,
                                     thickness: 2,
                                     endIndent:
-                                        Styles.kSettingsTitleStyle.fontSize! *
+                                        Styles.settingsTitleStyle.fontSize! *
                                             3.8,
                                     indent:
-                                        Styles.kSettingsTitleStyle.fontSize! *
+                                        Styles.settingsTitleStyle.fontSize! *
                                             3.8,
                                   ),
                                   Row(
@@ -193,7 +193,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                     children: [
                                       Text(
                                         'Programming: ',
-                                        style: Styles.kSettingsTextStyle,
+                                        style: Styles.settingsTextStyle,
                                       ),
                                       linkCreator(
                                         'Adam Podkowinski',
@@ -207,7 +207,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                   ),
                                   Text(
                                     'Game assets created by:',
-                                    style: Styles.kSettingsTextStyle,
+                                    style: Styles.settingsTextStyle,
                                   ),
                                   ..._assetsCreators.map(
                                     (e) => Column(
@@ -297,22 +297,22 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
                                   children: <Widget>[
                                     Text(
                                       'Are you sure?',
-                                      style: Styles.kSettingsTitleStyle,
+                                      style: Styles.settingsTitleStyle,
                                     ),
                                     Divider(
                                       color: ThemeColors.secondary,
                                       thickness: 2,
                                       endIndent:
-                                          Styles.kSettingsTitleStyle.fontSize! *
+                                          Styles.settingsTitleStyle.fontSize! *
                                               2.3,
                                       indent:
-                                          Styles.kSettingsTitleStyle.fontSize! *
+                                          Styles.settingsTitleStyle.fontSize! *
                                               2.3,
                                     ),
                                     Text(
                                       'Your game data will be lost. All of your items and quotes will be deleted and you won\'t be able to restore them!',
                                       textAlign: TextAlign.justify,
-                                      style: Styles.kSettingsTextStyle,
+                                      style: Styles.settingsTextStyle,
                                     ),
                                     Divider(
                                       color: ThemeColors.secondary,
@@ -353,7 +353,7 @@ class _GlobalSettingsDialogState extends State<GlobalSettingsDialog> {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-        style: Styles.kSettingsTextStyle.copyWith(
+        style: Styles.settingsTextStyle.copyWith(
           color: Colors.blue,
           decoration: TextDecoration.underline,
           fontWeight: FontWeight.normal,

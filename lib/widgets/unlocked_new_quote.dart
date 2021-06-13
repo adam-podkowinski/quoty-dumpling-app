@@ -130,25 +130,25 @@ class CardContent extends StatelessWidget {
             children: <Widget>[
               Text(
                 'New ',
-                style: Styles.kTitleStyle,
+                style: Styles.titleStyle,
               ),
               SizedBox(width: 5),
               Stack(
                 children: <Widget>[
                   Text(
                     '${newQuote!.rarityText()} ',
-                    style: Styles.kTitleStyle.copyWith(
+                    style: Styles.titleStyle.copyWith(
                       fontFamily: 'Pacifico',
                       fontStyle: FontStyle.italic,
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
                         ..strokeWidth = 5
-                        ..color = Styles.kTitleStyle.color!,
+                        ..color = Styles.titleStyle.color!,
                     ),
                   ),
                   Text(
                     '${newQuote!.rarityText()} ',
-                    style: Styles.kTitleStyle.copyWith(
+                    style: Styles.titleStyle.copyWith(
                       fontFamily: 'Pacifico',
                       fontStyle: FontStyle.italic,
                       color: newQuote!.rarityColor(context),
@@ -159,7 +159,7 @@ class CardContent extends StatelessWidget {
               SizedBox(width: 5),
               Text(
                 'Quote',
-                style: Styles.kTitleStyle,
+                style: Styles.titleStyle,
               ),
             ],
           ),
@@ -171,7 +171,7 @@ class CardContent extends StatelessWidget {
         //Quote content and author
         Text(
           newQuote!.quote,
-          style: Styles.kQuoteStyle,
+          style: Styles.quoteStyle,
           textAlign: TextAlign.justify,
         ),
         SizedBox(
@@ -180,33 +180,33 @@ class CardContent extends StatelessWidget {
         FittedBox(
           child: Text(
             'Author: ${newQuote!.author == '' ? 'Unknown' : newQuote!.author}',
-            style: Styles.kAuthorStyle,
+            style: Styles.authorStyle,
           ),
         ),
         Divider(
-          color: Styles.kAuthorStyle.color,
+          color: Styles.authorStyle.color,
           thickness: 1,
           height: 30.h,
         ),
         RichText(
           text: TextSpan(
             text: 'Additional bills: ',
-            style: Styles.kAuthorStyle,
+            style: Styles.authorStyle,
             children: <TextSpan>[
               TextSpan(
                 text: '\$${shopProvider.billsOnOpening}',
                 style: _isPowerupActive
-                    ? Styles.kAuthorStyle.copyWith(
+                    ? Styles.authorStyle.copyWith(
                         color: Theme.of(context).errorColor,
                         fontSize: 22.sp,
                       )
-                    : Styles.kAuthorStyle.copyWith(color: ThemeColors.surface),
+                    : Styles.authorStyle.copyWith(color: ThemeColors.surface),
               ),
             ],
           ),
         ),
         Divider(
-          color: Styles.kAuthorStyle.color,
+          color: Styles.authorStyle.color,
           thickness: 1,
           height: 30.h,
         ),
@@ -270,7 +270,7 @@ class NewQuoteButton extends StatelessWidget {
           padding: EdgeInsets.all(6),
           decoration: BoxDecoration(
             border: Border.all(
-              color: Styles.kTitleStyle.color!,
+              color: Styles.titleStyle.color!,
               width: 2,
             ),
             borderRadius: BorderRadius.circular(50),
@@ -286,7 +286,7 @@ class NewQuoteButton extends StatelessWidget {
             child: FittedBox(
               child: Text(
                 textContent,
-                style: Styles.kButtonTextStyle,
+                style: Styles.buttonTextStyle,
               ),
             ),
           ),

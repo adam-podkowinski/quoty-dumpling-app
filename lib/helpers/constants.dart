@@ -42,61 +42,61 @@ class Styles {
     ),
   );
 
-  static TextStyle kTitleStyle = TextStyle(
+  static TextStyle titleStyle = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
     color: ThemeColors.onBackground,
     fontSize: _screenWidth! * 0.08,
   );
 
-  static TextStyle kMoneyInShopItemTextStyle = TextStyle(
+  static TextStyle moneyInShopItemTextStyle = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
     color: ThemeColors.onBackground,
     fontSize: _screenWidth! * 0.04,
   );
 
-  static TextStyle kSettingsTitleStyle = kTitleStyle.copyWith(
+  static TextStyle settingsTitleStyle = titleStyle.copyWith(
     fontSize: _screenWidth! * 0.065,
   );
 
-  static TextStyle kQuoteStyle = TextStyle(
+  static TextStyle quoteStyle = TextStyle(
     fontFamily: fontFamily,
     fontStyle: FontStyle.italic,
-    color: kTitleStyle.color,
+    color: titleStyle.color,
     decorationStyle: TextDecorationStyle.dashed,
     fontSize: _screenWidth! * 0.05,
   );
 
-  static TextStyle kAuthorStyle = TextStyle(
+  static TextStyle authorStyle = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
-    color: kTitleStyle.color,
+    color: titleStyle.color,
     fontSize: _screenWidth! * 0.05,
     wordSpacing: 2,
   );
 
-  static TextStyle kButtonTextStyle = TextStyle(
+  static TextStyle buttonTextStyle = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
-    color: kTitleStyle.color,
+    color: titleStyle.color,
     fontSize: _screenWidth! * 0.045,
   );
 
-  static TextStyle kCommonTextStyle = TextStyle(
+  static TextStyle commonTextStyle = TextStyle(
     fontFamily: fontFamily,
-    color: kTitleStyle.color,
+    color: titleStyle.color,
     fontSize: _screenWidth! * 0.04328,
   );
 
-  static TextStyle kSettingsTextStyle = TextStyle(
+  static TextStyle settingsTextStyle = TextStyle(
     fontFamily: fontFamily,
-    color: kTitleStyle.color,
+    color: titleStyle.color,
     fontWeight: FontWeight.bold,
     fontSize: _screenWidth! * 0.04,
   );
 
-  static OutlineInputBorder kSearchBarBorder = OutlineInputBorder(
+  static OutlineInputBorder searchBarBorder = OutlineInputBorder(
     borderSide: BorderSide(
       color: ThemeColors.secondaryLight,
       width: 4,
@@ -106,38 +106,38 @@ class Styles {
     ),
   );
 
-  static TextStyle kSearchBarTextStyle = TextStyle(
+  static TextStyle searchBarTextStyle = TextStyle(
     color: ThemeColors.background,
     fontFamily: fontFamily,
     fontSize: _screenWidth! * 0.05,
   );
 
-  static TextStyle kTabBarTextStyle = TextStyle(
+  static TextStyle tabBarTextStyle = TextStyle(
     color: ThemeColors.onSecondary,
     fontFamily: fontFamily,
     fontSize: _screenWidth! * 0.04,
   );
 
-  static TextStyle kMoneyTextStyle = TextStyle(
+  static TextStyle moneyTextStyle = TextStyle(
     color: ThemeColors.onSecondary,
     fontFamily: fontFamily,
     fontSize: _screenWidth! * 0.05,
   );
 
-  static TextStyle kShopItemTitleStyle = TextStyle(
+  static TextStyle shopItemTitleStyle = TextStyle(
     color: ThemeColors.onSecondary,
     fontFamily: fontFamily,
     fontWeight: FontWeight.bold,
     fontSize: _screenWidth! * 0.055,
   );
 
-  static TextStyle kShopItemDescriptionStyle = TextStyle(
+  static TextStyle shopItemDescriptionStyle = TextStyle(
     color: ThemeColors.onSecondary,
     fontFamily: fontFamily,
     fontSize: _screenWidth! * 0.04,
   );
 
-  static TextStyle kItemLevelTextStyle = TextStyle(
+  static TextStyle itemLevelTextStyle = TextStyle(
     color: ThemeColors.onSecondary,
     fontFamily: fontFamily,
     fontSize: _screenWidth! * .045,

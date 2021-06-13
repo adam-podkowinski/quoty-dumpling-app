@@ -73,7 +73,7 @@ class _CollectionGridState extends State<CollectionGrid>
             ),
             Text(
               'New quotes (${_quotesProvider.newQuotes.length})',
-              style: Styles.kSettingsTextStyle,
+              style: Styles.settingsTextStyle,
             ),
             SizedBox(
               width: 5,
@@ -95,7 +95,7 @@ class _CollectionGridState extends State<CollectionGrid>
               color: ThemeColors.secondary.withOpacity(.8),
               child: Text(
                 'OK',
-                style: Styles.kSettingsTextStyle,
+                style: Styles.settingsTextStyle,
               ),
             ),
             SizedBox(width: 5),
@@ -196,7 +196,7 @@ class _CollectionGridState extends State<CollectionGrid>
                   'Not found quotes with this particular phrase.',
                   maxLines: 2,
                   textAlign: TextAlign.center,
-                  style: Styles.kSearchBarTextStyle,
+                  style: Styles.searchBarTextStyle,
                 ),
               ),
       ),
@@ -336,7 +336,7 @@ class _QuoteCardState extends State<QuoteCard> {
                     widget.quote.quote,
                     minFontSize: 1,
                     textAlign: TextAlign.justify,
-                    style: Styles.kQuoteStyle
+                    style: Styles.quoteStyle
                         .copyWith(fontSize: SizeConfig.screenWidth! * .045),
                   ),
                 ),

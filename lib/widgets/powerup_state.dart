@@ -74,7 +74,7 @@ class _PowerupStateState extends State<PowerupState>
           ),
           child: Icon(
             itemsProvider.currentPowerup?.itemTypeIcon(),
-            color: Styles.kTitleStyle.color,
+            color: Styles.titleStyle.color,
             size: 20.w,
           ),
         )

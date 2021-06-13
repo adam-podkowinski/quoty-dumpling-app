@@ -96,7 +96,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
                     suffix: FittedBox(
                       child: Text(
                         'Quotes: ${_quotesProvider.unlockedQuotes.length + _quotesProvider.newQuotes.length}',
-                        style: Styles.kSearchBarTextStyle.copyWith(
+                        style: Styles.searchBarTextStyle.copyWith(
                           color: ThemeColors.onSecondary,
                         ),
                       ),
@@ -148,14 +148,14 @@ class NothingInCollectionWidget extends StatelessWidget {
               Text(
                 'You haven\'t unlocked any quotes yet!',
                 textAlign: TextAlign.center,
-                style: Styles.kTitleStyle
+                style: Styles.titleStyle
                     .copyWith(fontSize: SizeConfig.screenWidth! * 0.07),
               ),
               SizedBox(height: SizeConfig.screenWidth! * 0.03),
               Text(
                 'Go and eat your dumplings!',
                 textAlign: TextAlign.center,
-                style: Styles.kAuthorStyle,
+                style: Styles.authorStyle,
               ),
               SizedBox(height: SizeConfig.screenWidth! * 0.03),
               RoundedButton(

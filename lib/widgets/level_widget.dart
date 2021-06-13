@@ -21,7 +21,7 @@ class LevelWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.h),
               width: 100.w,
               height: 50.h,
-              textColor: Styles.kTitleStyle.color,
+              textColor: Styles.titleStyle.color,
               color: ThemeColors.surface,
               onPressed: () async {
                 var tupleReward = _levelProvider.claimReward(context);
@@ -40,7 +40,7 @@ class LevelWidget extends StatelessWidget {
                         fontFamily: Styles.fontFamily,
                         fontWeight: FontWeight.bold,
                         fontSize: 19.sp,
-                        color: Styles.kTitleStyle.color,
+                        color: Styles.titleStyle.color,
                       ),
                 ),
                 Stack(

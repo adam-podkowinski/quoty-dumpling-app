@@ -47,7 +47,7 @@ class _SearchBarState extends State<SearchBar> {
                     .refreshScrollFab();
               }
             },
-            style: Styles.kSearchBarTextStyle,
+            style: Styles.searchBarTextStyle,
             controller: _controller,
             decoration: InputDecoration(
               suffix: Icon(null),
@@ -58,10 +58,10 @@ class _SearchBarState extends State<SearchBar> {
                 color: ThemeColors.background,
                 size: SizeConfig.screenWidth! * 0.07,
               ),
-              hintStyle: Styles.kSearchBarTextStyle,
-              labelStyle: Styles.kSearchBarTextStyle,
-              focusedBorder: Styles.kSearchBarBorder,
-              enabledBorder: Styles.kSearchBarBorder,
+              hintStyle: Styles.searchBarTextStyle,
+              labelStyle: Styles.searchBarTextStyle,
+              focusedBorder: Styles.searchBarBorder,
+              enabledBorder: Styles.searchBarBorder,
             ),
           ),
           Positioned(

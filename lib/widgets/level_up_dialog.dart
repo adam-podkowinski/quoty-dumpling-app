@@ -89,7 +89,7 @@ class _LevelUpDialogState extends State<LevelUpDialog> {
                       'LEVEL UP!',
                       maxLines: 1,
                       textAlign: TextAlign.center,
-                      style: Styles.kSettingsTitleStyle,
+                      style: Styles.settingsTitleStyle,
                     ),
                   ),
                   Divider(
@@ -103,18 +103,18 @@ class _LevelUpDialogState extends State<LevelUpDialog> {
                   ),
                   Text(
                     'Level achieved: ${widget.reward.levelAchieved.toString()}',
-                    style: Styles.kSettingsTextStyle,
+                    style: Styles.settingsTextStyle,
                   ),
                   Divider(
                     color: ThemeColors.secondary,
                   ),
                   Text(
                     'Bills Reward: ${widget.reward.billsReward.toString()}',
-                    style: Styles.kSettingsTextStyle,
+                    style: Styles.settingsTextStyle,
                   ),
                   Text(
                     'Diamonds Reward: ${widget.reward.diamondsReward.toString()}',
-                    style: Styles.kSettingsTextStyle,
+                    style: Styles.settingsTextStyle,
                   ),
                   Divider(color: ThemeColors.secondary),
                   Padding(
@@ -124,7 +124,7 @@ class _LevelUpDialogState extends State<LevelUpDialog> {
                     ),
                     child: AutoSizeText(
                       'UNLOCKED NEW QUOTE',
-                      style: Styles.kSettingsTitleStyle,
+                      style: Styles.settingsTitleStyle,
                       maxLines: 1,
                     ),
                   ),
@@ -187,7 +187,7 @@ class _QuoteCardLevelupState extends State<QuoteCardLevelup> {
                   widget.quote.quote,
                   minFontSize: 1,
                   textAlign: TextAlign.justify,
-                  style: Styles.kQuoteStyle
+                  style: Styles.quoteStyle
                       .copyWith(fontSize: SizeConfig.screenWidth! * .045),
                 ),
               ),

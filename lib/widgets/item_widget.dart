@@ -7,6 +7,7 @@ import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
+import 'package:quoty_dumpling_app/models/items/money_item.dart';
 import 'package:quoty_dumpling_app/models/items/powerup_item.dart';
 import 'package:quoty_dumpling_app/providers/audio_provider.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
@@ -123,7 +124,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                                 FittedBox(
                                   child: Text(
                                     (widget.item as LabeledItem).getLabel(),
-                                    style: Styles.kItemLevelTextStyle,
+                                    style: Styles.itemLevelTextStyle,
                                   ),
                                 ),
                               ],
@@ -142,7 +143,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                     children: <Widget>[
                       Text(
                         widget.item.name!,
-                        style: Styles.kShopItemTitleStyle,
+                        style: Styles.shopItemTitleStyle,
                       ),
                       if (widget.item.description!.isNotEmpty)
                         SizedBox(
@@ -151,7 +152,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                       if (widget.item.description!.isNotEmpty)
                         Text(
                           widget.item.description!,
-                          style: Styles.kShopItemDescriptionStyle,
+                          style: Styles.shopItemDescriptionStyle,
                         ),
                     ],
                   ),
@@ -165,7 +166,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                       buildPriceChip(
                         Text(
                           'FREE',
-                          style: Styles.kMoneyInShopItemTextStyle,
+                          style: Styles.moneyInShopItemTextStyle,
                         ),
                         avatar: Icon(
                           Icons.attach_money,
@@ -177,7 +178,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                         Text(
                           Shop.numberAbbreviation(widget.item.actualPriceBills),
                           textAlign: TextAlign.center,
-                          style: Styles.kMoneyInShopItemTextStyle,
+                          style: Styles.moneyInShopItemTextStyle,
                         ),
                         avatar: Icon(
                           Icons.attach_money,
@@ -190,7 +191,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                           Shop.numberAbbreviation(
                               widget.item.actualPriceDiamonds),
                           textAlign: TextAlign.center,
-                          style: Styles.kMoneyInShopItemTextStyle,
+                          style: Styles.moneyInShopItemTextStyle,
                         ),
                         avatar: Padding(
                           padding:
@@ -208,7 +209,7 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                           children: <Widget>[
                             Text(
                               widget.item.priceUSD ?? '0\$',
-                              style: Styles.kMoneyInShopItemTextStyle,
+                              style: Styles.moneyInShopItemTextStyle,
                             ),
                           ],
                         ),
@@ -249,12 +250,9 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                                     }
 
                                     if (widget.onPressedFunction != null) {
-                                      print('Going to buy a product!');
-                                      if (widget.onPressedFunction != null) {
-                                        widget.onPressedFunction!(
-                                          widget.item.id ?? '',
-                                        );
-                                      }
+                                      widget.onPressedFunction!(
+                                        widget.item.id ?? '',
+                                      );
                                     }
 
                                     await _scaleController.forward().then(
@@ -332,13 +330,13 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
       _scaleAnim = Tween<double>(begin: 1, end: .85).animate(_scaleController);
 
       _textSpanSmall =
-          TextSpan(text: '444', style: Styles.kMoneyInShopItemTextStyle);
+          TextSpan(text: '444', style: Styles.moneyInShopItemTextStyle);
       _textPainterSmall =
           TextPainter(text: _textSpanSmall, textDirection: TextDirection.ltr)
             ..layout();
 
       _textSpanBig =
-          TextSpan(text: '444.3W', style: Styles.kMoneyInShopItemTextStyle);
+          TextSpan(text: '444.3W', style: Styles.moneyInShopItemTextStyle);
       _textPainterBig =
           TextPainter(text: _textSpanBig, textDirection: TextDirection.ltr)
             ..layout();
@@ -358,9 +356,16 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
   }
 
   void _itemListener() {
+    print('Item listener!');
     _isActive = _shopProvider.checkIsActiveItem(widget.item, context);
     if (widget.item is PowerupItem) {
       _isRunningPowerup = (widget.item as PowerupItem).isRunning;
+    }
+
+    if (widget.item is MoneyItem) {
+      _isActive = _shopItemsProvider.isAvailable &&
+          _shopItemsProvider.isMoneyItemAvailable(widget.item as MoneyItem);
+      return;
     }
 
     if (!_isActive) {

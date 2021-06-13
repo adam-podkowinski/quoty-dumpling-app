@@ -72,11 +72,11 @@ class _DumplingState extends State<Dumpling> with TickerProviderStateMixin {
               child: AnimatedDefaultTextStyle(
                 duration: Duration(milliseconds: 200),
                 style: _isPowerupBillsOnClick
-                    ? Styles.kShopItemTitleStyle.copyWith(
+                    ? Styles.shopItemTitleStyle.copyWith(
                         color: Theme.of(context).errorColor,
                         fontSize: 30.sp,
                       )
-                    : Styles.kShopItemTitleStyle.copyWith(fontSize: 25.sp),
+                    : Styles.shopItemTitleStyle.copyWith(fontSize: 25.sp),
                 child: Text(
                   '+' +
                       Provider.of<Shop>(context).billsPerClick.toString() +
