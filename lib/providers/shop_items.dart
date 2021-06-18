@@ -160,9 +160,7 @@ class ShopItems extends ChangeNotifier {
           }
           if (purchaseDetails.pendingCompletePurchase) {
             print('pendingCompletePurchase');
-            if (kReleaseMode) {
-              await inAppPurchase.completePurchase(purchaseDetails);
-            }
+            await inAppPurchase.completePurchase(purchaseDetails);
           }
         }
       },
@@ -191,7 +189,11 @@ class ShopItems extends ChangeNotifier {
     var productDetails = _products.firstWhere((element) => element.id == id);
     late var purchaseParam = PurchaseParam(productDetails: productDetails);
     if (_productIds.contains(productDetails.id)) {
-      inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+      if (!kReleaseMode) {
+        inAppPurchase.buyConsumable(purchaseParam: purchaseParam);
+      } else {
+        inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+      }
     }
   }
 
