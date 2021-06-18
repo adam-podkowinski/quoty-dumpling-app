@@ -52,8 +52,7 @@ class ShopItems extends ChangeNotifier {
   bool isMoneyItemAvailable(MoneyItem item) {
     if (item.isConsumable) return true;
     var productId = _products.firstWhere((e) => e.id == item.id).id;
-    //print('Product id: $productId');
-    if (purchases.map((e) => e.productID).contains((e) => e.id == productId)) {
+    if (purchases.map((e) => e.productID).contains(productId)) {
       return false;
     }
     return true;
@@ -121,6 +120,7 @@ class ShopItems extends ChangeNotifier {
     _productIds.addAll(_money.map((e) => e.id ?? ''));
 
     final purchaseUpdated = inAppPurchase.purchaseStream;
+    await inAppPurchase.restorePurchases();
     _subscription = purchaseUpdated.listen(
       (purchaseDetailsList) {
         _listenToPurchaseUpdated(purchaseDetailsList);
@@ -143,30 +143,30 @@ class ShopItems extends ChangeNotifier {
   }
 
   void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
-    purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
-      if (purchaseDetails.status == PurchaseStatus.pending) {
-        print('PENDING');
-        showPendingUI();
-      } else {
-        if (purchaseDetails.status == PurchaseStatus.error) {
-          print('ERROR');
-          handleError(purchaseDetails.error!);
-        } else if (purchaseDetails.status == PurchaseStatus.purchased ||
-            purchaseDetails.status == PurchaseStatus.restored) {
-          print('restored or purchased');
-          var valid = await _verifyPurchase(purchaseDetails);
-          if (valid) {
+    print('Purchase updated!!!');
+    purchaseDetailsList.forEach(
+      (PurchaseDetails purchaseDetails) async {
+        if (purchaseDetails.status == PurchaseStatus.pending) {
+          print('PENDING');
+          showPendingUI();
+        } else {
+          if (purchaseDetails.status == PurchaseStatus.error) {
+            print('ERROR: PurchaseStatus is error');
+            handleError(purchaseDetails.error!);
+          } else if (purchaseDetails.status == PurchaseStatus.purchased ||
+              purchaseDetails.status == PurchaseStatus.restored) {
+            print('restored or purchased');
             deliverProduct(purchaseDetails);
-          } else {
-            _handleInvalidPurchase(purchaseDetails);
+          }
+          if (purchaseDetails.pendingCompletePurchase) {
+            print('pendingCompletePurchase');
+            if (kReleaseMode) {
+              await inAppPurchase.completePurchase(purchaseDetails);
+            }
           }
         }
-        if (purchaseDetails.pendingCompletePurchase) {
-          print('pendingCompletePurchase');
-          await inAppPurchase.completePurchase(purchaseDetails);
-        }
-      }
-    });
+      },
+    );
   }
 
   void showPendingUI() {
@@ -180,21 +180,10 @@ class ShopItems extends ChangeNotifier {
     print('ERROR while buying an item');
   }
 
-  Future<bool> _verifyPurchase(PurchaseDetails purchaseDetails) {
-    //TODO: verify a purchase (no need cuz im lazy)
-    return Future<bool>.value(true);
-  }
-
   void deliverProduct(PurchaseDetails purchaseDetails) async {
     _purchases.add(purchaseDetails);
     purchasePending = false;
     notifyListeners();
-  }
-
-  void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {
-    print(
-      'ERROR: Invalid purchase for product id ${purchaseDetails.productID}',
-    );
   }
 
   void buyProduct(String id) {
@@ -246,6 +235,8 @@ class ShopItems extends ChangeNotifier {
       notifyListeners();
       return;
     }
+
+    await inAppPurchase.restorePurchases();
 
     this.isAvailable = isAvailable;
     _products = productDetailResponse.productDetails;
