@@ -193,11 +193,7 @@ class ShopItems extends ChangeNotifier {
     var productDetails = _products.firstWhere((element) => element.id == id);
     late var purchaseParam = PurchaseParam(productDetails: productDetails);
     if (_productIds.contains(productDetails.id)) {
-      if (!kReleaseMode) {
-        inAppPurchase.buyConsumable(purchaseParam: purchaseParam);
-      } else {
-        inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
-      }
+      inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
     }
   }
 
