@@ -167,6 +167,10 @@ class ShopItems extends ChangeNotifier {
     );
   }
 
+  bool isProductBought(String id) {
+    return _purchases.map((e) => e.productID).contains(id);
+  }
+
   void showPendingUI() {
     purchasePending = true;
     notifyListeners();

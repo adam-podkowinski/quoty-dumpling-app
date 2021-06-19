@@ -11,6 +11,7 @@ import 'package:quoty_dumpling_app/icons/custom_icons.dart';
 import 'package:quoty_dumpling_app/providers/achievements.dart';
 import 'package:quoty_dumpling_app/providers/dumpling_provider.dart';
 import 'package:quoty_dumpling_app/providers/shop.dart';
+import 'package:quoty_dumpling_app/providers/shop_items.dart';
 import 'package:quoty_dumpling_app/widgets/achievements_dialog.dart';
 import 'package:quoty_dumpling_app/widgets/custom_app_bar.dart';
 import 'package:quoty_dumpling_app/widgets/dumpling.dart';
@@ -75,46 +76,45 @@ class _DumplingScreenState extends State<DumplingScreen>
 
   late var _isInit = true;
 
-  late final BannerAd myBanner;
-  late final BannerAdListener listener;
-  late final AdWidget adWidget;
-  late final Container adContainer;
+  BannerAd? myBanner;
+  BannerAdListener? listener;
+  AdWidget? adWidget;
+  Container? adContainer;
   var _showAd = false;
 
-  @override
-  void initState() {
-    super.initState();
-    listener = BannerAdListener(
-      onAdLoaded: (Ad ad) {
-        print('Ad loaded.');
-        setState(() {
-          _showAd = true;
-        });
-      },
-      onAdFailedToLoad: (Ad ad, LoadAdError error) {
-        _showAd = false;
-        ad.dispose();
-        print('Ad failed to load: Error( $error )');
-      },
-    );
-    //TODO: no ads showing in release mode
-    myBanner = BannerAd(
-      adUnitId: kReleaseMode
-          ? 'ca-app-pub-4457173945348292/7486886749'
-          : 'ca-app-pub-3940256099942544/6300978111',
-      size: AdSize.banner,
-      request: AdRequest(),
-      listener: listener,
-    );
-    myBanner.load();
+  void _initAds() {
+    if (!context.read<ShopItems>().isProductBought('remove_ads1')) {
+      listener = BannerAdListener(
+        onAdLoaded: (Ad ad) {
+          print('Ad loaded.');
+          setState(() {
+            _showAd = true;
+          });
+        },
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {
+          _showAd = false;
+          ad.dispose();
+          print('Ad failed to load: Error( $error )');
+        },
+      );
 
-    adWidget = AdWidget(ad: myBanner);
-    adContainer = Container(
-      alignment: Alignment.center,
-      width: myBanner.size.width.toDouble(),
-      height: myBanner.size.height.toDouble(),
-      child: adWidget,
-    );
+      myBanner = BannerAd(
+        adUnitId: kReleaseMode
+            ? 'ca-app-pub-4457173945348292/7486886749'
+            : 'ca-app-pub-3940256099942544/6300978111',
+        size: AdSize.banner,
+        request: AdRequest(),
+        listener: listener!,
+      )..load();
+
+      adWidget = AdWidget(ad: myBanner!);
+      adContainer = Container(
+        alignment: Alignment.center,
+        width: myBanner!.size.width.toDouble(),
+        height: myBanner!.size.height.toDouble(),
+        child: adWidget,
+      );
+    }
   }
 
   @override
@@ -128,13 +128,16 @@ class _DumplingScreenState extends State<DumplingScreen>
           }
         });
       _shopProvider = Provider.of<Shop>(context);
+
+      _initAds();
+
       _isInit = false;
     }
   }
 
   @override
   void dispose() {
-    myBanner.dispose();
+    myBanner?.dispose();
     super.dispose();
   }
 
@@ -243,7 +246,7 @@ class _DumplingScreenState extends State<DumplingScreen>
             Spacer(
               flex: 3,
             ),
-            if (_showAd) adContainer
+            if (_showAd && adContainer != null) adContainer!
           ],
         ),
       ),

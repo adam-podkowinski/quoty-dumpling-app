@@ -9,6 +9,7 @@ import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/helpers/size_config.dart';
 import 'package:quoty_dumpling_app/providers/collection_settings_provider.dart';
 import 'package:quoty_dumpling_app/providers/quotes.dart';
+import 'package:quoty_dumpling_app/providers/shop_items.dart';
 import 'package:quoty_dumpling_app/providers/tabs.dart';
 import 'package:quoty_dumpling_app/widgets/collection_grid.dart';
 import 'package:quoty_dumpling_app/widgets/collection_settings.dart';
@@ -28,20 +29,8 @@ class _CollectionScreenState extends State<CollectionScreen> {
   InterstitialAd? _interstitialAd;
   static const int _adChance = 3; // lower = more money ?????
 
-  @override
-  void initState() {
-    super.initState();
-    _quotesProvider = Provider.of<Quotes>(context, listen: false);
-    _quotesProvider.refreshVisibleQuotes();
-    _quotesProvider.sortCollection(false);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      _collectionSettings = Provider.of<CollectionSettings>(context)
-        ..initScrollControlller();
+  void _initAds() {
+    if (!context.read<ShopItems>().isProductBought('remove_ads1')) {
       var rng = Random();
       if (rng.nextInt(_adChance) == _adChance - 1) {
         InterstitialAd.load(
@@ -60,6 +49,19 @@ class _CollectionScreenState extends State<CollectionScreen> {
           ),
         );
       }
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      _quotesProvider = Provider.of<Quotes>(context, listen: false);
+      _quotesProvider.refreshVisibleQuotes();
+      _quotesProvider.sortCollection(false);
+      _collectionSettings = Provider.of<CollectionSettings>(context)
+        ..initScrollControlller();
+      _initAds();
       _isInit = false;
     }
   }
