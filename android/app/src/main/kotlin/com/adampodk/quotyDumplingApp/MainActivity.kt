@@ -204,7 +204,9 @@ class MainActivity : FlutterActivity() {
         if (user != null) {
             val snapshotsClient: SnapshotsClient =
                 Games.getSnapshotsClient(this, user)
-            return snapshotsClient.open(mainSaveName, true)
+            val conflictResolutionPolicy =
+                SnapshotsClient.RESOLUTION_POLICY_MOST_RECENTLY_MODIFIED
+            return snapshotsClient.open(mainSaveName, true, conflictResolutionPolicy)
                 .addOnCompleteListener(this) { task ->
                     if (!task.result.isConflict) {
                         val snapshot = task.result.data

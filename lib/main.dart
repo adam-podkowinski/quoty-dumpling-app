@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:provider/provider.dart';
+import 'package:logger/logger.dart' as log;
 import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/helpers/constants.dart';
 import 'package:quoty_dumpling_app/providers/achievements.dart';
@@ -105,6 +107,7 @@ class QuotyDumplingApp extends StatelessWidget {
                   switch (methodCall.method) {
                     case 'loadDataFromGooglePlay':
                       print('LOADING DATA FROM GOOGLE PLAY FROM DART');
+                      log.Logger().d(methodCall.arguments);
                       print('argument is: ${methodCall.arguments}');
 
                       if (methodCall.arguments is String) {

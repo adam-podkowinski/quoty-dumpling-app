@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:logger/logger.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart' as sql;
@@ -204,6 +205,7 @@ WHERE
         }
       });
       print('Filled database successfully');
+      Logger().d(await databaseToJSON());
     } catch (e) {
       print('Error while filling database from JSON (dart)');
     }
