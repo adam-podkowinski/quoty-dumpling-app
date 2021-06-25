@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:logger/logger.dart';
 import 'package:quoty_dumpling_app/data/db_provider.dart';
 import 'package:quoty_dumpling_app/models/items/item.dart';
 import 'package:quoty_dumpling_app/models/items/money_item.dart';
@@ -120,7 +121,11 @@ class ShopItems extends ChangeNotifier {
     _productIds.addAll(_money.map((e) => e.id ?? ''));
 
     final purchaseUpdated = inAppPurchase.purchaseStream;
-    await inAppPurchase.restorePurchases();
+    try {
+      await inAppPurchase.restorePurchases();
+    } catch (e) {
+      Logger().e('ERROR restoring purchases!: $e');
+    }
     _subscription = purchaseUpdated.listen(
       (purchaseDetailsList) {
         _listenToPurchaseUpdated(purchaseDetailsList);
@@ -137,9 +142,12 @@ class ShopItems extends ChangeNotifier {
 
     await initStoreInfo();
 
-    _money.forEach((element) {
-      element.priceUSD = _products.firstWhere((e) => e.id == element.id).price;
-    });
+    if (isAvailable) {
+      _money.forEach((element) {
+        element.priceUSD =
+            _products.firstWhere((e) => e.id == element.id).price;
+      });
+    }
   }
 
   void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {

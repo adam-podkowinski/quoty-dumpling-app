@@ -52,11 +52,6 @@ class _LoadingScreenState extends State<LoadingScreen>
     //   await Provider.of<DBProvider>(context, listen: false).databaseToJSON(),
     //  );
     //  await Provider.of<DBProvider>(context, listen: false).resetGame(context);
-    var prefs = await SharedPreferences.getInstance();
-
-    if (prefs.getBool('loginOnStartup') ?? true) {
-      await Provider.of<DBProvider>(context, listen: false).signIn();
-    }
 
     await Provider.of<Shop>(context, listen: false).initShop();
     await Provider.of<ShopItems>(context, listen: false).fetchItems(context);
@@ -70,6 +65,12 @@ class _LoadingScreenState extends State<LoadingScreen>
       Provider.of<Level>(context, listen: false),
     );
     await Provider.of<CollectionSettings>(context, listen: false).initOptions();
+
+    var prefs = await SharedPreferences.getInstance();
+
+    if (prefs.getBool('loginOnStartup') ?? true) {
+      await Provider.of<DBProvider>(context, listen: false).signIn();
+    }
 
     WidgetsBinding.instance!.addObserver(
       LifecycleEventHandler(detachedCallBack: DBProvider.saveJSONToGooglePlay),

@@ -71,7 +71,7 @@
     "useCase": "removeAds",
     "defaultPriceBills": 0,
     "defaultPriceDiamonds": 0,
-    "priceUSD": 4
+    "priceUSD": "4$"
   },
   {
     "id": "007",

@@ -205,13 +205,11 @@ class _ItemState extends State<Item> with TickerProviderStateMixin {
                       ),
                     if (widget.item.priceUSD != '0')
                       buildPriceChip(
-                        Row(
-                          children: <Widget>[
-                            Text(
-                              widget.item.priceUSD ?? '0\$',
-                              style: Styles.moneyInShopItemTextStyle,
-                            ),
-                          ],
+                        Center(
+                          child: Text(
+                            widget.item.priceUSD ?? '0\$',
+                            style: Styles.moneyInShopItemTextStyle,
+                          ),
                         ),
                       ),
                     AnimatedBuilder(
