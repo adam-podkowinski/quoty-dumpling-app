@@ -34,6 +34,9 @@
 deployment_cert.der
 upload-keystore.jks
 /android/app/src/main/res/values/ids.xml
+lib/kotlin-stdlib-js-sources.jar
+lib/kotlin-stdlib-js.jar
+gradle.properties
 
 # Web related
 lib/generated_plugin_registrant.dart
